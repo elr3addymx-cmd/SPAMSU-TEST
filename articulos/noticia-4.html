@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artículo — SPAMSU · UNAM</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#003B71;--oro:#C8A951;--font-serif:"Libre Baskerville",Georgia,serif;--font-sans:"Source Sans 3",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--font-sans);color:var(--azul);background:#fff;line-height:1.6}a{text-decoration:none;color:inherit}
+.art-nav{background:var(--azul);padding:14px 28px;display:flex;align-items:center;gap:16px}
+.art-nav-back{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.7);font-size:13px;font-weight:500;transition:color .2s}
+.art-nav-back:hover{color:#fff}
+.art-nav-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.art-nav-logo{font-family:var(--font-serif);font-size:15px;font-weight:700;color:#fff;margin-left:auto}
+.art-hero{width:100%;height:380px;background:linear-gradient(135deg,#001e45,#003B71);display:flex;align-items:flex-end;position:relative;overflow:hidden}
+.art-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.art-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%)}
+.art-hero-content{position:relative;z-index:1;padding:32px 60px;width:100%;max-width:900px;margin:0 auto}
+.art-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(200,169,81,.2);border:1px solid rgba(200,169,81,.4);color:var(--oro);font-size:10.5px;font-weight:700;padding:4px 13px;border-radius:20px;letter-spacing:.10em;text-transform:uppercase;margin-bottom:12px}
+.art-h1{font-family:var(--font-serif);font-size:clamp(22px,3vw,38px);font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px}
+.art-meta{font-size:12px;color:rgba(255,255,255,.55)}
+.art-body{max-width:780px;margin:0 auto;padding:52px 28px 80px}
+.art-img-ph{width:100%;height:280px;background:#f0f2f5;border:1.5px dashed #cbd5e0;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin:32px 0;color:#718096;font-size:12px;font-family:monospace;text-align:center}
+.art-h2{font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--azul);margin:36px 0 14px}
+.art-p{font-size:16px;color:#4A5568;font-weight:300;line-height:1.85;margin-bottom:18px}
+.art-highlight{background:#E8F0FE;border-left:4px solid var(--azul);border-radius:0 10px 10px 0;padding:18px 22px;margin:28px 0}
+.art-highlight p{font-size:15px;color:var(--azul);font-weight:400;line-height:1.7;margin:0}
+</style>
+</head>
+<body>
+<div class="art-nav">
+  <a href="../index.html" class="art-nav-back">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Regresar a inicio
+  </a>
+  <div class="art-nav-logo">SPAMSU · UNAM</div>
+</div>
+<div class="art-hero">
+  <!-- Descomenta la siguiente línea y ajusta la ruta cuando tengas la imagen -->
+  <!-- <img src="../img/noticia-4.jpg" alt="Imagen del artículo"> -->
+  <div class="art-hero-overlay"></div>
+  <div class="art-hero-content">
+    <div class="art-tag">Comunicado</div>
+    <!-- [TITULO] Reemplazar con el título del artículo -->
+    <h1 class="art-h1">Título del artículo o comunicado institucional</h1>
+    <!-- [FECHA] -->
+    <div class="art-meta">DD de mes, AAAA · SPAMSU UNAM</div>
+  </div>
+</div>
+<div class="art-body">
+  <!-- [PARRAFO-1] -->
+  <p class="art-p">Párrafo introductorio. Reemplazar con el contenido oficial.</p>
+
+  <!-- [IMAGEN-INTERNA] Opcional — imagen dentro del artículo -->
+  <div class="art-img-ph">🖼<br>img/noticia-4-foto.jpg<br><span style="opacity:.6">Imagen interna (opcional — borrar si no aplica)</span></div>
+
+  <!-- [SUBTITULO] -->
+  <h2 class="art-h2">Subtítulo de sección</h2>
+
+  <!-- [PARRAFO-2] -->
+  <p class="art-p">Desarrollo de la noticia. Agregar el contenido institucional correspondiente.</p>
+
+  <!-- [CITA-DESTACADA] Opcional -->
+  <div class="art-highlight"><p>"Texto destacado o cita importante del comunicado."</p></div>
+
+  <!-- [PARRAFO-3] -->
+  <p class="art-p">Párrafo de cierre con información adicional.</p>
+</div>
+</body>
+</html>
