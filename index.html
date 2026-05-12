@@ -1089,12 +1089,65 @@ button { font-family:var(--font-sans); cursor:pointer; border:none; }
   .mfc-name           { font-size:13px; }
   .mfc-addr           { font-size:11px; }
 }
-@media (max-width:480px) {
-  .emergency-bar { flex-wrap:wrap; gap:8px; justify-content:center; }
-  .hero-stats { flex-wrap:wrap; gap:14px; }
-  .hero-actions { flex-direction:column; }
-  .btn-primary,.btn-ghost-white { width:100%; justify-content:center; }
+/* ── RESPONSIVE EXTRA: tablet 900px ── */
+@media (max-width:900px) {
+  .nc.feat { grid-column:span 12; min-height:280px; }
+  .nc.tall { grid-column:span 6;  min-height:240px; }
+  .nc.wide { grid-column:span 6;  min-height:220px; }
+  .nc.norm { grid-column:span 6;  min-height:200px; }
+  .directores-grid { grid-template-columns:repeat(2,1fr); }
+  .secretario-wrap { grid-template-columns:1fr; }
+  .secretario-photo { min-height:240px; }
+  .soc-cards-grid { grid-template-columns:repeat(3,1fr); }
+  .accesos-grid { grid-template-columns:repeat(2,1fr); }
+  .emerg-inner { grid-template-columns:1fr; gap:28px; }
+  .mapa-final-card { max-width:220px; }
 }
+@media (max-width:640px) {
+  .nc.feat,.nc.tall,.nc.wide,.nc.norm { grid-column:span 12; min-height:220px; }
+  .soc-cards-grid { grid-template-columns:1fr; }
+  .accesos-grid { grid-template-columns:1fr; }
+  .dir-inst-grid { grid-template-columns:1fr; }
+  .directores-grid { grid-template-columns:1fr; }
+  .avisos-grid { grid-template-columns:1fr; }
+  .mj-doc { flex-direction:column; }
+  .mj-doc-meta { margin-left:0; justify-content:flex-start; }
+  .mapa-final-wrap { height:300px; }
+  .mapa-final-card { position:relative; top:auto; left:auto; width:100%; max-width:100%; border-radius:0; box-shadow:none; border-left:none; border-right:none; border-top:none; }
+  .soc-unam-section { padding:40px 16px; }
+  .section { padding:44px 16px; }
+  .hero h1 { font-size:22px; }
+  .hero-desc { font-size:14px; }
+  .hero-stats { display:none; }
+  .section-title { font-size:20px; }
+  .footer-grid { grid-template-columns:1fr; }
+  .secretario-body { padding:22px 20px; }
+  .sec-name { font-size:18px; }
+}
+/* Estabilidad visual de imágenes ── */
+[data-img] { contain:layout size; }
+section[id] { scroll-margin-top:76px; }
+[data-img] img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.nc-img [data-img],
+.nov-img [data-img],
+.srv-img [data-img],
+.dir-photo [data-img],
+.secretario-photo [data-img],
+.sec-photo [data-img],
+.itb-img [data-img] { position:absolute; inset:0; }
+/* Evitar desbordamiento horizontal global */
+html, body { max-width:100%; overflow-x:hidden; }
+/* Contenedores de imagen con altura explícita */
+.nc-img { position:relative; overflow:hidden; flex-shrink:0; }
+.nc.feat .nc-img { height:260px; }
+.nc.tall .nc-img { height:100%; min-height:200px; }
+.nc.wide .nc-img { height:180px; }
+.nc.norm .nc-img { height:165px; }
+.srv-img { position:relative; height:150px; overflow:hidden; }
+.dir-photo { position:relative; height:220px; overflow:hidden; }
+.secretario-photo { position:relative; min-height:280px; overflow:hidden; }
+/* Fix: sph dentro de contenedores position:absolute */
+.sph { position:absolute; inset:0; width:100%; height:100%; min-height:unset; }
 </style>
 </head>
 <body>
@@ -2050,6 +2103,25 @@ button { font-family:var(--font-sans); cursor:pointer; border:none; }
      SCRIPTS
      ================================================================ -->
 <script>
+/* ================================================================
+   FIX: siempre iniciar en la parte superior al cargar la página
+   ================================================================ */
+(function() {
+  // Desactiva la restauración de scroll del navegador
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  // Elimina cualquier hash en la URL (evita el salto automático)
+  if (window.location.hash) {
+    history.replaceState(null, null, window.location.pathname + window.location.search);
+  }
+  // Fuerza el scroll al inicio
+  window.scrollTo(0, 0);
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() { window.scrollTo(0, 0); }, 10);
+  });
+})();
+
 /* ================================================================
    SISTEMA INTELIGENTE DE PLACEHOLDERS
    ─────────────────────────────────────────────────────────────────
