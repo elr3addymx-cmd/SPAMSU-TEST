@@ -630,8 +630,9 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
 
 /* Backdrop para cerrar sidebar en móvil */
 .sidebar-backdrop{
-  display:none;position:fixed;inset:0;background:rgba(0,20,48,.45);
-  backdrop-filter:blur(2px);z-index:98;
+  display:none;position:fixed;top:52px;left:0;right:0;bottom:0;
+  background:rgba(0,20,48,.45);
+  backdrop-filter:blur(2px);z-index:198;
 }
 .sidebar-backdrop.open{display:block}
 
@@ -651,13 +652,13 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
     font-size:12px;padding:7px 14px;
   }
 
-  /* Sidebar convertido en drawer deslizable */
+  /* Sidebar convertido en drawer deslizable — arranca DEBAJO del topbar */
   .sidebar{
     display:flex !important;
-    position:fixed;top:0;left:0;bottom:0;
+    position:fixed;top:52px;left:0;bottom:0;
     transform:translateX(-100%);
     transition:transform .3s cubic-bezier(.4,0,.2,1);
-    z-index:150;
+    z-index:199;
     box-shadow:none;
   }
   .sidebar.mobile-open{
@@ -1084,6 +1085,8 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
         </div>
       </a>
       <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-inst-card">
+        <div class="dir-inst-logo">
+          <!-- logo-dir-movilidad -->
           <div data-img="logo-dir-movilidad" data-alt="Dirección General de Servicios Generales y Movilidad" style="width:100%;height:100%"></div>
         </div>
         <div>
@@ -1371,8 +1374,10 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
         </div>
         <div class="ig-body">
           <!-- Vista previa con imagen -->
-          <div style="width:100%;border-radius:8px;overflow:hidden;margin-bottom:12px;position:relative;background:var(--azul-pale);aspect-ratio:738/1200">
-            <div data-img="insta_test" data-alt="Vista previa Instagram @spamsu_unam" style="position:absolute;inset:0;width:100%;height:100%"></div>
+          <div style="display:flex;justify-content:center;margin-bottom:12px">
+            <div style="width:60%;border-radius:8px;overflow:hidden;position:relative;background:var(--azul-pale);aspect-ratio:738/1200">
+              <div data-img="insta_test" data-alt="Vista previa Instagram @spamsu_unam" style="position:absolute;inset:0;width:100%;height:100%"></div>
+            </div>
           </div>
           <div class="ig-follow">
             <a href="https://www.instagram.com/spamsu_unam" target="_blank" rel="noopener">
@@ -1397,8 +1402,10 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
         </div>
         <div class="x-body">
           <!-- Vista previa con imagen -->
-          <div style="width:100%;border-radius:8px;overflow:hidden;margin-bottom:4px;position:relative;background:#111;aspect-ratio:738/1200">
-            <div data-img="X_test" data-alt="Vista previa X @SPAMSU_UNAM" style="position:absolute;inset:0;width:100%;height:100%"></div>
+          <div style="display:flex;justify-content:center;margin-bottom:4px">
+            <div style="width:60%;border-radius:8px;overflow:hidden;position:relative;background:#111;aspect-ratio:738/1200">
+              <div data-img="X_test" data-alt="Vista previa X @SPAMSU_UNAM" style="position:absolute;inset:0;width:100%;height:100%"></div>
+            </div>
           </div>
         </div>
         <div class="x-follow">
