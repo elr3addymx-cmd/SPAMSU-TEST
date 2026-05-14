@@ -63,7 +63,8 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
   background:var(--blanco);
   border-right:1.5px solid var(--gris-borde);
   display:flex;flex-direction:column;align-items:center;
-  z-index:100;overflow:hidden;
+  z-index:99;overflow:hidden;
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
 }
 /* Logo container */
 .sb-logo{
@@ -519,6 +520,22 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
 <body>
 
 <!-- ════════════════════════════════════════
+     MOBILE TOP BAR (hamburger — solo móvil)
+════════════════════════════════════════ -->
+<div class="mobile-topbar" id="mobileTopbar">
+  <button class="mob-hamburger" id="mobHamburger" onclick="toggleSidebar()" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+  <span class="mob-logo">SPAMSU · UNAM</span>
+  <button class="mob-emerg-btn" onclick="scrollToEmerg()">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+    Emergencias
+  </button>
+</div>
+<!-- Backdrop para cerrar el sidebar en móvil -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+<!-- ════════════════════════════════════════
      SIDEBAR
 ════════════════════════════════════════ -->
 <aside class="sidebar" id="sidebar">
@@ -582,7 +599,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       ¿Qué hacemos?
     </button>
-    <button class="btn-emergencias" onclick="openModal('modal-emergencias')" aria-label="Emergencias">
+    <button class="btn-emergencias" onclick="scrollToEmerg()" aria-label="Emergencias">
       <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
       Emergencias
     </button>
@@ -892,6 +909,120 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
           <span class="dir-inst-btn">Visitar sitio →</span>
         </div>
       </a>
+    </div>
+  </section>
+
+
+
+  <!-- ════════════════════════════════════════
+       EMERGENCIAS UNAM — Sección completa
+       (basada en diseño institucional)
+  ════════════════════════════════════════ -->
+  <section class="emerg-section-new" id="emergencias">
+    <div class="emerg-new-header">
+      <!-- Logo UNAM -->
+      <div class="emerg-unam-logo">
+        <div data-img="logo-unam" data-alt="UNAM" style="width:100%;height:100%"></div>
+      </div>
+      <div>
+        <div class="emerg-new-title">EMERGENCIAS <span>UNAM</span></div>
+        <div class="emerg-new-sub">Marca 55 desde cualquier extensión UNAM</div>
+      </div>
+    </div>
+
+    <div class="emerg-cards-grid">
+
+      <!-- 1. CAE -->
+      <div class="emerg-card-new cae">
+        <div class="emerg-badge" style="background:#002060">
+          <div class="emerg-badge-text">CAE</div>
+        </div>
+        <div class="emerg-card-info">
+          <div class="emerg-card-name">Central de Atención de Emergencias</div>
+          <a href="tel:5556222597" class="emerg-card-phone">55-5622-2597</a>
+        </div>
+      </div>
+
+      <!-- 2. Postes de Emergencia -->
+      <div class="emerg-card-new postes">
+        <div class="emerg-badge" style="background:#E65100">
+          <svg width="26" height="26" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><path d="M12 6h4a2 2 0 010 4H8"/><circle cx="12" cy="18" r="2"/></svg>
+        </div>
+        <div class="emerg-card-info">
+          <div class="emerg-card-name">Postes de Emergencia</div>
+          <div class="emerg-card-desc">Se localizan en diferentes puntos del campus</div>
+        </div>
+      </div>
+
+      <!-- 3. Teléfono de Emergencia -->
+      <div class="emerg-card-new telefono">
+        <div class="emerg-badge" style="background:#F9A825">
+          <svg width="26" height="26" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="emerg-card-info">
+          <div class="emerg-card-name">Teléfono de Emergencia</div>
+          <div class="emerg-card-desc">Al descolgar será atendida su llamada</div>
+        </div>
+      </div>
+
+      <!-- 4. S.O.S. UNAM -->
+      <div class="emerg-card-new sos">
+        <div class="emerg-badge" style="background:#003B71;padding:4px">
+          <div class="emerg-badge-text" style="font-size:13px;line-height:1">S.O.S</div>
+          <div class="emerg-badge-text" style="font-size:10px;opacity:.85">UNAM</div>
+        </div>
+        <div class="emerg-card-info">
+          <div class="emerg-card-name">S.O.S. UNAM</div>
+          <a href="http://www.sos.unam.mx/" target="_blank" rel="noopener" class="emerg-card-phone" style="font-size:13px">Aplicación →</a>
+          <div class="emerg-card-desc">Descarga la app oficial de la UNAM</div>
+        </div>
+      </div>
+
+      <!-- 5. Protección Civil -->
+      <div class="emerg-card-new pcivil">
+        <div class="emerg-badge" style="background:#E65100">
+          <svg width="26" height="26" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div class="emerg-card-info">
+          <div class="emerg-card-name">Protección Civil</div>
+          <a href="tel:5556226552" class="emerg-card-phone">55-5622-6552</a>
+        </div>
+      </div>
+
+      <!-- 6. Bomberos UNAM -->
+      <div class="emerg-card-new bomberos">
+        <div class="emerg-badge" style="background:#C62828">
+          <svg width="26" height="26" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7 7 7 0 01-7-7c0-1.99.806-2.967 2.5-4.5z"/></svg>
+        </div>
+        <div class="emerg-card-info">
+          <div class="emerg-card-name">Bomberos UNAM</div>
+          <a href="tel:5556161560" class="emerg-card-phone">55-5616-1560</a>
+        </div>
+      </div>
+
+      <!-- 7. Línea de Reacción Puma -->
+      <div class="emerg-card-new puma">
+        <div class="emerg-badge" style="background:#F57F17">
+          <svg width="26" height="26" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="emerg-card-info">
+          <div class="emerg-card-name">Línea de Reacción Puma</div>
+          <a href="tel:5556226464" class="emerg-card-phone">55-5622-6464</a>
+        </div>
+      </div>
+
+      <!-- 8. Emergencias 911 -->
+      <div class="emerg-card-new e911">
+        <div class="emerg-badge" style="background:linear-gradient(135deg,#2E7D32,#1B5E20)">
+          <div class="emerg-badge-text" style="font-size:20px;font-weight:900;letter-spacing:-.02em">911</div>
+        </div>
+        <div class="emerg-card-info">
+          <div class="emerg-card-name">Número Nacional de Emergencias</div>
+          <a href="tel:911" class="emerg-card-phone">9-1-1</a>
+          <div class="emerg-card-desc">Policía · Ambulancia · Bomberos</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1306,6 +1437,41 @@ function buildXFallback() {
 </script>
 
 <script>
+/* ════════════════════════════════════════
+   MOBILE SIDEBAR TOGGLE
+════════════════════════════════════════ */
+function scrollToEmerg() {
+  var el = document.getElementById('emergencias');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Close mobile sidebar if open
+    var sb = document.getElementById('sidebar');
+    if (sb && sb.classList.contains('mobile-open')) toggleSidebar();
+  }
+}
+
+function toggleSidebar() {
+  var sb = document.getElementById('sidebar');
+  var bd = document.getElementById('sidebarBackdrop');
+  var hb = document.getElementById('mobHamburger');
+  var isOpen = sb.classList.contains('mobile-open');
+  sb.classList.toggle('mobile-open', !isOpen);
+  bd.classList.toggle('open', !isOpen);
+  hb.classList.toggle('open', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+// Close sidebar when a nav item is clicked
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.sb-item').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var sb = document.getElementById('sidebar');
+      if (sb && sb.classList.contains('mobile-open')) {
+        toggleSidebar();
+      }
+    });
+  });
+});
+
 /* ════════════════════════════════════════
    SCROLL FIX — siempre al inicio
 ════════════════════════════════════════ */
