@@ -466,13 +466,126 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
 .modal-body p{margin-bottom:12px}
 .modal-body ul{list-style:disc;padding-left:18px;display:flex;flex-direction:column;gap:6px}
 .modal-body li{font-size:14px;color:var(--gris-txt);font-weight:300}
-/* Emergencias panel */
-.emerg-panel{background:var(--blanco);border-radius:16px;padding:0;max-width:340px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.2);position:relative;overflow:hidden;animation:modalIn .28s ease}
-.ep-head{background:linear-gradient(135deg,rgba(169,198,232,.25),rgba(169,198,232,.12));border-bottom:1px solid var(--gris-borde);padding:18px 22px;display:flex;align-items:center;gap:12px}
-.ep-head-icon{width:40px;height:40px;border-radius:10px;background:var(--azul-claro);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ep-head-icon svg{width:20px;height:20px;stroke:var(--azul-oscuro);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ep-head-title{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--azul-oscuro)}
-.ep-head-sub{font-size:11px;color:var(--gris-sub);margin-top:1px}
+/* ═══════════════════════════════════════════
+   EMERGENCIAS — MODAL INSTITUCIONAL UNAM
+═══════════════════════════════════════════ */
+/* Fondo del modal — más oscuro y con blur para destacar */
+#modal-emergencias{background:rgba(0,20,48,.60);backdrop-filter:blur(6px)}
+
+/* Panel principal — ancho generoso tipo carrusel institucional */
+.emerg-panel{
+  background:var(--blanco);
+  border-radius:18px;
+  padding:0;
+  max-width:860px;
+  width:100%;
+  box-shadow:0 32px 80px rgba(0,20,48,.35), 0 0 0 1px rgba(169,198,232,.2);
+  position:relative;
+  overflow:hidden;
+  animation:modalIn .32s cubic-bezier(.34,1.26,.64,1);
+}
+
+/* Cabecera institucional */
+.ep-head{
+  background:linear-gradient(120deg, var(--azul-oscuro) 0%, #00529B 55%, #0065BE 100%);
+  padding:22px 30px 20px;
+  display:flex;align-items:center;gap:18px;
+  position:relative;overflow:hidden;
+}
+/* Patrón decorativo sutil en la cabecera */
+.ep-head::before{
+  content:'';position:absolute;right:-30px;top:-30px;
+  width:160px;height:160px;border-radius:50%;
+  background:rgba(169,198,232,.10);
+}
+.ep-head::after{
+  content:'';position:absolute;right:60px;top:-50px;
+  width:100px;height:100px;border-radius:50%;
+  background:rgba(169,198,232,.07);
+}
+.ep-logo-wrap{
+  width:52px;height:52px;border-radius:10px;overflow:hidden;
+  background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.ep-logo-wrap [data-img]{width:100%;height:100%}
+.ep-logo-wrap [data-img] img{object-fit:contain;filter:brightness(10)}
+.ep-head-texts{flex:1}
+.ep-head-title{
+  font-family:var(--font-serif);font-size:20px;font-weight:700;
+  color:#fff;letter-spacing:-.01em;line-height:1.1;
+  display:flex;align-items:baseline;gap:8px;
+}
+.ep-head-title span{color:var(--azul-claro)}
+.ep-head-sub{font-size:12px;color:rgba(255,255,255,.7);margin-top:4px;font-weight:400;letter-spacing:.02em}
+
+/* Grilla de tarjetas de emergencia */
+.ep-cards-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--gris-borde);
+  border-top:1px solid var(--gris-borde);
+}
+.ep-card{
+  background:var(--blanco);
+  padding:18px 16px;
+  display:flex;align-items:center;gap:13px;
+  transition:background var(--t);
+  text-decoration:none;color:inherit;
+  position:relative;
+}
+.ep-card:hover{background:var(--azul-pale)}
+.ep-card-badge{
+  width:46px;height:46px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-family:var(--font-serif);
+  font-weight:700;font-size:11px;text-align:center;
+  color:#fff;line-height:1.15;
+  position:relative;overflow:hidden;
+}
+.ep-card-badge svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ep-card-info{min-width:0;flex:1}
+.ep-card-name{
+  font-size:11.5px;font-weight:700;color:var(--azul-oscuro);
+  line-height:1.25;margin-bottom:3px;
+}
+.ep-card-val{
+  font-size:14px;font-weight:700;color:var(--azul-oscuro);
+  font-family:var(--font-serif);letter-spacing:-.01em;
+}
+.ep-card-val.phone{color:#003B71}
+.ep-card-desc{font-size:10.5px;color:var(--gris-sub);margin-top:1px;line-height:1.35}
+
+/* Segunda fila */
+.ep-cards-grid.row2{border-top:1px solid var(--gris-borde)}
+
+/* Pie del modal */
+.ep-footer{
+  background:var(--fondo);border-top:1px solid var(--gris-borde);
+  padding:11px 22px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font-size:11px;color:var(--gris-sub);
+}
+.ep-footer-left{display:flex;align-items:center;gap:7px}
+.ep-pulse{width:7px;height:7px;border-radius:50%;background:#22C55E;animation:pls 2s ease-in-out infinite;flex-shrink:0}
+.ep-footer svg{width:12px;height:12px;stroke:var(--gris-sub);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.ep-55-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--azul-pale2);border:1px solid var(--gris-borde);
+  border-radius:20px;padding:4px 10px;
+  font-size:10.5px;font-weight:700;color:var(--azul-oscuro);
+}
+
+/* Responsive modal emergencias */
+@media(max-width:860px){
+  .ep-cards-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .ep-cards-grid{grid-template-columns:1fr}
+  .ep-head{padding:16px 18px}
+  .ep-head-title{font-size:16px}
+}
 .ep-nums{padding:16px;display:flex;flex-direction:column;gap:9px}
 .ep-num{display:flex;align-items:center;gap:12px;background:var(--fondo);border:1px solid var(--gris-borde);border-radius:9px;padding:12px 14px;text-decoration:none;transition:all var(--t)}
 .ep-num:hover{border-color:var(--azul-claro);background:var(--azul-pale)}
@@ -525,11 +638,6 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
 <div class="mobile-topbar" id="mobileTopbar">
   <button class="mob-hamburger" id="mobHamburger" onclick="toggleSidebar()" aria-label="Abrir menú">
     <span></span><span></span><span></span>
-  </button>
-  <span class="mob-logo">SPAMSU · UNAM</span>
-  <button class="mob-emerg-btn" onclick="scrollToEmerg()">
-    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-    Emergencias
   </button>
 </div>
 <!-- Backdrop para cerrar el sidebar en móvil -->
@@ -898,9 +1006,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
           <span class="dir-inst-btn">Visitar sitio →</span>
         </div>
       </a>
-      <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" class="dir-inst-card">
-        <div class="dir-inst-logo">
-          <!-- logo-dir-movilidad -->
+      <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-inst-card">
           <div data-img="logo-dir-movilidad" data-alt="Dirección General de Servicios Generales y Movilidad" style="width:100%;height:100%"></div>
         </div>
         <div>
@@ -915,10 +1021,10 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
 
 
   <!-- ════════════════════════════════════════
-       EMERGENCIAS UNAM — Sección completa
-       (basada en diseño institucional)
+       EMERGENCIAS UNAM — Sección movida a modal
+       (ahora se abre como ventana flotante)
   ════════════════════════════════════════ -->
-  <section class="emerg-section-new" id="emergencias">
+  <section class="emerg-section-new" id="emergencias" style="display:none">
     <div class="emerg-new-header">
       <!-- Logo UNAM -->
       <div class="emerg-unam-logo">
@@ -1187,21 +1293,9 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
           </a>
         </div>
         <div class="ig-body">
-          <!-- Mosaico de muestra — representa el feed visual -->
-          <div class="ig-mosaic">
-            <div class="ig-tile" style="background:linear-gradient(135deg,#A9C6E8,#003B71)"></div>
-            <div class="ig-tile" style="background:linear-gradient(135deg,#7AAED4,#A9C6E8)"></div>
-            <div class="ig-tile" style="background:linear-gradient(135deg,#003B71,#1565C0)"></div>
-            <div class="ig-tile" style="background:linear-gradient(135deg,#E8F0FE,#A9C6E8)"></div>
-            <div class="ig-tile ig-tile-cta" onclick="window.open('https://www.instagram.com/spamsu_unam','_blank')">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              <span>Ver perfil</span>
-            </div>
-            <div class="ig-tile" style="background:linear-gradient(135deg,#1565C0,#003B71)"></div>
-          </div>
-          <div class="ig-notice">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            El contenido actualizado se visualiza directamente en Instagram
+          <!-- Vista previa con imagen -->
+          <div style="width:100%;border-radius:8px;overflow:hidden;margin-bottom:12px;aspect-ratio:4/3;position:relative;background:var(--azul-pale)">
+            <div data-img="insta_test" data-alt="Vista previa Instagram @spamsu_unam" style="position:absolute;inset:0;width:100%;height:100%"></div>
           </div>
           <div class="ig-follow">
             <a href="https://www.instagram.com/spamsu_unam" target="_blank" rel="noopener">
@@ -1225,13 +1319,9 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
           </a>
         </div>
         <div class="x-body">
-          <!-- Contenedor para el timeline programático de X/Twitter -->
-          <div id="x-timeline-container" class="x-timeline">
-            <!-- Estado de carga -->
-            <div id="x-loading" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;gap:10px">
-              <div style="width:22px;height:22px;border-radius:50%;border:2.5px solid #333;border-top-color:#fff;animation:spin .75s linear infinite"></div>
-              <span style="font-size:11px;color:rgba(255,255,255,.4)">Cargando publicaciones…</span>
-            </div>
+          <!-- Vista previa con imagen -->
+          <div style="width:100%;border-radius:8px;overflow:hidden;margin-bottom:4px;aspect-ratio:4/3;position:relative;background:#111">
+            <div data-img="X_test" data-alt="Vista previa X @SPAMSU_UNAM" style="position:absolute;inset:0;width:100%;height:100%"></div>
           </div>
         </div>
         <div class="x-follow">
@@ -1363,25 +1453,139 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
   </div>
 </div>
 
-<!-- MODAL: Emergencias -->
+<!-- MODAL: Emergencias UNAM — Diseño institucional -->
 <div class="modal-bg" id="modal-emergencias" onclick="handleBgClick(event,'modal-emergencias')" role="dialog" aria-modal="true" aria-labelledby="me-title">
   <div class="emerg-panel" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeModal('modal-emergencias')" aria-label="Cerrar" style="top:12px;right:12px">×</button>
+
+    <!-- Cerrar -->
+    <button class="modal-close" onclick="closeModal('modal-emergencias')" aria-label="Cerrar"
+      style="top:14px;right:14px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.25);z-index:2">×</button>
+
+    <!-- ── CABECERA INSTITUCIONAL ── -->
     <div class="ep-head">
-      <div class="ep-head-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-      <div><div class="ep-head-title" id="me-title">Emergencias UNAM</div><div class="ep-head-sub">Disponible las 24 horas</div></div>
+      <div class="ep-logo-wrap">
+        <div data-img="logo-unam" data-alt="UNAM" style="width:100%;height:100%"></div>
+      </div>
+      <div class="ep-head-texts">
+        <div class="ep-head-title" id="me-title">EMERGENCIAS <span>UNAM</span></div>
+        <div class="ep-head-sub">Marca 55 desde cualquier extensión UNAM &nbsp;·&nbsp; Disponible 24 horas</div>
+      </div>
     </div>
-    <div class="ep-nums">
-      <a href="tel:5556221994" class="ep-num">
-        <div class="ep-num-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
-        <div><div class="ep-lbl">Emergencias Campus</div><div class="ep-num-val">55 5622-1994</div><div class="ep-num-desc">Protección Civil y Seguridad</div></div>
+
+    <!-- ── FILA 1: CAE · Postes · Teléfono · SOS ── -->
+    <div class="ep-cards-grid">
+
+      <!-- CAE -->
+      <a href="tel:5556222597" class="ep-card">
+        <div class="ep-card-badge" style="background:#002060">
+          <span style="font-size:13px;font-weight:900;letter-spacing:-.02em">CAE</span>
+        </div>
+        <div class="ep-card-info">
+          <div class="ep-card-name">Central de Atención de Emergencias</div>
+          <div class="ep-card-val phone">55-5622-2597</div>
+        </div>
       </a>
-      <a href="tel:5556220804" class="ep-num">
-        <div class="ep-num-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <div><div class="ep-lbl">Protección Civil</div><div class="ep-num-val">55 5622-0804</div><div class="ep-num-desc">Casetas de seguridad campus</div></div>
+
+      <!-- Postes de Emergencia -->
+      <div class="ep-card">
+        <div class="ep-card-badge" style="background:#E65100">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><path d="M12 6h4a2 2 0 010 4H8"/><circle cx="12" cy="18" r="2"/></svg>
+        </div>
+        <div class="ep-card-info">
+          <div class="ep-card-name">Postes de Emergencia</div>
+          <div class="ep-card-desc">Se localizan en diferentes puntos del campus</div>
+        </div>
+      </div>
+
+      <!-- Teléfono de Emergencia -->
+      <div class="ep-card">
+        <div class="ep-card-badge" style="background:#F9A825">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="ep-card-info">
+          <div class="ep-card-name">Teléfono de Emergencia</div>
+          <div class="ep-card-desc">Al descolgar será atendida su llamada</div>
+        </div>
+      </div>
+
+      <!-- SOS UNAM -->
+      <a href="http://www.sos.unam.mx/" target="_blank" rel="noopener" class="ep-card">
+        <div class="ep-card-badge" style="background:#003B71;flex-direction:column;gap:0">
+          <span style="font-size:14px;font-weight:900;letter-spacing:-.02em">S.O.S</span>
+          <span style="font-size:9px;font-weight:600;opacity:.85">UNAM</span>
+        </div>
+        <div class="ep-card-info">
+          <div class="ep-card-name">S.O.S. UNAM</div>
+          <div class="ep-card-val" style="font-size:12px;color:var(--azul-claro)">Aplicación →</div>
+          <div class="ep-card-desc">Descarga la app oficial</div>
+        </div>
       </a>
+
     </div>
-    <div class="ep-footer"><span class="ep-pulse"></span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Servicio activo 24 h / 7 días</div>
+
+    <!-- ── FILA 2: Protección Civil · Bomberos · Reacción Puma · 911 ── -->
+    <div class="ep-cards-grid row2">
+
+      <!-- Protección Civil -->
+      <a href="tel:5556226552" class="ep-card">
+        <div class="ep-card-badge" style="background:#E65100">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div class="ep-card-info">
+          <div class="ep-card-name">Protección Civil</div>
+          <div class="ep-card-val phone">55-5622-6552</div>
+        </div>
+      </a>
+
+      <!-- Bomberos UNAM -->
+      <a href="tel:5556161560" class="ep-card">
+        <div class="ep-card-badge" style="background:#C62828">
+          <svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7 7 7 0 01-7-7c0-1.99.806-2.967 2.5-4.5z"/></svg>
+        </div>
+        <div class="ep-card-info">
+          <div class="ep-card-name">Bomberos UNAM</div>
+          <div class="ep-card-val phone">55-5616-1560</div>
+        </div>
+      </a>
+
+      <!-- Línea de Reacción Puma -->
+      <a href="tel:5556226464" class="ep-card">
+        <div class="ep-card-badge" style="background:#F57F17">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="ep-card-info">
+          <div class="ep-card-name">Línea de Reacción Puma</div>
+          <div class="ep-card-val phone">55-5622-6464</div>
+        </div>
+      </a>
+
+      <!-- Emergencias 911 -->
+      <a href="tel:911" class="ep-card">
+        <div class="ep-card-badge" style="background:linear-gradient(135deg,#2E7D32,#1B5E20)">
+          <span style="font-size:20px;font-weight:900;letter-spacing:-.03em">911</span>
+        </div>
+        <div class="ep-card-info">
+          <div class="ep-card-name">Número Nacional de Emergencias</div>
+          <div class="ep-card-val phone">9-1-1</div>
+          <div class="ep-card-desc">Policía · Ambulancia · Bomberos</div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- ── PIE ── -->
+    <div class="ep-footer">
+      <div class="ep-footer-left">
+        <span class="ep-pulse"></span>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Servicio activo 24 h / 7 días de la semana
+      </div>
+      <div class="ep-55-tag">
+        <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 1.14 2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        Ext. 55 desde campus
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1441,13 +1645,11 @@ function buildXFallback() {
    MOBILE SIDEBAR TOGGLE
 ════════════════════════════════════════ */
 function scrollToEmerg() {
-  var el = document.getElementById('emergencias');
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // Close mobile sidebar if open
-    var sb = document.getElementById('sidebar');
-    if (sb && sb.classList.contains('mobile-open')) toggleSidebar();
-  }
+  // Close mobile sidebar if open
+  var sb = document.getElementById('sidebar');
+  if (sb && sb.classList.contains('mobile-open')) toggleSidebar();
+  // Open the emergencias modal
+  openModal('modal-emergencias');
 }
 
 function toggleSidebar() {
