@@ -236,6 +236,8 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
 .srv-body{padding:18px 16px}
 .srv-icon{width:38px;height:38px;border-radius:8px;background:var(--azul-pale);display:flex;align-items:center;justify-content:center;margin-bottom:11px;transition:background var(--t)}
 .srv-card:hover .srv-icon{background:var(--azul-claro)}
+.srv-cta{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--azul-claro);margin-top:8px;transition:gap var(--t)}
+.srv-card:hover .srv-cta{gap:9px}
 .srv-icon svg{width:19px;height:19px;stroke:var(--azul-oscuro);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .srv-title{font-family:var(--font-serif);font-size:14px;font-weight:700;color:var(--azul-oscuro);margin-bottom:6px;line-height:1.3}
 .srv-desc{font-size:12.5px;color:var(--gris-txt);line-height:1.6;font-weight:300}
@@ -414,7 +416,7 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
    FOOTER — Estilo imagen 2 (UNAM 475)
 ═══════════════════════════════════════════ */
 .site-footer{background:#00204A;padding:44px 40px 22px;color:rgba(255,255,255,.85)}
-.footer-inner{max-width:100%;display:grid;grid-template-columns:220px 1fr 1fr 1fr 1fr;gap:40px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.10);margin-bottom:18px}
+.footer-inner{max-width:100%;display:grid;grid-template-columns:220px 1fr 1fr 1fr;gap:40px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.10);margin-bottom:18px}
 /* UNAM branding column */
 .footer-brand{}
 .footer-unam-logo{width:56px;height:auto;margin-bottom:10px;opacity:.85}
@@ -586,16 +588,6 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
     <!-- hero-slide-1 -->
     <div data-img="hero-slide-1" data-alt="Ciudad Universitaria UNAM" class="dark-ph" style="position:absolute;inset:0;width:100%;height:100%"></div>
     <div class="hero-overlay"></div>
-    <!-- Badge institucional -->
-    <div class="hero-badge">
-      <div class="hero-badge-logo">
-        <div data-img="spamsu" data-alt="SPAMSU" style="width:100%;height:100%"></div>
-      </div>
-      <div>
-        <div class="hero-badge-name">SPAMSU</div>
-        <div class="hero-badge-sub">Secretaría de Prevención y Apoyo a la<br>Movilidad y Seguridad Universitaria</div>
-      </div>
-    </div>
     <!-- Dots -->
     <div class="hero-dots">
       <button class="h-dot active" onclick="heroSlide(0)"></button>
@@ -766,6 +758,40 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
             <a href="http://www.transparencia.unam.mx/" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:12px;color:var(--azul-claro);margin-top:4px;display:inline-block">Portal de Transparencia UNAM →</a>
           </div>
         </div>
+
+        <!-- Pumabús -->
+        <a href="https://www.dgsgm.unam.mx/pumabus.html" target="_blank" rel="noopener" class="srv-card">
+          <div class="srv-img"><div data-img="srv-pumabus" data-alt="Pumabús UNAM" style="height:100%"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+            <div class="srv-title">Pumabús</div>
+            <p class="srv-desc">Servicio de transporte interno del campus universitario. Rutas, horarios y paradas dentro de Ciudad Universitaria.</p>
+            <span class="srv-cta">Ir al sitio oficial →</span>
+          </div>
+        </a>
+
+        <!-- Bicipuma -->
+        <a href="https://www.dgsgm.unam.mx/bicipuma.html" target="_blank" rel="noopener" class="srv-card">
+          <div class="srv-img"><div data-img="srv-bicipuma" data-alt="Bicipuma UNAM" style="height:100%"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><polyline points="15 6 15 17.5 6.5 17.5"/><path d="M5 6h5l3 5"/></svg></div>
+            <div class="srv-title">Bicipuma</div>
+            <p class="srv-desc">Sistema de bicicletas compartidas en el campus de la UNAM. Préstamo gratuito para la comunidad universitaria.</p>
+            <span class="srv-cta">Ir al sitio oficial →</span>
+          </div>
+        </a>
+
+        <!-- Estacionamientos -->
+        <a href="https://www.dgsgm.unam.mx/estacionamientos.html" target="_blank" rel="noopener" class="srv-card">
+          <div class="srv-img"><div data-img="srv-estacionamientos" data-alt="Estacionamientos UNAM" style="height:100%"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+            <div class="srv-title">Estacionamientos Controlados</div>
+            <p class="srv-desc">Información sobre estacionamientos controlados dentro del campus, accesos, tarifas y registro de vehículos.</p>
+            <span class="srv-cta">Ir al sitio oficial →</span>
+          </div>
+        </a>
+
       </div>
 
       <!-- Senderos Universitarios -->
@@ -1134,22 +1160,6 @@ button{font-family:var(--font-sans);cursor:pointer;border:none}
         </div>
       </div>
 
-      <!-- Columna: Síguenos -->
-      <div class="footer-col">
-        <div class="footer-col-title">Síguenos</div>
-        <div class="footer-social-icons">
-          <a href="https://x.com/SPAMSU_UNAM" target="_blank" rel="noopener" class="footer-social-icon" aria-label="X / Twitter">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,.6)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          <a href="https://www.instagram.com/spamsu_unam" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Instagram">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
-          <a href="mailto:spamsu@unam.mx" class="footer-social-icon" aria-label="Correo electrónico">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </a>
-        </div>
-      </div>
-
     </div>
     <div class="footer-bottom">
       <div class="footer-copyright">© 2026 UNAM · Universidad Nacional Autónoma de México</div>
@@ -1320,56 +1330,48 @@ window.addEventListener('scroll',function(){if(topBar) topBar.style.boxShadow=wi
 
 /* ════════════════════════════════════════
    OG:IMAGE PREVIEW FETCHER
-   Carga la imagen og:image de cada URL
-   directamente en el navegador del usuario
-   via CORS proxy (allorigins.win)
+   Usa microlink.io — API especializada en
+   link previews, funciona con Gaceta UNAM,
+   La Jornada e Instagram sin CORS issues
 ════════════════════════════════════════ */
 (function() {
-  var PROXY = 'https://api.allorigins.win/get?url=';
-
-  function extractOGImage(html) {
-    var patterns = [
-      /property=["']og:image["'][^>]+content=["']([^"']+)["']/i,
-      /content=["']([^"']+)["'][^>]+property=["']og:image["']/i,
-      /name=["']twitter:image(?::src)?["'][^>]+content=["']([^"']+)["']/i,
-      /content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i
-    ];
-    for (var i = 0; i < patterns.length; i++) {
-      var m = html.match(patterns[i]);
-      if (m && m[1]) {
-        var u = m[1].trim();
-        if (u.startsWith('//')) u = 'https:' + u;
-        if (u.startsWith('http')) return u;
-      }
-    }
-    return null;
-  }
+  var API = 'https://api.microlink.io?url=';
 
   function showError(el) {
-    el.innerHTML = '<div class="og-error"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A9C6E8" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><span>Vista previa no disponible</span></div>';
+    el.innerHTML = '<div class="og-error">'
+      + '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A9C6E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'
+      + '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'
+      + '<span>Vista previa no disponible</span></div>';
+  }
+
+  function setImage(el, imgUrl) {
+    if (!imgUrl) { showError(el); return; }
+    el.innerHTML = '';
+    var img = document.createElement('img');
+    img.alt = 'Vista previa';
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block';
+    img.onerror = function() { showError(el); };
+    img.src = imgUrl;
+    el.appendChild(img);
   }
 
   function loadOGPreview(el) {
     var url = el.getAttribute('data-og-url');
     if (!url) return;
 
-    var proxyUrl = PROXY + encodeURIComponent(url);
-
-    fetch(proxyUrl)
+    fetch(API + encodeURIComponent(url), { mode: 'cors' })
       .then(function(res) {
-        if (!res.ok) throw new Error('proxy error');
+        if (!res.ok) throw new Error(res.status);
         return res.json();
       })
       .then(function(data) {
-        var html = (data && data.contents) ? data.contents : '';
-        var imgUrl = extractOGImage(html);
-        if (imgUrl) {
-          el.innerHTML = '';
-          var img = document.createElement('img');
-          img.alt = 'Vista previa';
-          img.onerror = function() { showError(el); };
-          img.onload  = function() { el.innerHTML = ''; el.appendChild(img); };
-          img.src = imgUrl;
+        if (data && data.status === 'success' && data.data) {
+          var d = data.data;
+          // Prefer og:image → screenshot
+          var imgUrl = (d.image && d.image.url)
+                    || (d.screenshot && d.screenshot.url)
+                    || null;
+          setImage(el, imgUrl);
         } else {
           showError(el);
         }
@@ -1377,19 +1379,18 @@ window.addEventListener('scroll',function(){if(topBar) topBar.style.boxShadow=wi
       .catch(function() { showError(el); });
   }
 
-  // Stagger requests to avoid rate limiting (300ms between each)
+  // Stagger requests — 400ms between each to stay within free tier
   function loadAll() {
     var els = Array.from(document.querySelectorAll('[data-og-url]'));
     els.forEach(function(el, i) {
-      setTimeout(function() { loadOGPreview(el); }, i * 350);
+      setTimeout(function() { loadOGPreview(el); }, i * 400);
     });
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', loadAll);
   } else {
-    // Slight delay to let page render first
-    setTimeout(loadAll, 200);
+    setTimeout(loadAll, 300);
   }
 })();
 </script>
