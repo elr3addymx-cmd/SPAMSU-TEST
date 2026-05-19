@@ -543,8 +543,8 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .footer-inner{position:relative;z-index:1;display:grid;grid-template-columns:210px 1fr 1fr 1fr;gap:40px;padding-bottom:30px;border-bottom:1px solid rgba(255,255,255,.10);margin-bottom:20px}
 .fb-name{font-family:var(--font-serif);font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
 .fb-full{font-size:13px;color:rgba(255,255,255,.42);font-weight:300;line-height:1.6;max-width:200px;margin-bottom:13px}
-.footer-unam-logo{width:58px;height:auto;margin-bottom:7px;opacity:.8}
-.footer-unam-logo [data-img]{width:58px;height:58px}
+.footer-unam-logo{width:116px;height:auto;margin-bottom:7px;opacity:.8}
+.footer-unam-logo [data-img]{width:116px;height:116px}
 .footer-unam-logo [data-img] img{object-fit:contain;filter:brightness(10)}
 .fc-title{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.09em;margin-bottom:13px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.12)}
 .footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.52);font-weight:300;margin-bottom:9px;transition:color var(--t)}
@@ -690,7 +690,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   .dir-units-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:900px){
-  .sidebar{transform:translateX(-100%);transition:transform .3s ease;z-index:99;box-shadow:none}
+  .sidebar{transform:translateX(-100%);transition:transform .3s ease;z-index:99;box-shadow:none;padding-top:58px}
   .sidebar.mobile-open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.15)}
   .page-wrap{grid-template-columns:1fr}
   .main-content{margin-left:0}
@@ -1136,7 +1136,17 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
             <span class="srv-cta">Ir al sitio →</span>
           </div>
         </a>
-        <!-- 9. Igualdad de Género -->
+        <!-- 9. Bicipuma -->
+        <a href="https://www.dgsgm.unam.mx/bicipuma.html" target="_blank" rel="noopener" class="srv-card">
+          <div class="srv-img"><div data-img="srv-bicipuma" data-alt="Bicipuma UNAM"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg></div>
+            <div class="srv-title">Bicipuma</div>
+            <p class="srv-desc">Sistema de transporte gratuito para la Comunidad Universitaria que fomenta la movilidad sustentable y la salud.</p>
+            <span class="srv-cta">Ver más →</span>
+          </div>
+        </a>
+        <!-- 10. Igualdad de Género -->
         <a href="https://coordinaciongenero.unam.mx/" target="_blank" rel="noopener" class="srv-card">
           <div class="srv-img"><div data-img="srv-genero" data-alt="Igualdad de Género"></div></div>
           <div class="srv-body">
@@ -1560,7 +1570,10 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
     <div class="footer-bg-img"><div data-img="footer-bg" data-alt="UNAM campus" style="width:100%;height:100%"></div></div>
     <div class="footer-inner">
       <div>
-        <div class="footer-unam-logo"><div data-img="logo-unam" data-alt="UNAM" style="width:58px;height:58px;border-radius:7px"></div></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:7px">
+          <div class="footer-unam-logo" style="margin-bottom:0"><div data-img="logo-unam" data-alt="UNAM" style="width:116px;height:116px;border-radius:7px"></div></div>
+          <div class="footer-unam-logo" style="margin-bottom:0"><div data-img="logo-aniversario" data-alt="Aniversario UNAM" style="width:116px;height:116px;border-radius:7px"></div></div>
+        </div>
         <div class="fb-name">UNAM</div>
         <div class="fb-full">Universidad Nacional Autónoma de México<br>1551 · 2026</div>
       </div>
