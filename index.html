@@ -83,6 +83,18 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .sb-item.active{background:var(--azul-pale2);color:var(--azul);border-left-color:var(--azul-claro)}
 .sb-item svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke var(--t)}
 .sb-item:hover svg,.sb-item.active svg{stroke:var(--azul)}
+.sb-nav-img{
+  width:56px;height:56px;
+  object-fit:contain;
+  opacity:.75;
+  transition:opacity var(--t),transform var(--t);
+  display:block;
+}
+.sb-item:hover .sb-nav-img,
+.sb-item.active .sb-nav-img{
+  opacity:1;
+  transform:scale(1.06);
+}
 .sb-label{font-size:12.5px;font-weight:600;text-align:center;line-height:1.25}
 .sb-sos{width:100%;padding:14px;border-top:1px solid var(--gris-borde);display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--blanco)}
 .sos-img-wrap{width:92px;height:92px;border-radius:50%;overflow:hidden;cursor:pointer;transition:transform var(--t),box-shadow var(--t)}
@@ -117,14 +129,14 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .btn-que svg{width:17px;height:17px;stroke:var(--azul-claro);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .btn-emerg{
   display:inline-flex;align-items:center;gap:7px;
-  background:var(--azul-claro);color:var(--azul);
+  background:#3E7CB1;color:#fff;
   font-size:15px;font-weight:700;
   padding:9px 20px;border-radius:9px;border:none;
   transition:all var(--t);
-  box-shadow:0 2px 14px rgba(169,198,232,.6);
+  box-shadow:0 2px 14px rgba(62,124,177,.45);
   backdrop-filter:blur(8px);
 }
-.btn-emerg:hover{background:var(--azul-med);color:#fff;box-shadow:0 4px 18px rgba(122,174,212,.6)}
+.btn-emerg:hover{background:#2d6a9f;color:#fff;box-shadow:0 4px 18px rgba(62,124,177,.6)}
 .btn-emerg svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ═══════════════════════════════════════════
@@ -162,9 +174,12 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 
 /* INFO TABS */
 .info-tabs{display:flex;gap:0;border-bottom:2px solid var(--gris-borde);margin-bottom:36px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.itab{background:none;border:none;font-family:var(--font-sans);font-size:16px;font-weight:500;color:var(--gris-sub);padding:12px 24px;cursor:pointer;position:relative;transition:color var(--t);white-space:nowrap}
-.itab::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2.5px;background:var(--azul-claro);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
-.itab:hover{color:var(--azul)}.itab.active{color:var(--azul);font-weight:700}.itab.active::after{transform:scaleX(1)}
+.itab{background:none;border:none;font-family:var(--font-sans);font-size:16px;font-weight:500;color:var(--gris-sub);padding:12px 24px;cursor:pointer;position:relative;transition:color var(--t);white-space:nowrap;overflow:visible}
+.itab::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:3px;background:var(--azul-claro);transform:scaleX(0);transform-origin:left;transition:transform .38s cubic-bezier(.4,0,.2,1);border-radius:2px}
+.itab:hover{color:var(--azul)}
+.itab:hover::after{transform:scaleX(1);background:rgba(122,174,212,.6)}
+.itab.active{color:var(--azul);font-weight:700}
+.itab.active::after{transform:scaleX(1);background:var(--azul-claro)}
 .itab-pane{display:none;max-width:720px}.itab-pane.active{display:block;animation:fadeIn .3s ease}
 .itab-pane p{font-size:17px;color:var(--gris-txt);font-weight:300;line-height:1.85;margin-bottom:16px}
 
@@ -178,15 +193,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .dec-logo-img [data-img]{width:100%;height:100%}
 .dec-logo-img [data-img] img{object-fit:contain}
 .dec-title{font-family:var(--font-serif);font-size:clamp(18px,2.5vw,26px);font-weight:700;color:var(--azul);text-align:center;flex:1}
-/* Road track */
-.dec-road-wrap{display:grid;grid-template-columns:minmax(260px,38%) 1fr;gap:32px;align-items:start;width:100%}
-.dec-road{padding:0;position:relative}
-/* SVG road path */
-.dec-track svg{width:100%;height:auto;overflow:visible}
-.dec-stop{cursor:pointer;transition:all .3s ease}
-.dec-stop circle{transition:all .3s ease}
-.dec-stop:hover circle{filter:brightness(1.2)}
-/* Solo el círculo activo se agranda y brilla — los demás no cambian */
 .dec-stop.active circle{
   stroke:#fff;stroke-width:5;
   filter:drop-shadow(0 0 8px rgba(91,184,212,0.9)) brightness(1.15);
@@ -290,16 +296,26 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul-claro);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
 .srv-card:hover{border-color:var(--azul-claro);box-shadow:var(--sh);transform:translateY(-4px)}
 .srv-card:hover::before{transform:scaleX(1)}
-.srv-img{height:160px;position:relative}
-.srv-img [data-img]{height:160px}
-.srv-body{padding:20px 18px}
-.srv-icon{width:44px;height:44px;border-radius:10px;background:var(--azul-pale);display:flex;align-items:center;justify-content:center;margin-bottom:13px;transition:background var(--t)}
-.srv-card:hover .srv-icon{background:var(--azul-claro)}
-.srv-icon svg{width:22px;height:22px;stroke:var(--azul);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke var(--t)}
-.srv-card:hover .srv-icon svg{stroke:var(--azul)}
-.srv-title{font-family:var(--font-serif);font-size:17px;font-weight:700;color:var(--azul);margin-bottom:7px;line-height:1.3}
-.srv-desc{font-size:15px;color:var(--gris-txt);line-height:1.65;font-weight:300}
-.srv-cta{display:inline-flex;align-items:center;gap:5px;font-size:14px;font-weight:600;color:var(--azul-claro);margin-top:10px;transition:gap var(--t)}
+.srv-img{height:220px;position:relative;overflow:hidden}
+.srv-img [data-img]{height:220px;width:100%;position:absolute;inset:0}
+.srv-img [data-img] img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.srv-card:hover .srv-img [data-img] img{transform:scale(1.06)}
+/* Glassmorphism text overlay */
+.srv-body{
+  position:relative;z-index:2;
+  padding:18px 18px 16px;
+  background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.92) 28%, rgba(255,255,255,0.97) 100%);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  margin-top:-60px;
+}
+.srv-icon{width:40px;height:40px;border-radius:10px;background:rgba(169,198,232,.22);border:1px solid rgba(169,198,232,.4);display:flex;align-items:center;justify-content:center;margin-bottom:11px;transition:background var(--t),border-color var(--t)}
+.srv-card:hover .srv-icon{background:var(--azul-claro);border-color:var(--azul-claro)}
+.srv-icon svg{width:20px;height:20px;stroke:var(--azul);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke var(--t)}
+.srv-card:hover .srv-icon svg{stroke:#fff}
+.srv-title{font-family:var(--font-serif);font-size:16px;font-weight:700;color:var(--azul);margin-bottom:6px;line-height:1.3}
+.srv-desc{font-size:14px;color:var(--gris-txt);line-height:1.6;font-weight:300}
+.srv-cta{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--azul-claro);margin-top:9px;transition:gap var(--t)}
 .srv-card:hover .srv-cta{gap:9px}
 /* Senderos within servicios */
 .senderos-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;margin-top:44px;padding-top:36px;border-top:2px solid var(--gris-borde)}
@@ -417,11 +433,11 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
    VIDEO DEL RECTOR
 ═══════════════════════════════════════════ */
 .video-section{background:var(--fondo);padding:56px 44px;border-top:2px solid var(--gris-borde)}
-.video-inner{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.video-inner{display:grid;grid-template-columns:3fr 2fr;gap:40px;align-items:center}
 .video-wrap{border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(0,59,113,.15);aspect-ratio:16/9}
 .video-wrap iframe{width:100%;height:100%;border:none;display:block}
-.video-quote{font-family:var(--font-serif);font-size:20px;font-style:italic;color:var(--azul);line-height:1.65;border-left:3.5px solid var(--azul-claro);padding-left:20px;margin:20px 0}
-.video-speaker{font-size:15px;color:var(--gris-sub);font-weight:400}
+.video-quote{font-family:var(--font-serif);font-size:18px;font-style:italic;color:var(--azul);line-height:1.65;border-left:3.5px solid var(--azul-claro);padding-left:20px;margin:16px 0}
+.video-speaker{font-size:14px;color:var(--gris-sub);font-weight:400}
 
 /* ═══════════════════════════════════════════
    REDES SOCIALES
@@ -506,7 +522,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 ═══════════════════════════════════════════ */
 .mapa-final{position:relative;width:100%;height:430px;overflow:hidden}
 .mapa-final iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block}
-.mapa-info-card{position:absolute;top:20px;left:20px;z-index:3;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border:1px solid var(--gris-borde);border-radius:13px;padding:20px 22px;width:230px;box-shadow:0 8px 32px rgba(0,0,0,.16)}
 .mic-badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:.10em;background:var(--azul-pale);padding:3px 9px;border-radius:20px;margin-bottom:10px}
 .mic-name{font-family:var(--font-serif);font-size:16px;font-weight:700;color:var(--azul);margin-bottom:6px}
 .mic-addr{font-size:13px;color:var(--gris-txt);font-weight:300;line-height:1.6;margin-bottom:10px}
@@ -524,38 +539,38 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 /* ═══════════════════════════════════════════
    FOOTER IMAGE
 ═══════════════════════════════════════════ */
-.footer-img-section{width:100%;overflow:hidden;max-height:220px}
-.footer-img-section [data-img]{width:100%;height:220px}
-.footer-img-section [data-img] img{object-fit:cover}
+.footer-img-section{width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--azul-claro);padding:32px 20px}
+.footer-img-section [data-img]{max-width:100%;max-height:220px;width:auto;height:auto;background:transparent}
+.footer-img-section [data-img] img{object-fit:contain;max-height:220px;max-width:100%;display:block;margin:0 auto}
 
 /* ═══════════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════════ */
 .site-footer{
-  background:linear-gradient(rgba(0,30,60,.82),rgba(0,30,60,.82)),
-             center/cover no-repeat var(--azul);
-  padding:46px 44px 22px;color:rgba(255,255,255,.88);
+  background:linear-gradient(rgba(0,40,90,.80),rgba(0,40,90,.80)),
+             center/cover no-repeat #003B71;
+  padding:46px 44px 22px;color:rgba(0,30,60,.85);
   position:relative;
 }
+.fb-name{font-family:var(--font-serif);font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.fb-full{font-size:13px;color:rgba(255,255,255,.72);font-weight:300;line-height:1.6;max-width:200px;margin-bottom:13px}
+.fc-title{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.09em;margin-bottom:13px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.22)}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.78);font-weight:300;margin-bottom:9px;transition:color var(--t)}
+.footer-col a:hover{color:#fff}
+.fc-contact{display:flex;align-items:flex-start;gap:7px;font-size:14px;color:rgba(255,255,255,.78);font-weight:300;margin-bottom:9px}
+.fc-contact svg{width:14px;height:14px;stroke:rgba(255,255,255,.8);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:2px}
+.fc-contact a{color:rgba(255,255,255,.78);transition:color var(--t)}.fc-contact a:hover{color:#fff}
+.footer-bottom{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-copyright{font-size:13px;color:rgba(255,255,255,.72);font-weight:300}
+.footer-dir-label{font-size:12px;color:rgba(255,255,255,.62);font-weight:400;text-align:right}
+.copyright-bar{background:#A9C6E8;color:#003B71;font-size:13px;font-weight:600;text-align:center;padding:12px;border-top:none}
 .footer-bg-img{position:absolute;inset:0;z-index:0}
 .footer-bg-img [data-img]{width:100%;height:100%}
 .footer-bg-img [data-img] img{object-fit:cover}
-.footer-inner{position:relative;z-index:1;display:grid;grid-template-columns:210px 1fr 1fr 1fr;gap:40px;padding-bottom:30px;border-bottom:1px solid rgba(255,255,255,.10);margin-bottom:20px}
-.fb-name{font-family:var(--font-serif);font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
-.fb-full{font-size:13px;color:rgba(255,255,255,.42);font-weight:300;line-height:1.6;max-width:200px;margin-bottom:13px}
-.footer-unam-logo{width:116px;height:auto;margin-bottom:7px;opacity:.8}
+.footer-inner{position:relative;z-index:1;display:grid;grid-template-columns:210px 1fr 1fr 1fr;gap:40px;padding-bottom:30px;border-bottom:1px solid rgba(0,59,113,.18);margin-bottom:20px}
+.footer-unam-logo{width:116px;height:auto;margin-bottom:7px}
 .footer-unam-logo [data-img]{width:116px;height:116px}
-.footer-unam-logo [data-img] img{object-fit:contain;filter:brightness(10)}
-.fc-title{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.09em;margin-bottom:13px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.12)}
-.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.52);font-weight:300;margin-bottom:9px;transition:color var(--t)}
-.footer-col a:hover{color:rgba(255,255,255,.9)}
-.fc-contact{display:flex;align-items:flex-start;gap:7px;font-size:14px;color:rgba(255,255,255,.52);font-weight:300;margin-bottom:9px}
-.fc-contact svg{width:14px;height:14px;stroke:var(--azul-claro);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:2px}
-.fc-contact a{color:rgba(255,255,255,.52);transition:color var(--t)}.fc-contact a:hover{color:#fff}
-.footer-bottom{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.footer-copyright{font-size:13px;color:rgba(255,255,255,.30);font-weight:300}
-.footer-dir-label{font-size:12px;color:rgba(255,255,255,.28);font-weight:400;text-align:right}
-.copyright-bar{background:#001020;color:rgba(255,255,255,.28);font-size:13px;text-align:center;padding:12px;border-top:1px solid rgba(255,255,255,.05)}
+.footer-unam-logo [data-img] img{object-fit:contain}
 
 /* ═══════════════════════════════════════════
    MODALS
@@ -722,7 +737,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   .dir-units-grid{grid-template-columns:1fr}
   .vid-grid{grid-template-columns:1fr}
   .curso-grid{grid-template-columns:1fr}
-  .mapa-info-card{width:170px;padding:13px 15px}
   .info-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .nov-tab-bar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
   .hero-wrap{height:220px}
@@ -755,27 +769,27 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   <nav class="sb-nav" aria-label="Navegación principal">
     <!-- Información -->
     <button class="sb-item active" onclick="showTab('informacion')" id="sb-informacion">
-      <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <img class="sb-nav-img" src="img/img_nav-informacion.png" alt="Información">
       <span class="sb-label">Información</span>
     </button>
     <!-- Estructura -->
     <button class="sb-item" onclick="showTab('estructura')" id="sb-estructura">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <img class="sb-nav-img" src="img/img_nav-estructura.png" alt="Estructura">
       <span class="sb-label">Estructura</span>
     </button>
     <!-- Marco Jurídico -->
     <button class="sb-item" onclick="openMarcoJuridico()" id="sb-marco">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <img class="sb-nav-img" src="img/img_nav-marco.png" alt="Marco Jurídico">
       <span class="sb-label">Marco Jurídico</span>
     </button>
     <!-- Servicios -->
     <button class="sb-item" onclick="showTab('servicios')" id="sb-servicios">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <img class="sb-nav-img" src="img/img_nav-servicios.png" alt="Servicios">
       <span class="sb-label">Servicios</span>
     </button>
     <!-- Directorio -->
     <button class="sb-item" onclick="showTab('directorio')" id="sb-directorio">
-      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      <img class="sb-nav-img" src="img/img_nav-directorio.png" alt="Directorio">
       <span class="sb-label">Directorio</span>
     </button>
   </nav>
@@ -815,9 +829,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
     </div>
   </div>
   <!-- Decorative pattern below hero — identical to reference image -->
-  <div class="hero-pattern">
-    <canvas id="heroPatternCanvas" style="display:block;width:100%;height:48px"></canvas>
-  </div>
+  <!-- hero-pattern canvas eliminado según solicitud -->
 
   <!-- TAB PANELS -->
   <div class="tab-panels-wrap">
@@ -846,155 +858,573 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
       <div class="itab-pane" id="ip-vision">
         <p>Ser una secretaría de excelencia, reconocida como referente nacional en materia de seguridad, movilidad y prevención de riesgos en el ámbito universitario; con un equipo comprometido, tecnología de vanguardia y una relación de confianza con toda la comunidad universitaria.</p>
       </div>
-      <div class="itab-pane" id="ip-valores">
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;padding-left:0">
-          <li style="display:flex;gap:12px;align-items:flex-start"><span style="width:9px;height:9px;background:var(--azul-claro);border-radius:50%;flex-shrink:0;margin-top:8px"></span><div><strong style="color:var(--azul);font-size:17px">Integridad</strong><br><span style="font-size:16px;color:var(--gris-txt);font-weight:300">Actuamos con honestidad y transparencia en cada acción que emprendemos.</span></div></li>
-          <li style="display:flex;gap:12px;align-items:flex-start"><span style="width:9px;height:9px;background:var(--azul-claro);border-radius:50%;flex-shrink:0;margin-top:8px"></span><div><strong style="color:var(--azul);font-size:17px">Servicio a la comunidad</strong><br><span style="font-size:16px;color:var(--gris-txt);font-weight:300">La comunidad universitaria es el centro y razón de nuestra labor.</span></div></li>
-          <li style="display:flex;gap:12px;align-items:flex-start"><span style="width:9px;height:9px;background:var(--azul-claro);border-radius:50%;flex-shrink:0;margin-top:8px"></span><div><strong style="color:var(--azul);font-size:17px">Prevención</strong><br><span style="font-size:16px;color:var(--gris-txt);font-weight:300">Anticipamos los riesgos para proteger el bienestar de la comunidad universitaria.</span></div></li>
-          <li style="display:flex;gap:12px;align-items:flex-start"><span style="width:9px;height:9px;background:var(--azul-claro);border-radius:50%;flex-shrink:0;margin-top:8px"></span><div><strong style="color:var(--azul);font-size:17px">Transparencia</strong><br><span style="font-size:16px;color:var(--gris-txt);font-weight:300">Rendimos cuentas con claridad y responsabilidad ante la comunidad que servimos.</span></div></li>
-        </ul>
-      </div>
+      <div class="itab-pane" id="ip-valores" style="max-width:none;padding:0">
+        <!-- VALORES QUE NOS DEFINEN — Image-based interactive puzzle -->
+        <style>
+        .valores-section{width:100%;background:#fff;padding:32px 0 28px}
+        .valores-header{display:flex;align-items:center;justify-content:space-between;padding:0 0 28px 0;gap:16px;flex-wrap:wrap}
+        .valores-title{font-family:var(--font-serif);font-size:clamp(22px,3vw,32px);font-weight:700;color:var(--azul)}
+        .valores-logos{display:flex;align-items:center;gap:14px;flex-shrink:0}
+        .vlogo{width:56px;height:56px;border-radius:10px;overflow:hidden;border:1px solid var(--gris-borde);display:flex;align-items:center;justify-content:center;background:#f4f7fb}
+        .vlogo img{width:100%;height:100%;object-fit:contain;padding:4px}
+        .valores-body{display:grid;grid-template-columns:300px 1fr;gap:40px;align-items:center}
+        /* ── Puzzle — coordenadas fijas calibradas ── */
+        .valores-puzzle-grid{
+          position:relative;
+          width:300px;
+          height:300px;
+          flex-shrink:0;
+          /* Escalar proporcionalmente en pantallas pequeñas */
+          transform-origin:top left;
+        }
+        .puzzle-img-wrap{
+          position:absolute;
+          width:170px;
+          cursor:pointer;
+          transition:transform .28s cubic-bezier(.4,0,.2,1),
+                      filter .28s ease,
+                      box-shadow .28s ease;
+        }
+        /* Coordenadas exactas calibradas */
+        #puzzle-0{ top:69px;  left:-14px; z-index:2 }  /* 01 Respeto */
+        #puzzle-1{ top:-18px; left:68px;  z-index:3 }  /* 02 Convivencia */
+        #puzzle-2{ top:150px; left:69px;  z-index:3 }  /* 03 Igualdad */
+        #puzzle-3{ top:63px;  left:152px; z-index:4 }  /* 04 Libertad */
+        .puzzle-img-wrap img{
+          width:100%;
+          height:auto;
+          display:block;
+          border-radius:0;
+          transition:inherit;
+        }
+        .puzzle-img-wrap.highlighted{
+          transform:translateY(-8px) scale(1.07) !important;
+          filter:brightness(1.15) saturate(1.1);
+          box-shadow:0 12px 36px rgba(0,59,113,.32),
+                     0 0 0 3px rgba(169,198,232,.75);
+          z-index:10 !important;
+        }
+        .valores-items{display:flex;flex-direction:column;gap:14px}
+        .valor-item{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;border:1.5px solid var(--gris-borde);background:#fff;cursor:pointer;transition:all .25s ease;position:relative;overflow:hidden}
+        .valor-item::after{content:"";position:absolute;bottom:0;left:0;height:3px;width:0;background:var(--azul-claro);transition:width .38s cubic-bezier(.4,0,.2,1)}
+        .valor-item:hover,.valor-item.vi-active{border-color:var(--azul-claro);background:rgba(169,198,232,.09);transform:translateX(4px)}
+        .valor-item:hover::after,.valor-item.vi-active::after{width:100%}
+        .valor-icon-img{width:36px;height:36px;flex-shrink:0;border-radius:7px;overflow:hidden;background:var(--azul-pale)}
+        .valor-icon-img img{width:100%;height:100%;object-fit:contain}
+        .valor-name{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--azul);line-height:1.25;margin-bottom:3px}
+        .valor-sub{font-size:13px;color:var(--gris-sub);font-weight:300;line-height:1.4}
+        .valor-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,30,60,.52);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px}
+        .valor-modal-bg.open{display:flex;animation:fadeIn .22s ease}
+        .valor-modal{background:#fff;border-radius:20px;max-width:540px;width:100%;box-shadow:0 28px 70px rgba(0,59,113,.22);position:relative;overflow:hidden;animation:modalIn .28s ease}
+        .valor-modal-head{background:linear-gradient(135deg,#003B71 0%,#1565C0 60%,#2d8fce 100%);padding:28px 32px;display:flex;align-items:center;gap:18px;position:relative}
+        .valor-modal-head::after{content:"";position:absolute;right:-30px;top:-30px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+        .valor-modal-img{width:52px;height:52px;flex-shrink:0;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.15)}
+        .valor-modal-img img{width:100%;height:100%;object-fit:contain;padding:4px}
+        .valor-modal-title{font-family:var(--font-serif);font-size:20px;font-weight:700;color:#fff;line-height:1.2}
+        .valor-modal-body{padding:28px 32px}
+        .valor-modal-text{font-size:16px;color:var(--gris-txt);font-weight:300;line-height:1.85}
+        .valor-modal-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:background .2s}
+        .valor-modal-close:hover{background:rgba(255,255,255,.35)}
+        @media(max-width:700px){.valores-body{grid-template-columns:1fr}.valores-puzzle-grid{width:240px;margin:0 auto}}
+        </style>
 
-      <!-- DECÁLOGO -->
-      <div class="itab-pane" id="ip-decalogo" style="max-width:none">
-        <div class="decalogo-wrap">
-          <div class="dec-header">
-            <div class="dec-logos">
-              <div class="dec-logo-img"><div data-img="logo-unam" data-alt="UNAM" style="width:100%;height:100%"></div></div>
-              <div class="dec-logo-img"><div data-img="spamsu" data-alt="SPAMSU" style="width:100%;height:100%"></div></div>
-              <div class="dec-logo-img"><div data-img="logo-unam2" data-alt="La Universidad de la Nación" style="width:100%;height:100%"></div></div>
+        <div class="valores-section">
+          <div class="valores-header">
+            <h3 class="valores-title">Valores que Nos Definen</h3>
+            <div class="valores-logos">
+              <div class="vlogo"><img src="img/valores-escudo-unam.png" alt="Escudo UNAM" onerror="this.closest('.vlogo').style.display='none'"></div>
+              <div class="vlogo"><img src="img/valores-logo-spamsu.png" alt="SPAMSU" onerror="this.closest('.vlogo').style.display='none'"></div>
+              <div class="vlogo"><img src="img/valores-unam-nacion.png" alt="UNAM la Universidad de la Nacion" onerror="this.closest('.vlogo').style.display='none'"></div>
             </div>
-            <div class="dec-title">DECÁLOGO SPAMSU:<br>SERVICIO, PREVENCIÓN Y COMUNIDAD</div>
           </div>
 
-          <div class="dec-road-wrap">
-            <!-- Road SVG — U invertida ancha, idéntica a imagen de referencia -->
-            <div class="dec-road" id="decRoad">
-              <svg viewBox="-10 -10 280 500" xmlns="http://www.w3.org/2000/svg" id="decSvg" style="width:100%;height:auto;display:block">
-                <!--
-                  U INVERTIDA — viewBox con padding para que los círculos no se recorten.
-                  Rama derecha: x=190, y=20 → y=280
-                  Curva inferior: arco de semicírculo radio=60, centro (130,280)
-                  Rama izquierda: x=70, y=280 → y=50
-                -->
-
-                <!-- Borde/sombra exterior -->
-                <path d="M190 20 L190 280 A60 60 0 0 1 70 280 L70 50"
-                      fill="none" stroke="#001020" stroke-width="54"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- Cuerpo azul oscuro -->
-                <path d="M190 20 L190 280 A60 60 0 0 1 70 280 L70 50"
-                      fill="none" stroke="#003B71" stroke-width="44"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- Capa interior más clara (profundidad) -->
-                <path d="M190 20 L190 280 A60 60 0 0 1 70 280 L70 50"
-                      fill="none" stroke="#0d4f94" stroke-width="32"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- Línea punteada central -->
-                <path d="M190 20 L190 280 A60 60 0 0 1 70 280 L70 50"
-                      fill="none" stroke="rgba(255,255,255,0.30)" stroke-width="2.5"
-                      stroke-dasharray="11 15" stroke-linecap="round" stroke-linejoin="round"/>
-
-                <!-- ═══ PARADAS — distribuidas uniformemente ═══ -->
-
-                <!-- 1 — tope rama derecha — celeste -->
-                <g class="dec-stop active" onclick="activateDec(1)" data-dec="1" style="cursor:pointer">
-                  <circle cx="190" cy="20" r="20" fill="#5BB8D4" stroke="white" stroke-width="3"/>
-                  <text x="190" y="27" text-anchor="middle" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">1</text>
-                </g>
-                <!-- 2 — rama derecha -->
-                <g class="dec-stop" onclick="activateDec(2)" data-dec="2" style="cursor:pointer">
-                  <circle cx="190" cy="107" r="20" fill="#1565C0" stroke="white" stroke-width="3"/>
-                  <text x="190" y="114" text-anchor="middle" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">2</text>
-                </g>
-                <!-- 3 — rama derecha -->
-                <g class="dec-stop" onclick="activateDec(3)" data-dec="3" style="cursor:pointer">
-                  <circle cx="190" cy="200" r="20" fill="#1565C0" stroke="white" stroke-width="3"/>
-                  <text x="190" y="207" text-anchor="middle" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">3</text>
-                </g>
-                <!-- 4 — entrando a la curva derecha -->
-                <g class="dec-stop" onclick="activateDec(4)" data-dec="4" style="cursor:pointer">
-                  <circle cx="179" cy="322" r="20" fill="#1565C0" stroke="white" stroke-width="3"/>
-                  <text x="179" y="329" text-anchor="middle" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">4</text>
-                </g>
-                <!-- 5 — fondo de curva -->
-                <g class="dec-stop" onclick="activateDec(5)" data-dec="5" style="cursor:pointer">
-                  <circle cx="130" cy="370" r="20" fill="#1565C0" stroke="white" stroke-width="3"/>
-                  <text x="130" y="377" text-anchor="middle" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">5</text>
-                </g>
-                <!-- 6 — saliendo curva izquierda -->
-                <g class="dec-stop" onclick="activateDec(6)" data-dec="6" style="cursor:pointer">
-                  <circle cx="81" cy="322" r="20" fill="#1565C0" stroke="white" stroke-width="3"/>
-                  <text x="81" y="329" text-anchor="middle" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">6</text>
-                </g>
-                <!-- 7 — rama izquierda baja -->
-                <g class="dec-stop" onclick="activateDec(7)" data-dec="7" style="cursor:pointer">
-                  <circle cx="70" cy="240" r="20" fill="#5BB8D4" stroke="white" stroke-width="3"/>
-                  <text x="70" y="247" text-anchor="middle" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">7</text>
-                </g>
-                <!-- 8 — rama izquierda media -->
-                <g class="dec-stop" onclick="activateDec(8)" data-dec="8" style="cursor:pointer">
-                  <circle cx="70" cy="165" r="20" fill="#5BB8D4" stroke="white" stroke-width="3"/>
-                  <text x="70" y="172" text-anchor="middle" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">8</text>
-                </g>
-                <!-- 9 — rama izquierda alta -->
-                <g class="dec-stop" onclick="activateDec(9)" data-dec="9" style="cursor:pointer">
-                  <circle cx="70" cy="107" r="20" fill="#5BB8D4" stroke="white" stroke-width="3"/>
-                  <text x="70" y="114" text-anchor="middle" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">9</text>
-                </g>
-                <!-- 10 — tope rama izquierda -->
-                <g class="dec-stop" onclick="activateDec(10)" data-dec="10" style="cursor:pointer">
-                  <circle cx="70" cy="50" r="22" fill="#1565C0" stroke="#5BB8D4" stroke-width="4"/>
-                  <text x="70" y="57" text-anchor="middle" fill="white" font-size="13" font-weight="bold" font-family="sans-serif">10</text>
-                </g>
-              </svg>
+          <div class="valores-body">
+            <!-- Puzzle rompecabezas -->
+            <div class="valores-puzzle-grid" id="puzzleGrid">
+              <div class="puzzle-img-wrap" id="puzzle-0" onclick="openValorModal(0)">
+                <img src="img/puzzle-respeto.png" alt="Respeto y Tolerancia" onerror="this.style.opacity='.35'">
+              </div>
+              <div class="puzzle-img-wrap" id="puzzle-1" onclick="openValorModal(1)">
+                <img src="img/puzzle-convivencia.png" alt="Convivencia Pacifica" onerror="this.style.opacity='.35'">
+              </div>
+              <div class="puzzle-img-wrap" id="puzzle-2" onclick="openValorModal(2)">
+                <img src="img/puzzle-igualdad.png" alt="Igualdad" onerror="this.style.opacity='.35'">
+              </div>
+              <div class="puzzle-img-wrap" id="puzzle-3" onclick="openValorModal(3)">
+                <img src="img/puzzle-libertad.png" alt="Libertad de Pensamiento" onerror="this.style.opacity='.35'">
+              </div>
             </div>
-            <!-- Items list -->
-            <div class="dec-items" id="decItems">
-              <div class="dec-item active" data-dec="1" onclick="activateDec(1)">
-                <div class="dec-num" style="background:#5BB8D4">1</div>
-                <div class="dec-text">La seguridad universitaria como una política preventiva y de cuidados.</div>
+
+            <div class="valores-items">
+              <div class="valor-item" id="vi-0"
+                onmouseenter="highlightPiece(0)" onmouseleave="highlightPiece(-1)" onclick="openValorModal(0)">
+                <div class="valor-icon-img"><img src="img/puzzle-respeto.png" alt="" onerror="this.style.display='none'"></div>
+                <div>
+                  <div class="valor-name">Respeto y Tolerancia</div>
+                  <div class="valor-sub">Convivencia universitaria en pluralidad</div>
+                </div>
               </div>
-              <div class="dec-item" data-dec="2" onclick="activateDec(2)">
-                <div class="dec-num" style="background:#1565C0">2</div>
-                <div class="dec-text">Seguridad efectiva implementada con diagnósticos y respuestas diferenciadas.</div>
+              <div class="valor-item" id="vi-1"
+                onmouseenter="highlightPiece(1)" onmouseleave="highlightPiece(-1)" onclick="openValorModal(1)">
+                <div class="valor-icon-img"><img src="img/puzzle-convivencia.png" alt="" onerror="this.style.display='none'"></div>
+                <div>
+                  <div class="valor-name">Convivencia Pacifica y Respeto a la Diversidad</div>
+                  <div class="valor-sub">Cultural, etnica y personal</div>
+                </div>
               </div>
-              <div class="dec-item" data-dec="3" onclick="activateDec(3)">
-                <div class="dec-num" style="background:#1565C0">3</div>
-                <div class="dec-text">Construcción de la prevención en comunidad.</div>
+              <div class="valor-item" id="vi-2"
+                onmouseenter="highlightPiece(2)" onmouseleave="highlightPiece(-1)" onclick="openValorModal(2)">
+                <div class="valor-icon-img"><img src="img/puzzle-igualdad.png" alt="" onerror="this.style.display='none'"></div>
+                <div>
+                  <div class="valor-name">Igualdad</div>
+                  <div class="valor-sub">Sin discriminacion por ningun motivo</div>
+                </div>
               </div>
-              <div class="dec-item" data-dec="4" onclick="activateDec(4)">
-                <div class="dec-num" style="background:#1565C0">4</div>
-                <div class="dec-text">Entornos seguros con perspectiva de género.</div>
-              </div>
-              <div class="dec-item" data-dec="5" onclick="activateDec(5)">
-                <div class="dec-num" style="background:#1565C0">5</div>
-                <div class="dec-text">Estrategias de autocuidado en individual y colectivo contemplando la atención a la salud mental.</div>
-              </div>
-              <div class="dec-item" data-dec="6" onclick="activateDec(6)">
-                <div class="dec-num" style="background:#1565C0">6</div>
-                <div class="dec-text">Seguridad universitaria en la era posdigital.</div>
-              </div>
-              <div class="dec-item" data-dec="7" onclick="activateDec(7)">
-                <div class="dec-num" style="background:#5BB8D4">7</div>
-                <div class="dec-text">Políticas de seguridad universitaria a través de cartografías participativas, paradigma de una lógica reactiva a una lógica de cuidado.</div>
-              </div>
-              <div class="dec-item" data-dec="8" onclick="activateDec(8)">
-                <div class="dec-num" style="background:#5BB8D4">8</div>
-                <div class="dec-text">Cohesión social y sentido de pertenencia.</div>
-              </div>
-              <div class="dec-item" data-dec="9" onclick="activateDec(9)">
-                <div class="dec-num" style="background:#5BB8D4">9</div>
-                <div class="dec-text">Espacios físicos seguros.</div>
-              </div>
-              <div class="dec-item" data-dec="10" onclick="activateDec(10)">
-                <div class="dec-num" style="background:#1565C0">10</div>
-                <div class="dec-text">Enfoque anticipatorio, no solo reactivo.</div>
+              <div class="valor-item" id="vi-3"
+                onmouseenter="highlightPiece(3)" onmouseleave="highlightPiece(-1)" onclick="openValorModal(3)">
+                <div class="valor-icon-img"><img src="img/puzzle-libertad.png" alt="" onerror="this.style.display='none'"></div>
+                <div>
+                  <div class="valor-name">Libertad de Pensamiento y Expresion</div>
+                  <div class="valor-sub">Buscar, recibir y difundir informacion</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Modal -->
+        <div class="valor-modal-bg" id="valor-modal" onclick="if(event.target===this)closeValorModal()">
+          <div class="valor-modal">
+            <button class="valor-modal-close" onclick="closeValorModal()">x</button>
+            <div class="valor-modal-head">
+              <div class="valor-modal-img"><img id="vmodal-img-src" src="" alt=""></div>
+              <div class="valor-modal-title" id="vmodal-title">Valor</div>
+            </div>
+            <div class="valor-modal-body">
+              <p class="valor-modal-text" id="vmodal-text"></p>
+            </div>
+          </div>
+        </div>
+
+        <script>
+        var _valoresData = [
+          {title:'Respeto y Tolerancia', img:'img/puzzle-respeto.png',
+           text:'El respeto es un principio fundamental de la convivencia universitaria y conlleva el imperativo de la tolerancia: comprender el contexto de pluralidad en el que vivimos y asumir la responsabilidad de reconocer la relatividad de las propias convicciones, practicas e ideas.'},
+          {title:'Convivencia Pacifica y Respeto a la Diversidad Cultural, Etnica y Personal', img:'img/puzzle-convivencia.png',
+           text:'Se trata de mantener relaciones pacificas, cordiales, basadas en el dialogo equitativo y respetuoso como mecanismo para identificar desacuerdos y superarlos, a fin de evitar el ejercicio de la violencia.'},
+          {title:'Igualdad', img:'img/puzzle-igualdad.png',
+           text:'Nadie puede ser discriminado por su origen nacional o etnico, sus opiniones, genero, orientacion o preferencia sexual, religion, edad, estado civil, condicion social, laboral o de salud, discapacidades o cualquier otro motivo que atente contra la dignidad humana.'},
+          {title:'Libertad de Pensamiento y Expresion', img:'img/puzzle-libertad.png',
+           text:'Se relaciona con la libertad de buscar, recibir y difundir informacion e ideas de toda indole, sin consideracion de fronteras y a traves de cualquier medio, en estricto respeto a los derechos de terceros, conforme a lo establecido en la legislacion universitaria.'}
+        ];
+
+        window.highlightPiece = function(idx) {
+          var pieces = document.querySelectorAll('.puzzle-img-wrap');
+          var items  = document.querySelectorAll('.valor-item');
+          if (!pieces || !items) return;
+          for (var i = 0; i < pieces.length; i++) {
+            if (pieces[i]) pieces[i].classList.toggle('highlighted', i === idx);
+          }
+          for (var j = 0; j < items.length; j++) {
+            if (items[j]) items[j].classList.toggle('vi-active', j === idx);
+          }
+        };
+
+        window.openValorModal = function(idx) {
+          if (!_valoresData || idx < 0 || idx >= _valoresData.length) return;
+          var d = _valoresData[idx];
+          if (!d) return;
+          var t = document.getElementById('vmodal-title');
+          var x = document.getElementById('vmodal-text');
+          var s = document.getElementById('vmodal-img-src');
+          var m = document.getElementById('valor-modal');
+          if (t) t.textContent = d.title;
+          if (x) x.textContent = d.text;
+          if (s) s.src = d.img;
+          if (m) m.classList.add('open');
+          highlightPiece(idx);
+        };
+
+        window.closeValorModal = function() {
+          var m = document.getElementById('valor-modal');
+          if (m) m.classList.remove('open');
+          highlightPiece(-1);
+        };
+        </script>
       </div>
+
+            <!-- DECÁLOGO — Nueva versión institucional interactiva -->
+      <div class="itab-pane" id="ip-decalogo" style="max-width:none;padding:0">
+        <style>
+        /* ══ Decálogo wrapper ══ */
+        .dec2-wrap{
+          width:100%;background:#fff;padding:0 0 32px;
+        }
+
+        /* ── Cabecera ── */
+        .dec2-head{
+          position:relative;
+          display:grid;
+          /* Columna izquierda: personaje | Columna derecha: título centrado */
+          grid-template-columns:1fr;
+          grid-template-rows:1fr;
+          background:linear-gradient(135deg,#001d40 0%,#002f60 30%,#0d4f94 70%,#1565C0 100%);
+          border-radius:16px;
+          margin-bottom:36px;
+          min-height:220px;
+          overflow:hidden;
+        }
+
+        /* Logos — fila horizontal, esquina superior-izquierda, sobre todo */
+        .dec2-logos-bar{
+          position:absolute;
+          top:14px;left:16px;
+          display:flex;align-items:center;gap:10px;
+          z-index:10;
+        }
+        .dec2-logo{
+          width:40px;height:40px;border-radius:7px;overflow:hidden;
+          display:flex;align-items:center;justify-content:center;
+          background:transparent;
+        }
+        .dec2-logo img{
+          width:100%;height:100%;object-fit:contain;
+          filter:brightness(0) invert(1);
+        }
+        .dec2-logo.dec2-logo-free img{ filter:none; }
+
+        /* ── Columna izquierda: personaje ── */
+        .dec2-char{
+          grid-column:1;
+          grid-row:1;
+          display:flex;
+          align-items:flex-end;
+          justify-content:center;
+          padding-top:70px;   /* espacio para logos encima */
+          overflow:hidden;
+          position:relative;
+        }
+        .dec2-char img{
+          width:100%;
+          max-width:280px;
+          height:auto;
+          max-height:200px;
+          object-fit:contain;
+          object-position:bottom center;
+          filter:drop-shadow(0 6px 20px rgba(0,0,0,.45));
+          display:block;
+        }
+        .dec2-char-ph{
+          width:110px;height:160px;
+          border:2px dashed rgba(255,255,255,.35);
+          border-radius:12px;
+          display:flex;flex-direction:column;
+          align-items:center;justify-content:center;
+          gap:6px;color:rgba(255,255,255,.5);
+          font-size:11px;text-align:center;padding:8px;
+          font-family:var(--font-sans);line-height:1.3;
+          margin-bottom:12px;
+        }
+
+        /* ── Columna derecha: título centrado ── */
+        .dec2-center{
+          grid-column:1;
+          grid-row:1;
+          display:flex;flex-direction:column;
+          align-items:center;justify-content:center;
+          text-align:center;
+          padding:36px 48px;
+          position:relative;z-index:3;
+        }
+        .dec2-kicker{
+          font-size:11px;font-weight:700;
+          color:rgba(255,255,255,.75);
+          text-transform:uppercase;letter-spacing:.18em;margin-bottom:6px;
+        }
+        .dec2-main-title{
+          font-family:var(--font-serif);
+          font-size:clamp(32px,5vw,58px);
+          font-weight:700;color:#fff;
+          letter-spacing:.06em;line-height:1;margin-bottom:16px;
+          text-shadow:0 3px 24px rgba(0,10,30,.45);
+        }
+        .dec2-subtitle{
+          font-size:clamp(13px,1.4vw,16px);
+          font-weight:600;color:#ffffff !important;
+          line-height:1.6;max-width:400px;
+          margin:0 auto;letter-spacing:.01em;
+          -webkit-font-smoothing:antialiased;
+          background:rgba(0,15,40,.38);
+          padding:8px 20px;border-radius:8px;
+          backdrop-filter:blur(4px);
+        }
+
+        /* ── Grid 5+5 ── */
+        .dec2-grid{
+          display:grid;grid-template-columns:repeat(5,1fr);gap:12px;
+        }
+
+        /* ── Cards ── */
+        .dec2-item{
+          background:#F4F7FB;border:1.5px solid var(--gris-borde);
+          border-radius:14px;padding:20px 16px 16px;cursor:pointer;
+          transition:transform .26s cubic-bezier(.4,0,.2,1),
+                      box-shadow .26s ease,border-color .26s ease,background .26s ease;
+          position:relative;overflow:hidden;text-align:left;
+        }
+        .dec2-item::before{
+          content:"";position:absolute;inset:0;border-radius:14px;
+          background:radial-gradient(circle at 50% 50%, rgba(169,198,232,.55) 0%, transparent 70%);
+          opacity:0;transition:opacity .3s ease;pointer-events:none;
+        }
+        .dec2-item:hover{
+          transform:translateY(-6px);
+          box-shadow:0 12px 40px rgba(0,59,113,.18),0 0 0 2px rgba(122,174,212,.5);
+          border-color:var(--azul-claro);background:#EFF4FB;
+        }
+        .dec2-item:hover::before{ opacity:1 }
+        .dec2-num{
+          font-family:var(--font-serif);font-size:clamp(36px,4vw,48px);
+          font-weight:700;line-height:1;margin-bottom:10px;letter-spacing:.02em;
+          transition:text-shadow .26s ease;
+        }
+        .dec2-item:hover .dec2-num{ text-shadow:0 0 22px rgba(122,174,212,.6) }
+        .dec2-label{
+          font-size:13px;font-weight:500;color:var(--gris-txt);
+          line-height:1.45;transition:color .26s ease;
+        }
+        .dec2-item:hover .dec2-label{ color:var(--azul) }
+        .dec2-item::after{
+          content:"";position:absolute;bottom:0;left:0;right:0;
+          height:3px;border-radius:0 0 14px 14px;
+          transform:scaleX(0);transform-origin:left;
+          transition:transform .36s cubic-bezier(.4,0,.2,1);
+        }
+        .dec2-item:hover::after{ transform:scaleX(1) }
+        .dec2-c0{color:#003B71}.dec2-c0::after{background:#003B71}
+        .dec2-c1{color:#1565C0}.dec2-c1::after{background:#1565C0}
+        .dec2-c2{color:#2d8fce}.dec2-c2::after{background:#2d8fce}
+        .dec2-c3{color:#5BB8D4}.dec2-c3::after{background:#5BB8D4}
+        .dec2-c4{color:#7AAED4}.dec2-c4::after{background:#7AAED4}
+
+        /* ── Modal ── */
+        .dec2-modal-bg{
+          display:none;position:fixed;inset:0;
+          background:rgba(0,30,60,.5);backdrop-filter:blur(5px);
+          z-index:600;align-items:center;justify-content:center;padding:24px;
+        }
+        .dec2-modal-bg.open{display:flex;animation:fadeIn .22s ease}
+        .dec2-modal{
+          background:#fff;border-radius:22px;max-width:580px;width:100%;
+          box-shadow:0 32px 80px rgba(0,59,113,.24);
+          position:relative;overflow:hidden;
+          animation:modalIn .28s cubic-bezier(.4,0,.2,1);
+        }
+        .dec2-modal-head{
+          background:linear-gradient(135deg,#003B71 0%,#1565C0 60%,#2d8fce 100%);
+          padding:26px 32px;display:flex;align-items:center;gap:18px;
+          position:relative;overflow:hidden;
+        }
+        .dec2-modal-head::after{
+          content:"";position:absolute;right:-40px;top:-40px;
+          width:200px;height:200px;border-radius:50%;
+          background:rgba(255,255,255,.08);pointer-events:none;
+        }
+        .dec2-modal-num{
+          font-family:var(--font-serif);font-size:44px;font-weight:700;
+          color:rgba(255,255,255,.25);line-height:1;flex-shrink:0;min-width:56px;
+        }
+        .dec2-modal-title{
+          font-family:var(--font-serif);font-size:18px;font-weight:700;
+          color:#fff;line-height:1.3;z-index:1;
+        }
+        .dec2-modal-body{padding:28px 32px}
+        .dec2-modal-text{font-size:16px;color:var(--gris-txt);font-weight:300;line-height:1.85}
+        .dec2-modal-close{
+          position:absolute;top:14px;right:14px;
+          background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);
+          color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;
+          display:flex;align-items:center;justify-content:center;
+          cursor:pointer;z-index:10;transition:background .2s;
+        }
+        .dec2-modal-close:hover{background:rgba(255,255,255,.35)}
+
+        /* ── Responsive ── */
+        @media(max-width:1100px){
+          .dec2-grid{grid-template-columns:repeat(5,1fr);gap:10px}
+          .dec2-num{font-size:32px}.dec2-label{font-size:12px}
+        }
+        @media(max-width:900px){
+          .dec2-head{grid-template-columns:1fr;min-height:auto}
+          .dec2-char{padding-top:60px;justify-content:center;max-height:140px}
+          .dec2-char img{max-height:120px}
+          .dec2-center{padding:16px 20px 24px;grid-column:1}
+          .dec2-grid{grid-template-columns:repeat(2,1fr)}
+          .dec2-logos-bar{gap:8px}
+        }
+        @media(max-width:500px){
+          .dec2-grid{grid-template-columns:1fr 1fr}
+          .dec2-num{font-size:30px}
+        }
+        </style>
+
+        <div class="dec2-wrap">
+
+          <!-- ── Cabecera ── -->
+          <div class="dec2-head">
+
+            <!-- Logos horizontales: esquina superior-izquierda -->
+            <div class="dec2-logos-bar">
+              <div class="dec2-logo">
+                <img src="img/logo-unam.png" alt="UNAM"
+                     onerror="this.closest('.dec2-logo').style.opacity='.35'">
+              </div>
+              <div class="dec2-logo">
+                <img src="img/decalogo-spamsu-blanco.png" alt="SPAMSU"
+                     onerror="this.closest('.dec2-logo').style.opacity='.35'">
+              </div>
+              <div class="dec2-logo dec2-logo-free">
+                <img src="img/decalogo-logo3.png" alt="Logo institucional"
+                     onerror="this.closest('.dec2-logo').style.opacity='.35'">
+              </div>
+            </div>
+
+            <!-- Personaje eliminado -->
+
+
+            <!-- Título y subtítulo — centrados en columna derecha -->
+            <div class="dec2-center">
+              <div class="dec2-kicker">10 premisas</div>
+              <div class="dec2-main-title">DEC&#193;LOGO</div>
+              <p class="dec2-subtitle">Servicio, Prevenci&#243;n y Comunidad para un Entorno Universitario Seguro</p>
+            </div>
+
+          </div>
+
+                    <!-- ── Grid de premisas ── -->
+          <div class="dec2-grid" id="dec2Grid">
+            <!-- 01 -->
+            <div class="dec2-item" onclick="openDec2(0)">
+              <div class="dec2-num dec2-c0">01</div>
+              <div class="dec2-label">La seguridad universitaria como una política preventiva y de cuidados.</div>
+            </div>
+            <!-- 02 -->
+            <div class="dec2-item" onclick="openDec2(1)">
+              <div class="dec2-num dec2-c1">02</div>
+              <div class="dec2-label">Seguridad efectiva implementada con diagnósticos y respuestas diferenciadas.</div>
+            </div>
+            <!-- 03 -->
+            <div class="dec2-item" onclick="openDec2(2)">
+              <div class="dec2-num dec2-c2">03</div>
+              <div class="dec2-label">Construcción de la prevención en comunidad.</div>
+            </div>
+            <!-- 04 -->
+            <div class="dec2-item" onclick="openDec2(3)">
+              <div class="dec2-num dec2-c3">04</div>
+              <div class="dec2-label">Entornos seguros con perspectiva de género.</div>
+            </div>
+            <!-- 05 -->
+            <div class="dec2-item" onclick="openDec2(4)">
+              <div class="dec2-num dec2-c4">05</div>
+              <div class="dec2-label">Estrategias de autocuidado contemplando la atención a la salud mental.</div>
+            </div>
+            <!-- 06 -->
+            <div class="dec2-item" onclick="openDec2(5)">
+              <div class="dec2-num dec2-c1">06</div>
+              <div class="dec2-label">Seguridad universitaria en la era posdigital.</div>
+            </div>
+            <!-- 07 -->
+            <div class="dec2-item" onclick="openDec2(6)">
+              <div class="dec2-num dec2-c0">07</div>
+              <div class="dec2-label">Paradigma de una lógica reactiva a una lógica de cuidado.</div>
+            </div>
+            <!-- 08 -->
+            <div class="dec2-item" onclick="openDec2(7)">
+              <div class="dec2-num dec2-c2">08</div>
+              <div class="dec2-label">Cohesión social y sentido de pertenencia.</div>
+            </div>
+            <!-- 09 -->
+            <div class="dec2-item" onclick="openDec2(8)">
+              <div class="dec2-num dec2-c3">09</div>
+              <div class="dec2-label">Espacios físicos seguros.</div>
+            </div>
+            <!-- 10 -->
+            <div class="dec2-item" onclick="openDec2(9)">
+              <div class="dec2-num dec2-c4">10</div>
+              <div class="dec2-label">Enfoque anticipatorio, no solo reactivo.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Modal ── -->
+        <div class="dec2-modal-bg" id="dec2Modal" onclick="if(event.target===this)closeDec2()">
+          <div class="dec2-modal">
+            <button class="dec2-modal-close" onclick="closeDec2()">&#x2715;</button>
+            <div class="dec2-modal-head">
+              <div class="dec2-modal-num" id="dec2MNum">01</div>
+              <div class="dec2-modal-title" id="dec2MTitle"></div>
+            </div>
+            <div class="dec2-modal-body">
+              <p class="dec2-modal-text" id="dec2MText"></p>
+            </div>
+          </div>
+        </div>
+
+        <script>
+        var _dec2Data = [
+          {num:"01",
+           title:"La seguridad universitaria como una política preventiva y de cuidados.",
+           text:"La seguridad universitaria debe entenderse como una política preventiva y de cuidados, orientada a crear condiciones para el desarrollo pleno de la vida académica, la convivencia y el bienestar de la comunidad."},
+          {num:"02",
+           title:"Seguridad efectiva implementada con diagnósticos y respuestas diferenciadas.",
+           text:"En una universidad plural y de gran escala, los riesgos no son homogéneos; una seguridad efectiva requiere diagnósticos y respuestas diferenciadas que reconozcan la complejidad territorial y social de cada espacio."},
+          {num:"03",
+           title:"Construcción de la prevención en comunidad.",
+           text:"La prevención se construye desde la proximidad; la comunidad universitaria se involucra y participa de manera proactiva en la detección temprana de violencias y situaciones de riesgo, en los espacios universitarios."},
+          {num:"04",
+           title:"Entornos seguros con perspectiva de género.",
+           text:"Es indispensable incorporar la perspectiva de género para construir un entorno seguro. Nos permite reconocer riesgos diferenciados y necesidades distintas de protección y cuidado, particularmente de mujeres y grupos históricamente invisibilizados."},
+          {num:"05",
+           title:"Estrategias de autocuidado en individual y colectivo contemplando la atención a la salud mental.",
+           text:"La atención de la salud mental de cada estudiante permite generar estrategias de autocuidado y fomentar el bienestar individual y colectivo, atendiendo las causas y previniendo las violencias de manera oportuna."},
+          {num:"06",
+           title:"Seguridad universitaria en la era posdigital.",
+           text:"La seguridad universitaria en la era posdigital requiere comprender los procesos de amplificación, polarización y desinformación que emergen en entornos virtuales, fortaleciendo estrategias de escucha, comunicación responsable y atención oportuna."},
+          {num:"07",
+           title:"Paradigma de una lógica reactiva a una lógica de cuidado.",
+           text:"Conocer cómo se sienten y se viven los espacios a través de cartografías participativas nos permite desarrollar políticas de seguridad universitaria que atiendan emociones y percepciones, al identificar zonas de confianza, trayectos ambivalentes, puntos de tensión y experiencias diferenciadas. Comprender la dimensión emocional del territorio universitario permite pasar de una lógica reactiva a una lógica de cuidado, al reconocer que el miedo, la confianza y el bienestar influyen directamente en la prevención de violencias y conductas de riesgo."},
+          {num:"08",
+           title:"Cohesión social y sentido de pertenencia.",
+           text:"La cohesión social y el sentido de pertenencia a una comunidad reducen riesgos, porque los entornos donde existen comunicación, vínculos y reconocimiento mutuo son menos propensos a las violencias."},
+          {num:"09",
+           title:"Espacios físicos seguros.",
+           text:"El diseño y mantenimiento del espacio físico son herramientas preventivas fundamentales; la iluminación, la visibilidad, la accesibilidad y la apropiación comunitaria inciden directamente en la percepción y reducción del riesgo. Las capacidades operativas y tecnológicas deben responder a patrones reales de uso del espacio y aplicarse con criterios claros de proporcionalidad, legalidad y respeto a derechos."},
+          {num:"10",
+           title:"Enfoque anticipatorio, no solo reactivo.",
+           text:"La gestión de la seguridad va más allá de acciones reactivas; implica anticiparse a los riesgos para fortalecer las condiciones que permitan a la comunidad universitaria ejercer el derecho a la educación en entornos de seguridad y confianza."}
+        ];
+
+        window.openDec2 = function(idx) {
+          if (!_dec2Data || idx < 0 || idx >= _dec2Data.length) return;
+          var d = _dec2Data[idx];
+          if (!d) return;
+          var nEl = document.getElementById('dec2MNum');
+          var tEl = document.getElementById('dec2MTitle');
+          var xEl = document.getElementById('dec2MText');
+          var mEl = document.getElementById('dec2Modal');
+          if (nEl) nEl.textContent = d.num;
+          if (tEl) tEl.textContent = d.title;
+          if (xEl) xEl.textContent = d.text;
+          if (mEl) mEl.classList.add('open');
+        };
+
+        window.closeDec2 = function() {
+          var mEl = document.getElementById('dec2Modal');
+          if (mEl) mEl.classList.remove('open');
+        };
+        </script>
+      </div>
+
     </div>
 
     <!-- ╔══════════════════════════════╗
@@ -1026,6 +1456,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
       </div>
 
       <!-- ── SECCIÓN 2: DGAPSU ── fondo gris muy suave -->
+
       <div class="dir-showcase dir-showcase-gray">
         <h2 class="dir-showcase-title">Dirección General de Análisis, Protección y Seguridad Universitaria</h2>
         <div class="dir-showcase-body">
@@ -1042,6 +1473,49 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
           <div class="dir-showcase-text-col">
             <p class="dir-showcase-desc">La Dirección General de Análisis, Protección y Seguridad Universitaria impulsa las acciones para salvaguardar la integridad de la comunidad universitaria y sus visitantes, manteniendo el ambiente de seguridad, confianza y tranquilidad en el campus universitario, contribuyendo al desempeño de las actividades sustantivas de la docencia, investigación y difusión de la cultura, esto desarrollado con personal eficiente y con constante innovación tecnológica.</p>
             <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" class="dir-showcase-cta">
+              Visitar el sitio <span class="dir-cta-arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECCIÓN 3: Áreas de la dependencia ── -->
+      <div class="dir-showcase dir-showcase-light" style="padding:44px 52px">
+        <h2 class="dir-showcase-title">Áreas que Integran la Dependencia</h2>
+        <style>
+        .coord-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:28px}
+        .coord-card{background:#F4F7FB;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px;transition:all var(--t)}
+        .coord-card:hover{border-color:var(--azul-claro);background:rgba(169,198,232,.12);transform:translateY(-2px)}
+        .coord-dot{width:10px;height:10px;border-radius:50%;background:var(--azul-claro);flex-shrink:0;margin-top:5px}
+        .coord-name{font-size:15px;font-weight:600;color:var(--azul);line-height:1.35}
+        </style>
+        <div class="coord-grid">
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></div>
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></div>
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></div>
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Planeación Institucional</div></div>
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Proyectos y Programas de Prevención y Seguridad</div></div>
+          <div class="coord-card"><div class="coord-dot" style="background:var(--azul)"></div><div class="coord-name">Comisiones Locales de Seguridad</div></div>
+        </div>
+      </div>
+
+      <!-- ── SECCIÓN 4: CRACE ── independiente -->
+      <div class="dir-showcase dir-showcase-gray">
+        <h2 class="dir-showcase-title">CRACE UNAM</h2>
+        <div class="dir-showcase-body">
+          <div class="dir-showcase-img-col">
+            <div class="dir-showcase-logo-wrap">
+              <img src="img/crace-logo.png" alt="CRACE UNAM" class="dir-showcase-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="dir-showcase-logo-ph" style="display:none">
+                <span class="sph-icon">🚗</span>
+                <span class="sph-name">crace-logo.png</span>
+                <span class="sph-badge">Logo</span>
+              </div>
+            </div>
+          </div>
+          <div class="dir-showcase-text-col">
+            <p class="dir-showcase-desc">Centro de Regulación de Acceso y Control de Estacionamiento. Gestión de accesos vehiculares y registro de vehículos en el campus universitario de la UNAM.</p>
+            <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-showcase-cta">
               Visitar el sitio <span class="dir-cta-arrow">→</span>
             </a>
           </div>
@@ -1078,13 +1552,13 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
             <span class="srv-cta">Conocer más →</span>
           </div>
         </a>
-        <!-- 3. EPUS -->
+        <!-- 3. Comisiones Locales de Seguridad -->
         <div class="srv-card">
-          <div class="srv-img"><div data-img="srv-epus" data-alt="EPUS CRACE"></div></div>
+          <div class="srv-img"><div data-img="srv-comisiones" data-alt="Comisiones Locales de Seguridad"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div>
-            <div class="srv-title">EPUS / CRACE</div>
-            <p class="srv-desc">Regulación de acceso y control de estacionamiento en el campus universitario de la UNAM.</p>
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="srv-title">Comisiones Locales de Seguridad</div>
+            <p class="srv-desc">Instancias colegiadas de participación para la prevención, atención y seguimiento de situaciones de riesgo en las entidades universitarias.</p>
           </div>
         </div>
         <!-- 4. Préstamo de candados -->
@@ -1146,16 +1620,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
             <span class="srv-cta">Ver más →</span>
           </div>
         </a>
-        <!-- 10. Igualdad de Género -->
-        <a href="https://coordinaciongenero.unam.mx/" target="_blank" rel="noopener" class="srv-card">
-          <div class="srv-img"><div data-img="srv-genero" data-alt="Igualdad de Género"></div></div>
-          <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M14 10h6m-3-3v6"/><path d="M2 20c0-3.31 3.13-6 7-6s7 2.69 7 6"/></svg></div>
-            <div class="srv-title">Igualdad de Género</div>
-            <p class="srv-desc">Programas y protocolos para la prevención de violencia de género. Incluye acceso a CINIG SPAMSU.</p>
-            <span class="srv-cta">Ver más →</span>
-          </div>
-        </a>
+        <!-- Igualdad de Género eliminado según solicitud -->
       </div>
 
       <!-- Senderos Universitarios -->
@@ -1204,25 +1669,71 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
     <div class="tab-panel" id="panel-directorio">
       <div class="sec-tag">Personal institucional</div>
       <h2 class="sec-title">Directorio Institucional</h2>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
-        <div style="background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);padding:24px">
-          <div style="font-size:12px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.10em;margin-bottom:9px">Titular</div>
-          <div style="font-family:var(--font-serif);font-size:17px;font-weight:700;color:var(--azul);margin-bottom:5px">[Nombre del/la Secretario/a]</div>
-          <div style="font-size:14px;color:var(--gris-sub);font-weight:300;margin-bottom:14px">Secretaría de Prevención y Apoyo a la Movilidad y Seguridad Universitaria</div>
-          <a href="mailto:spamsu@unam.mx" style="display:flex;align-items:center;gap:7px;font-size:14px;color:var(--azul);font-weight:500;margin-bottom:7px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>spamsu@unam.mx</a>
-          <a href="tel:5556221994" style="display:flex;align-items:center;gap:7px;font-size:14px;color:var(--azul);font-weight:500"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>55 5622-1994</a>
+      <!-- Estilo tipo UNAM Directorio -->
+      <style>
+      .dir-unam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-bottom:28px}
+      .dir-unam-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);padding:24px 22px;transition:all var(--t);position:relative;overflow:hidden}
+      .dir-unam-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3.5px;background:var(--azul-claro);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
+      .dir-unam-card:hover{box-shadow:var(--sh);border-color:var(--azul-claro);transform:translateY(-2px)}
+      .dir-unam-card:hover::before{transform:scaleX(1)}
+      .dir-unam-badge{display:inline-block;font-size:11px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.10em;margin-bottom:10px;background:var(--azul-pale);padding:3px 10px;border-radius:20px}
+      .dir-unam-name{font-family:var(--font-serif);font-size:17px;font-weight:700;color:var(--azul);margin-bottom:4px;line-height:1.25}
+      .dir-unam-role{font-size:13.5px;color:var(--gris-sub);font-weight:300;line-height:1.5;margin-bottom:14px}
+      .dir-unam-links{display:flex;flex-direction:column;gap:7px}
+      .dir-unam-link{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--azul);font-weight:500;text-decoration:none;transition:color var(--t)}
+      .dir-unam-link:hover{color:var(--azul-med)}
+      .dir-unam-link svg{flex-shrink:0;stroke:var(--azul-claro)}
+      .dir-info-section{background:var(--fondo);border-radius:var(--r);padding:20px 24px;border:1px solid var(--gris-borde);margin-top:8px}
+      .dir-info-title{font-size:13px;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+      .dir-info-row{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--gris-txt);margin-bottom:9px}
+      .dir-info-row svg{flex-shrink:0;stroke:var(--azul-claro);margin-top:1px}
+      </style>
+
+      <!-- Bloque Información General -->
+      <div class="dir-info-section" style="margin-bottom:28px">
+        <div class="dir-info-title">Información General</div>
+        <div class="dir-info-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span><a href="mailto:spamsu@unam.mx" style="color:var(--azul)">spamsu@unam.mx</a></span></div>
+        <div class="dir-info-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg><span><a href="tel:5556221994" style="color:var(--azul)">55 5622-1994</a></span></div>
+        <div class="dir-info-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg><span>Torre de Rectoría, Ciudad Universitaria, Coyoacán, C.P. 04510</span></div>
+      </div>
+
+      <div class="dir-unam-grid">
+        <!-- Titular SPAMSU -->
+        <div class="dir-unam-card">
+          <span class="dir-unam-badge">Titular</span>
+          <div class="dir-unam-name">[Nombre del/la Secretario/a]</div>
+          <div class="dir-unam-role">Secretaría de Prevención y Apoyo a la Movilidad y Seguridad Universitaria</div>
+          <div class="dir-unam-links">
+            <a href="mailto:spamsu@unam.mx" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>spamsu@unam.mx</a>
+            <a href="tel:5556221994" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>55 5622-1994</a>
+          </div>
         </div>
-        <div style="background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);padding:24px">
-          <div style="font-size:12px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.10em;margin-bottom:9px">Dirección General</div>
-          <div style="font-family:var(--font-serif);font-size:17px;font-weight:700;color:var(--azul);margin-bottom:5px">[Nombre del/la Director/a]</div>
-          <div style="font-size:14px;color:var(--gris-sub);font-weight:300;margin-bottom:14px">Dirección General de Análisis, Protección y Seguridad Universitaria</div>
-          <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;font-size:14px;color:var(--azul);font-weight:500">Visitar sitio →</a>
+        <!-- Camila Fosado Balderas -->
+        <div class="dir-unam-card">
+          <span class="dir-unam-badge">Información General</span>
+          <div class="dir-unam-name">Lic. Camila Fosado Balderas</div>
+          <div class="dir-unam-role">Información General · SPAMSU</div>
+          <div class="dir-unam-links">
+            <a href="mailto:spamsu@unam.mx" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>spamsu@unam.mx</a>
+          </div>
         </div>
-        <div style="background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);padding:24px">
-          <div style="font-size:12px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.10em;margin-bottom:9px">Dirección General</div>
-          <div style="font-family:var(--font-serif);font-size:17px;font-weight:700;color:var(--azul);margin-bottom:5px">[Nombre del/la Director/a]</div>
-          <div style="font-size:14px;color:var(--gris-sub);font-weight:300;margin-bottom:14px">Dirección General de Servicios Generales y Movilidad</div>
-          <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;font-size:14px;color:var(--azul);font-weight:500">Visitar sitio →</a>
+        <!-- DGAPSU -->
+        <div class="dir-unam-card">
+          <span class="dir-unam-badge">Dirección General</span>
+          <div class="dir-unam-name">[Nombre del/la Director/a]</div>
+          <div class="dir-unam-role">Dirección General de Análisis, Protección y Seguridad Universitaria</div>
+          <div class="dir-unam-links">
+            <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Visitar sitio</a>
+          </div>
+        </div>
+        <!-- DGSGM -->
+        <div class="dir-unam-card">
+          <span class="dir-unam-badge">Dirección General</span>
+          <div class="dir-unam-name">[Nombre del/la Director/a]</div>
+          <div class="dir-unam-role">Dirección General de Servicios Generales y Movilidad</div>
+          <div class="dir-unam-links">
+            <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Visitar sitio</a>
+          </div>
         </div>
       </div>
     </div>
@@ -1230,62 +1741,236 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   </div><!-- /tab-panels-wrap -->
 
 
+
+  <!-- ══════════════ NOTICIAS GACETA UNAM ══════════════ -->
+  <section class="noticias-section" id="noticias">
+    <style>
+    /* ── Noticias section wrapper ── */
+    .noticias-section{background:var(--fondo);padding:52px 44px;border-top:2px solid var(--gris-borde)}
+    .noticias-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:14px}
+    .noticias-source-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--azul);color:#fff;
+      font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+      padding:5px 14px;border-radius:20px;
+    }
+    .noticias-ver-mas{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--azul-med);text-decoration:none;transition:gap var(--t)}
+    .noticias-ver-mas:hover{gap:10px;color:var(--azul)}
+
+    /* ── Magazine collage grid ── */
+    .nws-grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      grid-template-rows:auto;
+      gap:14px;
+    }
+    /* Hero card: spans 7 columns */
+    .nws-card-hero{grid-column:span 7;grid-row:span 2}
+    /* Top-right tall card: 5 cols, 2 rows */
+    .nws-card-tall{grid-column:span 5;grid-row:span 2}
+    /* Bottom row: 3 small cards of 4 cols each */
+    .nws-card-sm{grid-column:span 4}
+
+    /* ── Card base ── */
+    .nws-card{
+      display:flex;flex-direction:column;
+      background:var(--blanco);border-radius:14px;overflow:hidden;
+      border:1px solid var(--gris-borde);
+      text-decoration:none;
+      transition:transform .26s ease,box-shadow .26s ease,border-color .26s ease;
+      position:relative;
+    }
+    .nws-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,59,113,.13);border-color:var(--azul-claro)}
+    /* Image area */
+    .nws-img{position:relative;overflow:hidden;background:var(--azul-pale);flex-shrink:0}
+    .nws-card-hero .nws-img{height:260px}
+    .nws-card-tall .nws-img{height:200px}
+    .nws-card-sm   .nws-img{height:140px}
+    .nws-img [data-og-url]{position:absolute;inset:0;width:100%;height:100%}
+    .nws-img [data-og-url] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+    .nws-card:hover .nws-img [data-og-url] img{transform:scale(1.05)}
+    /* Gradient overlay on image */
+    .nws-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,30,60,.22) 0%,transparent 50%);pointer-events:none;z-index:1}
+    /* Text body */
+    .nws-body{padding:18px 18px 14px;display:flex;flex-direction:column;flex:1}
+    .nws-source{font-size:11px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+    .nws-source::before{content:"";width:14px;height:2px;background:var(--azul-claro);border-radius:1px;flex-shrink:0}
+    .nws-title{font-family:var(--font-serif);font-weight:700;color:var(--azul);line-height:1.32;flex:1}
+    .nws-card-hero .nws-title{font-size:20px;-webkit-line-clamp:4;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+    .nws-card-tall .nws-title{font-size:16px;-webkit-line-clamp:4;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+    .nws-card-sm   .nws-title{font-size:14px;-webkit-line-clamp:3;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+    .nws-desc{font-size:14px;color:var(--gris-txt);font-weight:300;line-height:1.55;margin:6px 0 0;-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+    .nws-card-sm .nws-desc{display:none}
+    .nws-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:10px}
+    .nws-date{font-size:12px;color:var(--gris-sub)}
+    .nws-link{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:var(--azul-claro);transition:gap var(--t)}
+    .nws-card:hover .nws-link{gap:7px}
+
+    /* ── Responsive ── */
+    @media(max-width:1100px){
+      .nws-grid{grid-template-columns:repeat(6,1fr)}
+      .nws-card-hero{grid-column:span 6;grid-row:span 1}
+      .nws-card-tall{grid-column:span 3}
+      .nws-card-sm  {grid-column:span 3}
+    }
+    @media(max-width:700px){
+      .noticias-section{padding:36px 20px}
+      .nws-grid{grid-template-columns:1fr}
+      .nws-card-hero,.nws-card-tall,.nws-card-sm{grid-column:span 1;grid-row:span 1}
+      .nws-card-sm .nws-desc{display:-webkit-box}
+    }
+    </style>
+
+    <div class="noticias-head">
+      <div>
+        <div class="sec-tag">Actualidad universitaria</div>
+        <h2 class="sec-title" style="margin-bottom:0">Noticias</h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <span class="noticias-source-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
+          Gaceta UNAM
+        </span>
+        <a href="https://www.gaceta.unam.mx/" target="_blank" rel="noopener" class="noticias-ver-mas">Ver todas<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Magazine collage grid -->
+    <div class="nws-grid">
+        <a href="https://www.gaceta.unam.mx/el-rector-de-la-unam-anuncia-nombramientos-en-seguridad-universitaria/" target="_blank" rel="noopener" class="nws-card nws-card-hero">
+          <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/el-rector-de-la-unam-anuncia-nombramientos-en-seguridad-universitaria/"><div class="og-loader"></div></div></div>
+          <div class="nws-body">
+            <span class="nws-source">Gaceta UNAM</span>
+            <h3 class="nws-title">El rector de la UNAM anuncia nombramientos en seguridad universitaria</h3>
+            <p class="nws-desc">Manuel Palma Rangel, nuevo titular de la Secretaría de Prevención y Apoyo a la Movilidad y Seguridad Universitaria.</p>
+            <div class="nws-foot"><span class="nws-date">18 nov. 2025</span><span class="nws-link">Leer&nbsp;<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span></div>
+          </div>
+        </a>
+        <a href="https://www.gaceta.unam.mx/impulso-a-un-nuevo-paradigma-de-politica-de-cuidado-y-seguridad/" target="_blank" rel="noopener" class="nws-card nws-card-tall">
+          <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/impulso-a-un-nuevo-paradigma-de-politica-de-cuidado-y-seguridad/"><div class="og-loader"></div></div></div>
+          <div class="nws-body">
+            <span class="nws-source">Gaceta UNAM</span>
+            <h3 class="nws-title">Impulso a un nuevo paradigma de política de cuidado y seguridad</h3>
+            <p class="nws-desc">La UNAM avanza en construir una política universitaria de prevención y cuidado.</p>
+            <div class="nws-foot"><span class="nws-date">Gaceta UNAM</span><span class="nws-link">Leer&nbsp;<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span></div>
+          </div>
+        </a>
+        <a href="https://www.gaceta.unam.mx/analizan-retos-y-estrategias-de-seguridad-en-la-universidad/" target="_blank" rel="noopener" class="nws-card nws-card-sm">
+          <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/analizan-retos-y-estrategias-de-seguridad-en-la-universidad/"><div class="og-loader"></div></div></div>
+          <div class="nws-body">
+            <span class="nws-source">Gaceta UNAM</span>
+            <h3 class="nws-title">Analizan retos y estrategias de seguridad en la Universidad</h3>
+            <p class="nws-desc">Se construye una nueva política de cuidado y prevención basada en escuchar a los jóvenes.</p>
+            <div class="nws-foot"><span class="nws-date">6 abr. 2026</span><span class="nws-link">Leer&nbsp;<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span></div>
+          </div>
+        </a>
+        <a href="https://www.gaceta.unam.mx/seguridad-condicion-indispensable-para-una-educacion-plena/" target="_blank" rel="noopener" class="nws-card nws-card-sm">
+          <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/seguridad-condicion-indispensable-para-una-educacion-plena/"><div class="og-loader"></div></div></div>
+          <div class="nws-body">
+            <span class="nws-source">Gaceta UNAM</span>
+            <h3 class="nws-title">Seguridad, condición indispensable para una educación plena</h3>
+            <p class="nws-desc">Foro Intercambio de Saberes entre la UNAM, el IPN y el Colegio de Bachilleres.</p>
+            <div class="nws-foot"><span class="nws-date">27 nov. 2025</span><span class="nws-link">Leer&nbsp;<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span></div>
+          </div>
+        </a>
+        <a href="https://www.gaceta.unam.mx/jornadas-de-prevencion-universitaria-tercera-edicion-segundo-bloque/" target="_blank" rel="noopener" class="nws-card nws-card-sm">
+          <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/jornadas-de-prevencion-universitaria-tercera-edicion-segundo-bloque/"><div class="og-loader"></div></div></div>
+          <div class="nws-body">
+            <span class="nws-source">Gaceta UNAM</span>
+            <h3 class="nws-title">Jornadas de Prevención Universitaria, Tercera Edición (Segundo bloque)</h3>
+            <p class="nws-desc">La UNAM refuerza su compromiso con la seguridad universitaria.</p>
+            <div class="nws-foot"><span class="nws-date">16 abr. 2026</span><span class="nws-link">Leer&nbsp;<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span></div>
+          </div>
+        </a>
+    </div>
+  </section>
+
   <!-- NOVEDADES Y RECURSOS -->
   <section class="nov-section" id="novedades">
     <div class="sec-tag">Información y recursos</div>
     <h2 class="sec-title">Novedades y Recursos</h2>
     <div class="nov-tab-bar">
-      <button class="ntab active" onclick="switchNovTab('noticias')"   id="ntb-noticias">📰 Noticias</button>
-      <button class="ntab"        onclick="switchNovTab('videos')"     id="ntb-videos">🎬 Videos</button>
-      <button class="ntab"        onclick="switchNovTab('gaceta')"     id="ntb-gaceta">📰 Gaceta UNAM</button>
-      <button class="ntab"        onclick="switchNovTab('cursos')"     id="ntb-cursos">📚 Cursos</button>
-      <button class="ntab"        onclick="switchNovTab('capac')"      id="ntb-capac">🎓 Capacitaciones</button>
-      <button class="ntab"        onclick="switchNovTab('material')"   id="ntb-material">📥 Material descargable</button>
-      <button class="ntab"        onclick="switchNovTab('protocolos')" id="ntb-protocolos">📋 Protocolos</button>
-    </div>
-
-    <!-- NOTICIAS -->
-    <div class="ntab-panel active" id="np-noticias">
-      <div class="nov-grid">
-        <a href="https://www.gaceta.unam.mx/el-rector-de-la-unam-anuncia-nombramientos-en-seguridad-universitaria/" target="_blank" rel="noopener" class="nov-card">
-          <div class="nov-img-wrap"><div data-og-url="https://www.gaceta.unam.mx/el-rector-de-la-unam-anuncia-nombramientos-en-seguridad-universitaria/"><div class="og-loader"></div></div></div>
-          <div class="nov-body"><div class="nov-source">Gaceta UNAM</div><div class="nov-title">El rector de la UNAM anuncia nombramientos en seguridad universitaria</div><div class="nov-desc">Manuel Palma Rangel, nuevo titular de la Secretaría de Prevención y Apoyo a la Movilidad y Seguridad Universitaria.</div><div class="nov-meta"><span class="nov-date">18 nov. 2025</span><span class="nov-link">Leer <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div></div>
-        </a>
-        <a href="https://www.gaceta.unam.mx/impulso-a-un-nuevo-paradigma-de-politica-de-cuidado-y-seguridad/" target="_blank" rel="noopener" class="nov-card">
-          <div class="nov-img-wrap"><div data-og-url="https://www.gaceta.unam.mx/impulso-a-un-nuevo-paradigma-de-politica-de-cuidado-y-seguridad/"><div class="og-loader"></div></div></div>
-          <div class="nov-body"><div class="nov-source">Gaceta UNAM</div><div class="nov-title">Impulso a un nuevo paradigma de política de cuidado y seguridad</div><div class="nov-meta"><span class="nov-date">Gaceta UNAM</span><span class="nov-link">Leer <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div></div>
-        </a>
-        <a href="https://www.gaceta.unam.mx/analizan-retos-y-estrategias-de-seguridad-en-la-universidad/" target="_blank" rel="noopener" class="nov-card">
-          <div class="nov-img-wrap"><div data-og-url="https://www.gaceta.unam.mx/analizan-retos-y-estrategias-de-seguridad-en-la-universidad/"><div class="og-loader"></div></div></div>
-          <div class="nov-body"><div class="nov-source">Gaceta UNAM</div><div class="nov-title">Analizan retos y estrategias de seguridad en la Universidad</div><div class="nov-desc">Se construye una nueva política de cuidado y prevención basada en escuchar a los jóvenes.</div><div class="nov-meta"><span class="nov-date">6 abr. 2026</span><span class="nov-link">Leer <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div></div>
-        </a>
-        <a href="https://www.gaceta.unam.mx/seguridad-condicion-indispensable-para-una-educacion-plena/" target="_blank" rel="noopener" class="nov-card">
-          <div class="nov-img-wrap"><div data-og-url="https://www.gaceta.unam.mx/seguridad-condicion-indispensable-para-una-educacion-plena/"><div class="og-loader"></div></div></div>
-          <div class="nov-body"><div class="nov-source">Gaceta UNAM</div><div class="nov-title">Seguridad, condición indispensable para una educación plena</div><div class="nov-desc">Foro Intercambio de Saberes entre la UNAM, el IPN y el Colegio de Bachilleres.</div><div class="nov-meta"><span class="nov-date">27 nov. 2025</span><span class="nov-link">Leer <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div></div>
-        </a>
-        <a href="https://www.gaceta.unam.mx/jornadas-de-prevencion-universitaria-tercera-edicion-segundo-bloque/" target="_blank" rel="noopener" class="nov-card">
-          <div class="nov-img-wrap"><div data-og-url="https://www.gaceta.unam.mx/jornadas-de-prevencion-universitaria-tercera-edicion-segundo-bloque/"><div class="og-loader"></div></div></div>
-          <div class="nov-body"><div class="nov-source">Gaceta UNAM</div><div class="nov-title">Jornadas de Prevención Universitaria, Tercera Edición (Segundo bloque)</div><div class="nov-meta"><span class="nov-date">16 abr. 2026</span><span class="nov-link">Leer <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div></div>
-        </a>
-        <a href="https://www.gaceta.unam.mx/recibe-la-unam-en-donacion-dos-caninos-para-deteccion-y-prevencion-de-riesgos/" target="_blank" rel="noopener" class="nov-card">
-          <div class="nov-img-wrap"><div data-og-url="https://www.gaceta.unam.mx/recibe-la-unam-en-donacion-dos-caninos-para-deteccion-y-prevencion-de-riesgos/"><div class="og-loader"></div></div></div>
-          <div class="nov-body"><div class="nov-source">Gaceta UNAM</div><div class="nov-title">Donan a la UNAM dos perros para detección y prevención de riesgos</div><div class="nov-desc">La Universidad Nacional avanza en garantizar la seguridad de la comunidad.</div><div class="nov-meta"><span class="nov-date">9 mar. 2026</span><span class="nov-link">Leer <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div></div>
-        </a>
-      </div>
+      <button class="ntab active" onclick="switchNovTab('videos')"     id="ntb-videos">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        Videos
+      </button>
+      <button class="ntab"        onclick="switchNovTab('proyectos')"  id="ntb-proyectos">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        Nuestros Proyectos
+      </button>
+      <button class="ntab"        onclick="switchNovTab('cursos')"     id="ntb-cursos">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Cursos y Capacitaciones
+      </button>
+      <button class="ntab"        onclick="switchNovTab('protocolos')" id="ntb-protocolos">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Protocolos
+      </button>
+      <button class="ntab"        onclick="switchNovTab('material')"   id="ntb-material">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Material
+      </button>
     </div>
 
     <!-- VIDEOS -->
-    <div class="ntab-panel" id="np-videos">
-      <div class="vid-grid">
-        <div class="vid-card">
-          <div class="vid-embed"><iframe src="https://www.youtube.com/embed/dUX6ja2OX1Q?start=21" title="Mensaje del Rector UNAM" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-          <div class="vid-info"><div class="vid-title">Mensaje del Rector sobre seguridad universitaria</div></div>
+    <div class="ntab-panel active" id="np-videos">
+      <!-- Sub-pestanas de Videos -->
+      <div class="info-tabs" style="margin-bottom:24px">
+        <button class="itab active" onclick="switchVidTab('comunidad')"  id="vt-comunidad">Nuestra comunidad</button>
+        <button class="itab"        onclick="switchVidTab('estadio')"    id="vt-estadio">Nuestro estadio</button>
+        <button class="itab"        onclick="switchVidTab('proyectos')"  id="vt-proyectos">Nuestros proyectos</button>
+        <button class="itab"        onclick="switchVidTab('protoc')"     id="vt-protoc">Nuestros protocolos</button>
+      </div>
+      <div class="itab-pane active" id="vp-comunidad">
+        <div class="vid-grid">
+          <div class="vid-card" style="overflow:hidden">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYdsHT2Nq2K/?igsh=eGR4bW90aXhkamt5" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:var(--r);box-shadow:none;margin:0;max-width:100%;min-width:unset;padding:0;width:100%"></blockquote>
+          </div>
+          <!-- [VIDEO-COMUNIDAD] Agregar videos de comunidad aqui -->
         </div>
-        <!-- [VIDEO-2] Agregar más videos aquí -->
-        <div class="vid-card" style="overflow:hidden">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYdsHT2Nq2K/?igsh=eGR4bW90aXhkamt5" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:var(--r);box-shadow:none;margin:0;max-width:100%;min-width:unset;padding:0;width:100%"></blockquote>
+      </div>
+      <div class="itab-pane" id="vp-estadio">
+        <div class="vid-grid">
+          <!-- [VIDEO-ESTADIO] Agregar videos del estadio aqui -->
+          <div class="vid-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;background:var(--azul-pale)">
+            <div style="text-align:center;color:var(--gris-sub);font-size:15px">Videos del estadio<br><span style="font-size:13px;opacity:.6">[Agregar videos]</span></div>
+          </div>
         </div>
+      </div>
+      <div class="itab-pane" id="vp-proyectos">
+        <div class="vid-grid">
+          <!-- [VIDEO-PROYECTOS] Agregar videos de proyectos aqui -->
+          <div class="vid-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;background:var(--azul-pale)">
+            <div style="text-align:center;color:var(--gris-sub);font-size:15px">Videos de proyectos<br><span style="font-size:13px;opacity:.6">[Agregar videos]</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="itab-pane" id="vp-protoc">
+        <div class="vid-grid">
+          <!-- [VIDEO-PROTOCOLOS] Agregar videos de protocolos aqui -->
+          <div class="vid-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;background:var(--azul-pale)">
+            <div style="text-align:center;color:var(--gris-sub);font-size:15px">Videos de protocolos<br><span style="font-size:13px;opacity:.6">[Agregar videos]</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- NUESTROS PROYECTOS -->
+    <div class="ntab-panel" id="np-proyectos">
+      <div class="sec-tag">Iniciativas institucionales</div>
+      <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--azul);margin-bottom:24px">Nuestros Proyectos</h3>
+      <div class="srv-grid">
+        <!-- PMS -->
+        <div class="srv-card">
+          <div class="srv-img"><div data-img="proyecto-pms" data-alt="PMS"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+            <div class="srv-title">PMS</div>
+            <p class="srv-desc">Programa de Mejora a la Seguridad. Iniciativa institucional para el fortalecimiento de las capacidades de seguridad en el campus universitario.</p>
+            <span class="srv-cta">Conocer mas &rarr;</span>
+          </div>
+        </div>
+        <!-- [PROYECTO-+] Agregar mas proyectos aqui -->
       </div>
     </div>
 
@@ -1302,9 +1987,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 
     <!-- CURSOS -->
     <div class="ntab-panel" id="np-cursos">
-      <div class="vid-grid" style="margin-bottom:28px">
-        <div class="vid-card"><div class="vid-embed"><iframe src="https://www.youtube.com/embed/dUX6ja2OX1Q?start=21" title="Curso de seguridad" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div><div class="vid-info"><div class="vid-title">Introducción a la Seguridad Universitaria</div></div></div>
-      </div>
       <div class="curso-grid">
         <div class="curso-card"><div class="curso-img"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div class="curso-body"><div class="curso-badge">Curso en línea</div><div class="curso-title">Prevención y Autoprotección</div><p class="curso-desc">Fundamentos de prevención de riesgos y autoprotección para la comunidad universitaria.</p><span class="curso-link">Próximamente →</span></div></div>
         <div class="curso-card"><div class="curso-img"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="curso-body"><div class="curso-badge">Taller presencial</div><div class="curso-title">Protección Civil Básica</div><p class="curso-desc">Protocolos de evacuación, primeros auxilios y respuesta ante emergencias.</p><span class="curso-link">Próximamente →</span></div></div>
@@ -1324,17 +2006,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
     <!-- MATERIAL DESCARGABLE -->
     <div class="ntab-panel" id="np-material">
       <div class="dl-list">
-        <a href="https://liveatteduunam-my.sharepoint.com/personal/comunicacion_cigu_unam_mx/_layouts/15/onedrive.aspx?ga=1&id=%2Fpersonal%2Fcomunicacion%5Fcigu%5Funam%5Fmx%2FDocuments%2FRuta%20de%20Atenci%C3%B3n%202024%2FCartel%2DRutaatencion%2D2024%2Epdf" target="_blank" rel="noopener" class="dl-item">
-          <div class="dl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div><div class="dl-name">Ruta de Atención 2024</div><div class="dl-desc">Cartel oficial de la ruta de atención para la comunidad universitaria</div></div>
-          <span class="dl-btn">Descargar <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
-        </a>
-        <a href="https://normatividadseguridad.unam.mx/" target="_blank" rel="noopener" class="dl-item">
-          <div class="dl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div>
-          <div><div class="dl-name">Portal de Normatividad en Seguridad</div><div class="dl-desc">Marco jurídico completo en materia de seguridad universitaria UNAM</div></div>
-          <span class="dl-btn">Ver portal <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
-        </a>
-        <!-- [MATERIAL-+] Agregar más materiales aquí -->
+        <!-- [MATERIAL-+] Agregar materiales aqui -->
         <a href="https://www.dgsgm.unam.mx/docs/Bases%20de%20participaci%C3%B3n%20del%20Bici%20Rally%20BiciFest%202026_%20VF.pdf" target="_blank" rel="noopener" class="dl-item">
           <div class="dl-icon" style="background:#1565C0"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg></div>
           <div><div class="dl-name">Bases de participación del Bici Rally BiciFest 2026</div><div class="dl-desc">Bases oficiales de participación para el Bici Rally BiciFest 2026 — DGSGM UNAM</div></div>
@@ -1345,23 +2017,30 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 
     <!-- PROTOCOLOS -->
     <div class="ntab-panel" id="np-protocolos">
+      <div style="background:var(--azul-pale);border:1px solid var(--gris-borde);border-radius:var(--r);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--azul)">Consulta todos los protocolos generales en el portal oficial</div>
+          <a href="https://normatividadseguridad.unam.mx/protoc%20grales.html" target="_blank" rel="noopener" style="font-size:13px;color:var(--azul-med);font-weight:500">normatividadseguridad.unam.mx &rarr;</a>
+        </div>
+      </div>
       <div class="dl-list">
-        <div class="dl-item">
-          <div class="dl-icon" style="background:#E65100"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <div><div class="dl-name">Protocolo de Evacuación</div><div class="dl-desc">Procedimientos de evacuación en caso de sismo, incendio u otras emergencias en campus</div></div>
-          <span class="dl-btn" style="background:var(--fondo);color:var(--gris-sub);cursor:default">Próximamente</span>
-        </div>
-        <div class="dl-item">
-          <div class="dl-icon" style="background:#6B21A8"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-          <div><div class="dl-name">Protocolo de Atención de Violencia de Género</div><div class="dl-desc">Procedimientos para la atención y canalización en casos de violencia de género en la UNAM</div></div>
-          <a href="https://coordinaciongenero.unam.mx/" target="_blank" rel="noopener" class="dl-btn">Ver protocolo <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-        </div>
-        <div class="dl-item">
+        <a href="https://normatividadseguridad.unam.mx/protoc%20grales.html" target="_blank" rel="noopener" class="dl-item">
+          <div class="dl-icon" style="background:#003B71"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+          <div><div class="dl-name">Protocolo de Evacuacion</div><div class="dl-desc">Procedimientos de evacuacion ante sismo, incendio u otras emergencias en campus</div></div>
+          <span class="dl-btn">Ver <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+        </a>
+        <a href="https://normatividadseguridad.unam.mx/protoc%20grales.html" target="_blank" rel="noopener" class="dl-item">
           <div class="dl-icon" style="background:#C62828"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7 7 7 0 01-7-7c0-1.99.806-2.967 2.5-4.5z"/></svg></div>
-          <div><div class="dl-name">Protocolo de Atención a Incendios</div><div class="dl-desc">Guía de actuación y rutas de evacuación ante incendios en instalaciones universitarias</div></div>
-          <span class="dl-btn" style="background:var(--fondo);color:var(--gris-sub);cursor:default">Próximamente</span>
-        </div>
-        <!-- [PROTOCOLO-+] Agregar más protocolos aquí -->
+          <div><div class="dl-name">Protocolo de Atencion a Incendios</div><div class="dl-desc">Guia de actuacion y rutas de evacuacion ante incendios en instalaciones universitarias</div></div>
+          <span class="dl-btn">Ver <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+        </a>
+        <a href="https://normatividadseguridad.unam.mx/protoc%20grales.html" target="_blank" rel="noopener" class="dl-item">
+          <div class="dl-icon" style="background:#6B21A8"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <div><div class="dl-name">Protocolo de Atencion de Violencia de Genero</div><div class="dl-desc">Procedimientos para atencion y canalizacion en casos de violencia de genero en la UNAM</div></div>
+          <span class="dl-btn">Ver <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+        </a>
+        <!-- [PROTOCOLO-+] Agregar mas protocolos aqui -->
       </div>
     </div>
   </section>
@@ -1547,21 +2226,100 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   </section>
 
 
-  <!-- MAPA FINAL -->
-  <div class="mapa-final" id="mapa-ubicacion">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3764.155!2d-99.19050!3d19.32300!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce000070e7b4d9%3A0xf20e7da6619c4774!2sRector%C3%ADa%20de%20la%20UNAM!5e0!3m2!1ses-419!2smx!4v1715555555555!5m2!1ses-419!2smx" title="Ubicación SPAMSU — Ciudad Universitaria UNAM" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    <div class="mapa-info-card">
-      <div class="mic-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Nuestra ubicación</div>
-      <div class="mic-name">SPAMSU · UNAM</div>
-      <div class="mic-addr">Torre de Rectoría<br>Ciudad Universitaria<br>Coyoacán, C.P. 04510</div>
-      <div class="mic-phone"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:5556221994" style="color:inherit">55 5622-1994</a></div>
-      <a href="https://maps.google.com/?q=Rectoria+UNAM+Ciudad+Universitaria" target="_blank" rel="noopener" class="mic-btn"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Abrir en Google Maps</a>
+  <!-- MAPA FINAL — Pestanas de ubicaciones -->
+  <div id="mapa-ubicacion" style="background:#fff;border-top:2px solid var(--gris-borde)">
+    <style>
+    .mapa-tabs-bar{display:flex;gap:0;background:var(--azul);padding:0 20px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .mapa-tab-btn{background:none;border:none;font-family:var(--font-sans);font-size:14px;font-weight:600;color:rgba(255,255,255,.65);padding:14px 20px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .22s ease}
+    .mapa-tab-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
+    .mapa-tab-btn.active{color:#fff;border-bottom-color:var(--azul-claro)}
+    .mapa-tab-panel{display:none;position:relative;height:440px}
+    .mapa-tab-panel.active{display:block}
+    .mapa-tab-panel iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block}
+    /* Floating "Abrir en Maps" chip — minimal, no card */
+    .mapa-open-chip{
+      position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+      z-index:10;
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--azul);color:#fff;
+      font-family:var(--font-sans);font-size:14px;font-weight:700;
+      padding:11px 24px;border-radius:30px;
+      box-shadow:0 4px 20px rgba(0,59,113,.35);
+      text-decoration:none;
+      transition:background .22s ease,transform .22s ease,box-shadow .22s ease;
+      white-space:nowrap;
+    }
+    .mapa-open-chip:hover{background:var(--azul-med);transform:translateX(-50%) translateY(-2px);box-shadow:0 8px 28px rgba(0,59,113,.45)}
+    .mapa-open-chip svg{flex-shrink:0}
+    @media(max-width:480px){.mapa-tab-btn{font-size:13px;padding:12px 14px}}
+    </style>
+
+    <div style="background:var(--azul);padding:16px 24px 0 24px">
+      <div class="sec-tag" style="color:rgba(255,255,255,.65);margin:0 0 8px 0">Nuestra presencia en el campus</div>
+      <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:700;color:#fff;margin-bottom:0;padding-bottom:0">Ubica nuestros lugares de operación</h3>
     </div>
-    <div class="mapa-markers" aria-hidden="true">
-      <div class="mapa-marker" style="top:38%;left:52%"><div class="mm-dot" style="background:#B91C1C"></div><div><div class="mm-name">Rectoría UNAM</div><div class="mm-sub">Torre de Rectoría</div></div></div>
-      <div class="mapa-marker" style="top:44%;left:32%"><div class="mm-dot" style="background:#003B71"></div><div><div class="mm-name">Estadio Olímpico</div><div class="mm-sub">Ciudad Universitaria</div></div></div>
+    <div class="mapa-tabs-bar">
+      <button class="mapa-tab-btn active" onclick="switchMapaTab('rectoria',this)">📍 Rectoría</button>
+      <button class="mapa-tab-btn" onclick="switchMapaTab('estadio',this)">🏟 Estadio Olímpico</button>
+      <button class="mapa-tab-btn" onclick="switchMapaTab('bicipuma',this)">🚲 Bicipuma · Bicicentro</button>
+      <button class="mapa-tab-btn" onclick="switchMapaTab('pumabus',this)">🚌 Pumabús</button>
+    </div>
+
+    <!-- Rectoría UNAM -->
+    <div class="mapa-tab-panel active" id="mapa-rectoria">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.1!2d-99.1881895!3d19.3321734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce000070e7b4d9%3A0xf20e7da6619c4774!2sRector%C3%ADa+de+la+UNAM!5e0!3m2!1ses-419!2smx!4v1715555555555!5m2!1ses-419!2smx"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Rectoría UNAM"></iframe>
+      <a href="https://www.google.com/maps/place/Rector%C3%ADa+de+la+UNAM/@19.3321734,-99.1881895,17z" target="_blank" rel="noopener" class="mapa-open-chip">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Abrir en Maps
+      </a>
+    </div>
+
+    <!-- Estadio Olímpico Universitario -->
+    <div class="mapa-tab-panel" id="mapa-estadio">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.1!2d-99.1893!3d19.3218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce002a6d3b2c4d%3A0xb87221ef658004e2!2sEstadio+Ol%C3%ADmpico+Universitario!5e0!3m2!1ses-419!2smx!4v1715555555556!5m2!1ses-419!2smx"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Estadio Olímpico Universitario"></iframe>
+      <a href="https://www.google.com/maps/place/Estadio+Ol%C3%ADmpico+Universitario" target="_blank" rel="noopener" class="mapa-open-chip">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Abrir en Maps
+      </a>
+    </div>
+
+    <!-- Bicipuma Bicicentro -->
+    <div class="mapa-tab-panel" id="mapa-bicipuma">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.1!2d-99.174548!3d19.324862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0010a242b779%3A0xc9e07174381bfec0!2sBicipuma+%E2%80%93+Bicicentro+(Planta+Alta)!5e0!3m2!1ses-419!2smx!4v1715555555557!5m2!1ses-419!2smx"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Bicipuma Bicicentro"></iframe>
+      <a href="https://www.google.com/maps/place/Bicipuma+%E2%80%93+Bicicentro+(Planta+Alta)/@19.324862,-99.174548,17z" target="_blank" rel="noopener" class="mapa-open-chip">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Abrir en Maps
+      </a>
+    </div>
+
+    <!-- Pumabús CU -->
+    <div class="mapa-tab-panel" id="mapa-pumabus">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.1!2d-99.1882074!3d19.3236981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce00086dd1a813%3A0xd285f45239dbced!2sParada+del+Pumabus%2C+camiones+de+CU!5e0!3m2!1ses-419!2smx!4v1715555555558!5m2!1ses-419!2smx"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Pumabús CU"></iframe>
+      <a href="https://www.google.com/maps/place/Parada+del+%22Pumabus%22,+camiones+de+CU/@19.3236981,-99.1882074,17z" target="_blank" rel="noopener" class="mapa-open-chip">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Abrir en Maps
+      </a>
     </div>
   </div>
+
+  <script>
+  function switchMapaTab(id, btn) {
+    document.querySelectorAll('.mapa-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.mapa-tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    var panel = document.getElementById('mapa-'+id);
+    if (panel) panel.classList.add('active');
+  }
+  </script>
+
 
 
   <!-- FOOTER -->
@@ -1814,6 +2572,16 @@ function switchInfoTab(id){
   document.querySelectorAll('.itab-pane').forEach(function(p){p.classList.remove('active')});
   document.getElementById('it-'+id).classList.add('active');
   document.getElementById('ip-'+id).classList.add('active');
+}
+
+/* ════════ VIDEO SUB-TABS ════════ */
+function switchVidTab(id){
+  var all = ['comunidad','estadio','proyectos','protoc'];
+  all.forEach(function(k){
+    var b=document.getElementById('vt-'+k), p=document.getElementById('vp-'+k);
+    if(b) b.classList.toggle('active', k===id);
+    if(p) p.classList.toggle('active', k===id);
+  });
 }
 
 /* ════════ DECÁLOGO INTERACTIVE ════════ */
