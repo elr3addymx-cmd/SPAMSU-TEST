@@ -56,11 +56,11 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 /* ── SIDEBAR ── */
 .sidebar{
   width:var(--sidebar-w);position:fixed;top:0;left:0;bottom:0;
-  background:var(--blanco);border-right:1.5px solid var(--gris-borde);
+  background:var(--blanco);border-right:2px solid var(--azul-claro);
   display:flex;flex-direction:column;align-items:center;
   z-index:99;overflow:hidden;
   transition:transform .3s cubic-bezier(.4,0,.2,1);
-  box-shadow:2px 0 20px rgba(0,59,113,.06);
+  box-shadow:3px 0 24px rgba(0,59,113,.14);
 }
 .sb-logo{
   width:100%;padding:18px 14px 14px;
@@ -79,8 +79,8 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   border-left:3.5px solid transparent;
   transition:all var(--t);position:relative;
 }
-.sb-item:hover{background:var(--azul-pale);color:var(--azul)}
-.sb-item.active{background:var(--azul-pale2);color:var(--azul);border-left-color:var(--azul-claro)}
+.sb-item:hover{background:linear-gradient(90deg,rgba(169,198,232,.28) 0%,rgba(169,198,232,.10) 100%);color:var(--azul);border-left-color:var(--azul-med);border-left-width:4px;box-shadow:inset 0 0 0 1px rgba(169,198,232,.25)}
+.sb-item.active{background:linear-gradient(90deg,rgba(0,59,113,.13) 0%,rgba(169,198,232,.12) 100%);color:var(--azul);border-left-color:var(--azul);border-left-width:5px;box-shadow:inset 0 0 0 1px rgba(0,59,113,.10)}
 .sb-item svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke var(--t)}
 .sb-item:hover svg,.sb-item.active svg{stroke:var(--azul)}
 .sb-nav-img{
@@ -161,9 +161,23 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 /* ═══════════════════════════════════════════
    TAB PANELS
 ═══════════════════════════════════════════ */
-.tab-panels-wrap{background:var(--blanco);border-bottom:1px solid var(--gris-borde)}
-.tab-panel{display:none;padding:52px 44px;animation:fadeIn .3s ease}
-.tab-panel.active{display:block}
+.tab-panels-wrap{background:var(--blanco)}
+/* Secciones de scroll: siempre visibles */
+.tab-panel{display:block;padding:52px 44px;border-bottom:2px solid var(--gris-borde)}
+/* Paneles de pestaña: ocultos por defecto, se abren aparte */
+.tab-panel.panel-tab-only{display:none}
+.tab-panel.panel-tab-only.panel-open{display:block}
+/* Cuando un panel de pestaña está abierto, ocultar el contenido de scroll */
+body.tab-mode .tab-panel:not(.panel-tab-only){display:none}
+body.tab-mode .tab-panels-wrap{border-bottom:none}
+body.tab-mode section.video-section,
+body.tab-mode section.noticias-section,
+body.tab-mode section.nov-section,
+body.tab-mode section.emerg-section,
+body.tab-mode section.social-section,
+body.tab-mode section.accesos-section,
+body.tab-mode #mapa-ubicacion,
+body.tab-mode section.noticias-section{display:none}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -332,10 +346,11 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
    NOVEDADES Y RECURSOS — Multi-tab section
 ═══════════════════════════════════════════ */
 .nov-section{background:var(--fondo);padding:56px 44px;border-top:2px solid var(--gris-borde)}
-.nov-tab-bar{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.ntab{background:var(--blanco);border:1.5px solid var(--gris-borde);font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--gris-sub);padding:9px 20px;border-radius:20px;cursor:pointer;transition:all var(--t);white-space:nowrap}
-.ntab:hover{border-color:var(--azul-claro);color:var(--azul)}
-.ntab.active{background:var(--azul-claro);border-color:var(--azul-claro);color:var(--azul);font-weight:700}
+/* ── Novedades tab bar — barra unificada, fondo blanco, cambia al seleccionar ── */
+.nov-tab-bar{display:flex;gap:0;margin-bottom:32px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-radius:12px;border:1.5px solid var(--gris-borde);padding:4px;flex-wrap:nowrap;white-space:nowrap}
+.ntab{background:transparent;border:none;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--gris-sub);padding:9px 16px;border-radius:8px;cursor:pointer;transition:all var(--t);white-space:nowrap;flex-shrink:0}
+.ntab:hover{color:var(--azul);background:var(--azul-pale)}
+.ntab.active{background:var(--azul);color:#fff;font-weight:700}
 .ntab-panel{display:none}.ntab-panel.active{display:block;animation:fadeIn .3s ease}
 /* News cards */
 .nov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
@@ -567,7 +582,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .footer-bg-img{position:absolute;inset:0;z-index:0}
 .footer-bg-img [data-img]{width:100%;height:100%}
 .footer-bg-img [data-img] img{object-fit:cover}
-.footer-inner{position:relative;z-index:1;display:grid;grid-template-columns:210px 1fr 1fr 1fr;gap:40px;padding-bottom:30px;border-bottom:1px solid rgba(0,59,113,.18);margin-bottom:20px}
+.footer-inner{position:relative;z-index:1;display:grid;grid-template-columns:210px 1fr;gap:40px;padding-bottom:30px;border-bottom:1px solid rgba(0,59,113,.18);margin-bottom:20px}
 .footer-unam-logo{width:116px;height:auto;margin-bottom:7px}
 .footer-unam-logo [data-img]{width:116px;height:116px}
 .footer-unam-logo [data-img] img{object-fit:contain}
@@ -768,29 +783,29 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 
   <nav class="sb-nav" aria-label="Navegación principal">
     <!-- Información -->
-    <button class="sb-item active" onclick="showTab('informacion')" id="sb-informacion">
+    <button class="sb-item active" onclick="sbGoSection('panel-informacion','sb-informacion')" id="sb-informacion">
       <img class="sb-nav-img" src="img/img_nav-informacion.png" alt="Información">
       <span class="sb-label">Información</span>
     </button>
     <!-- Estructura -->
-    <button class="sb-item" onclick="showTab('estructura')" id="sb-estructura">
+    <button class="sb-item" onclick="sbGoSection('panel-estructura','sb-estructura')" id="sb-estructura">
       <img class="sb-nav-img" src="img/img_nav-estructura.png" alt="Estructura">
       <span class="sb-label">Estructura</span>
+    </button>
+    <!-- Servicios -->
+    <button class="sb-item" onclick="sbGoSection('panel-servicios','sb-servicios')" id="sb-servicios">
+      <img class="sb-nav-img" src="img/img_nav-servicios.png" alt="Servicios">
+      <span class="sb-label">Servicios</span>
+    </button>
+    <!-- Directorio — abre en panel aparte -->
+    <button class="sb-item" onclick="sbOpenTab('directorio','sb-directorio')" id="sb-directorio">
+      <img class="sb-nav-img" src="img/img_nav-directorio.png" alt="Directorio">
+      <span class="sb-label">Directorio</span>
     </button>
     <!-- Marco Jurídico -->
     <button class="sb-item" onclick="openMarcoJuridico()" id="sb-marco">
       <img class="sb-nav-img" src="img/img_nav-marco.png" alt="Marco Jurídico">
       <span class="sb-label">Marco Jurídico</span>
-    </button>
-    <!-- Servicios -->
-    <button class="sb-item" onclick="showTab('servicios')" id="sb-servicios">
-      <img class="sb-nav-img" src="img/img_nav-servicios.png" alt="Servicios">
-      <span class="sb-label">Servicios</span>
-    </button>
-    <!-- Directorio -->
-    <button class="sb-item" onclick="showTab('directorio')" id="sb-directorio">
-      <img class="sb-nav-img" src="img/img_nav-directorio.png" alt="Directorio">
-      <span class="sb-label">Directorio</span>
     </button>
   </nav>
 
@@ -1270,35 +1285,15 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 
         <div class="dec2-wrap">
 
-          <!-- ── Cabecera ── -->
-          <div class="dec2-head">
-
-            <!-- Logos horizontales: esquina superior-izquierda -->
-            <div class="dec2-logos-bar">
-              <div class="dec2-logo">
-                <img src="img/logo-unam.png" alt="UNAM"
-                     onerror="this.closest('.dec2-logo').style.opacity='.35'">
-              </div>
-              <div class="dec2-logo">
-                <img src="img/decalogo-spamsu-blanco.png" alt="SPAMSU"
-                     onerror="this.closest('.dec2-logo').style.opacity='.35'">
-              </div>
-              <div class="dec2-logo dec2-logo-free">
-                <img src="img/decalogo-logo3.png" alt="Logo institucional"
-                     onerror="this.closest('.dec2-logo').style.opacity='.35'">
-              </div>
+          <!-- ── Cabecera — imagen decalogo-banner.png ── -->
+          <div class="dec2-head" style="background:transparent;border-radius:16px;overflow:hidden;margin-bottom:36px;min-height:auto">
+            <img src="img/decalogo-banner.png" alt="Decálogo SPAMSU UNAM — 10 Premisas" style="width:100%;height:auto;display:block;border-radius:16px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <!-- Fallback si no existe la imagen -->
+            <div style="display:none;background:linear-gradient(135deg,#001d40 0%,#002f60 30%,#0d4f94 70%,#1565C0 100%);border-radius:16px;padding:36px;text-align:center;min-height:200px;align-items:center;justify-content:center;flex-direction:column">
+              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.18em;margin-bottom:6px">10 premisas</div>
+              <div style="font-family:var(--font-serif);font-size:clamp(32px,5vw,58px);font-weight:700;color:#fff;letter-spacing:.06em;line-height:1;margin-bottom:16px">DECÁLOGO</div>
+              <div style="font-size:clamp(13px,1.4vw,16px);font-weight:600;color:#fff;line-height:1.6;max-width:400px;margin:0 auto;background:rgba(0,15,40,.38);padding:8px 20px;border-radius:8px">Servicio, Prevención y Comunidad para un Entorno Universitario Seguro</div>
             </div>
-
-            <!-- Personaje eliminado -->
-
-
-            <!-- Título y subtítulo — centrados en columna derecha -->
-            <div class="dec2-center">
-              <div class="dec2-kicker">10 premisas</div>
-              <div class="dec2-main-title">DEC&#193;LOGO</div>
-              <p class="dec2-subtitle">Servicio, Prevenci&#243;n y Comunidad para un Entorno Universitario Seguro</p>
-            </div>
-
           </div>
 
                     <!-- ── Grid de premisas ── -->
@@ -1433,31 +1428,8 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
     <div class="tab-panel" id="panel-estructura" style="padding:0">
 
       <!-- ── SECCIÓN 1: DGSGM ── fondo blanco -->
+      <!-- ── SECCIÓN 1: DGAPSU ── fondo blanco (PRIMERO según instrucciones) -->
       <div class="dir-showcase dir-showcase-light">
-        <h2 class="dir-showcase-title">Dirección General de Servicios Generales y Movilidad</h2>
-        <div class="dir-showcase-body">
-          <div class="dir-showcase-img-col">
-            <div class="dir-showcase-logo-wrap">
-              <img src="img/dgsgm-logo.png" alt="DG SGM" class="dir-showcase-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="dir-showcase-logo-ph" style="display:none">
-                <span class="sph-icon">🏢</span>
-                <span class="sph-name">dgsgm-logo.png</span>
-                <span class="sph-badge">Logo</span>
-              </div>
-            </div>
-          </div>
-          <div class="dir-showcase-text-col">
-            <p class="dir-showcase-desc">Promover una movilidad universitaria sustentable y eficiente mediante los servicios de Pumabús, Bicipuma, Estacionamientos Controlados y Archivo General, implementando acciones, tecnologías y campañas de concientización que beneficien a toda la comunidad universitaria y contribuyan al cuidado del medio ambiente.</p>
-            <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-showcase-cta">
-              Visitar el sitio <span class="dir-cta-arrow">→</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── SECCIÓN 2: DGAPSU ── fondo gris muy suave -->
-
-      <div class="dir-showcase dir-showcase-gray">
         <h2 class="dir-showcase-title">Dirección General de Análisis, Protección y Seguridad Universitaria</h2>
         <div class="dir-showcase-body">
           <div class="dir-showcase-img-col">
@@ -1469,6 +1441,12 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
                 <span class="sph-badge">Logo</span>
               </div>
             </div>
+            <!-- Tres puntitos — abren modal con info de imagen 1 -->
+            <button class="dir-dots-btn" onclick="openDirModal('dgapsu')" title="Ver más información" aria-label="Ver información de DGAPSU">
+              <span class="dir-dot-circle"></span>
+              <span class="dir-dot-circle"></span>
+              <span class="dir-dot-circle"></span>
+            </button>
           </div>
           <div class="dir-showcase-text-col">
             <p class="dir-showcase-desc">La Dirección General de Análisis, Protección y Seguridad Universitaria impulsa las acciones para salvaguardar la integridad de la comunidad universitaria y sus visitantes, manteniendo el ambiente de seguridad, confianza y tranquilidad en el campus universitario, contribuyendo al desempeño de las actividades sustantivas de la docencia, investigación y difusión de la cultura, esto desarrollado con personal eficiente y con constante innovación tecnológica.</p>
@@ -1479,45 +1457,211 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
         </div>
       </div>
 
-      <!-- ── SECCIÓN 3: Áreas de la dependencia ── -->
-      <div class="dir-showcase dir-showcase-light" style="padding:44px 52px">
-        <h2 class="dir-showcase-title">Áreas que Integran la Dependencia</h2>
-        <style>
-        .coord-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:28px}
-        .coord-card{background:#F4F7FB;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px;transition:all var(--t)}
-        .coord-card:hover{border-color:var(--azul-claro);background:rgba(169,198,232,.12);transform:translateY(-2px)}
-        .coord-dot{width:10px;height:10px;border-radius:50%;background:var(--azul-claro);flex-shrink:0;margin-top:5px}
-        .coord-name{font-size:15px;font-weight:600;color:var(--azul);line-height:1.35}
-        </style>
-        <div class="coord-grid">
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></div>
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></div>
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></div>
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Planeación Institucional</div></div>
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Proyectos y Programas de Prevención y Seguridad</div></div>
-          <div class="coord-card"><div class="coord-dot" style="background:var(--azul)"></div><div class="coord-name">Comisiones Locales de Seguridad</div></div>
-        </div>
-      </div>
-
-      <!-- ── SECCIÓN 4: CRACE ── independiente -->
+      <!-- ── SECCIÓN 2: DGSGM ── fondo gris suave -->
       <div class="dir-showcase dir-showcase-gray">
-        <h2 class="dir-showcase-title">CRACE UNAM</h2>
+        <h2 class="dir-showcase-title">Dirección General de Servicios Generales y Movilidad</h2>
         <div class="dir-showcase-body">
           <div class="dir-showcase-img-col">
             <div class="dir-showcase-logo-wrap">
-              <img src="img/crace-logo.png" alt="CRACE UNAM" class="dir-showcase-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <img src="img/dgsgm-logo.png" alt="DG SGM" class="dir-showcase-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="dir-showcase-logo-ph" style="display:none">
-                <span class="sph-icon">🚗</span>
-                <span class="sph-name">crace-logo.png</span>
+                <span class="sph-icon">🏢</span>
+                <span class="sph-name">dgsgm-logo.png</span>
                 <span class="sph-badge">Logo</span>
               </div>
             </div>
+            <!-- Tres puntitos — abren modal con info de DGSGM -->
+            <button class="dir-dots-btn" onclick="openDirModal('dgsgm')" title="Ver más información" aria-label="Ver información de DGSGM">
+              <span class="dir-dot-circle"></span>
+              <span class="dir-dot-circle"></span>
+              <span class="dir-dot-circle"></span>
+            </button>
           </div>
           <div class="dir-showcase-text-col">
-            <p class="dir-showcase-desc">Centro de Regulación de Acceso y Control de Estacionamiento. Gestión de accesos vehiculares y registro de vehículos en el campus universitario de la UNAM.</p>
+            <p class="dir-showcase-desc">Promover una movilidad universitaria sustentable y eficiente mediante los servicios de Pumabús, Bicipuma, Estacionamientos Controlados y Archivo General, implementando acciones, tecnologías y campañas de concientización que beneficien a toda la comunidad universitaria y contribuyan al cuidado del medio ambiente.</p>
             <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-showcase-cta">
               Visitar el sitio <span class="dir-cta-arrow">→</span>
             </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTILOS DOTS y MODALES DE ESTRUCTURA -->
+      <style>
+      .dir-dots-btn{
+        display:flex;align-items:center;justify-content:center;gap:5px;
+        background:none;border:1.5px solid var(--gris-borde);border-radius:20px;
+        padding:8px 18px;cursor:pointer;margin-top:14px;transition:all var(--t);
+        width:fit-content;align-self:center;
+      }
+      .dir-dots-btn:hover{border-color:var(--azul-claro);background:var(--azul-pale)}
+      .dir-dot-circle{
+        width:8px;height:8px;border-radius:50%;background:var(--azul);
+        display:inline-block;transition:background var(--t);
+      }
+      .dir-dots-btn:hover .dir-dot-circle{background:var(--azul-claro)}
+
+      /* Modal de estructura */
+      .dir-modal-bg{
+        display:none;position:fixed;inset:0;background:rgba(0,30,60,.5);
+        backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px;
+      }
+      .dir-modal-bg.open{display:flex;animation:fadeIn .22s ease}
+      .dir-modal-box{
+        background:#fff;border-radius:18px;max-width:900px;width:100%;
+        box-shadow:0 24px 64px rgba(0,0,0,.22);position:relative;overflow:hidden;
+        animation:modalIn .28s ease;max-height:90vh;overflow-y:auto;
+      }
+      .dir-modal-head{
+        background:linear-gradient(135deg,#003B71 0%,#1565C0 60%,#2d8fce 100%);
+        padding:24px 32px;position:relative;overflow:hidden;
+      }
+      .dir-modal-head::after{
+        content:'';position:absolute;right:-30px;top:-30px;width:180px;height:180px;
+        border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none;
+      }
+      .dir-modal-title{font-family:var(--font-serif);font-size:20px;font-weight:700;color:#fff;margin:0}
+      .dir-modal-close{
+        position:absolute;top:14px;right:14px;background:rgba(255,255,255,.18);
+        border:1px solid rgba(255,255,255,.25);color:#fff;width:32px;height:32px;
+        border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;
+        cursor:pointer;z-index:10;transition:background .2s;
+      }
+      .dir-modal-close:hover{background:rgba(255,255,255,.35)}
+      .dir-modal-body{padding:32px}
+
+      /* Grid de unidades dentro del modal */
+      .dir-modal-units{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:0}
+      .dir-modal-unit{
+        background:#F4F7FB;border:1px solid var(--gris-borde);border-radius:12px;
+        padding:20px 16px;text-align:center;transition:all var(--t);
+      }
+      .dir-modal-unit:hover{border-color:var(--azul-claro);box-shadow:var(--sh);transform:translateY(-2px)}
+      .dir-mu-logo{
+        width:72px;height:72px;border-radius:50%;overflow:hidden;
+        margin:0 auto 12px;background:var(--azul);
+        display:flex;align-items:center;justify-content:center;
+        border:2px solid var(--gris-borde);
+      }
+      .dir-mu-logo img{width:100%;height:100%;object-fit:contain;padding:4px}
+      .dir-mu-name{font-family:var(--font-serif);font-size:14px;font-weight:700;color:var(--azul);line-height:1.3;margin-bottom:6px}
+      .dir-mu-desc{font-size:13px;color:var(--gris-txt);font-weight:300;line-height:1.5}
+      @media(max-width:700px){.dir-modal-units{grid-template-columns:1fr 1fr}}
+      @media(max-width:480px){.dir-modal-units{grid-template-columns:1fr}}
+      </style>
+
+      <!-- Modal DGAPSU -->
+      <div class="dir-modal-bg" id="dir-modal-dgapsu" onclick="if(event.target===this)closeDirModal('dgapsu')">
+        <div class="dir-modal-box">
+          <button class="dir-modal-close" onclick="closeDirModal('dgapsu')">&#x2715;</button>
+          <div class="dir-modal-head">
+            <div class="dir-modal-title">Dirección General de Análisis, Protección y Seguridad Universitaria</div>
+          </div>
+          <div class="dir-modal-body">
+            <div class="dir-modal-units">
+              <!-- DSU DGAPSU -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgapsu-dsu-logo.png" alt="DSU DGAPSU" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><path d=\'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Dirección de Seguridad Universitaria</div>
+                <div class="dir-mu-desc">Instancia responsable de planear, coordinar y ejecutar acciones de prevención, protección y atención de riesgos para salvaguardar la integridad de la comunidad universitaria.</div>
+              </div>
+              <!-- Análisis y Prevención de Riesgos -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgapsu-analisis-logo.png" alt="Análisis y Prevención de Riesgos" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><circle cx=\'11\' cy=\'11\' r=\'8\'/><line x1=\'21\' y1=\'21\' x2=\'16.65\' y2=\'16.65\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Dirección de Análisis y Prevención de Riesgos</div>
+                <div class="dir-mu-desc">Realiza estudios técnicos para identificar, evaluar y mitigar riesgos potenciales en las instalaciones universitarias. Desarrolla políticas y programas preventivos basados en análisis de datos.</div>
+              </div>
+              <!-- Enlace Estadio Olímpico -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgapsu-estadio-logo.png" alt="Enlace Estadio Olímpico" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><path d=\'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Enlace del Estadio Olímpico Universitario</div>
+                <div class="dir-mu-desc">Coordina todas las actividades de seguridad durante eventos deportivos y culturales de gran magnitud. Implementa protocolos especiales de evacuación, control de multitudes y coordinación con autoridades externas.</div>
+              </div>
+              <!-- Protección Civil y Bomberos -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgapsu-pcivil-logo.png" alt="Protección Civil y Bomberos" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><path d=\'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\'/><polyline points=\'9 12 11 14 15 10\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Dirección de Protección Civil y Bomberos</div>
+                <div class="dir-mu-desc">Se encarga de prevenir, mitigar y responder ante situaciones de emergencia. Coordina simulacros, capacitaciones en materia de protección civil y mantiene un cuerpo de bomberos especializado.</div>
+              </div>
+              <!-- Gestión Tecnológica en Seguridad -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgapsu-tecnologia-logo.png" alt="Gestión Tecnológica" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><rect x=\'2\' y=\'3\' width=\'20\' height=\'14\' rx=\'2\'/><path d=\'M8 21h8M12 17v4\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Coordinación de Gestión Tecnológica en Seguridad</div>
+                <div class="dir-mu-desc">Implementa y administra sistemas tecnológicos avanzados para el monitoreo, control y análisis de la seguridad. Gestiona videovigilancia, sistemas de acceso y plataformas de información.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal DGSGM -->
+      <div class="dir-modal-bg" id="dir-modal-dgsgm" onclick="if(event.target===this)closeDirModal('dgsgm')">
+        <div class="dir-modal-box">
+          <button class="dir-modal-close" onclick="closeDirModal('dgsgm')">&#x2715;</button>
+          <div class="dir-modal-head">
+            <div class="dir-modal-title">Dirección General de Servicios Generales y Movilidad</div>
+          </div>
+          <div class="dir-modal-body">
+            <div class="dir-modal-units">
+              <!-- Pumabús -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgsgm-pumabus-logo.png" alt="Pumabús" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><rect x=\'1\' y=\'3\' width=\'15\' height=\'13\'/><polygon points=\'16 8 20 8 23 11 23 16 16 16 16 8\'/><circle cx=\'5.5\' cy=\'18.5\' r=\'2.5\'/><circle cx=\'18.5\' cy=\'18.5\' r=\'2.5\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Pumabús</div>
+                <div class="dir-mu-desc">Servicio de transporte interno del campus universitario. Rutas, horarios y paradas en Ciudad Universitaria.</div>
+              </div>
+              <!-- Servicios para Personas con Discapacidad -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgsgm-discapacidad-logo.png" alt="Servicios para Personas con Discapacidad" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'5\' r=\'2\'/><path d=\'M10 22l2-8 3 3 2-5\'/><path d=\'M6 14c0 4 3 7 6 8\'/><path d=\'M16 9l-1 5\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Servicios para Personas con Discapacidad</div>
+                <div class="dir-mu-desc">Programas y apoyos de movilidad e inclusión para personas con discapacidad dentro del campus universitario.</div>
+              </div>
+              <!-- Brigada Vial -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgsgm-brigada-logo.png" alt="Brigada Vial" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><path d=\'M18 10h-4V6l-4 6h4v4l4-6z\'/><circle cx=\'12\' cy=\'12\' r=\'10\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Brigada Vial</div>
+                <div class="dir-mu-desc">Apoyo y regulación del tráfico vehicular dentro del campus para garantizar una movilidad ordenada y segura.</div>
+              </div>
+              <!-- Bicipuma / Biciescuela -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgsgm-bicipuma-logo.png" alt="Bicipuma / Biciescuela" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><circle cx=\'5.5\' cy=\'17.5\' r=\'3.5\'/><circle cx=\'18.5\' cy=\'17.5\' r=\'3.5\'/><path d=\'M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Bicipuma / Biciescuela</div>
+                <div class="dir-mu-desc">Sistema de transporte gratuito y escuela de ciclismo urbano para fomentar la movilidad sustentable y la salud en la comunidad universitaria.</div>
+              </div>
+              <!-- Estacionamientos Controlados -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgsgm-estacionamiento-logo.png" alt="Estacionamientos Controlados" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><rect x=\'2\' y=\'7\' width=\'20\' height=\'14\' rx=\'2\'/><path d=\'M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Estacionamientos Controlados</div>
+                <div class="dir-mu-desc">Gestión y control de los estacionamientos dentro del campus universitario, accesos y registro de vehículos.</div>
+              </div>
+              <!-- Programa Cuida tu Moto -->
+              <div class="dir-modal-unit">
+                <div class="dir-mu-logo">
+                  <img src="img/dgsgm-moto-logo.png" alt="Programa Cuida tu Moto" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><circle cx=\'5\' cy=\'17\' r=\'3\'/><circle cx=\'19\' cy=\'17\' r=\'3\'/><path d=\'M2 17h1l3-9 4 4 2-4h5\'/><rect x=\'3\' y=\'11\' width=\'18\' height=\'11\' rx=\'2\' opacity=\'.3\'/></svg>'">
+                </div>
+                <div class="dir-mu-name">Programa Cuida tu Moto</div>
+                <div class="dir-mu-desc">Programa de seguridad y protección para motociclistas dentro del campus universitario de la UNAM.</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1561,13 +1705,13 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
             <p class="srv-desc">Instancias colegiadas de participación para la prevención, atención y seguimiento de situaciones de riesgo en las entidades universitarias.</p>
           </div>
         </div>
-        <!-- 4. Préstamo de candados -->
+        <!-- 4. Moto Candados -->
         <div class="srv-card">
-          <div class="srv-img"><div data-img="srv-candados" data-alt="Préstamo de candados"></div></div>
+          <div class="srv-img"><div data-img="srv-candados" data-alt="Moto Candados"></div></div>
           <div class="srv-body">
             <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-            <div class="srv-title">Préstamo de Candados</div>
-            <p class="srv-desc">Servicio de préstamo de candados para bicicletas disponible para la comunidad universitaria en campus.</p>
+            <div class="srv-title">Moto Candados</div>
+            <p class="srv-desc">Servicio de préstamo de moto candados para bicicletas disponible para la comunidad universitaria en campus.</p>
           </div>
         </div>
         <!-- 5. Unidad Canina -->
@@ -1580,36 +1724,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
             <a href="https://www.gaceta.unam.mx/forman-en-la-unam-perros-para-busqueda-y-rescate-de-personas/" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="srv-cta">Ver más →</a>
           </div>
         </div>
-        <!-- 6. CINIG SPAMSU -->
-        <a href="https://serviciosalacomunidad.unam.mx/que%20es%20la%20cinig.htm" target="_blank" rel="noopener" class="srv-card">
-          <div class="srv-img"><div data-img="srv-cinig" data-alt="CINIG SPAMSU"></div></div>
-          <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-            <div class="srv-title">CINIG SPAMSU</div>
-            <p class="srv-desc">Centro de Información sobre la No-discriminación e Igualdad de Género. Programas y atención especializada.</p>
-            <span class="srv-cta">Conocer CINIG →</span>
-          </div>
-        </a>
-        <!-- 7. Pumabús -->
-        <a href="https://www.dgsgm.unam.mx/pumabus.html" target="_blank" rel="noopener" class="srv-card">
-          <div class="srv-img"><div data-img="srv-pumabus" data-alt="Pumabús UNAM"></div></div>
-          <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-            <div class="srv-title">Pumabús</div>
-            <p class="srv-desc">Servicio de transporte interno del campus universitario. Rutas, horarios y paradas en Ciudad Universitaria.</p>
-            <span class="srv-cta">Ver horarios →</span>
-          </div>
-        </a>
-        <!-- 8. Estacionamientos -->
-        <a href="https://www.dgsgm.unam.mx/estacionamientos.html" target="_blank" rel="noopener" class="srv-card">
-          <div class="srv-img"><div data-img="srv-estacionamientos" data-alt="Estacionamientos"></div></div>
-          <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
-            <div class="srv-title">Estacionamientos Controlados</div>
-            <p class="srv-desc">Estacionamientos dentro del campus, accesos, tarifas y registro de vehículos.</p>
-            <span class="srv-cta">Ir al sitio →</span>
-          </div>
-        </a>
         <!-- 9. Bicipuma -->
         <a href="https://www.dgsgm.unam.mx/bicipuma.html" target="_blank" rel="noopener" class="srv-card">
           <div class="srv-img"><div data-img="srv-bicipuma" data-alt="Bicipuma UNAM"></div></div>
@@ -1620,7 +1734,35 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
             <span class="srv-cta">Ver más →</span>
           </div>
         </a>
-        <!-- Igualdad de Género eliminado según solicitud -->
+        <!-- 10. Biciescuela -->
+        <div class="srv-card">
+          <div class="srv-img"><div data-img="srv-biciescuela" data-alt="Biciescuela UNAM"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/><path d="M2 17h1l3-9 4 4 2-4h5"/></svg></div>
+            <div class="srv-title">Biciescuela</div>
+            <p class="srv-desc">Aprende a andar en bicicleta de manera segura en el campus universitario. Clases gratuitas para toda la comunidad universitaria.</p>
+          </div>
+        </div>
+        <!-- 6. Pumabús -->
+        <a href="https://www.dgsgm.unam.mx/pumabus.html" target="_blank" rel="noopener" class="srv-card">
+          <div class="srv-img"><div data-img="srv-pumabus" data-alt="Pumabús UNAM"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+            <div class="srv-title">Pumabús</div>
+            <p class="srv-desc">Servicio de transporte interno del campus universitario. Rutas, horarios y paradas en Ciudad Universitaria.</p>
+            <span class="srv-cta">Ver horarios →</span>
+          </div>
+        </a>
+        <!-- 7. Estacionamientos -->
+        <a href="https://www.dgsgm.unam.mx/estacionamientos.html" target="_blank" rel="noopener" class="srv-card">
+          <div class="srv-img"><div data-img="srv-estacionamientos" data-alt="Estacionamientos"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+            <div class="srv-title">Estacionamientos Controlados</div>
+            <p class="srv-desc">Estacionamientos dentro del campus, accesos, tarifas y registro de vehículos.</p>
+            <span class="srv-cta">Ir al sitio →</span>
+          </div>
+        </a>
       </div>
 
       <!-- Senderos Universitarios -->
@@ -1656,6 +1798,10 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Abrir mapa completo en Google Maps
           </a>
+          <a href="https://senderos.savar.mx/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:var(--azul-claro);color:var(--azul);font-size:15px;font-weight:700;padding:12px 22px;border-radius:10px;margin-top:12px;transition:all var(--t)" onmouseover="this.style.background='var(--azul-med)';this.style.color='#fff'" onmouseout="this.style.background='var(--azul-claro)';this.style.color='var(--azul)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Senderos Universitarios (SAVAR)
+          </a>
         </div>
         <div class="map-wrap">
           <iframe src="https://www.google.com/maps/d/embed?mid=1b1iNRcR8LOeq98KjsidWDECybsfOx5g" title="Senderos Universitarios UNAM" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -1666,81 +1812,362 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
     <!-- ╔══════════════════════════════╗
          DIRECTORIO
     ╚══════════════════════════════╝ -->
-    <div class="tab-panel" id="panel-directorio">
+    <div class="tab-panel panel-tab-only" id="panel-directorio">
+      <!-- Botón regresar -->
+      <div style="margin-bottom:28px">
+        <button onclick="sbGoSection('panel-informacion','sb-informacion')" style="display:inline-flex;align-items:center;gap:8px;background:var(--azul-pale);border:1px solid var(--gris-borde);color:var(--azul);font-family:var(--font-sans);font-size:14px;font-weight:600;padding:9px 18px;border-radius:9px;cursor:pointer;transition:all var(--t)" onmouseover="this.style.background='var(--azul-claro)'" onmouseout="this.style.background='var(--azul-pale)'">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Regresar a la página
+        </button>
+      </div>
       <div class="sec-tag">Personal institucional</div>
       <h2 class="sec-title">Directorio Institucional</h2>
-      <!-- Estilo tipo UNAM Directorio -->
       <style>
-      .dir-unam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-bottom:28px}
-      .dir-unam-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);padding:24px 22px;transition:all var(--t);position:relative;overflow:hidden}
-      .dir-unam-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3.5px;background:var(--azul-claro);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
-      .dir-unam-card:hover{box-shadow:var(--sh);border-color:var(--azul-claro);transform:translateY(-2px)}
-      .dir-unam-card:hover::before{transform:scaleX(1)}
-      .dir-unam-badge{display:inline-block;font-size:11px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.10em;margin-bottom:10px;background:var(--azul-pale);padding:3px 10px;border-radius:20px}
-      .dir-unam-name{font-family:var(--font-serif);font-size:17px;font-weight:700;color:var(--azul);margin-bottom:4px;line-height:1.25}
-      .dir-unam-role{font-size:13.5px;color:var(--gris-sub);font-weight:300;line-height:1.5;margin-bottom:14px}
-      .dir-unam-links{display:flex;flex-direction:column;gap:7px}
-      .dir-unam-link{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--azul);font-weight:500;text-decoration:none;transition:color var(--t)}
-      .dir-unam-link:hover{color:var(--azul-med)}
-      .dir-unam-link svg{flex-shrink:0;stroke:var(--azul-claro)}
-      .dir-info-section{background:var(--fondo);border-radius:var(--r);padding:20px 24px;border:1px solid var(--gris-borde);margin-top:8px}
-      .dir-info-title{font-size:13px;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
-      .dir-info-row{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--gris-txt);margin-bottom:9px}
-      .dir-info-row svg{flex-shrink:0;stroke:var(--azul-claro);margin-top:1px}
+      /* ── Directorio estilo UNAM ── */
+      .dir-contacto-bar{
+        display:flex;align-items:center;gap:10px;
+        background:var(--azul);color:#fff;
+        padding:13px 22px;border-radius:var(--r);
+        font-size:15px;font-weight:600;
+        margin-bottom:28px;
+      }
+      .dir-contacto-bar svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+      .dir-contacto-bar a{color:var(--azul-claro);font-weight:700;text-decoration:none}
+      .dir-contacto-bar a:hover{color:#fff}
+
+      .dir-table{width:100%;border-collapse:collapse;font-size:14.5px}
+      .dir-table tr{border-bottom:1px solid var(--gris-borde);transition:background var(--t)}
+      .dir-table tr:hover{background:var(--azul-pale)}
+      .dir-table td{padding:14px 16px;vertical-align:top}
+      .dir-table td:first-child{width:34px;padding-right:0}
+      .dir-cell-avatar{
+        width:32px;height:32px;border-radius:50%;
+        background:var(--azul-claro);
+        display:flex;align-items:center;justify-content:center;
+        flex-shrink:0;margin-top:2px;
+      }
+      .dir-cell-avatar svg{width:15px;height:15px;stroke:var(--azul);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+      .dir-cell-avatar.av-gold{background:#F59E0B}
+      .dir-cell-avatar.av-gold svg{stroke:#fff}
+      .dir-name{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--azul);line-height:1.3;margin-bottom:2px}
+      .dir-role{font-size:13px;color:var(--gris-sub);font-weight:300;line-height:1.5;margin-bottom:5px}
+      .dir-meta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+      .dir-ext{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--gris-txt);font-weight:400}
+      .dir-ext svg{width:12px;height:12px;stroke:var(--azul-med);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+      .dir-email{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--azul);font-weight:500;text-decoration:none;transition:color var(--t)}
+      .dir-email:hover{color:var(--azul-med)}
+      .dir-email svg{width:12px;height:12px;stroke:var(--azul-claro);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+      .dir-badge-ig{
+        display:inline-block;font-size:10.5px;font-weight:700;
+        color:var(--azul);background:var(--azul-claro);
+        padding:2px 9px;border-radius:20px;letter-spacing:.06em;
+        text-transform:uppercase;margin-bottom:3px;
+      }
+      .dir-sep{height:0;border:none;border-top:2.5px solid var(--azul-claro);margin:6px 0}
+      .dir-sep-label{font-size:11px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.14em;padding:14px 16px 4px;display:flex;align-items:center;gap:8px}
+      .dir-sep-label::before{content:'';width:16px;height:2px;background:var(--azul-claro);border-radius:1px}
+      @media(max-width:640px){
+        .dir-table td:first-child{display:none}
+        .dir-table td{padding:12px 10px}
+      }
       </style>
 
-      <!-- Bloque Información General -->
-      <div class="dir-info-section" style="margin-bottom:28px">
-        <div class="dir-info-title">Información General</div>
-        <div class="dir-info-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span><a href="mailto:spamsu@unam.mx" style="color:var(--azul)">spamsu@unam.mx</a></span></div>
-        <div class="dir-info-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg><span><a href="tel:5556221994" style="color:var(--azul)">55 5622-1994</a></span></div>
-        <div class="dir-info-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg><span>Torre de Rectoría, Ciudad Universitaria, Coyoacán, C.P. 04510</span></div>
+      <!-- Contáctenos -->
+      <div class="dir-contacto-bar">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        Contáctenos: <a href="tel:5556222222">55 5622 2222</a>
+        &nbsp;·&nbsp; Torre de Rectoría, Ciudad Universitaria, Coyoacán, C.P. 04510
       </div>
 
-      <div class="dir-unam-grid">
-        <!-- Titular SPAMSU -->
-        <div class="dir-unam-card">
-          <span class="dir-unam-badge">Titular</span>
-          <div class="dir-unam-name">[Nombre del/la Secretario/a]</div>
-          <div class="dir-unam-role">Secretaría de Prevención y Apoyo a la Movilidad y Seguridad Universitaria</div>
-          <div class="dir-unam-links">
-            <a href="mailto:spamsu@unam.mx" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>spamsu@unam.mx</a>
-            <a href="tel:5556221994" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>55 5622-1994</a>
-          </div>
-        </div>
-        <!-- Camila Fosado Balderas -->
-        <div class="dir-unam-card">
-          <span class="dir-unam-badge">Información General</span>
-          <div class="dir-unam-name">Lic. Camila Fosado Balderas</div>
-          <div class="dir-unam-role">Información General · SPAMSU</div>
-          <div class="dir-unam-links">
-            <a href="mailto:spamsu@unam.mx" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>spamsu@unam.mx</a>
-          </div>
-        </div>
-        <!-- DGAPSU -->
-        <div class="dir-unam-card">
-          <span class="dir-unam-badge">Dirección General</span>
-          <div class="dir-unam-name">[Nombre del/la Director/a]</div>
-          <div class="dir-unam-role">Dirección General de Análisis, Protección y Seguridad Universitaria</div>
-          <div class="dir-unam-links">
-            <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Visitar sitio</a>
-          </div>
-        </div>
-        <!-- DGSGM -->
-        <div class="dir-unam-card">
-          <span class="dir-unam-badge">Dirección General</span>
-          <div class="dir-unam-name">[Nombre del/la Director/a]</div>
-          <div class="dir-unam-role">Dirección General de Servicios Generales y Movilidad</div>
-          <div class="dir-unam-links">
-            <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-unam-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Visitar sitio</a>
-          </div>
-        </div>
-      </div>
+      <table class="dir-table">
+        <!-- Titular -->
+        <tr>
+          <td><div class="dir-cell-avatar av-gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Dr. Manuel Palma Rangel</div>
+            <div class="dir-role">Secretario de Prevención y Apoyo a la Movilidad y Seguridad Universitaria</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21284</span>
+              <a href="mailto:secretariospamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>secretariospamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Lic. Mónica Carballido Quintanar</div>
+            <div class="dir-role">Asistente</div>
+            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21286 y 21047</span></div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Ing. Jesús Cruz Cervantes</div>
+            <div class="dir-role">Coordinador de Gestión</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40544</span>
+              <a href="mailto:coordgestion.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>coordgestion.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <!-- Camila Fosado — Información General (se respeta intacto) -->
+        <tr>
+          <td><div class="dir-cell-avatar" style="background:var(--azul-claro)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-badge-ig">Información General</div>
+            <div class="dir-name">Lic. Camila Fosado Balderas</div>
+            <div class="dir-role">Información General · SPAMSU</div>
+            <div class="dir-meta">
+              <a href="mailto:spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtro. Arturo Ruiz Ruisánchez</div>
+            <div class="dir-role">Coordinador de Análisis y Concertación</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40534</span>
+              <a href="mailto:canc@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>canc@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Med. Jaime Jimmy Revah Peralta</div>
+            <div class="dir-role">Subdirector de Análisis e Interpretación</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40536</span>
+              <a href="mailto:sai@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sai@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Lic. Sergio Luis Gutiérrez Mancilla</div>
+            <div class="dir-role">Subdirector de Concertación</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21041</span>
+              <a href="mailto:subdcon@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>subdcon@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtra. Fusae Nakazawa Cuéllar</div>
+            <div class="dir-role">Secretaria Auxiliar de Orientación y Asesoramiento</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40104</span>
+              <a href="mailto:saora@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>saora@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtro. Jaime Echartea Mojica</div>
+            <div class="dir-role">Coordinador de Educación en Prevención y Seguridad</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82697</span>
+              <a href="mailto:educacion.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>educacion.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Lic. Omar Pérez Salazar</div>
+            <div class="dir-role">Jefe del Departamento de Valores y Entornos Universitarios</div>
+            <div class="dir-meta">
+              <a href="mailto:jdvalores@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdvalores@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtra. Maritza Valencia Murcia</div>
+            <div class="dir-role">Jefa del Departamento de Prevención y Atención de Riesgos</div>
+            <div class="dir-meta">
+              <a href="mailto:jdriesgos@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdriesgos@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtra. Manuela Luna Briseño</div>
+            <div class="dir-role">Coordinadora de Enlace con Instancias de Gobierno</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82811</span>
+              <a href="mailto:ceig.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>ceig.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtro. Honorio Raúl Sotelo Esquivel</div>
+            <div class="dir-role">Secretario Auxiliar</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82707</span>
+              <a href="mailto:srioaux.ceig.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>srioaux.ceig.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Luz María Morales Cortés</div>
+            <div class="dir-role">Asistente</div>
+            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82811</span></div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtra. Karol Rivera Barrios</div>
+            <div class="dir-role">Jefa de Departamento de Bachillerato</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82694</span>
+              <a href="mailto:jdbachillerato.ceig.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdbachillerato.ceig.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Ing. Julio Calderón Juan</div>
+            <div class="dir-role">Jefe del Departamento Zona Metropolitana</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82700</span>
+              <a href="mailto:jdeptoedomex.ceig.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdeptoedomex.ceig.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtro. Jorge Hugo Ibarra Cárdenas</div>
+            <div class="dir-role">Coordinador de Planeación Institucional</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21036</span>
+              <a href="mailto:planeacion_institucional.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>planeacion_institucional.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Lic. María del Rocío Guzmán García</div>
+            <div class="dir-role">Asistente</div>
+            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21033</span></div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Lic. Gerardo Nerio Gallardo</div>
+            <div class="dir-role">Secretario Auxiliar de Planeación</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21030</span>
+              <a href="mailto:sa_planeacion.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sa_planeacion.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Lic. Carlos Maximiliano Zetina Huerta</div>
+            <div class="dir-role">Jefe del Departamento de Evaluación</div>
+            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21041</span></div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtra. Paola Romero Monterrubio</div>
+            <div class="dir-role">Coordinadora de Proyectos y Programas de Prevención y Seguridad</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40724</span>
+              <a href="mailto:copppres.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>copppres.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Monserrat Arumi Cortés Hernández</div>
+            <div class="dir-role">Secretaria Auxiliar</div>
+            <div class="dir-meta">
+              <a href="mailto:monserratcortes@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>monserratcortes@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Lic. Daniel Cuéllar Ramírez</div>
+            <div class="dir-role">Secretario Auxiliar</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21030</span>
+              <a href="mailto:daniel_cu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>daniel_cu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Mtra. Georgina González Moreno</div>
+            <div class="dir-role">Coordinadora de Comisiones Locales de Seguridad de la Torre de Rectoría</div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40665</span>
+              <a href="mailto:ccls.tr.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>ccls.tr.spamsu@unam.mx</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div></td>
+          <td>
+            <div class="dir-name">Unidad Administrativa</div>
+            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82688</span></div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+          <td>
+            <div class="dir-name">Ing. Alejandro de Rosas Olaya</div>
+            <div class="dir-role">Asistente</div>
+            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21299</span></div>
+          </td>
+        </tr>
+      </table>
     </div>
 
   </div><!-- /tab-panels-wrap -->
 
 
+
+  <!-- VIDEO DEL RECTOR -->
+  <section class="video-section" id="video-rector">
+    <div class="video-inner">
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/dUX6ja2OX1Q?start=21" title="Mensaje del Rector de la UNAM" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div>
+        <div class="sec-tag">Mensaje institucional</div>
+        <h2 class="sec-title" style="margin-bottom:10px">Palabras del Rector</h2>
+        <div class="video-quote">"La seguridad es una condición indispensable para una educación plena en la Universidad Nacional."</div>
+        <div class="video-speaker">Dr. Leonardo Lomelí Vanegas<br><span style="color:var(--gris-sub);font-size:14px;font-weight:300">Rector de la UNAM</span></div>
+        <p style="font-size:16px;color:var(--gris-txt);font-weight:300;line-height:1.7;margin-top:18px">El rector de la UNAM comparte la visión institucional sobre seguridad, prevención y el nuevo paradigma de cuidado universitario.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- ══════════════ NOTICIAS GACETA UNAM ══════════════ -->
   <section class="noticias-section" id="noticias">
@@ -1831,7 +2258,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
           Gaceta UNAM
         </span>
-        <a href="https://www.gaceta.unam.mx/" target="_blank" rel="noopener" class="noticias-ver-mas">Ver todas<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
       </div>
     </div>
 
@@ -1883,31 +2309,36 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
           </div>
         </a>
     </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:18px">
+      <a href="https://www.gaceta.unam.mx/" target="_blank" rel="noopener" class="noticias-ver-mas">Ver todas las noticias<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+    </div>
   </section>
-
-  <!-- NOVEDADES Y RECURSOS -->
   <section class="nov-section" id="novedades">
     <div class="sec-tag">Información y recursos</div>
     <h2 class="sec-title">Novedades y Recursos</h2>
     <div class="nov-tab-bar">
       <button class="ntab active" onclick="switchNovTab('videos')"     id="ntb-videos">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
         Videos
       </button>
       <button class="ntab"        onclick="switchNovTab('proyectos')"  id="ntb-proyectos">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-        Nuestros Proyectos
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        Planes y Programas
+      </button>
+      <button class="ntab"        onclick="switchNovTab('incluyente')" id="ntb-incluyente">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M10 22l2-8 3 3 2-5"/><path d="M6 14c0 4 3 7 6 8"/></svg>
+        Seguridad y Movilidad Incluyente
       </button>
       <button class="ntab"        onclick="switchNovTab('cursos')"     id="ntb-cursos">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
         Cursos y Capacitaciones
       </button>
       <button class="ntab"        onclick="switchNovTab('protocolos')" id="ntb-protocolos">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         Protocolos
       </button>
       <button class="ntab"        onclick="switchNovTab('material')"   id="ntb-material">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Material
       </button>
     </div>
@@ -1930,10 +2361,24 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
         </div>
       </div>
       <div class="itab-pane" id="vp-estadio">
+        <div class="info-tabs" style="margin-bottom:24px">
+          <button class="itab active" onclick="switchEstadioTab('videos')" id="et-videos">Videos</button>
+          <button class="itab" onclick="switchEstadioTab('visitas')" id="et-visitas">Visitas Guiadas</button>
+        </div>
+        <div class="itab-pane active" id="ep-videos">
         <div class="vid-grid">
           <!-- [VIDEO-ESTADIO] Agregar videos del estadio aqui -->
           <div class="vid-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;background:var(--azul-pale)">
             <div style="text-align:center;color:var(--gris-sub);font-size:15px">Videos del estadio<br><span style="font-size:13px;opacity:.6">[Agregar videos]</span></div>
+          </div>
+        </div>
+        </div>
+        <div class="itab-pane" id="ep-visitas">
+          <div style="background:var(--azul-pale);border:1px solid var(--gris-borde);border-radius:var(--r);padding:24px;text-align:center">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 14px"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            <div style="font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--azul);margin-bottom:8px">Visitas Guiadas al Estadio Olímpico Universitario</div>
+            <p style="font-size:15px;color:var(--gris-txt);font-weight:300;line-height:1.7;margin-bottom:16px">Próximamente disponible el enlace para solicitar visitas guiadas al Estadio Olímpico Universitario.</p>
+            <span style="display:inline-flex;align-items:center;gap:6px;background:var(--azul);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:9px;opacity:.6;cursor:not-allowed">Enlace pendiente</span>
           </div>
         </div>
       </div>
@@ -1955,10 +2400,10 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
       </div>
     </div>
 
-    <!-- NUESTROS PROYECTOS -->
+    <!-- PLANES Y PROGRAMAS (antes Nuestros Proyectos) -->
     <div class="ntab-panel" id="np-proyectos">
       <div class="sec-tag">Iniciativas institucionales</div>
-      <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--azul);margin-bottom:24px">Nuestros Proyectos</h3>
+      <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--azul);margin-bottom:24px">Planes y Programas</h3>
       <div class="srv-grid">
         <!-- PMS -->
         <div class="srv-card">
@@ -1971,6 +2416,38 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
           </div>
         </div>
         <!-- [PROYECTO-+] Agregar mas proyectos aqui -->
+      </div>
+    </div>
+
+    <!-- SEGURIDAD Y MOVILIDAD INCLUYENTE -->
+    <div class="ntab-panel" id="np-incluyente">
+      <div class="sec-tag">Inclusión y accesibilidad</div>
+      <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--azul);margin-bottom:24px">Seguridad y Movilidad Incluyente</h3>
+      <div class="srv-grid">
+        <div class="srv-card">
+          <div class="srv-img"><div data-img="incluyente-discapacidad" data-alt="Servicios para Personas con Discapacidad"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M10 22l2-8 3 3 2-5"/><path d="M6 14c0 4 3 7 6 8"/></svg></div>
+            <div class="srv-title">Servicios para Personas con Discapacidad</div>
+            <p class="srv-desc">Apoyos y servicios de movilidad e inclusión para personas con discapacidad dentro del campus universitario.</p>
+          </div>
+        </div>
+        <div class="srv-card">
+          <div class="srv-img"><div data-img="incluyente-accesibilidad" data-alt="Accesibilidad Universal"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M17 18a2 2 0 012 2v1M3 21v-1a2 2 0 012-2M12 3a2 2 0 110 4"/><path d="M12 7v5l3 3"/></svg></div>
+            <div class="srv-title">Accesibilidad Universal</div>
+            <p class="srv-desc">Programas de accesibilidad e inclusión en el campus para garantizar el libre tránsito de toda la comunidad universitaria.</p>
+          </div>
+        </div>
+        <div class="srv-card">
+          <div class="srv-img"><div data-img="incluyente-brigada" data-alt="Brigada Vial Incluyente"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-4V6l-4 6h4v4l4-6z"/><circle cx="12" cy="12" r="10"/></svg></div>
+            <div class="srv-title">Brigada Vial Incluyente</div>
+            <p class="srv-desc">Apoyo especializado para la movilidad de personas con discapacidad dentro del campus universitario.</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2017,30 +2494,271 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 
     <!-- PROTOCOLOS -->
     <div class="ntab-panel" id="np-protocolos">
-      <div style="background:var(--azul-pale);border:1px solid var(--gris-borde);border-radius:var(--r);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        <div>
-          <div style="font-size:14px;font-weight:600;color:var(--azul)">Consulta todos los protocolos generales en el portal oficial</div>
-          <a href="https://normatividadseguridad.unam.mx/protoc%20grales.html" target="_blank" rel="noopener" style="font-size:13px;color:var(--azul-med);font-weight:500">normatividadseguridad.unam.mx &rarr;</a>
+      <style>
+      .proto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-bottom:32px}
+      .proto-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);padding:16px 18px;display:flex;align-items:flex-start;gap:13px;transition:all var(--t);position:relative;overflow:hidden}
+      .proto-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--azul-claro);transform:scaleY(0);transform-origin:top;transition:transform .3s ease}
+      .proto-card:hover{box-shadow:var(--sh);border-color:var(--azul-claro);transform:translateY(-2px)}.proto-card:hover::before{transform:scaleY(1)}
+      .proto-icon{width:42px;height:42px;border-radius:9px;background:var(--azul);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+      .proto-icon svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+      .proto-info{flex:1;min-width:0}
+      .proto-title{font-family:var(--font-serif);font-size:13.5px;font-weight:700;color:var(--azul);line-height:1.35;margin-bottom:4px}
+      .proto-date{font-size:11.5px;color:var(--gris-sub);font-weight:300;margin-bottom:9px}
+      .proto-dl{display:inline-flex;align-items:center;gap:6px;background:var(--azul-claro);color:var(--azul);font-size:12px;font-weight:700;padding:6px 13px;border-radius:7px;text-decoration:none;transition:all var(--t)}
+      .proto-dl:hover{background:var(--azul);color:#fff}
+      .proto-dl svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+      .proto-section-label{font-size:11.5px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.14em;display:flex;align-items:center;gap:9px;margin:24px 0 14px}
+      .proto-section-label::before{content:'';width:20px;height:2px;background:var(--azul-claro);border-radius:1px}
+      @media(max-width:640px){.proto-grid{grid-template-columns:1fr}}
+      </style>
+
+      <!-- ── Seguridad y orden público ── -->
+      <div class="proto-section-label">Seguridad y orden público</div>
+      <div class="proto-grid">
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación en caso de agresión de grupos al exterior de una entidad o dependencia Universitaria</div>
+            <div class="proto-date">14 de agosto de 2014</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_agresion_de_grupos_al_exterior_de_una_entidad_o_dependencia_universitaria.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación ante la agresión de grupos al interior de una entidad o dependencia Universitaria</div>
+            <div class="proto-date">14 de agosto de 2019</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_agresion_de_grupos_al_interior_de_una_entidad_o_dependencia_universitaria.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación en caso de persona no localizada, parte de la Comunidad Universitaria</div>
+            <div class="proto-date">14 de agosto de 2019</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_persona_no_localizada_parte_de_la_comunidad_universitaria.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación ante situación de robo</div>
+            <div class="proto-date">22 de junio de 2022</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_ante_situacion_de_robo.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación ante robo en transporte público</div>
+            <div class="proto-date">22 de junio de 2022</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_robo_en_transporte_publico.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><line x1="4.5" y1="4.5" x2="19.5" y2="19.5"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de extorsión telefónica</div>
+            <div class="proto-date">14 de agosto de 2019</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_extorsion_telefonica.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo para el caso de presencia y uso de armas dentro de entidades, dependencias o zonas comunes de la UNAM</div>
+            <div class="proto-date">14 de agosto de 2019</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_para_el_caso_de_presencia_de_armas_en_la_UNAM.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo ante artefacto explosivo en las instalaciones universitarias</div>
+            <div class="proto-date">23 de enero de 2020</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_ante_artefacto_explosivo_en_las_instalaciones_universitarias.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo ante amenaza por red social</div>
+            <div class="proto-date">4 de marzo de 2020</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_amenaza_por_red_social.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación ante paquete u objeto extraño</div>
+            <div class="proto-date">9 de septiembre de 2020</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_actuacion_paquete_objeto_extranio.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6M17 5H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de preservación del lugar donde se efectuó un hecho ilícito</div>
+            <div class="proto-date">9 de septiembre de 2020</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_preservacion_lugar_donde_efectuo_hecho_ilicito.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#0D47A1"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación ante la activación de botones de auxilio en una entidad académica o dependencia administrativa</div>
+            <div class="proto-date">23 de octubre de 2025</div>
+            <a href="https://normatividadseguridad.unam.mx/index_html_files/Protocolo%20botones%20de%20auxilio%202.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
         </div>
       </div>
-      <div class="dl-list">
-        <a href="https://normatividadseguridad.unam.mx/protoc%20grales.html" target="_blank" rel="noopener" class="dl-item">
-          <div class="dl-icon" style="background:#003B71"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
-          <div><div class="dl-name">Protocolo de Evacuacion</div><div class="dl-desc">Procedimientos de evacuacion ante sismo, incendio u otras emergencias en campus</div></div>
-          <span class="dl-btn">Ver <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
-        </a>
-        <a href="https://normatividadseguridad.unam.mx/protoc%20grales.html" target="_blank" rel="noopener" class="dl-item">
-          <div class="dl-icon" style="background:#C62828"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7 7 7 0 01-7-7c0-1.99.806-2.967 2.5-4.5z"/></svg></div>
-          <div><div class="dl-name">Protocolo de Atencion a Incendios</div><div class="dl-desc">Guia de actuacion y rutas de evacuacion ante incendios en instalaciones universitarias</div></div>
-          <span class="dl-btn">Ver <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
-        </a>
-        <a href="https://normatividadseguridad.unam.mx/protoc%20grales.html" target="_blank" rel="noopener" class="dl-item">
-          <div class="dl-icon" style="background:#6B21A8"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-          <div><div class="dl-name">Protocolo de Atencion de Violencia de Genero</div><div class="dl-desc">Procedimientos para atencion y canalizacion en casos de violencia de genero en la UNAM</div></div>
-          <span class="dl-btn">Ver <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
-        </a>
-        <!-- [PROTOCOLO-+] Agregar mas protocolos aqui -->
+
+      <!-- ── Emergencias y desastres naturales ── -->
+      <div class="proto-section-label">Emergencias y desastres naturales</div>
+      <div class="proto-grid">
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#D32F2F"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7 7 7 0 01-7-7c0-1.99.806-2.967 2.5-4.5z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de incendio para la Universidad Nacional Autónoma de México</div>
+            <div class="proto-date">14 de agosto de 2019</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_incendio_para_la_UNAM.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#BF360C"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo en caso de sismo</div>
+            <div class="proto-date">22 de junio de 2022</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_sismo.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#BF360C"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación ante sismo en el marco del COVID-19</div>
+            <div class="proto-date">5 de mayo de 2021</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_ante_sismo_en_el_marco_del_COVID-19.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#F57F17"><svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="12"/><path d="M12 22s-4-2-4-8V6l4-2 4 2v8c0 6-4 8-4 8z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de emergencias por fugas de gas L.P.</div>
+            <div class="proto-date">14 de agosto de 2019</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_emergencias_por_fuga_de_gas_L.P.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#1565C0"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación en situación de fuga o derrame de productos peligrosos</div>
+            <div class="proto-date">22 de junio de 2022</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_en_situacion_de_fuga_o_derrame.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#2E7D32"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación ante tormentas torrenciales e inundaciones</div>
+            <div class="proto-date">5 de mayo de 2021</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_ante_tormentas_torrenciales_e_inundaciones.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#6A1B9A"><svg viewBox="0 0 24 24"><path d="M12 2c0 0-4 4.5-4 9 0 2.2 1.8 4 4 4s4-1.8 4-4c0-4.5-4-9-4-9z"/><line x1="12" y1="15" x2="12" y2="22"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación ante contingencia volcánica (POPOCATÉPETL)</div>
+            <div class="proto-date">22 de junio de 2022</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_ante_contingencia_volcanica.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#00838F"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 01-20 0M2 12a10 10 0 0120 0"/><path d="M12 2v20M2 9h20M2 15h20"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación en situación de ciclón tropical</div>
+            <div class="proto-date">22 de junio de 2022</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_en_situacion_de_ciclon_tropical.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Atención médica y bienestar ── -->
+      <div class="proto-section-label">Atención médica y bienestar</div>
+      <div class="proto-grid">
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#C62828"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo para la atención de urgencias médicas en Ciudad Universitaria</div>
+            <div class="proto-date">22 de enero de 2020</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_para_la_atencion_de_urgencias_medicas_en_Ciudad_Universitaria.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#C62828"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo para la atención de urgencias médicas para entidades y dependencias externas a Ciudad Universitaria</div>
+            <div class="proto-date">5 de mayo de 2021</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_para_la_atencion_de_urgencias_medicas_para_entidades_y_dependencias_externas.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#4A148C"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12s1-2 4-2 4 2 4 2M9 9h.01M15 9h.01"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo para la Identificación y el Manejo del Riesgo de Autolesión y/o Suicidio en la Comunidad Universitaria</div>
+            <div class="proto-date">6 de noviembre de 2024</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_atencion_riesgo_autolesion.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#1565C0"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de atención a personas con discapacidad en situaciones de emergencia</div>
+            <div class="proto-date">6 de noviembre de 2024</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_Atencion_Personas_Discapacidad_Emergencias.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo para la atención de menores que desconocen el paradero de sus familiares</div>
+            <div class="proto-date">5 de mayo de 2021</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_para_la_atencion_de_menores.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Actividades universitarias ── -->
+      <div class="proto-section-label">Actividades universitarias</div>
+      <div class="proto-grid">
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#4E342E"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo de actuación en festivales y eventos en las instalaciones de la UNAM</div>
+            <div class="proto-date">5 de mayo de 2021</div>
+            <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_en_festivales_y_eventos_en_las_instalaciones_de_la_UNAM.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#33691E"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo para actividades universitarias presenciales COVID-19 – Torre de Rectoría</div>
+            <div class="proto-date">7 de septiembre de 2022</div>
+            <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/TORRE%20DE%20RECTORIA%20PROTOCOLO%20ACTUALIZADO%2007-09-22%20OK.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+        <div class="proto-card">
+          <div class="proto-icon" style="background:#33691E"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+          <div class="proto-info">
+            <div class="proto-title">Protocolo para el regreso a las actividades Universitarias – SPASU</div>
+            <div class="proto-date">16 de agosto de 2022</div>
+            <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/PROTOCOLO%20PARA%20EL%20REGRESO%20A%20LAS%20ACTIVIDADES%20%20SPASU%20Ago%202022.pdf" target="_blank" rel="noopener" class="proto-dl"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--azul-pale);border:1px solid var(--gris-borde);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;gap:12px;margin-top:4px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p style="font-size:13px;color:var(--gris-txt);font-weight:300;margin:0">Documentos oficiales del Consejo Universitario de la UNAM. Consulta la normatividad completa en <a href="https://normatividadseguridad.unam.mx/" target="_blank" rel="noopener" style="color:var(--azul);font-weight:600">normatividadseguridad.unam.mx</a>.</p>
       </div>
     </div>
   </section>
@@ -2067,22 +2785,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
     </div>
   </section>
 
-
-  <!-- VIDEO DEL RECTOR -->
-  <section class="video-section" id="video-rector">
-    <div class="video-inner">
-      <div class="video-wrap">
-        <iframe src="https://www.youtube.com/embed/dUX6ja2OX1Q?start=21" title="Mensaje del Rector de la UNAM" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div>
-        <div class="sec-tag">Mensaje institucional</div>
-        <h2 class="sec-title" style="margin-bottom:10px">Palabras del Rector</h2>
-        <div class="video-quote">"La seguridad es una condición indispensable para una educación plena en la Universidad Nacional."</div>
-        <div class="video-speaker">Dr. Leonardo Lomelí Vanegas<br><span style="color:var(--gris-sub);font-size:14px;font-weight:300">Rector de la UNAM</span></div>
-        <p style="font-size:16px;color:var(--gris-txt);font-weight:300;line-height:1.7;margin-top:18px">El rector de la UNAM comparte la visión institucional sobre seguridad, prevención y el nuevo paradigma de cuidado universitario.</p>
-      </div>
-    </div>
-  </section>
 
 
   <!-- REDES SOCIALES -->
@@ -2229,10 +2931,10 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   <!-- MAPA FINAL — Pestanas de ubicaciones -->
   <div id="mapa-ubicacion" style="background:#fff;border-top:2px solid var(--gris-borde)">
     <style>
-    .mapa-tabs-bar{display:flex;gap:0;background:var(--azul);padding:0 20px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-    .mapa-tab-btn{background:none;border:none;font-family:var(--font-sans);font-size:14px;font-weight:600;color:rgba(255,255,255,.65);padding:14px 20px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .22s ease}
-    .mapa-tab-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
-    .mapa-tab-btn.active{color:#fff;border-bottom-color:var(--azul-claro)}
+    .mapa-tabs-bar{display:flex;gap:0;background:var(--azul);padding:0 20px;overflow-x:auto;-webkit-overflow-scrolling:touch;box-shadow:0 2px 12px rgba(0,59,113,.3)}
+    .mapa-tab-btn{background:none;border:none;font-family:var(--font-sans);font-size:14px;font-weight:600;color:rgba(255,255,255,.65);padding:14px 20px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .22s ease;display:flex;align-items:center;gap:8px}
+    .mapa-tab-btn:hover{color:#fff;background:rgba(255,255,255,.15);border-bottom-color:rgba(169,198,232,.7);transform:none}
+    .mapa-tab-btn.active{color:#fff;border-bottom-color:var(--azul-claro);background:rgba(255,255,255,.1)}
     .mapa-tab-panel{display:none;position:relative;height:440px}
     .mapa-tab-panel.active{display:block}
     .mapa-tab-panel iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block}
@@ -2259,10 +2961,26 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
       <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:700;color:#fff;margin-bottom:0;padding-bottom:0">Ubica nuestros lugares de operación</h3>
     </div>
     <div class="mapa-tabs-bar">
-      <button class="mapa-tab-btn active" onclick="switchMapaTab('rectoria',this)">📍 Rectoría</button>
-      <button class="mapa-tab-btn" onclick="switchMapaTab('estadio',this)">🏟 Estadio Olímpico</button>
-      <button class="mapa-tab-btn" onclick="switchMapaTab('bicipuma',this)">🚲 Bicipuma · Bicicentro</button>
-      <button class="mapa-tab-btn" onclick="switchMapaTab('pumabus',this)">🚌 Pumabús</button>
+      <button class="mapa-tab-btn active" onclick="switchMapaTab('rectoria',this)">
+        <img src="img/mapa-rectoria.png" alt="Rectoría" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
+        Rectoría
+      </button>
+      <button class="mapa-tab-btn" onclick="switchMapaTab('estadio',this)">
+        <img src="img/mapa-estadio.png" alt="Estadio Olímpico" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
+        Estadio Olímpico
+      </button>
+      <button class="mapa-tab-btn" onclick="switchMapaTab('bicipuma',this)">
+        <img src="img/mapa-bicipuma.png" alt="Bicipuma" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
+        Bicipuma · Bicicentro
+      </button>
+      <button class="mapa-tab-btn" onclick="switchMapaTab('pumabus',this)">
+        <img src="img/mapa-pumabus.png" alt="Pumabús" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
+        Pumabús
+      </button>
+      <button class="mapa-tab-btn" onclick="switchMapaTab('cuidamoto',this)">
+        <img src="img/mapa-cuidamoto.png" alt="Cuida tu Moto" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
+        Programa Cuida tu Moto
+      </button>
     </div>
 
     <!-- Rectoría UNAM -->
@@ -2270,7 +2988,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.1!2d-99.1881895!3d19.3321734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce000070e7b4d9%3A0xf20e7da6619c4774!2sRector%C3%ADa+de+la+UNAM!5e0!3m2!1ses-419!2smx!4v1715555555555!5m2!1ses-419!2smx"
         allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Rectoría UNAM"></iframe>
-      <a href="https://www.google.com/maps/place/Rector%C3%ADa+de+la+UNAM/@19.3321734,-99.1881895,17z" target="_blank" rel="noopener" class="mapa-open-chip">
+      <a href="https://www.google.com/maps/place/Rector%C3%ADa+de+la+UNAM/data=!4m2!3m1!1s0x0:0xf20e7da6619c4774?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener" class="mapa-open-chip">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
         Abrir en Maps
       </a>
@@ -2281,7 +2999,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.1!2d-99.1893!3d19.3218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce002a6d3b2c4d%3A0xb87221ef658004e2!2sEstadio+Ol%C3%ADmpico+Universitario!5e0!3m2!1ses-419!2smx!4v1715555555556!5m2!1ses-419!2smx"
         allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Estadio Olímpico Universitario"></iframe>
-      <a href="https://www.google.com/maps/place/Estadio+Ol%C3%ADmpico+Universitario" target="_blank" rel="noopener" class="mapa-open-chip">
+      <a href="https://www.google.com/maps/place/estadio+olimpico+universitario/data=!4m2!3m1!1s0x85cdfffe5cfdd5cf:0xb87221ef658004e2?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener" class="mapa-open-chip">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
         Abrir en Maps
       </a>
@@ -2292,7 +3010,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.1!2d-99.174548!3d19.324862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0010a242b779%3A0xc9e07174381bfec0!2sBicipuma+%E2%80%93+Bicicentro+(Planta+Alta)!5e0!3m2!1ses-419!2smx!4v1715555555557!5m2!1ses-419!2smx"
         allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Bicipuma Bicicentro"></iframe>
-      <a href="https://www.google.com/maps/place/Bicipuma+%E2%80%93+Bicicentro+(Planta+Alta)/@19.324862,-99.174548,17z" target="_blank" rel="noopener" class="mapa-open-chip">
+      <a href="https://www.google.com/maps/place/Bicipuma+%E2%80%93+Bicicentro+(Planta+Alta)/data=!4m2!3m1!1s0x0:0xc9e07174381bfec0?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener" class="mapa-open-chip">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
         Abrir en Maps
       </a>
@@ -2303,15 +3021,24 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.1!2d-99.1882074!3d19.3236981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce00086dd1a813%3A0xd285f45239dbced!2sParada+del+Pumabus%2C+camiones+de+CU!5e0!3m2!1ses-419!2smx!4v1715555555558!5m2!1ses-419!2smx"
         allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Pumabús CU"></iframe>
-      <a href="https://www.google.com/maps/place/Parada+del+%22Pumabus%22,+camiones+de+CU/@19.3236981,-99.1882074,17z" target="_blank" rel="noopener" class="mapa-open-chip">
+      <a href="https://maps.app.goo.gl/RAjd7UsNs7oMXrxs7" target="_blank" rel="noopener" class="mapa-open-chip">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Abrir en Maps
+      </a>
+    </div>
+    <!-- Programa Cuida tu Moto -->
+    <div class="mapa-tab-panel" id="mapa-cuidamoto">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.1!2d-99.1830153!3d19.3329696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0151a9423071%3A0x5bbbb1e83f7559d1!2sDGSGM!5e0!3m2!1ses-419!2smx!4v1715555555559!5m2!1ses-419!2smx"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Programa Cuida tu Moto DGSGM"></iframe>
+      <a href="https://www.google.com/maps/place/DGSGM/data=!4m2!3m1!1s0x0:0x5bbbb1e83f7559d1?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener" class="mapa-open-chip">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
         Abrir en Maps
       </a>
     </div>
   </div>
-
   <script>
-  function switchMapaTab(id, btn) {
+  function switchMapaTab(id, btn){
     document.querySelectorAll('.mapa-tab-btn').forEach(function(b){ b.classList.remove('active'); });
     document.querySelectorAll('.mapa-tab-panel').forEach(function(p){ p.classList.remove('active'); });
     if (btn) btn.classList.add('active');
@@ -2342,17 +3069,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
         <a href="#" onclick="showTab('directorio');return false">Directorio institucional</a>
         <a href="http://www.transparencia.unam.mx/" target="_blank" rel="noopener">Transparencia UNAM</a>
       </div>
-      <div class="footer-col">
-        <div class="fc-title">Igualdad de Género</div>
-        <a href="https://coordinaciongenero.unam.mx/" target="_blank" rel="noopener">Protocolo de atención de violencia de género</a>
-        <a href="https://liveatteduunam-my.sharepoint.com/personal/comunicacion_cigu_unam_mx/_layouts/15/onedrive.aspx?ga=1&id=%2Fpersonal%2Fcomunicacion%5Fcigu%5Funam%5Fmx%2FDocuments%2FRuta%20de%20Atenci%C3%B3n%202024%2FCartel%2DRutaatencion%2D2024%2Epdf" target="_blank" rel="noopener">Ruta de atención para quejas</a>
-      </div>
-      <div class="footer-col">
-        <div class="fc-title">Correspondencia SPAMSU</div>
-        <div class="fc-contact"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:spamsu@unam.mx">spamsu@unam.mx</a></div>
-        <div class="fc-contact"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg><span>Protección Civil: <a href="tel:5556220804">55-5622-0804</a></span></div>
-        <div class="fc-contact"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg><span>Emergencias UNAM: <a href="tel:5556221994">55-5622-1994</a></span></div>
-      </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-copyright">© 2026 UNAM · Universidad Nacional Autónoma de México</div>
@@ -2363,6 +3079,111 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 
 </main>
 
+
+<!-- DISCLAIMER MODAL (se muestra una sola vez al abrir la página) -->
+<style>
+.disclaimer-bg{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:linear-gradient(135deg,rgba(0,20,50,.88) 0%,rgba(0,40,90,.92) 100%);
+  backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;
+}
+.disclaimer-bg.open{display:flex;animation:fadeIn .38s ease}
+.disclaimer-box{
+  background:#1a2e4a;border:1px solid rgba(169,198,232,.25);
+  border-radius:22px;max-width:560px;width:100%;
+  box-shadow:0 32px 80px rgba(0,0,0,.45);
+  position:relative;overflow:hidden;
+  animation:modalIn .38s cubic-bezier(.4,0,.2,1);
+}
+.disclaimer-head{
+  background:linear-gradient(135deg,#001d40 0%,#002f60 50%,#003B71 100%);
+  padding:32px 32px 24px;text-align:center;position:relative;overflow:hidden;
+}
+.disclaimer-head::before{
+  content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(169,198,232,.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.disclaimer-head-title{
+  font-family:var(--font-serif);font-size:clamp(20px,3vw,28px);font-weight:700;
+  color:#fff;line-height:1.2;margin-bottom:6px;position:relative;z-index:1;
+}
+.disclaimer-head-sub{
+  font-size:14px;color:rgba(255,255,255,.65);font-weight:300;position:relative;z-index:1;
+}
+.disclaimer-body{padding:28px 32px}
+/* Tarjeta de número de emergencia */
+.disclaimer-card{
+  display:flex;align-items:center;gap:16px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(169,198,232,.2);
+  border-radius:14px;padding:16px 20px;margin-bottom:14px;
+  transition:background .2s ease;cursor:pointer;text-decoration:none;
+}
+.disclaimer-card:hover{background:rgba(255,255,255,.12)}
+.disclaimer-badge{
+  width:52px;height:52px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:12px;color:#fff;letter-spacing:.02em;
+  background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.2);
+  text-align:center;line-height:1.2;flex-direction:column;gap:1px;
+}
+.disclaimer-card-info{}
+.disclaimer-card-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.disclaimer-card-number{font-family:var(--font-serif);font-size:22px;font-weight:700;color:#fff;line-height:1}
+.disclaimer-footer{padding:0 32px 28px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.disclaimer-sos-btn{
+  display:flex;align-items:center;gap:10px;
+  background:var(--azul-claro);color:var(--azul);
+  font-family:var(--font-sans);font-size:15px;font-weight:700;
+  padding:13px 28px;border-radius:12px;border:none;cursor:pointer;
+  transition:all var(--t);width:100%;justify-content:center;text-decoration:none;
+}
+.disclaimer-sos-btn:hover{background:#fff;color:var(--azul)}
+.disclaimer-close-link{
+  font-size:13px;color:rgba(255,255,255,.45);cursor:pointer;
+  text-decoration:underline;transition:color .2s;background:none;border:none;
+}
+.disclaimer-close-link:hover{color:rgba(255,255,255,.75)}
+</style>
+
+<div class="disclaimer-bg" id="disclaimerModal">
+  <div class="disclaimer-box">
+    <div class="disclaimer-head">
+      <div class="disclaimer-head-title">¿Necesitas ayuda inmediata?</div>
+      <div class="disclaimer-head-sub">Nuestros equipos de reacción están disponibles las 24 horas.<br>No dudes en llamar si estás en riesgo.</div>
+    </div>
+    <div class="disclaimer-body">
+      <a href="tel:5556160523" class="disclaimer-card">
+        <div class="disclaimer-badge" style="background:#002060;padding:6px;overflow:hidden">
+          <img src="img/disclaimer-cae.png" alt="CAE" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span style="display:none;font-size:11px;font-weight:900;letter-spacing:.04em">CAE</span>
+        </div>
+        <div class="disclaimer-card-info">
+          <div class="disclaimer-card-name">Central de Atención de Emergencias</div>
+          <div class="disclaimer-card-number">55 5616 0523</div>
+        </div>
+      </a>
+      <a href="tel:5556226464" class="disclaimer-card">
+        <div class="disclaimer-badge" style="background:#F57F17;padding:6px;overflow:hidden">
+          <img src="img/disclaimer-puma.png" alt="Línea de Reacción Puma" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <svg style="display:none" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+        </div>
+        <div class="disclaimer-card-info">
+          <div class="disclaimer-card-name">Línea de Reacción Puma</div>
+          <div class="disclaimer-card-number">55 5622 6464</div>
+        </div>
+      </a>
+    </div>
+    <div class="disclaimer-footer">
+      <a href="http://www.sos.unam.mx/" target="_blank" rel="noopener" class="disclaimer-sos-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        Ir a S.O.S. UNAM
+      </a>
+      <button class="disclaimer-close-link" onclick="closeDisclaimer()">Entendido, continuar al sitio</button>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL: ¿Qué hacemos? -->
 <div class="modal-bg" id="modal-quehacemos" onclick="if(event.target===this)closeModal('modal-quehacemos')" role="dialog" aria-modal="true">
@@ -2548,17 +3369,79 @@ function goTop(){window.scrollTo({top:0,behavior:'smooth'});}
 function toggleSidebar(){var sb=document.getElementById('sidebar');var bd=document.getElementById('sidebarBackdrop');var hb=document.getElementById('mobHamburger');var open=sb.classList.contains('mobile-open');sb.classList.toggle('mobile-open',!open);bd.classList.toggle('open',!open);hb.classList.toggle('open',!open);document.body.style.overflow=open?'':'hidden';}
 document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.sb-item').forEach(function(btn){btn.addEventListener('click',function(){var sb=document.getElementById('sidebar');if(sb&&sb.classList.contains('mobile-open'))toggleSidebar();});});});
 
-/* ════════ SIDEBAR TAB NAV ════════ */
-function showTab(id){
-  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active')});
+/* ════════ NAVEGACIÓN HÍBRIDA: SCROLL + PANELES APARTE ════════ */
+
+/* Ir a una sección de scroll (modo página normal) */
+function sbGoSection(sectionId, btnId){
+  // Salir del modo pestaña si estaba activo
+  document.body.classList.remove('tab-mode');
+  document.querySelectorAll('.panel-tab-only').forEach(function(p){p.classList.remove('panel-open')});
+  // Marcar botón activo
   document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
-  var panel=document.getElementById('panel-'+id);if(panel)panel.classList.add('active');
-  var btn=document.getElementById('sb-'+id);if(btn)btn.classList.add('active');
-  window.scrollTo(0,0);
-  /* Cierra sidebar en móvil al seleccionar una sección */
-  var sb=document.getElementById('sidebar');
-  if(sb&&sb.classList.contains('mobile-open'))toggleSidebar();
+  var btn = document.getElementById(btnId); if(btn) btn.classList.add('active');
+  // Scroll a la sección
+  var el = document.getElementById(sectionId);
+  if(!el){ window.scrollTo({top:0,behavior:'smooth'}); return; }
+  var offset = window.innerWidth <= 900 ? 62 : 0;
+  var top = el.getBoundingClientRect().top + window.pageYOffset - offset - 12;
+  window.scrollTo({top: top, behavior:'smooth'});
+  // Cierra sidebar móvil
+  var sb = document.getElementById('sidebar');
+  if(sb && sb.classList.contains('mobile-open')) toggleSidebar();
 }
+
+/* Abrir un panel de pestaña aparte (Directorio, etc.) */
+function sbOpenTab(panelId, btnId){
+  // Activar modo pestaña: oculta scroll, muestra el panel
+  document.querySelectorAll('.panel-tab-only').forEach(function(p){p.classList.remove('panel-open')});
+  var panel = document.getElementById('panel-'+panelId);
+  if(panel) panel.classList.add('panel-open');
+  document.body.classList.add('tab-mode');
+  // Marcar botón activo
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
+  var btn = document.getElementById(btnId); if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  // Cierra sidebar móvil
+  var sb = document.getElementById('sidebar');
+  if(sb && sb.classList.contains('mobile-open')) toggleSidebar();
+}
+
+/* Alias: showTab sigue funcionando para cualquier llamada existente */
+function showTab(id){
+  var scrollPanels = ['informacion','estructura','servicios'];
+  if(scrollPanels.indexOf(id) >= 0){
+    sbGoSection('panel-'+id, 'sb-'+id);
+  } else {
+    sbOpenTab(id, 'sb-'+id);
+  }
+}
+
+/* ════════ SIDEBAR SCROLL SPY ════════ */
+(function(){
+  var spySections = [
+    {id:'panel-informacion', btn:'sb-informacion'},
+    {id:'panel-estructura',  btn:'sb-estructura'},
+    {id:'panel-servicios',   btn:'sb-servicios'}
+  ];
+  if(!('IntersectionObserver' in window)) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var m = spySections.find(function(s){return s.id===e.target.id;});
+        if(m){
+          document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
+          var btn = document.getElementById(m.btn);
+          if(btn) btn.classList.add('active');
+        }
+      }
+    });
+  },{threshold:0.25});
+  document.addEventListener('DOMContentLoaded',function(){
+    spySections.forEach(function(s){
+      var el=document.getElementById(s.id);if(el) obs.observe(el);
+    });
+  });
+})();
 function openMarcoJuridico(){
   window.open('https://normatividadseguridad.unam.mx/','_blank','noopener');
   document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
@@ -2606,25 +3489,45 @@ document.addEventListener('DOMContentLoaded',function(){
   });
 });
 
-/* ════════ ESTRUCTURA — Dir panels ════════ */
-function openDirPanel(id){
-  document.querySelectorAll('.dir-inner-panel').forEach(function(p){p.classList.remove('open')});
-  var panel=document.getElementById('dir-panel-'+id);
-  if(panel){panel.classList.add('open');panel.scrollIntoView({behavior:'smooth',block:'start'});}
+/* ════════ ESTRUCTURA DIR MODALS ════════ */
+function openDirModal(id){
+  var m=document.getElementById('dir-modal-'+id);
+  if(m){m.classList.add('open');document.body.style.overflow='hidden';}
 }
+function closeDirModal(id){
+  var m=document.getElementById('dir-modal-'+id);
+  if(m){m.classList.remove('open');document.body.style.overflow='';}
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    document.querySelectorAll('.dir-modal-bg.open').forEach(function(m){m.classList.remove('open')});
+    document.body.style.overflow='';
+  }
+});
 
 /* ════════ NOVEDADES TABS ════════ */
 function switchNovTab(id){
   document.querySelectorAll('.ntab').forEach(function(b){b.classList.remove('active')});
   document.querySelectorAll('.ntab-panel').forEach(function(p){p.classList.remove('active')});
-  document.getElementById('ntb-'+id).classList.add('active');
-  document.getElementById('np-'+id).classList.add('active');
+  var btn=document.getElementById('ntb-'+id);
+  var panel=document.getElementById('np-'+id);
+  if(btn)btn.classList.add('active');
+  if(panel)panel.classList.add('active');
+}
+
+/* ════════ ESTADIO SUB-TABS ════════ */
+function switchEstadioTab(id){
+  ['videos','visitas'].forEach(function(k){
+    var b=document.getElementById('et-'+k), p=document.getElementById('ep-'+k);
+    if(b) b.classList.toggle('active', k===id);
+    if(p) p.classList.toggle('active', k===id);
+  });
 }
 
 /* ════════ MODALS ════════ */
 function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-bg.open').forEach(function(m){m.classList.remove('open')});document.body.style.overflow='';}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.dir-modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.disclaimer-bg.open').forEach(function(m){m.classList.remove('open')});document.body.style.overflow='';}});
 
 /* ════════ HERO DOTS ════════ */
 var hDots=document.querySelectorAll('.h-dot');
@@ -2723,7 +3626,25 @@ function drawHeroPattern() {
 document.addEventListener('DOMContentLoaded', drawHeroPattern);
 window.addEventListener('resize', drawHeroPattern);
 
-/* ════════ TOPBAR SHADOW ════════ */
+/* ════════ DISCLAIMER (se muestra una sola vez por sesión) ════════ */
+function closeDisclaimer(){
+  var m=document.getElementById('disclaimerModal');
+  if(m){m.classList.remove('open');document.body.style.overflow='';}
+  try{sessionStorage.setItem('spamsu_disclaimer_shown','1');}catch(e){}
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var shown=false;
+  try{shown=!!sessionStorage.getItem('spamsu_disclaimer_shown');}catch(e){}
+  if(!shown){
+    var m=document.getElementById('disclaimerModal');
+    if(m){
+      setTimeout(function(){
+        m.classList.add('open');
+        document.body.style.overflow='hidden';
+      },600);
+    }
+  }
+});
 var topBar=document.querySelector('.top-bar');
 window.addEventListener('scroll',function(){if(topBar)topBar.style.boxShadow=window.scrollY>10?'0 2px 16px rgba(169,198,232,.3)':'none';},{passive:true});
 </script>
