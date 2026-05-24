@@ -835,14 +835,94 @@ body.tab-mode section.noticias-section{display:none}
 
   <!-- Hero -->
   <div class="hero-wrap" id="heroWrap">
-    <div data-img="hero-slide-1" data-alt="Ciudad Universitaria UNAM" class="dark-ph" style="position:absolute;inset:0;width:100%;height:100%"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-dots">
+    <!-- Slide 1 — Imagen -->
+    <div class="hero-slide" id="hero-slide-1" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:1;z-index:1">
+      <div data-img="hero-slide-1" data-alt="Ciudad Universitaria UNAM" class="dark-ph" style="width:100%;height:100%"></div>
+    </div>
+    <!-- Slide 2 — Video YouTube: autoplay, muted, sin controles, sin HUD -->
+    <div class="hero-slide" id="hero-slide-2" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;overflow:hidden;background:#000">
+      <iframe
+        id="heroYTFrame"
+        src="https://www.youtube.com/embed/WOlHrlRu9Xg?autoplay=1&mute=1&loop=1&playlist=WOlHrlRu9Xg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&playsinline=1&enablejsapi=1"
+        title="SPAMSU UNAM"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        style="position:absolute;top:50%;left:50%;width:177.78%;height:177.78%;min-width:100%;min-height:100%;transform:translate(-50%,-50%);border:none;pointer-events:none"
+        loading="lazy">
+      </iframe>
+    </div>
+    <!-- Slide 3 — Imagen -->
+    <div class="hero-slide" id="hero-slide-3" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1">
+      <div data-img="hero-slide-3" data-alt="Campus UNAM" class="dark-ph" style="width:100%;height:100%"></div>
+    </div>
+    <div class="hero-overlay" style="z-index:2"></div>
+    <div class="hero-dots" style="z-index:3">
       <button class="h-dot active" onclick="heroSlide(0)"></button>
       <button class="h-dot" onclick="heroSlide(1)"></button>
       <button class="h-dot" onclick="heroSlide(2)"></button>
     </div>
   </div>
+  <script>
+  /* ════ HERO SLIDER — imagen / video / imagen ════ */
+  var _heroIdx = 0;
+  var _heroTimer = null;
+  var _heroSlides = ['hero-slide-1','hero-slide-2','hero-slide-3'];
+  var _heroDots   = null;
+
+  function heroSlide(n){
+    _heroIdx = n;
+    _heroSlides.forEach(function(id,i){
+      var el = document.getElementById(id);
+      if(el) el.style.opacity = i===n ? '1' : '0';
+    });
+    if(!_heroDots) _heroDots = document.querySelectorAll('.h-dot');
+    _heroDots.forEach(function(d,i){ d.classList.toggle('active', i===n); });
+    // Pause/resume YT iframe
+    var yt = document.getElementById('heroYTFrame');
+    if(yt){
+      try{
+        if(n===1){ yt.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*'); }
+        else      { yt.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*'); }
+      }catch(e){}
+    }
+    resetHeroTimer();
+  }
+
+  function resetHeroTimer(){
+    clearInterval(_heroTimer);
+    // Slide 2 (video) stays longer (12 s), others 5 s
+    var delay = _heroIdx === 1 ? 12000 : 5000;
+    _heroTimer = setTimeout(function(){ heroSlide((_heroIdx+1)%3); }, delay);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    resetHeroTimer();
+
+    /* ── Swipe táctil en móvil ── */
+    var hw = document.getElementById('heroWrap');
+    var _txStart = 0, _tyStart = 0;
+
+    hw.addEventListener('touchstart', function(e){
+      _txStart = e.touches[0].clientX;
+      _tyStart = e.touches[0].clientY;
+    }, {passive:true});
+
+    hw.addEventListener('touchend', function(e){
+      var dx = e.changedTouches[0].clientX - _txStart;
+      var dy = e.changedTouches[0].clientY - _tyStart;
+      // Solo actuar si el movimiento horizontal supera al vertical (swipe lateral)
+      if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
+        if(dx < 0){
+          // Swipe izquierda → siguiente slide
+          heroSlide((_heroIdx + 1) % _heroSlides.length);
+        } else {
+          // Swipe derecha → slide anterior
+          heroSlide((_heroIdx - 1 + _heroSlides.length) % _heroSlides.length);
+        }
+      }
+    }, {passive:true});
+  });
+  </script>
   <!-- Decorative pattern below hero — identical to reference image -->
   <!-- hero-pattern canvas eliminado según solicitud -->
 
@@ -960,7 +1040,7 @@ body.tab-mode section.noticias-section{display:none}
                 <img src="img/puzzle-respeto.png" alt="Respeto y Tolerancia" onerror="this.style.opacity='.35'">
               </div>
               <div class="puzzle-img-wrap" id="puzzle-1" onclick="openValorModal(1)">
-                <img src="img/puzzle-convivencia.png" alt="Convivencia Pacifica" onerror="this.style.opacity='.35'">
+                <img src="img/puzzle-convivencia.png" alt="Convivencia Pac&#237;fica" onerror="this.style.opacity='.35'">
               </div>
               <div class="puzzle-img-wrap" id="puzzle-2" onclick="openValorModal(2)">
                 <img src="img/puzzle-igualdad.png" alt="Igualdad" onerror="this.style.opacity='.35'">
@@ -983,8 +1063,8 @@ body.tab-mode section.noticias-section{display:none}
                 onmouseenter="highlightPiece(1)" onmouseleave="highlightPiece(-1)" onclick="openValorModal(1)">
                 <div class="valor-icon-img"><img src="img/puzzle-convivencia.png" alt="" onerror="this.style.display='none'"></div>
                 <div>
-                  <div class="valor-name">Convivencia Pacifica y Respeto a la Diversidad</div>
-                  <div class="valor-sub">Cultural, etnica y personal</div>
+                  <div class="valor-name">Convivencia Pac&#237;fica y Respeto a la Diversidad</div>
+                  <div class="valor-sub">Cultural, &#233;tnica y personal</div>
                 </div>
               </div>
               <div class="valor-item" id="vi-2"
@@ -992,7 +1072,7 @@ body.tab-mode section.noticias-section{display:none}
                 <div class="valor-icon-img"><img src="img/puzzle-igualdad.png" alt="" onerror="this.style.display='none'"></div>
                 <div>
                   <div class="valor-name">Igualdad</div>
-                  <div class="valor-sub">Sin discriminacion por ningun motivo</div>
+                  <div class="valor-sub">Sin discriminaci&#243;n por ning&#250;n motivo</div>
                 </div>
               </div>
               <div class="valor-item" id="vi-3"
@@ -1000,7 +1080,7 @@ body.tab-mode section.noticias-section{display:none}
                 <div class="valor-icon-img"><img src="img/puzzle-libertad.png" alt="" onerror="this.style.display='none'"></div>
                 <div>
                   <div class="valor-name">Libertad de Pensamiento y Expresion</div>
-                  <div class="valor-sub">Buscar, recibir y difundir informacion</div>
+                  <div class="valor-sub">Buscar, recibir y difundir informaci&#243;n</div>
                 </div>
               </div>
             </div>
@@ -1024,13 +1104,13 @@ body.tab-mode section.noticias-section{display:none}
         <script>
         var _valoresData = [
           {title:'Respeto y Tolerancia', img:'img/puzzle-respeto.png',
-           text:'El respeto es un principio fundamental de la convivencia universitaria y conlleva el imperativo de la tolerancia: comprender el contexto de pluralidad en el que vivimos y asumir la responsabilidad de reconocer la relatividad de las propias convicciones, practicas e ideas.'},
-          {title:'Convivencia Pacifica y Respeto a la Diversidad Cultural, Etnica y Personal', img:'img/puzzle-convivencia.png',
-           text:'Se trata de mantener relaciones pacificas, cordiales, basadas en el dialogo equitativo y respetuoso como mecanismo para identificar desacuerdos y superarlos, a fin de evitar el ejercicio de la violencia.'},
+           text:'El respeto es un principio fundamental de la convivencia universitaria y conlleva el imperativo de la tolerancia: comprender el contexto de pluralidad en el que vivimos y asumir la responsabilidad de reconocer la relatividad de las propias convicciones, prácticas e ideas.'},
+          {title:'Convivencia Pacífica y Respeto a la Diversidad Cultural, Étnica y Personal', img:'img/puzzle-convivencia.png',
+           text:'Se trata de mantener relaciones pacíficas, cordiales, basadas en el diálogo equitativo y respetuoso como mecanismo para identificar desacuerdos y superarlos, a fin de evitar el ejercicio de la violencia.'},
           {title:'Igualdad', img:'img/puzzle-igualdad.png',
            text:'Nadie puede ser discriminado por su origen nacional o etnico, sus opiniones, genero, orientacion o preferencia sexual, religion, edad, estado civil, condicion social, laboral o de salud, discapacidades o cualquier otro motivo que atente contra la dignidad humana.'},
           {title:'Libertad de Pensamiento y Expresion', img:'img/puzzle-libertad.png',
-           text:'Se relaciona con la libertad de buscar, recibir y difundir informacion e ideas de toda indole, sin consideracion de fronteras y a traves de cualquier medio, en estricto respeto a los derechos de terceros, conforme a lo establecido en la legislacion universitaria.'}
+           text:'Se relaciona con la libertad de buscar, recibir y difundir información e ideas de toda índole, sin consideración de fronteras y a través de cualquier medio, en estricto respeto a los derechos de terceros, conforme a lo establecido en la legislación universitaria.'}
         ];
 
         window.highlightPiece = function(idx) {
@@ -1778,19 +1858,19 @@ body.tab-mode section.noticias-section{display:none}
             <tbody>
               <tr>
                 <td><div style="display:flex;align-items:center;gap:8px"><div class="send-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div>Rutas señalizadas</div></td>
-                <td>Rutas habilitadas dentro del campus universitario para peatones y ciclistas</td>
+                <td>Rutas habilitadas dentro del campus universitario para peatones y ciclistas.</td>
               </tr>
               <tr>
                 <td><div style="display:flex;align-items:center;gap:8px"><div class="send-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>Casetas de seguridad</div></td>
-                <td>Puntos de vigilancia distribuidos en todo el campus universitario</td>
+                <td>Puntos de vigilancia distribuidos en todo el campus universitario.</td>
               </tr>
               <tr>
                 <td><div style="display:flex;align-items:center;gap:8px"><div class="send-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/></svg></div>Puntos de emergencia</div></td>
-                <td>Teléfonos de emergencia y desfibriladores disponibles en campus</td>
+                <td>Teléfonos de emergencia y desfibriladores disponibles en campus.</td>
               </tr>
               <tr>
                 <td><div style="display:flex;align-items:center;gap:8px"><div class="send-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/></svg></div>Movilidad y transporte</div></td>
-                <td>Rutas de transporte interno y estacionamientos disponibles por zona</td>
+                <td>Rutas de transporte interno y estacionamientos disponibles por zona.</td>
               </tr>
             </tbody>
           </table>
@@ -2353,12 +2433,15 @@ body.tab-mode section.noticias-section{display:none}
         <button class="itab"        onclick="switchVidTab('protoc')"     id="vt-protoc">Nuestros protocolos</button>
       </div>
       <div class="itab-pane active" id="vp-comunidad">
-        <div class="vid-grid">
-          <div class="vid-card" style="overflow:hidden">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYdsHT2Nq2K/?igsh=eGR4bW90aXhkamt5" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:var(--r);box-shadow:none;margin:0;max-width:100%;min-width:unset;padding:0;width:100%"></blockquote>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;width:100%">
+          <div style="width:100%;max-width:400px;overflow:visible">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYdsHT2Nq2K/?igsh=eGR4bW90aXhkamt5" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
           </div>
-          <!-- [VIDEO-COMUNIDAD] Agregar videos de comunidad aqui -->
+          <div style="width:100%;max-width:400px;overflow:visible">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/DYbAWavBlgU/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
+          </div>
         </div>
+        <!-- [VIDEO-COMUNIDAD] Agregar videos de comunidad aqui -->
       </div>
       <div class="itab-pane" id="vp-estadio">
         <div class="info-tabs" style="margin-bottom:24px">
@@ -2412,7 +2495,7 @@ body.tab-mode section.noticias-section{display:none}
             <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
             <div class="srv-title">PMS</div>
             <p class="srv-desc">Programa de Mejora a la Seguridad. Iniciativa institucional para el fortalecimiento de las capacidades de seguridad en el campus universitario.</p>
-            <span class="srv-cta">Conocer mas &rarr;</span>
+            <span class="srv-cta">Conocer más &rarr;</span>
           </div>
         </div>
         <!-- [PROYECTO-+] Agregar mas proyectos aqui -->
@@ -2455,9 +2538,9 @@ body.tab-mode section.noticias-section{display:none}
     <div class="ntab-panel" id="np-gaceta">
       <div class="sec-tag">Gaceta UNAM</div>
       <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--azul);margin-bottom:18px">Gaceta UNAM · Videos</h3>
-      <div class="vid-grid">
-        <div class="vid-card" style="overflow:hidden">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYbAWavBlgU/?igsh=MTBqZmprajBtYWYyZA%3D%3D" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:var(--r);box-shadow:none;margin:0;max-width:100%;min-width:unset;padding:0;width:100%"></blockquote>
+      <div style="display:flex;justify-content:center;width:100%">
+        <div style="width:100%;max-width:400px;overflow:visible">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYbAWavBlgU/?igsh=MTBqZmprajBtYWYyZA%3D%3D" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
         </div>
       </div>
     </div>
@@ -3530,8 +3613,7 @@ function closeModal(id){document.getElementById(id).classList.remove('open');doc
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.dir-modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.disclaimer-bg.open').forEach(function(m){m.classList.remove('open')});document.body.style.overflow='';}});
 
 /* ════════ HERO DOTS ════════ */
-var hDots=document.querySelectorAll('.h-dot');
-function heroSlide(n){hDots.forEach(function(d){d.classList.remove('active')});if(hDots[n])hDots[n].classList.add('active');}
+/* heroSlide is defined inline in the hero block above */
 
 /* ════════ HERO PATTERN CANVAS ════════ */
 function drawHeroPattern() {
