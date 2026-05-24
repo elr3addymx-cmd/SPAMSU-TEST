@@ -839,17 +839,11 @@ body.tab-mode section.noticias-section{display:none}
     <div class="hero-slide" id="hero-slide-1" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:1;z-index:1">
       <div data-img="hero-slide-1" data-alt="Ciudad Universitaria UNAM" class="dark-ph" style="width:100%;height:100%"></div>
     </div>
-    <!-- Slide 2 — Video YouTube: autoplay, muted, sin controles, sin HUD -->
+    <!-- Slide 2 — Video YouTube: avanza al terminar, sin controles ni HUD -->
     <div class="hero-slide" id="hero-slide-2" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;overflow:hidden;background:#000">
-      <iframe
-        id="heroYTFrame"
-        src="https://www.youtube.com/embed/WOlHrlRu9Xg?autoplay=1&mute=1&loop=1&playlist=WOlHrlRu9Xg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&playsinline=1&enablejsapi=1"
-        title="SPAMSU UNAM"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-        style="position:absolute;top:50%;left:50%;width:177.78%;height:177.78%;min-width:100%;min-height:100%;transform:translate(-50%,-50%);border:none;pointer-events:none"
-        loading="lazy">
-      </iframe>
+      <!-- Capa bloqueadora encima del iframe para ocultar controles de YouTube -->
+      <div style="position:absolute;inset:0;z-index:3;pointer-events:none"></div>
+      <div id="heroYTPlayer" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;overflow:hidden"></div>
     </div>
     <!-- Slide 3 — Imagen -->
     <div class="hero-slide" id="hero-slide-3" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1">
@@ -863,40 +857,112 @@ body.tab-mode section.noticias-section{display:none}
     </div>
   </div>
   <script>
-  /* ════ HERO SLIDER — imagen / video / imagen ════ */
-  var _heroIdx = 0;
-  var _heroTimer = null;
+  /* ════ HERO SLIDER ════ */
+  var _heroIdx    = 0;
+  var _heroTimer  = null;
   var _heroSlides = ['hero-slide-1','hero-slide-2','hero-slide-3'];
   var _heroDots   = null;
+  var _ytPlayer   = null;   // YouTube IFrame API player
+  var _ytReady    = false;
 
+  /* ── Avanzar al slide n ── */
   function heroSlide(n){
+    var prev = _heroIdx;
     _heroIdx = n;
+
     _heroSlides.forEach(function(id,i){
       var el = document.getElementById(id);
-      if(el) el.style.opacity = i===n ? '1' : '0';
+      if(el) el.style.opacity = i === n ? '1' : '0';
     });
+
     if(!_heroDots) _heroDots = document.querySelectorAll('.h-dot');
-    _heroDots.forEach(function(d,i){ d.classList.toggle('active', i===n); });
-    // Pause/resume YT iframe
-    var yt = document.getElementById('heroYTFrame');
-    if(yt){
-      try{
-        if(n===1){ yt.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*'); }
-        else      { yt.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*'); }
-      }catch(e){}
+    _heroDots.forEach(function(d,i){ d.classList.toggle('active', i === n); });
+
+    clearTimeout(_heroTimer);
+    _heroTimer = null;
+
+    if(n === 1){
+      /* Slide de video: reproducir y esperar a que termine (sin timer) */
+      if(_ytReady && _ytPlayer){
+        try{ _ytPlayer.seekTo(0); _ytPlayer.playVideo(); }catch(e){}
+      }
+    } else {
+      /* Slides de imagen: pausar video si venía del slide 2 */
+      if(prev === 1 && _ytReady && _ytPlayer){
+        try{ _ytPlayer.pauseVideo(); }catch(e){}
+      }
+      /* Avance automático tras 5 s */
+      _heroTimer = setTimeout(function(){
+        heroSlide((_heroIdx + 1) % _heroSlides.length);
+      }, 5000);
     }
-    resetHeroTimer();
   }
 
-  function resetHeroTimer(){
-    clearInterval(_heroTimer);
-    // Slide 2 (video) stays longer (12 s), others 5 s
-    var delay = _heroIdx === 1 ? 12000 : 5000;
-    _heroTimer = setTimeout(function(){ heroSlide((_heroIdx+1)%3); }, delay);
+  /* ── YouTube IFrame API ── */
+  function _sizeHeroVideo(){
+    var hero = document.getElementById('heroWrap');
+    var div  = document.getElementById('heroYTPlayer');
+    if(!hero || !div) return;
+    var W = hero.offsetWidth;
+    var H = hero.offsetHeight;
+    var ratio = 16 / 9;
+    var vw, vh;
+    if(W / H > ratio){
+      vw = W + 4;
+      vh = Math.ceil(W / ratio) + 4;
+    } else {
+      vh = H + 4;
+      vw = Math.ceil(H * ratio) + 4;
+    }
+    div.style.width  = vw + 'px';
+    div.style.height = vh + 'px';
+    var iframe = div.querySelector('iframe');
+    if(iframe){
+      iframe.style.cssText = 'width:'+vw+'px;height:'+vh+'px;border:none;display:block;pointer-events:none';
+    }
   }
+
+  function onYouTubeIframeAPIReady(){
+    _sizeHeroVideo();
+    var div = document.getElementById('heroYTPlayer');
+    _ytPlayer = new YT.Player('heroYTPlayer', {
+      videoId: 'WOlHrlRu9Xg',
+      width:  div ? div.offsetWidth  : 1280,
+      height: div ? div.offsetHeight : 720,
+      playerVars:{
+        autoplay:0, mute:1, controls:0, showinfo:0, rel:0,
+        iv_load_policy:3, modestbranding:1, disablekb:1,
+        fs:0, playsinline:1, loop:0, cc_load_policy:0
+      },
+      events:{
+        onReady: function(e){
+          _ytReady = true;
+          e.target.setVolume(0);
+          _sizeHeroVideo();
+          window.addEventListener('resize', _sizeHeroVideo);
+        },
+        onStateChange: function(e){
+          if(e.data === YT.PlayerState.ENDED){
+            heroSlide((_heroIdx + 1) % _heroSlides.length);
+          }
+        }
+      }
+    });
+  }
+
+  /* Cargar la API de YouTube de forma asíncrona */
+  (function(){
+    var tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    var first = document.getElementsByTagName('script')[0];
+    first.parentNode.insertBefore(tag, first);
+  })();
 
   document.addEventListener('DOMContentLoaded', function(){
-    resetHeroTimer();
+    /* Arrancar el ciclo automático desde el slide 1 */
+    _heroTimer = setTimeout(function(){
+      heroSlide((_heroIdx + 1) % _heroSlides.length);
+    }, 5000);
 
     /* ── Swipe táctil en móvil ── */
     var hw = document.getElementById('heroWrap');
@@ -910,13 +976,10 @@ body.tab-mode section.noticias-section{display:none}
     hw.addEventListener('touchend', function(e){
       var dx = e.changedTouches[0].clientX - _txStart;
       var dy = e.changedTouches[0].clientY - _tyStart;
-      // Solo actuar si el movimiento horizontal supera al vertical (swipe lateral)
       if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
         if(dx < 0){
-          // Swipe izquierda → siguiente slide
           heroSlide((_heroIdx + 1) % _heroSlides.length);
         } else {
-          // Swipe derecha → slide anterior
           heroSlide((_heroIdx - 1 + _heroSlides.length) % _heroSlides.length);
         }
       }
@@ -3613,7 +3676,7 @@ function closeModal(id){document.getElementById(id).classList.remove('open');doc
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.dir-modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.disclaimer-bg.open').forEach(function(m){m.classList.remove('open')});document.body.style.overflow='';}});
 
 /* ════════ HERO DOTS ════════ */
-/* heroSlide is defined inline in the hero block above */
+/* heroSlide y YouTube API definidos en el bloque del hero */
 
 /* ════════ HERO PATTERN CANVAS ════════ */
 function drawHeroPattern() {
