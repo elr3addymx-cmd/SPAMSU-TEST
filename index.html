@@ -69,7 +69,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   cursor:pointer;transition:opacity var(--t);
 }
 .sb-logo:hover{opacity:.82}
-.sb-logo [data-img]{width:110px;height:80px;border-radius:8px}
+.sb-logo [data-img]{width:160px;height:116px;border-radius:8px}
 .sb-logo [data-img] img{object-fit:contain}
 .sb-nav{flex:1;width:100%;padding:10px 0;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
 .sb-item{
@@ -282,13 +282,19 @@ body.tab-mode section.noticias-section{display:none}
 /* ═══════════════════════════════════════════
    ESTRUCTURA — Nueva presentación tipo showcase
 ═══════════════════════════════════════════ */
-.dir-showcase{width:100%;padding:64px 52px;border-bottom:1px solid var(--gris-borde)}
-.dir-showcase-light{background:#FFFFFF}
-.dir-showcase-gray{background:#F0F4F9}
+.dir-showcase{width:100%;padding:64px 52px;border-bottom:1px solid var(--gris-borde);position:relative}
+.dir-showcase-light{
+  background:linear-gradient(145deg,#ffffff 0%,#f5f9ff 55%,#eaf1fb 100%);
+  box-shadow:inset 0 -4px 12px rgba(0,59,113,.04);
+}
+.dir-showcase-gray{
+  background:linear-gradient(145deg,#eef3fa 0%,#e3ecf7 50%,#d8e7f5 100%);
+  box-shadow:inset 0 4px 12px rgba(0,59,113,.05),inset 0 -4px 12px rgba(0,59,113,.04);
+}
 .dir-showcase-title{font-family:var(--font-serif);font-size:clamp(20px,2.2vw,28px);font-weight:700;color:var(--azul);text-align:center;margin-bottom:44px;line-height:1.25}
 .dir-showcase-body{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:56px;align-items:center;max-width:1000px;margin:0 auto}
 .dir-showcase-img-col{display:flex;flex-direction:column;align-items:center;gap:18px}
-.dir-showcase-logo-wrap{width:100%;max-width:300px;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:var(--azul);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(0,59,113,.18)}
+.dir-showcase-logo-wrap{width:100%;max-width:300px;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#002f5a 0%,#003B71 60%,#1a5c9a 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 16px 48px rgba(0,59,113,.28),0 4px 12px rgba(0,59,113,.18),inset 0 1px 0 rgba(255,255,255,.08)}
 .dir-showcase-logo-img{width:100%;height:100%;object-fit:contain}
 .dir-showcase-logo-ph{flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:16px;text-align:center;width:100%;height:100%}
 .dir-showcase-dots{display:flex;gap:8px;justify-content:center}
@@ -296,8 +302,8 @@ body.tab-mode section.noticias-section{display:none}
 .dir-dot-active{background:var(--azul)}
 .dir-showcase-text-col{display:flex;flex-direction:column;gap:24px}
 .dir-showcase-desc{font-size:17px;color:var(--gris-txt);line-height:1.85;font-weight:300;text-align:justify}
-.dir-showcase-cta{display:inline-flex;align-items:center;gap:10px;border:1.5px solid var(--azul-claro);color:var(--azul);background:transparent;font-size:16px;font-weight:500;padding:11px 26px;border-radius:9px;transition:all var(--t);align-self:flex-end;cursor:pointer}
-.dir-showcase-cta:hover{background:var(--azul);color:#fff;border-color:var(--azul)}
+.dir-showcase-cta{display:inline-flex;align-items:center;gap:10px;border:1.5px solid var(--azul-claro);color:var(--azul);background:transparent;font-size:16px;font-weight:500;padding:11px 26px;border-radius:9px;transition:all var(--t);align-self:flex-end;cursor:pointer;box-shadow:0 2px 8px rgba(0,59,113,.08)}
+.dir-showcase-cta:hover{background:var(--azul);color:#fff;border-color:var(--azul);box-shadow:0 4px 16px rgba(0,59,113,.18)}
 .dir-cta-arrow{font-size:18px;transition:transform var(--t)}
 .dir-showcase-cta:hover .dir-cta-arrow{transform:translateX(4px)}
 @media(max-width:900px){.dir-showcase{padding:44px 24px}.dir-showcase-body{grid-template-columns:1fr;gap:28px}.dir-showcase-logo-wrap{max-width:200px;margin:0 auto}.dir-showcase-cta{align-self:flex-start}}
@@ -347,8 +353,8 @@ body.tab-mode section.noticias-section{display:none}
 ═══════════════════════════════════════════ */
 .nov-section{background:var(--fondo);padding:56px 44px;border-top:2px solid var(--gris-borde)}
 /* ── Novedades tab bar — barra unificada, fondo blanco, cambia al seleccionar ── */
-.nov-tab-bar{display:flex;gap:0;margin-bottom:32px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-radius:12px;border:1.5px solid var(--gris-borde);padding:4px;flex-wrap:nowrap;white-space:nowrap}
-.ntab{background:transparent;border:none;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--gris-sub);padding:9px 16px;border-radius:8px;cursor:pointer;transition:all var(--t);white-space:nowrap;flex-shrink:0}
+.nov-tab-bar{display:flex;gap:4px;margin-bottom:32px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-radius:14px;border:1.5px solid var(--gris-borde);padding:6px;flex-wrap:nowrap;white-space:nowrap}
+.ntab{background:transparent;border:none;font-family:var(--font-sans);font-size:12px;font-weight:600;color:var(--gris-sub);padding:10px 14px;border-radius:10px;cursor:pointer;transition:all var(--t);white-space:nowrap;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:72px}
 .ntab:hover{color:var(--azul);background:var(--azul-pale)}
 .ntab.active{background:var(--azul);color:#fff;font-weight:700}
 .ntab-panel{display:none}.ntab-panel.active{display:block;animation:fadeIn .3s ease}
@@ -778,7 +784,7 @@ body.tab-mode section.noticias-section{display:none}
 <aside class="sidebar" id="sidebar">
   <!-- Logo SPAMSU — clic va al inicio -->
   <div class="sb-logo" onclick="location.reload()" title="Inicio">
-    <div data-img="spamsu" data-alt="Logo SPAMSU" style="width:110px;height:80px;border-radius:8px"></div>
+    <div data-img="spamsu" data-alt="Logo SPAMSU" style="width:160px;height:116px;border-radius:8px"></div>
   </div>
 
   <nav class="sb-nav" aria-label="Navegación principal">
@@ -824,7 +830,7 @@ body.tab-mode section.noticias-section{display:none}
   <!-- Top bar -->
   <div class="top-bar">
     <button class="btn-que" onclick="openModal('modal-quehacemos')">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <img src="img/icon-que-hacemos.png" alt="¿Qué hacemos?" style="width:18px;height:18px;object-fit:contain" onerror="this.style.display='none'">
       ¿Qué hacemos?
     </button>
     <button class="btn-emerg" onclick="openModal('modal-emerg')">
@@ -835,34 +841,41 @@ body.tab-mode section.noticias-section{display:none}
 
   <!-- Hero -->
   <div class="hero-wrap" id="heroWrap">
-    <!-- Slide 1 — Imagen -->
-    <div class="hero-slide" id="hero-slide-1" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1">
-      <div data-img="hero-slide-1" data-alt="Ciudad Universitaria UNAM" class="dark-ph" style="width:100%;height:100%"></div>
+    <!-- Slide 1 — Video local (carpeta videos/) -->
+    <div class="hero-slide" id="hero-slide-1" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;overflow:hidden;background:#000">
+      <video id="heroLocalVideo" muted playsinline loop preload="auto"
+        style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;pointer-events:none">
+        <source src="videos/hero-video.mp4" type="video/mp4">
+      </video>
     </div>
-    <!-- Slide 2 — Video YouTube: avanza al terminar, sin controles ni HUD -->
-    <div class="hero-slide" id="hero-slide-2" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;overflow:hidden;background:#000">
-      <!-- Capa bloqueadora encima del iframe para ocultar controles de YouTube -->
-      <div style="position:absolute;inset:0;z-index:3;pointer-events:auto;cursor:default;background:transparent"></div>
-      <div id="heroYTPlayer" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;overflow:hidden"></div>
+    <!-- Slide 2 — Imagen -->
+    <div class="hero-slide" id="hero-slide-2" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1">
+      <div data-img="hero-slide-2" data-alt="Ciudad Universitaria UNAM" class="dark-ph" style="width:100%;height:100%"></div>
     </div>
-    <!-- Slide 3 — Imagen -->
-    <div class="hero-slide" id="hero-slide-3" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1">
-      <div data-img="hero-slide-3" data-alt="Campus UNAM" class="dark-ph" style="width:100%;height:100%"></div>
+    <!-- Slide 3 — Imagen → clic va al Decálogo -->
+    <div class="hero-slide" id="hero-slide-3" onclick="sbGoSection('panel-informacion','sb-informacion');setTimeout(function(){switchInfoTab('decalogo')},400)"
+      style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;cursor:pointer">
+      <div data-img="hero-slide-3" data-alt="Decálogo SPAMSU" class="dark-ph" style="width:100%;height:100%"></div>
+    </div>
+    <!-- Slide 4 — Imagen -->
+    <div class="hero-slide" id="hero-slide-4" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1">
+      <div data-img="hero-slide-4" data-alt="SPAMSU UNAM" class="dark-ph" style="width:100%;height:100%"></div>
     </div>
     <div class="hero-overlay" style="z-index:2"></div>
     <div class="hero-dots" style="z-index:3">
-      <button class="h-dot" onclick="heroSlide(0)"></button>
-      <button class="h-dot active" onclick="heroSlide(1)"></button>
+      <button class="h-dot active" onclick="heroSlide(0)"></button>
+      <button class="h-dot" onclick="heroSlide(1)"></button>
       <button class="h-dot" onclick="heroSlide(2)"></button>
+      <button class="h-dot" onclick="heroSlide(3)"></button>
     </div>
   </div>
   <script>
   /* ════ HERO SLIDER ════ */
-  var _heroIdx    = 1;
+  var _heroIdx    = 0;
   var _heroTimer  = null;
-  var _heroSlides = ['hero-slide-1','hero-slide-2','hero-slide-3'];
+  var _heroSlides = ['hero-slide-1','hero-slide-2','hero-slide-3','hero-slide-4'];
   var _heroDots   = null;
-  var _ytPlayer   = null;
+  var _ytPlayer   = null;   /* kept for compatibility */
   var _ytReady    = false;
 
   /* ── Avanzar al slide n ── */
@@ -870,9 +883,8 @@ body.tab-mode section.noticias-section{display:none}
     var prev = _heroIdx;
     _heroIdx = n;
 
-    /* Para todos los slides excepto el 2 (video), mostrar/ocultar normal */
+    /* Ocultar / mostrar todos los slides */
     _heroSlides.forEach(function(id,i){
-      if(i === 1) return; /* el slide de video lo manejamos aparte */
       var el = document.getElementById(id);
       if(el) el.style.opacity = i === n ? '1' : '0';
     });
@@ -883,108 +895,25 @@ body.tab-mode section.noticias-section{display:none}
     clearTimeout(_heroTimer);
     _heroTimer = null;
 
-    if(n === 1){
-      /* Slide de video:
-         1. Arrancar la reproducción con el slide AÚN INVISIBLE
-         2. Esperar 1.2 s (tiempo suficiente para que YouTube oculte su overlay)
-         3. Revelar el slide con fade-in limpio */
-      var s2 = document.getElementById('hero-slide-2');
-      if(s2) s2.style.opacity = '0';
-
-      if(_ytReady && _ytPlayer){
-        try{ _ytPlayer.seekTo(9, true); _ytPlayer.playVideo(); }catch(e){}
-        setTimeout(function(){
-          if(_heroIdx === 1 && s2) s2.style.opacity = '1';
-        }, 1200);
-      } else {
-        /* API aún no lista: esperar y reintentar */
-        var _waitYT = setInterval(function(){
-          if(_ytReady && _ytPlayer){
-            clearInterval(_waitYT);
-            try{ _ytPlayer.seekTo(9, true); _ytPlayer.playVideo(); }catch(e){}
-            setTimeout(function(){
-              if(_heroIdx === 1 && s2) s2.style.opacity = '1';
-            }, 1200);
-          }
-        }, 200);
-      }
+    var lv = document.getElementById('heroLocalVideo');
+    if(n === 0 && lv){
+      /* Slide de video local: reproducir, avanzar al terminar */
+      lv.currentTime = 0;
+      lv.play().catch(function(){});
+      lv.onended = function(){ heroSlide((_heroIdx + 1) % _heroSlides.length); };
     } else {
-      /* Slides de imagen: ocultar slide 2 y pausar video */
-      var s2 = document.getElementById('hero-slide-2');
-      if(s2) s2.style.opacity = '0';
-      if(prev === 1 && _ytReady && _ytPlayer){
-        try{ _ytPlayer.pauseVideo(); }catch(e){}
-      }
-      /* Avance automático tras 5 s */
+      /* Pausar video local si estaba reproduciéndose */
+      if(lv && !lv.paused){ lv.pause(); }
+      /* Imágenes: avanzar tras 5 s */
       _heroTimer = setTimeout(function(){
         heroSlide((_heroIdx + 1) % _heroSlides.length);
       }, 5000);
     }
   }
 
-  /* ── YouTube IFrame API ── */
-  function _sizeHeroVideo(){
-    var hero = document.getElementById('heroWrap');
-    var div  = document.getElementById('heroYTPlayer');
-    if(!hero || !div) return;
-    var W = hero.offsetWidth;
-    var H = hero.offsetHeight;
-    var ratio = 16 / 9;
-    var vw, vh;
-    if(W / H > ratio){
-      vw = W + 4;
-      vh = Math.ceil(W / ratio) + 4;
-    } else {
-      vh = H + 4;
-      vw = Math.ceil(H * ratio) + 4;
-    }
-    div.style.width  = vw + 'px';
-    div.style.height = vh + 'px';
-    var iframe = div.querySelector('iframe');
-    if(iframe){
-      iframe.style.cssText = 'width:'+vw+'px;height:'+vh+'px;border:none;display:block;pointer-events:none';
-    }
-  }
-
-  function onYouTubeIframeAPIReady(){
-    _sizeHeroVideo();
-    var div = document.getElementById('heroYTPlayer');
-    _ytPlayer = new YT.Player('heroYTPlayer', {
-      videoId: 'WOlHrlRu9Xg',
-      width:  div ? div.offsetWidth  : 1280,
-      height: div ? div.offsetHeight : 720,
-      playerVars:{
-        autoplay:0, mute:1, controls:0, showinfo:0, rel:0,
-        iv_load_policy:3, modestbranding:1, disablekb:1,
-        fs:0, playsinline:1, loop:0, cc_load_policy:0
-      },
-      events:{
-        onReady: function(e){
-          _ytReady = true;
-          e.target.setVolume(0);
-          _sizeHeroVideo();
-          window.addEventListener('resize', _sizeHeroVideo);
-        },
-        onStateChange: function(e){
-          if(e.data === YT.PlayerState.ENDED){
-            heroSlide((_heroIdx + 1) % _heroSlides.length);
-          }
-        }
-      }
-    });
-  }
-
-  /* Cargar la API de YouTube de forma asíncrona */
-  (function(){
-    var tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    var first = document.getElementsByTagName('script')[0];
-    first.parentNode.insertBefore(tag, first);
-  })();
-
   document.addEventListener('DOMContentLoaded', function(){
-    /* Arrancar en el slide de video (índice 1) */
-    heroSlide(1);
+    /* Arrancar en el slide de video (índice 0) */
+    heroSlide(0);
 
     /* ── Swipe táctil en móvil ── */
     var hw = document.getElementById('heroWrap');
@@ -1110,7 +1039,7 @@ body.tab-mode section.noticias-section{display:none}
 
         <div class="valores-section">
           <div class="valores-header">
-            <h3 class="valores-title">Valores que nos definen.</h3>
+            
             <div class="valores-logos">
               <div class="vlogo"><img src="img/valores-escudo-unam.png" alt="Escudo UNAM" onerror="this.closest('.vlogo').style.display='none'"></div>
               <div class="vlogo"><img src="img/valores-logo-spamsu.png" alt="SPAMSU" onerror="this.closest('.vlogo').style.display='none'"></div>
@@ -1236,158 +1165,71 @@ body.tab-mode section.noticias-section{display:none}
             <!-- DECÁLOGO — Nueva versión institucional interactiva -->
       <div class="itab-pane" id="ip-decalogo" style="max-width:none;padding:0">
         <style>
-        /* ══ Decálogo wrapper ══ */
-        .dec2-wrap{
-          width:100%;background:#fff;padding:0 0 32px;
+        <style>
+        /* ══ DECÁLOGO — colorful infographic style ══ */
+        .dec2-wrap{width:100%;background:#fff;padding:0 0 40px;overflow:hidden;position:relative}
+
+        /* Decorative background shapes */
+        .dec2-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+        .dec2-bg-shapes::before{
+          content:'';position:absolute;top:-60px;right:-60px;
+          width:260px;height:260px;border-radius:50%;
+          background:radial-gradient(circle,rgba(169,198,232,.18) 0%,transparent 70%);
+        }
+        .dec2-bg-shapes::after{
+          content:'';position:absolute;bottom:-40px;left:-40px;
+          width:200px;height:200px;border-radius:50%;
+          background:radial-gradient(circle,rgba(122,174,212,.12) 0%,transparent 70%);
         }
 
-        /* ── Cabecera ── */
-        .dec2-head{
-          position:relative;
-          display:grid;
-          /* Columna izquierda: personaje | Columna derecha: título centrado */
-          grid-template-columns:1fr;
-          grid-template-rows:1fr;
-          background:linear-gradient(135deg,#001d40 0%,#002f60 30%,#0d4f94 70%,#1565C0 100%);
-          border-radius:16px;
-          margin-bottom:36px;
-          min-height:220px;
-          overflow:hidden;
-        }
-
-        /* Logos — fila horizontal, esquina superior-izquierda, sobre todo */
-        .dec2-logos-bar{
-          position:absolute;
-          top:14px;left:16px;
-          display:flex;align-items:center;gap:10px;
-          z-index:10;
-        }
-        .dec2-logo{
-          width:40px;height:40px;border-radius:7px;overflow:hidden;
-          display:flex;align-items:center;justify-content:center;
-          background:transparent;
-        }
-        .dec2-logo img{
-          width:100%;height:100%;object-fit:contain;
-          filter:brightness(0) invert(1);
-        }
-        .dec2-logo.dec2-logo-free img{ filter:none; }
-
-        /* ── Columna izquierda: personaje ── */
-        .dec2-char{
-          grid-column:1;
-          grid-row:1;
-          display:flex;
-          align-items:flex-end;
-          justify-content:center;
-          padding-top:70px;   /* espacio para logos encima */
-          overflow:hidden;
-          position:relative;
-        }
-        .dec2-char img{
-          width:100%;
-          max-width:280px;
-          height:auto;
-          max-height:200px;
-          object-fit:contain;
-          object-position:bottom center;
-          filter:drop-shadow(0 6px 20px rgba(0,0,0,.45));
-          display:block;
-        }
-        .dec2-char-ph{
-          width:110px;height:160px;
-          border:2px dashed rgba(255,255,255,.35);
-          border-radius:12px;
-          display:flex;flex-direction:column;
-          align-items:center;justify-content:center;
-          gap:6px;color:rgba(255,255,255,.5);
-          font-size:11px;text-align:center;padding:8px;
-          font-family:var(--font-sans);line-height:1.3;
-          margin-bottom:12px;
-        }
-
-        /* ── Columna derecha: título centrado ── */
-        .dec2-center{
-          grid-column:1;
-          grid-row:1;
-          display:flex;flex-direction:column;
-          align-items:center;justify-content:center;
-          text-align:center;
-          padding:36px 48px;
-          position:relative;z-index:3;
-        }
-        .dec2-kicker{
-          font-size:11px;font-weight:700;
-          color:rgba(255,255,255,.75);
-          text-transform:uppercase;letter-spacing:.18em;margin-bottom:6px;
-        }
-        .dec2-main-title{
-          font-family:var(--font-serif);
-          font-size:clamp(32px,5vw,58px);
-          font-weight:700;color:#fff;
-          letter-spacing:.06em;line-height:1;margin-bottom:16px;
-          text-shadow:0 3px 24px rgba(0,10,30,.45);
-        }
-        .dec2-subtitle{
-          font-size:clamp(13px,1.4vw,16px);
-          font-weight:600;color:#ffffff !important;
-          line-height:1.6;max-width:400px;
-          margin:0 auto;letter-spacing:.01em;
-          -webkit-font-smoothing:antialiased;
-          background:rgba(0,15,40,.38);
-          padding:8px 20px;border-radius:8px;
-          backdrop-filter:blur(4px);
-        }
-
-        /* ── Grid 5+5 ── */
+        /* Grid: scattered layout matching Image 2 */
         .dec2-grid{
-          display:grid;grid-template-columns:repeat(5,1fr);gap:12px;
+          position:relative;z-index:1;
+          display:grid;
+          grid-template-columns:repeat(3,1fr);
+          gap:0;
+          padding:24px 0;
         }
 
-        /* ── Cards ── */
+        /* Each item: number large + text below, staggered heights */
         .dec2-item{
-          background:#F4F7FB;border:1.5px solid var(--gris-borde);
-          border-radius:14px;padding:20px 16px 16px;cursor:pointer;
-          transition:transform .26s cubic-bezier(.4,0,.2,1),
-                      box-shadow .26s ease,border-color .26s ease,background .26s ease;
-          position:relative;overflow:hidden;text-align:left;
+          display:flex;flex-direction:column;align-items:center;
+          text-align:center;padding:28px 20px 20px;
+          cursor:pointer;transition:transform .22s ease;
+          background:transparent;border:none;position:relative;
         }
-        .dec2-item::before{
-          content:"";position:absolute;inset:0;border-radius:14px;
-          background:radial-gradient(circle at 50% 50%, rgba(169,198,232,.55) 0%, transparent 70%);
-          opacity:0;transition:opacity .3s ease;pointer-events:none;
-        }
-        .dec2-item:hover{
-          transform:translateY(-6px);
-          box-shadow:0 12px 40px rgba(0,59,113,.18),0 0 0 2px rgba(122,174,212,.5);
-          border-color:var(--azul-claro);background:#EFF4FB;
-        }
-        .dec2-item:hover::before{ opacity:1 }
-        .dec2-num{
-          font-family:var(--font-serif);font-size:clamp(36px,4vw,48px);
-          font-weight:700;line-height:1;margin-bottom:10px;letter-spacing:.02em;
-          transition:text-shadow .26s ease;
-        }
-        .dec2-item:hover .dec2-num{ text-shadow:0 0 22px rgba(122,174,212,.6) }
-        .dec2-label{
-          font-size:13px;font-weight:500;color:var(--gris-txt);
-          line-height:1.45;transition:color .26s ease;
-        }
-        .dec2-item:hover .dec2-label{ color:var(--azul) }
-        .dec2-item::after{
-          content:"";position:absolute;bottom:0;left:0;right:0;
-          height:3px;border-radius:0 0 14px 14px;
-          transform:scaleX(0);transform-origin:left;
-          transition:transform .36s cubic-bezier(.4,0,.2,1);
-        }
-        .dec2-item:hover::after{ transform:scaleX(1) }
-        .dec2-c0{color:#003B71}.dec2-c0::after{background:#003B71}
-        .dec2-c1{color:#1565C0}.dec2-c1::after{background:#1565C0}
-        .dec2-c2{color:#2d8fce}.dec2-c2::after{background:#2d8fce}
-        .dec2-c3{color:#5BB8D4}.dec2-c3::after{background:#5BB8D4}
-        .dec2-c4{color:#7AAED4}.dec2-c4::after{background:#7AAED4}
+        .dec2-item:hover{transform:scale(1.04)}
 
-        /* ── Modal ── */
+        /* Big colorful number */
+        .dec2-num{
+          font-family:'Source Sans 3',system-ui,sans-serif;
+          font-size:clamp(52px,7vw,80px);
+          font-weight:900;line-height:1;margin-bottom:10px;
+          letter-spacing:-.03em;
+        }
+        /* Color palette matching Image 2 */
+        .dec2-c0 .dec2-num{color:#7C4DFF}
+        .dec2-c1 .dec2-num{color:#E91E8C}
+        .dec2-c2 .dec2-num{color:#FF6B35}
+        .dec2-c3 .dec2-num{color:#00BCD4}
+        .dec2-c4 .dec2-num{color:#8BC34A}
+        .dec2-c5 .dec2-num{color:#FF9800}
+        .dec2-c6 .dec2-num{color:#E91E8C}
+        .dec2-c7 .dec2-num{color:#7C4DFF}
+        .dec2-c8 .dec2-num{color:#F44336}
+        .dec2-c9 .dec2-num{color:#00BCD4}
+
+        .dec2-label{
+          font-size:13.5px;font-weight:500;color:#2D3748;
+          line-height:1.5;max-width:180px;
+        }
+
+        /* Decorative mini-icons per item */
+        .dec2-deco{
+          position:absolute;opacity:.25;pointer-events:none;
+        }
+
+        /* Modal */
         .dec2-modal-bg{
           display:none;position:fixed;inset:0;
           background:rgba(0,30,60,.5);backdrop-filter:blur(5px);
@@ -1401,54 +1243,34 @@ body.tab-mode section.noticias-section{display:none}
           animation:modalIn .28s cubic-bezier(.4,0,.2,1);
         }
         .dec2-modal-head{
-          background:linear-gradient(135deg,#003B71 0%,#1565C0 60%,#2d8fce 100%);
           padding:26px 32px;display:flex;align-items:center;gap:18px;
           position:relative;overflow:hidden;
         }
-        .dec2-modal-head::after{
-          content:"";position:absolute;right:-40px;top:-40px;
-          width:200px;height:200px;border-radius:50%;
-          background:rgba(255,255,255,.08);pointer-events:none;
-        }
         .dec2-modal-num{
-          font-family:var(--font-serif);font-size:44px;font-weight:700;
-          color:rgba(255,255,255,.25);line-height:1;flex-shrink:0;min-width:56px;
+          font-family:'Source Sans 3',sans-serif;font-size:56px;font-weight:900;
+          line-height:1;flex-shrink:0;min-width:68px;
         }
         .dec2-modal-title{
-          font-family:var(--font-serif);font-size:18px;font-weight:700;
-          color:#fff;line-height:1.3;z-index:1;
+          font-family:'Libre Baskerville',Georgia,serif;font-size:17px;font-weight:700;
+          color:#003B71;line-height:1.3;z-index:1;
         }
-        .dec2-modal-body{padding:28px 32px}
-        .dec2-modal-text{font-size:16px;color:var(--gris-txt);font-weight:300;line-height:1.85}
+        .dec2-modal-body{padding:20px 32px 28px;border-top:1px solid rgba(169,198,232,.3)}
+        .dec2-modal-text{font-size:15px;color:#5A6475;font-weight:300;line-height:1.85}
         .dec2-modal-close{
           position:absolute;top:14px;right:14px;
-          background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);
-          color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;
+          background:rgba(0,59,113,.08);border:1px solid rgba(169,198,232,.3);
+          color:#003B71;width:32px;height:32px;border-radius:50%;font-size:16px;
           display:flex;align-items:center;justify-content:center;
           cursor:pointer;z-index:10;transition:background .2s;
         }
-        .dec2-modal-close:hover{background:rgba(255,255,255,.35)}
+        .dec2-modal-close:hover{background:rgba(0,59,113,.15)}
 
-        /* ── Responsive ── */
-        @media(max-width:1100px){
-          .dec2-grid{grid-template-columns:repeat(5,1fr);gap:10px}
-          .dec2-num{font-size:32px}.dec2-label{font-size:12px}
-        }
-        @media(max-width:900px){
-          .dec2-head{grid-template-columns:1fr;min-height:auto}
-          .dec2-char{padding-top:60px;justify-content:center;max-height:140px}
-          .dec2-char img{max-height:120px}
-          .dec2-center{padding:16px 20px 24px;grid-column:1}
-          .dec2-grid{grid-template-columns:repeat(2,1fr)}
-          .dec2-logos-bar{gap:8px}
-        }
-        @media(max-width:500px){
-          .dec2-grid{grid-template-columns:1fr 1fr}
-          .dec2-num{font-size:30px}
-        }
+        @media(max-width:900px){.dec2-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:480px){.dec2-grid{grid-template-columns:1fr 1fr}}
         </style>
 
         <div class="dec2-wrap">
+          <div class="dec2-bg-shapes"></div>
 
           <!-- ── Cabecera — imagen decalogo-banner.png ── -->
           <div class="dec2-head" style="background:transparent;border-radius:16px;overflow:hidden;margin-bottom:36px;min-height:auto">
@@ -1463,54 +1285,54 @@ body.tab-mode section.noticias-section{display:none}
 
                     <!-- ── Grid de premisas ── -->
           <div class="dec2-grid" id="dec2Grid">
-            <!-- 01 -->
-            <div class="dec2-item" onclick="openDec2(0)">
-              <div class="dec2-num dec2-c0">01</div>
+            <div class="dec2-item dec2-c0" onclick="openDec2(0)">
+              <svg class="dec2-deco" style="top:8px;right:12px" width="22" height="22" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#7C4DFF"/></svg>
+              <div class="dec2-num">01</div>
               <div class="dec2-label">La seguridad universitaria como una política preventiva y de cuidados.</div>
             </div>
-            <!-- 02 -->
-            <div class="dec2-item" onclick="openDec2(1)">
-              <div class="dec2-num dec2-c1">02</div>
+            <div class="dec2-item dec2-c1" onclick="openDec2(1)">
+              <svg class="dec2-deco" style="top:6px;left:10px" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#E91E8C"/></svg>
+              <div class="dec2-num">02</div>
               <div class="dec2-label">Seguridad efectiva implementada con diagnósticos y respuestas diferenciadas.</div>
             </div>
-            <!-- 03 -->
-            <div class="dec2-item" onclick="openDec2(2)">
-              <div class="dec2-num dec2-c2">03</div>
+            <div class="dec2-item dec2-c2" onclick="openDec2(2)">
+              <svg class="dec2-deco" style="bottom:8px;right:10px" width="18" height="18" viewBox="0 0 24 24"><path d="M12 2c0 0-4 4.5-4 9a4 4 0 008 0c0-4.5-4-9-4-9z" fill="#FF6B35"/></svg>
+              <div class="dec2-num">03</div>
               <div class="dec2-label">Construcción de la prevención en comunidad.</div>
             </div>
-            <!-- 04 -->
-            <div class="dec2-item" onclick="openDec2(3)">
-              <div class="dec2-num dec2-c3">04</div>
+            <div class="dec2-item dec2-c3" onclick="openDec2(3)">
+              <svg class="dec2-deco" style="top:8px;right:8px" width="22" height="22" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#00BCD4"/></svg>
+              <div class="dec2-num">04</div>
               <div class="dec2-label">Entornos seguros con perspectiva de género.</div>
             </div>
-            <!-- 05 -->
-            <div class="dec2-item" onclick="openDec2(4)">
-              <div class="dec2-num dec2-c4">05</div>
+            <div class="dec2-item dec2-c4" onclick="openDec2(4)">
+              <svg class="dec2-deco" style="bottom:6px;left:8px" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#8BC34A"/></svg>
+              <div class="dec2-num">05</div>
               <div class="dec2-label">Estrategias de autocuidado contemplando la atención a la salud mental.</div>
             </div>
-            <!-- 06 -->
-            <div class="dec2-item" onclick="openDec2(5)">
-              <div class="dec2-num dec2-c1">06</div>
+            <div class="dec2-item dec2-c5" onclick="openDec2(5)">
+              <svg class="dec2-deco" style="top:10px;right:12px" width="18" height="18" viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z" fill="#FF9800"/></svg>
+              <div class="dec2-num">06</div>
               <div class="dec2-label">Seguridad universitaria en la era posdigital.</div>
             </div>
-            <!-- 07 -->
-            <div class="dec2-item" onclick="openDec2(6)">
-              <div class="dec2-num dec2-c0">07</div>
+            <div class="dec2-item dec2-c6" onclick="openDec2(6)">
+              <svg class="dec2-deco" style="bottom:10px;right:10px" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#E91E8C"/></svg>
+              <div class="dec2-num">07</div>
               <div class="dec2-label">Paradigma de una lógica reactiva a una lógica de cuidado.</div>
             </div>
-            <!-- 08 -->
-            <div class="dec2-item" onclick="openDec2(7)">
-              <div class="dec2-num dec2-c2">08</div>
+            <div class="dec2-item dec2-c7" onclick="openDec2(7)">
+              <svg class="dec2-deco" style="top:6px;left:8px" width="22" height="22" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#7C4DFF"/></svg>
+              <div class="dec2-num">08</div>
               <div class="dec2-label">Cohesión social y sentido de pertenencia.</div>
             </div>
-            <!-- 09 -->
-            <div class="dec2-item" onclick="openDec2(8)">
-              <div class="dec2-num dec2-c3">09</div>
+            <div class="dec2-item dec2-c8" onclick="openDec2(8)">
+              <svg class="dec2-deco" style="top:8px;right:8px" width="18" height="18" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="#F44336"/></svg>
+              <div class="dec2-num">09</div>
               <div class="dec2-label">Espacios físicos seguros.</div>
             </div>
-            <!-- 10 -->
-            <div class="dec2-item" onclick="openDec2(9)">
-              <div class="dec2-num dec2-c4">10</div>
+            <div class="dec2-item dec2-c9" onclick="openDec2(9)">
+              <svg class="dec2-deco" style="bottom:6px;left:10px" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00BCD4"/></svg>
+              <div class="dec2-num">10</div>
               <div class="dec2-label">Enfoque anticipatorio, no solo reactivo.</div>
             </div>
           </div>
@@ -1717,53 +1539,80 @@ body.tab-mode section.noticias-section{display:none}
 
       <!-- Modal DGAPSU -->
       <div class="dir-modal-bg" id="dir-modal-dgapsu" onclick="if(event.target===this)closeDirModal('dgapsu')">
-        <div class="dir-modal-box">
+        <div class="dir-modal-box" style="max-width:820px">
           <button class="dir-modal-close" onclick="closeDirModal('dgapsu')">&#x2715;</button>
           <div class="dir-modal-head">
             <div class="dir-modal-title">Dirección General de Análisis, Protección y Seguridad Universitaria</div>
           </div>
           <div class="dir-modal-body">
-            <div class="dir-modal-units">
-              <!-- DSU DGAPSU -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgapsu-dsu-logo.png" alt="DSU DGAPSU" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><path d=\'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\'/></svg>'">
+            <style>
+            .dmu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+            .dmu-card{background:#fff;border:1px solid #dde8f4;border-radius:14px;padding:28px 20px 0;display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden;transition:box-shadow .22s,transform .22s;position:relative}
+            .dmu-card:hover{box-shadow:0 8px 32px rgba(0,59,113,.13);transform:translateY(-3px)}
+            .dmu-icon-circle{width:72px;height:72px;border-radius:50%;background:#e8f1fb;display:flex;align-items:center;justify-content:center;margin-bottom:14px;flex-shrink:0}
+            .dmu-icon-circle svg{width:34px;height:34px;stroke:#003B71;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+            .dmu-icon-circle img{width:44px;height:44px;object-fit:contain}
+            .dmu-name{font-family:'Libre Baskerville',Georgia,serif;font-size:14px;font-weight:700;color:#003B71;line-height:1.35;margin-bottom:9px}
+            .dmu-desc{font-size:13px;color:#5A6475;font-weight:300;line-height:1.6;margin-bottom:18px;flex:1}
+            .dmu-foot{width:calc(100% + 40px);margin:0 -20px;height:12px;background:linear-gradient(90deg,#003B71 0%,#7AAED4 60%,#A9C6E8 100%);border-radius:0 0 3px 3px}
+            @media(max-width:700px){.dmu-grid{grid-template-columns:1fr 1fr}}
+            @media(max-width:480px){.dmu-grid{grid-template-columns:1fr}}
+            </style>
+            <div class="dmu-grid">
+              <!-- DSU -->
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgapsu-dsu-logo.png" alt="DSU" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
-                <div class="dir-mu-name">Dirección de Seguridad Universitaria</div>
-                <div class="dir-mu-desc">Instancia responsable de planear, coordinar y ejecutar acciones de prevención, protección y atención de riesgos para salvaguardar la integridad de la comunidad universitaria.</div>
+                <div class="dmu-name">Dirección de Seguridad Universitaria</div>
+                <div class="dmu-desc">Instancia responsable de planear, coordinar y ejecutar acciones de prevención, protección y atención de riesgos para salvaguardar la integridad de la comunidad universitaria.</div>
+                <div class="dmu-foot"></div>
               </div>
-              <!-- Análisis y Prevención de Riesgos -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgapsu-analisis-logo.png" alt="Análisis y Prevención de Riesgos" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><circle cx=\'11\' cy=\'11\' r=\'8\'/><line x1=\'21\' y1=\'21\' x2=\'16.65\' y2=\'16.65\'/></svg>'">
+              <!-- Análisis y Prevención -->
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgapsu-analisis-logo.png" alt="Análisis y Prevención" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </div>
-                <div class="dir-mu-name">Dirección de Análisis y Prevención de Riesgos</div>
-                <div class="dir-mu-desc">Realiza estudios técnicos para identificar, evaluar y mitigar riesgos potenciales en las instalaciones universitarias. Desarrolla políticas y programas preventivos basados en análisis de datos.</div>
+                <div class="dmu-name">Dirección de Análisis y Prevención de Riesgos</div>
+                <div class="dmu-desc">Realiza estudios técnicos para identificar, evaluar y mitigar riesgos potenciales en las instalaciones universitarias. Desarrolla políticas y programas preventivos basados en análisis de datos.</div>
+                <div class="dmu-foot"></div>
               </div>
-              <!-- Enlace Estadio Olímpico -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgapsu-estadio-logo.png" alt="Enlace Estadio Olímpico" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><path d=\'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z\'/></svg>'">
+              <!-- Estadio Olímpico (sin "Enlace") -->
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgapsu-estadio-logo.png" alt="Estadio Olímpico" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
                 </div>
-                <div class="dir-mu-name">Enlace del Estadio Olímpico Universitario</div>
-                <div class="dir-mu-desc">Coordina todas las actividades de seguridad durante eventos deportivos y culturales de gran magnitud. Implementa protocolos especiales de evacuación, control de multitudes y coordinación con autoridades externas.</div>
+                <div class="dmu-name">Estadio Olímpico Universitario</div>
+                <div class="dmu-desc">Coordina todas las actividades de seguridad durante eventos deportivos y culturales de gran magnitud. Implementa protocolos especiales de evacuación, control de multitudes y coordinación con autoridades externas.</div>
+                <div class="dmu-foot"></div>
               </div>
               <!-- Protección Civil y Bomberos -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgapsu-pcivil-logo.png" alt="Protección Civil y Bomberos" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><path d=\'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\'/><polyline points=\'9 12 11 14 15 10\'/></svg>'">
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgapsu-pcivil-logo.png" alt="Protección Civil" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
                 </div>
-                <div class="dir-mu-name">Dirección de Protección Civil y Bomberos</div>
-                <div class="dir-mu-desc">Se encarga de prevenir, mitigar y responder ante situaciones de emergencia. Coordina simulacros, capacitaciones en materia de protección civil y mantiene un cuerpo de bomberos especializado.</div>
+                <div class="dmu-name">Dirección de Protección Civil y Bomberos</div>
+                <div class="dmu-desc">Se encarga de prevenir, mitigar y responder ante situaciones de emergencia. Coordina simulacros, capacitaciones en materia de protección civil y mantiene un cuerpo de bomberos especializado.</div>
+                <div class="dmu-foot"></div>
               </div>
-              <!-- Gestión Tecnológica en Seguridad -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgapsu-tecnologia-logo.png" alt="Gestión Tecnológica" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><rect x=\'2\' y=\'3\' width=\'20\' height=\'14\' rx=\'2\'/><path d=\'M8 21h8M12 17v4\'/></svg>'">
+              <!-- Gestión Tecnológica -->
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgapsu-tecnologia-logo.png" alt="Gestión Tecnológica" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                 </div>
-                <div class="dir-mu-name">Coordinación de Gestión Tecnológica en Seguridad</div>
-                <div class="dir-mu-desc">Implementa y administra sistemas tecnológicos avanzados para el monitoreo, control y análisis de la seguridad. Gestiona videovigilancia, sistemas de acceso y plataformas de información.</div>
+                <div class="dmu-name">Coordinación de Gestión Tecnológica en Seguridad</div>
+                <div class="dmu-desc">Implementa y administra sistemas tecnológicos avanzados para el monitoreo, control y análisis de la seguridad. Gestiona videovigilancia, sistemas de acceso y plataformas de información.</div>
+                <div class="dmu-foot"></div>
               </div>
+            </div>
+            <!-- Banner inferior -->
+            <div style="margin-top:24px;border-radius:10px;overflow:hidden;line-height:0">
+              <img src="img/dgapsu-banner-bottom.png" alt="DGAPSU UNAM" style="width:100%;height:auto;display:block;max-height:110px;object-fit:cover" onerror="this.style.display='none'">
             </div>
           </div>
         </div>
@@ -1771,63 +1620,99 @@ body.tab-mode section.noticias-section{display:none}
 
       <!-- Modal DGSGM -->
       <div class="dir-modal-bg" id="dir-modal-dgsgm" onclick="if(event.target===this)closeDirModal('dgsgm')">
-        <div class="dir-modal-box">
+        <div class="dir-modal-box" style="max-width:820px">
           <button class="dir-modal-close" onclick="closeDirModal('dgsgm')">&#x2715;</button>
           <div class="dir-modal-head">
             <div class="dir-modal-title">Dirección General de Servicios Generales y Movilidad</div>
           </div>
           <div class="dir-modal-body">
-            <div class="dir-modal-units">
+            <div class="dmu-grid">
               <!-- Pumabús -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgsgm-pumabus-logo.png" alt="Pumabús" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><rect x=\'1\' y=\'3\' width=\'15\' height=\'13\'/><polygon points=\'16 8 20 8 23 11 23 16 16 16 16 8\'/><circle cx=\'5.5\' cy=\'18.5\' r=\'2.5\'/><circle cx=\'18.5\' cy=\'18.5\' r=\'2.5\'/></svg>'">
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgsgm-pumabus-logo.png" alt="Pumabús" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                 </div>
-                <div class="dir-mu-name">Pumabús</div>
-                <div class="dir-mu-desc">Servicio de transporte interno del campus universitario. Rutas, horarios y paradas en Ciudad Universitaria.</div>
+                <div class="dmu-name">Pumabús</div>
+                <div class="dmu-desc">Servicio de transporte interno del campus universitario. Rutas, horarios y paradas en Ciudad Universitaria.</div>
+                <div class="dmu-foot"></div>
               </div>
               <!-- Servicios para Personas con Discapacidad -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgsgm-discapacidad-logo.png" alt="Servicios para Personas con Discapacidad" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'5\' r=\'2\'/><path d=\'M10 22l2-8 3 3 2-5\'/><path d=\'M6 14c0 4 3 7 6 8\'/><path d=\'M16 9l-1 5\'/></svg>'">
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgsgm-discapacidad-logo.png" alt="Discapacidad" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M10 22l2-8 3 3 2-5"/><path d="M6 14c0 4 3 7 6 8"/></svg>
                 </div>
-                <div class="dir-mu-name">Servicios para Personas con Discapacidad</div>
-                <div class="dir-mu-desc">Programas y apoyos de movilidad e inclusión para personas con discapacidad dentro del campus universitario.</div>
+                <div class="dmu-name">Servicios para Personas con Discapacidad</div>
+                <div class="dmu-desc">Programas y apoyos de movilidad e inclusión para personas con discapacidad dentro del campus universitario.</div>
+                <div class="dmu-foot"></div>
               </div>
               <!-- Brigada Vial -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgsgm-brigada-logo.png" alt="Brigada Vial" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><path d=\'M18 10h-4V6l-4 6h4v4l4-6z\'/><circle cx=\'12\' cy=\'12\' r=\'10\'/></svg>'">
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgsgm-brigada-logo.png" alt="Brigada Vial" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><path d="M18 10h-4V6l-4 6h4v4l4-6z"/><circle cx="12" cy="12" r="10"/></svg>
                 </div>
-                <div class="dir-mu-name">Brigada Vial</div>
-                <div class="dir-mu-desc">Apoyo y regulación del tráfico vehicular dentro del campus para garantizar una movilidad ordenada y segura.</div>
+                <div class="dmu-name">Brigada Vial</div>
+                <div class="dmu-desc">Apoyo y regulación del tráfico vehicular dentro del campus para garantizar una movilidad ordenada y segura.</div>
+                <div class="dmu-foot"></div>
               </div>
               <!-- Bicipuma / Biciescuela -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgsgm-bicipuma-logo.png" alt="Bicipuma / Biciescuela" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><circle cx=\'5.5\' cy=\'17.5\' r=\'3.5\'/><circle cx=\'18.5\' cy=\'17.5\' r=\'3.5\'/><path d=\'M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2\'/></svg>'">
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgsgm-bicipuma-logo.png" alt="Bicipuma" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg>
                 </div>
-                <div class="dir-mu-name">Bicipuma / Biciescuela</div>
-                <div class="dir-mu-desc">Sistema de transporte gratuito y escuela de ciclismo urbano para fomentar la movilidad sustentable y la salud en la comunidad universitaria.</div>
+                <div class="dmu-name">Bicipuma / Biciescuela</div>
+                <div class="dmu-desc">Sistema de transporte gratuito y escuela de ciclismo urbano para fomentar la movilidad sustentable y la salud en la comunidad universitaria.</div>
+                <div class="dmu-foot"></div>
               </div>
               <!-- Estacionamientos Controlados -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgsgm-estacionamiento-logo.png" alt="Estacionamientos Controlados" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><rect x=\'2\' y=\'7\' width=\'20\' height=\'14\' rx=\'2\'/><path d=\'M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16\'/></svg>'">
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgsgm-estacionamiento-logo.png" alt="Estacionamientos" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
                 </div>
-                <div class="dir-mu-name">Estacionamientos Controlados</div>
-                <div class="dir-mu-desc">Gestión y control de los estacionamientos dentro del campus universitario, accesos y registro de vehículos.</div>
+                <div class="dmu-name">Estacionamientos Controlados</div>
+                <div class="dmu-desc">Gestión y control de los estacionamientos dentro del campus universitario, accesos y registro de vehículos.</div>
+                <div class="dmu-foot"></div>
               </div>
               <!-- Programa Cuida tu Moto -->
-              <div class="dir-modal-unit">
-                <div class="dir-mu-logo">
-                  <img src="img/dgsgm-moto-logo.png" alt="Programa Cuida tu Moto" onerror="this.closest('.dir-mu-logo').innerHTML='<svg width=\'36\' height=\'36\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'1.5\'><circle cx=\'5\' cy=\'17\' r=\'3\'/><circle cx=\'19\' cy=\'17\' r=\'3\'/><path d=\'M2 17h1l3-9 4 4 2-4h5\'/><rect x=\'3\' y=\'11\' width=\'18\' height=\'11\' rx=\'2\' opacity=\'.3\'/></svg>'">
+              <div class="dmu-card">
+                <div class="dmu-icon-circle">
+                  <img src="img/dgsgm-moto-logo.png" alt="Cuida tu Moto" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                  <svg style="display:none" viewBox="0 0 24 24"><circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/><path d="M2 17h1l3-9 4 4 2-4h5"/></svg>
                 </div>
-                <div class="dir-mu-name">Programa Cuida tu Moto</div>
-                <div class="dir-mu-desc">Programa de seguridad y protección para motociclistas dentro del campus universitario de la UNAM.</div>
+                <div class="dmu-name">Programa Cuida tu Moto</div>
+                <div class="dmu-desc">Programa de seguridad y protección para motociclistas dentro del campus universitario de la UNAM.</div>
+                <div class="dmu-foot"></div>
               </div>
             </div>
+            <!-- Banner inferior -->
+            <div style="margin-top:24px;border-radius:10px;overflow:hidden;line-height:0">
+              <img src="img/dgsgm-banner-bottom.png" alt="DGSGM UNAM" style="width:100%;height:auto;display:block;max-height:110px;object-fit:cover" onerror="this.style.display='none'">
+            </div>
           </div>
+        </div>
+      </div>
+
+      <!-- ── SECCIÓN: Áreas que Integran la Dependencia ── -->
+      <div class="dir-showcase dir-showcase-light" style="padding:44px 52px">
+        <h2 class="dir-showcase-title">Áreas que Integran la Dependencia</h2>
+        <style>
+        .coord-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:28px}
+        .coord-card{background:#F4F7FB;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px;transition:all var(--t)}
+        .coord-card:hover{border-color:var(--azul-claro);background:rgba(169,198,232,.12);transform:translateY(-2px)}
+        .coord-dot{width:10px;height:10px;border-radius:50%;background:var(--azul);flex-shrink:0;margin-top:5px}
+        .coord-name{font-size:15px;font-weight:600;color:var(--azul);line-height:1.35}
+        </style>
+        <div class="coord-grid">
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></div>
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></div>
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></div>
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Planeación Institucional</div></div>
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Proyectos y Programas de Prevención y Seguridad</div></div>
+          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Comisiones Locales de Seguridad</div></div>
         </div>
       </div>
 
@@ -1972,18 +1857,332 @@ body.tab-mode section.noticias-section{display:none}
           <iframe src="https://www.google.com/maps/d/embed?mid=1b1iNRcR8LOeq98KjsidWDECybsfOx5g" title="Senderos Universitarios UNAM" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
+
+      <!-- ╔══════════════════════════════╗
+           GENERA TU REPORTE EN UN MINUTO
+      ╚══════════════════════════════╝ -->
+      <div style="margin-top:48px;padding-top:44px;border-top:2px solid var(--gris-borde)">
+        <style>
+        /* ── REPORTE SECTION — redesign ── */
+        .rep-section-wrap{border-radius:18px;overflow:hidden;box-shadow:0 8px 40px rgba(0,59,113,.14);border:1px solid var(--gris-borde)}
+
+        /* Banner header */
+        .rep-banner{
+          background:linear-gradient(135deg,#002a55 0%,#003B71 55%,#1a5fa8 100%);
+          padding:32px 40px 28px;
+          position:relative;overflow:hidden;
+        }
+        .rep-banner::before{
+          content:'';position:absolute;inset:0;
+          background:radial-gradient(ellipse 80% 100% at 110% 50%,rgba(122,174,212,.18) 0%,transparent 70%);
+        }
+        .rep-banner::after{
+          content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+          border-radius:50%;border:2px solid rgba(169,198,232,.12);
+        }
+        .rep-banner-inner{position:relative;z-index:1}
+        .rep-banner-tag{
+          display:inline-flex;align-items:center;gap:8px;
+          font-size:11px;font-weight:700;color:var(--azul-claro);
+          text-transform:uppercase;letter-spacing:.14em;margin-bottom:10px;
+        }
+        .rep-banner-tag::before{content:'';width:20px;height:2px;background:var(--azul-claro);border-radius:1px;display:block}
+        .rep-banner h3{
+          font-family:var(--font-serif);font-size:clamp(22px,2.8vw,32px);
+          font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px;
+        }
+        .rep-banner p{
+          font-size:15px;color:rgba(169,198,232,.9);font-weight:300;line-height:1.65;max-width:600px;
+        }
+
+        /* Location warning bar */
+        .rep-loc-bar{
+          background:rgba(169,198,232,.10);border-bottom:1px solid var(--gris-borde);
+          padding:13px 40px;display:flex;align-items:center;gap:10px;
+        }
+        .rep-loc-bar svg{width:18px;height:18px;stroke:var(--azul-med);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        .rep-loc-bar-text{font-size:13.5px;color:var(--gris-txt);font-weight:400;flex:1}
+        .rep-loc-bar-text strong{color:var(--azul);font-weight:700}
+        .rep-loc-retry{
+          font-size:12.5px;font-weight:600;color:var(--azul);
+          background:rgba(169,198,232,.25);border:1px solid var(--gris-borde);
+          border-radius:7px;padding:5px 13px;cursor:pointer;transition:all .2s;white-space:nowrap;
+        }
+        .rep-loc-retry:hover{background:var(--azul-claro);color:#fff;border-color:var(--azul-claro)}
+
+        /* Two-column body */
+        .rep-body{
+          display:grid;grid-template-columns:1fr 1fr;
+          background:var(--blanco);
+        }
+        @media(max-width:860px){.rep-body{grid-template-columns:1fr}}
+
+        /* Left — form */
+        .rep-form-col{padding:32px 36px 36px;border-right:1px solid var(--gris-borde)}
+        @media(max-width:860px){.rep-form-col{border-right:none;border-bottom:1px solid var(--gris-borde)}}
+
+        .rep-field{margin-bottom:16px}
+        .rep-label{font-size:12.5px;font-weight:700;color:var(--azul);display:block;margin-bottom:6px;letter-spacing:.04em;text-transform:uppercase}
+        .rep-input,.rep-select,.rep-textarea{
+          width:100%;padding:11px 14px;border:1.5px solid var(--gris-borde);border-radius:9px;
+          font-family:var(--font-sans);font-size:14px;color:var(--gris-txt);
+          background:#fff;transition:border-color .2s,box-shadow .2s;outline:none;
+        }
+        .rep-input:focus,.rep-select:focus,.rep-textarea:focus{
+          border-color:var(--azul-claro);box-shadow:0 0 0 3px rgba(169,198,232,.22);
+        }
+        .rep-input::placeholder,.rep-textarea::placeholder{color:#aab8c8;font-weight:300}
+        .rep-textarea{min-height:100px;resize:vertical}
+        .rep-char-count{font-size:11px;color:var(--gris-sub);text-align:right;margin-top:4px}
+        .rep-select{
+          appearance:none;
+          background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%23003B71' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+          background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:36px;cursor:pointer;
+        }
+        .rep-file-btn{
+          display:inline-flex;align-items:center;gap:8px;
+          background:var(--fondo);border:1.5px solid var(--gris-borde);border-radius:9px;
+          padding:10px 16px;font-size:13.5px;font-weight:500;color:var(--azul);
+          cursor:pointer;transition:all .2s;
+        }
+        .rep-file-btn:hover{border-color:var(--azul-claro);background:rgba(169,198,232,.12)}
+        .rep-file-btn svg{width:16px;height:16px;stroke:var(--azul-claro);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+        .rep-file-name{font-size:13px;color:var(--gris-sub);font-style:italic}
+        .rep-submit{
+          width:100%;padding:14px;background:var(--azul);color:#fff;
+          font-family:var(--font-sans);font-size:15px;font-weight:700;
+          border:none;border-radius:10px;cursor:pointer;
+          transition:background var(--t),transform var(--t),box-shadow var(--t);
+          display:flex;align-items:center;justify-content:center;gap:9px;
+          margin-top:6px;box-shadow:0 4px 18px rgba(0,59,113,.28);
+          letter-spacing:.02em;
+        }
+        .rep-submit:hover{background:#1565C0;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,59,113,.38)}
+        .rep-submit:active{transform:translateY(0)}
+        .rep-submit svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+        .rep-success{
+          display:none;background:linear-gradient(135deg,#E8F5E9,#F1F8E9);
+          border:1px solid #A5D6A7;border-radius:10px;
+          padding:16px 20px;text-align:center;color:#2E7D32;font-weight:600;font-size:15px;margin-top:14px;
+        }
+        .rep-alt-link{
+          margin-top:16px;display:flex;align-items:center;gap:8px;
+          font-size:13px;color:var(--gris-sub);font-weight:300;
+        }
+        .rep-alt-link a{color:var(--azul-med);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+        .rep-alt-link a:hover{color:var(--azul)}
+
+        /* Right — map */
+        .rep-map-col{padding:28px 32px;display:flex;flex-direction:column;gap:14px}
+        .rep-map-header{display:flex;align-items:center;justify-content:space-between;gap:10px}
+        .rep-map-title{font-size:13px;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:.08em}
+        .rep-sat-btn{
+          display:inline-flex;align-items:center;gap:6px;
+          font-size:12px;font-weight:600;color:var(--azul);
+          background:var(--fondo);border:1.5px solid var(--gris-borde);
+          border-radius:8px;padding:6px 13px;cursor:pointer;transition:all .2s;
+        }
+        .rep-sat-btn:hover{border-color:var(--azul-claro);background:rgba(169,198,232,.15)}
+        .rep-sat-btn svg{width:14px;height:14px;stroke:var(--azul-claro);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+        .rep-map-frame{
+          flex:1;border-radius:12px;overflow:hidden;
+          border:1.5px solid var(--gris-borde);
+          box-shadow:0 4px 20px rgba(0,59,113,.10);
+          min-height:360px;position:relative;
+        }
+        .rep-map-frame iframe{width:100%;height:100%;border:none;display:block;position:absolute;inset:0}
+        .rep-map-hint{
+          font-size:12px;color:var(--gris-sub);font-weight:300;
+          display:flex;align-items:center;gap:6px;
+        }
+        .rep-map-hint svg{width:13px;height:13px;stroke:var(--azul-claro);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        </style>
+
+        <div class="rep-section-wrap">
+
+          <!-- Banner header — matches reference image style -->
+          <div class="rep-banner">
+            <div class="rep-banner-inner">
+              <div class="rep-banner-tag">Plataforma digital SAVAR</div>
+              <h3>Genera tu reporte en un minuto</h3>
+              <p>Tu ayuda es importante para mejorar la seguridad y movilidad del campus universitario.</p>
+            </div>
+          </div>
+
+          <!-- Location info bar -->
+          <div class="rep-loc-bar">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span class="rep-loc-bar-text"><strong>Información sobre ubicación</strong> — Permite el acceso a tu ubicación en la configuración de tu navegador y sistema operativo.</span>
+            <button class="rep-loc-retry" onclick="(function(){if(navigator.geolocation)navigator.geolocation.getCurrentPosition(function(){},function(){})})()">Reintentar permisos</button>
+          </div>
+
+          <!-- Two-column body -->
+          <div class="rep-body">
+
+            <!-- Left: Form -->
+            <div class="rep-form-col">
+              <div class="rep-field">
+                <label class="rep-label">Tipo de Reporte</label>
+                <select class="rep-select" id="rep-tipo">
+                  <option value="">Selecciona un tipo</option>
+                  <option value="luminaria">Falla en luminaria</option>
+                  <option value="pavimento">Daño en pavimento o banqueta</option>
+                  <option value="seguridad">Situación de seguridad</option>
+                  <option value="puerta">Puerta o acceso dañado</option>
+                  <option value="agua">Fuga de agua</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+
+              <div class="rep-field">
+                <label class="rep-label">Lugar cercano</label>
+                <input class="rep-input" type="text" id="rep-ubicacion" placeholder="Introduce el lugar del incidente">
+              </div>
+
+              <div class="rep-field">
+                <label class="rep-label">Descripcion</label>
+                <textarea class="rep-textarea" id="rep-desc" placeholder="Describe el incidente con detalle..." maxlength="140" oninput="document.getElementById('rep-charcount').textContent=this.value.length+'/140'"></textarea>
+                <div class="rep-char-count"><span id="rep-charcount">0/140</span></div>
+              </div>
+
+              <div class="rep-field">
+                <label class="rep-label">Imagen (opcional)</label>
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <label class="rep-file-btn">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Seleccionar imagen
+                    <input type="file" accept="image/*" style="display:none" onchange="document.getElementById('rep-fname').textContent=this.files[0]?this.files[0].name:'Ningun archivo'">
+                  </label>
+                  <span class="rep-file-name" id="rep-fname">Ningun archivo</span>
+                </div>
+              </div>
+
+              <button class="rep-submit" onclick="enviarReporte()">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Enviar Reporte
+              </button>
+
+              <div class="rep-success" id="rep-success">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:8px"><polyline points="20 6 9 17 4 12"/></svg>
+                ¡Reporte enviado correctamente! El equipo responsable lo atenderá a la brevedad.
+              </div>
+
+              <div class="rep-alt-link">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                También puedes reportar en <a href="https://senderos.savar.mx/reporte" target="_blank" rel="noopener">senderos.savar.mx</a>
+              </div>
+            </div>
+
+            <!-- Right: Map -->
+            <div class="rep-map-col">
+              <div class="rep-map-header">
+                <span class="rep-map-title">Ubicacion</span>
+                <button class="rep-sat-btn">
+                  <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>
+                  Satelite
+                </button>
+              </div>
+
+              <div class="rep-map-frame">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d942.9!2d-99.18757!3d19.32277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0003b14e37ed%3A0xf20e7da6619c4774!2sRector%C3%ADa+de+la+UNAM!5e0!3m2!1ses!2smx!4v1"
+                  title="Ubicación UNAM - Rectoría"
+                  allowfullscreen
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+
+              <div class="rep-map-hint">
+                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Haz clic en el mapa para seleccionar tu ubicacion
+              </div>
+            </div>
+
+          </div><!-- /rep-body -->
+        </div><!-- /rep-section-wrap -->
+
+        <script>
+        function enviarReporte(){
+          var tipo     = document.getElementById('rep-tipo').value;
+          var ubicacion= document.getElementById('rep-ubicacion').value.trim();
+          var desc     = document.getElementById('rep-desc').value.trim();
+          if(!tipo||!ubicacion||!desc){
+            alert('Por favor completa los campos requeridos antes de enviar.');
+            return;
+          }
+          var subject  = encodeURIComponent('Reporte de incidencia: ' + tipo);
+          var body     = encodeURIComponent(
+            'Tipo: '   + tipo   + '\n' +
+            'Ubicaci\u00f3n: ' + ubicacion + '\n\n' +
+            'Descripci\u00f3n:\n' + desc
+          );
+          window.open('mailto:senderos@unam.mx?subject=' + subject + '&body=' + body);
+          document.getElementById('rep-success').style.display = 'block';
+          document.getElementById('rep-ubicacion').value='';
+          document.getElementById('rep-desc').value='';
+          document.getElementById('rep-tipo').value='';
+          document.getElementById('rep-charcount').textContent='0/140';
+          document.getElementById('rep-fname').textContent='Ningun archivo';
+        }
+        </script>
+      </div>
     </div>
 
     <!-- ╔══════════════════════════════╗
          DIRECTORIO
     ╚══════════════════════════════╝ -->
     <div class="tab-panel panel-tab-only" id="panel-directorio">
-      <!-- Botón regresar -->
-      <div style="margin-bottom:28px">
-        <button onclick="sbGoSection('panel-informacion','sb-informacion')" style="display:inline-flex;align-items:center;gap:8px;background:var(--azul-pale);border:1px solid var(--gris-borde);color:var(--azul);font-family:var(--font-sans);font-size:14px;font-weight:600;padding:9px 18px;border-radius:9px;cursor:pointer;transition:all var(--t)" onmouseover="this.style.background='var(--azul-claro)'" onmouseout="this.style.background='var(--azul-pale)'">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          Regresar a la página
-        </button>
+      <style>
+      /* ── Access bar ── */
+      .dir-access-bar{
+        display:flex;flex-wrap:wrap;gap:10px;
+        background:#f0f4fa;border:1px solid #dde8f4;border-radius:14px;
+        padding:14px 18px;margin-bottom:32px;
+      }
+      .dir-access-chip{
+        display:flex;align-items:center;gap:10px;
+        background:#fff;border:1.5px solid #dde8f4;border-radius:10px;
+        padding:10px 18px;cursor:pointer;transition:all .2s;text-decoration:none;
+        color:var(--azul);font-family:var(--font-sans);font-size:14px;font-weight:600;
+        min-width:140px;
+      }
+      .dir-access-chip:hover{background:var(--azul);color:#fff;border-color:var(--azul)}
+      .dir-access-chip:hover svg{stroke:#fff}
+      .dir-access-chip svg{width:22px;height:22px;stroke:var(--azul);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:stroke .2s}
+      .dir-access-chip span{font-size:12px;color:inherit;opacity:.75;display:block;font-weight:400;line-height:1.2}
+      /* ── Directorio groups ── */
+      .dir-group{margin-bottom:36px}
+      .dir-group-label{
+        font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;
+        color:var(--azul);border-left:4px solid #D4AF37;padding-left:12px;
+        margin-bottom:16px;line-height:1;
+      }
+      @media(max-width:640px){.dir-access-bar{gap:8px}.dir-access-chip{min-width:120px;padding:8px 12px;font-size:13px}}
+      </style>
+
+      <!-- Access bar (Image 5) -->
+      <div class="dir-access-bar">
+        <a href="tel:5556160523" class="dir-access-chip">
+          <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4M12 16h.01"/></svg>
+          <div>Emergencias<span>55 5616 0523</span></div>
+        </a>
+        <a href="https://www.dgsgm.unam.mx/pumabus.html" target="_blank" rel="noopener" class="dir-access-chip">
+          <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <div>Pumabús<span>&nbsp;</span></div>
+        </a>
+        <a href="mailto:spamsu@unam.mx" class="dir-access-chip">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <div>Atención a la Comunidad<span>&nbsp;</span></div>
+        </a>
+        <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-access-chip">
+          <svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg>
+          <div>Movilidad<span>&nbsp;</span></div>
+        </a>
+        <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" class="dir-access-chip">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div>Seguridad Universitaria<span>&nbsp;</span></div>
+        </a>
       </div>
       <div class="sec-tag">Personal institucional</div>
       <h2 class="sec-title">Directorio Institucional</h2>
@@ -2000,10 +2199,23 @@ body.tab-mode section.noticias-section{display:none}
       .dir-contacto-bar a{color:var(--azul-claro);font-weight:700;text-decoration:none}
       .dir-contacto-bar a:hover{color:#fff}
 
-      .dir-table{width:100%;border-collapse:collapse;font-size:14.5px}
-      .dir-table tr{border-bottom:1px solid var(--gris-borde);transition:background var(--t)}
-      .dir-table tr:hover{background:var(--azul-pale)}
-      .dir-table td{padding:14px 16px;vertical-align:top}
+      .dir-table{width:100%;border-collapse:collapse;font-size:14.5px;border-spacing:0}
+      .dir-table tr.dir-tr-data{border-bottom:1px solid var(--gris-borde);transition:background var(--t)}
+      .dir-table tr.dir-tr-data:hover{background:var(--azul-pale)}
+      .dir-table tr.dir-tr-group td{
+        padding:20px 16px 8px;
+        background:transparent;
+        border-bottom:2.5px solid #D4AF37;
+      }
+      .dir-group-hd{
+        font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;
+        color:var(--azul);display:flex;align-items:center;gap:10px;
+      }
+      .dir-group-hd::before{
+        content:'';display:inline-block;width:3px;height:14px;
+        background:#D4AF37;border-radius:2px;flex-shrink:0;
+      }
+      .dir-table td{padding:13px 16px;vertical-align:top}
       .dir-table td:first-child{width:34px;padding-right:0}
       .dir-cell-avatar{
         width:32px;height:32px;border-radius:50%;
@@ -2045,8 +2257,8 @@ body.tab-mode section.noticias-section{display:none}
       </div>
 
       <table class="dir-table">
-        <!-- Titular -->
-        <tr>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Titular de la Secretaría</div></td></tr>
+        <tr class="dir-tr-data">
           <td><div class="dir-cell-avatar av-gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Dr. Manuel Palma Rangel</div>
@@ -2057,16 +2269,19 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Asistencia y Gestión</div></td></tr>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Lic. Mónica Carballido Quintanar</div>
             <div class="dir-role">Asistente</div>
-            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21286 y 21047</span></div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21286 y 21047</span>
+            </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Ing. Jesús Cruz Cervantes</div>
             <div class="dir-role">Coordinador de Gestión</div>
@@ -2076,9 +2291,8 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <!-- Camila Fosado — Información General (se respeta intacto) -->
-        <tr>
-          <td><div class="dir-cell-avatar" style="background:var(--azul-claro)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-badge-ig">Información General</div>
             <div class="dir-name">Lic. Camila Fosado Balderas</div>
@@ -2088,8 +2302,9 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Coordinación de Análisis y Concertación</div></td></tr>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Mtro. Arturo Ruiz Ruisánchez</div>
             <div class="dir-role">Coordinador de Análisis y Concertación</div>
@@ -2099,8 +2314,8 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Med. Jaime Jimmy Revah Peralta</div>
             <div class="dir-role">Subdirector de Análisis e Interpretación</div>
@@ -2110,8 +2325,8 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Lic. Sergio Luis Gutiérrez Mancilla</div>
             <div class="dir-role">Subdirector de Concertación</div>
@@ -2121,8 +2336,9 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Orientación y Asesoramiento</div></td></tr>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Mtra. Fusae Nakazawa Cuéllar</div>
             <div class="dir-role">Secretaria Auxiliar de Orientación y Asesoramiento</div>
@@ -2132,8 +2348,9 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Educación en Prevención y Seguridad</div></td></tr>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Mtro. Jaime Echartea Mojica</div>
             <div class="dir-role">Coordinador de Educación en Prevención y Seguridad</div>
@@ -2143,8 +2360,8 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Lic. Omar Pérez Salazar</div>
             <div class="dir-role">Jefe del Departamento de Valores y Entornos Universitarios</div>
@@ -2153,8 +2370,8 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Mtra. Maritza Valencia Murcia</div>
             <div class="dir-role">Jefa del Departamento de Prevención y Atención de Riesgos</div>
@@ -2163,8 +2380,9 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Enlace con Instancias de Gobierno</div></td></tr>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Mtra. Manuela Luna Briseño</div>
             <div class="dir-role">Coordinadora de Enlace con Instancias de Gobierno</div>
@@ -2174,10 +2392,10 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
-            <div class="dir-name">Mtro. Honorio Raúl Sotelo Esquivel</div>
+            <div class="dir-name">Mtro. Honorio Raúil Sotelo Esquivel</div>
             <div class="dir-role">Secretario Auxiliar</div>
             <div class="dir-meta">
               <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82707</span>
@@ -2185,16 +2403,18 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Luz María Morales Cortés</div>
             <div class="dir-role">Asistente</div>
-            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82811</span></div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82811</span>
+            </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Mtra. Karol Rivera Barrios</div>
             <div class="dir-role">Jefa de Departamento de Bachillerato</div>
@@ -2204,8 +2424,8 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Ing. Julio Calderón Juan</div>
             <div class="dir-role">Jefe del Departamento Zona Metropolitana</div>
@@ -2215,8 +2435,9 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Coordinación de Planeación Institucional</div></td></tr>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Mtro. Jorge Hugo Ibarra Cárdenas</div>
             <div class="dir-role">Coordinador de Planeación Institucional</div>
@@ -2226,16 +2447,18 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Lic. María del Rocío Guzmán García</div>
             <div class="dir-role">Asistente</div>
-            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21033</span></div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21033</span>
+            </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Lic. Gerardo Nerio Gallardo</div>
             <div class="dir-role">Secretario Auxiliar de Planeación</div>
@@ -2245,16 +2468,19 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Lic. Carlos Maximiliano Zetina Huerta</div>
             <div class="dir-role">Jefe del Departamento de Evaluación</div>
-            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21041</span></div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21041</span>
+            </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Proyectos y Programas de Prevención</div></td></tr>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Mtra. Paola Romero Monterrubio</div>
             <div class="dir-role">Coordinadora de Proyectos y Programas de Prevención y Seguridad</div>
@@ -2264,8 +2490,8 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Monserrat Arumi Cortés Hernández</div>
             <div class="dir-role">Secretaria Auxiliar</div>
@@ -2274,8 +2500,8 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Lic. Daniel Cuéllar Ramírez</div>
             <div class="dir-role">Secretario Auxiliar</div>
@@ -2285,8 +2511,9 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Comisiones Locales de Seguridad</div></td></tr>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Mtra. Georgina González Moreno</div>
             <div class="dir-role">Coordinadora de Comisiones Locales de Seguridad de la Torre de Rectoría</div>
@@ -2296,19 +2523,16 @@ body.tab-mode section.noticias-section{display:none}
             </div>
           </td>
         </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div></td>
-          <td>
-            <div class="dir-name">Unidad Administrativa</div>
-            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82688</span></div>
-          </td>
-        </tr>
-        <tr>
-          <td><div class="dir-cell-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
+        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Unidad Administrativa</div></td></tr>
+        <tr class="dir-tr-data"><td></td><td><div class="dir-name" style="font-weight:500;font-size:14px">Unidad Administrativa</div><div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82688</span></div></td></tr>
+        <tr class="dir-tr-data">
+          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
           <td>
             <div class="dir-name">Ing. Alejandro de Rosas Olaya</div>
             <div class="dir-role">Asistente</div>
-            <div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21299</span></div>
+            <div class="dir-meta">
+              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21299</span>
+            </div>
           </td>
         </tr>
       </table>
@@ -2479,31 +2703,30 @@ body.tab-mode section.noticias-section{display:none}
     </div>
   </section>
   <section class="nov-section" id="novedades">
-    <div class="sec-tag">Información y recursos</div>
     <h2 class="sec-title">Novedades y Recursos</h2>
     <div class="nov-tab-bar">
       <button class="ntab active" onclick="switchNovTab('videos')"     id="ntb-videos">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
         Videos
       </button>
       <button class="ntab"        onclick="switchNovTab('proyectos')"  id="ntb-proyectos">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
         Planes y Programas
       </button>
       <button class="ntab"        onclick="switchNovTab('incluyente')" id="ntb-incluyente">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M10 22l2-8 3 3 2-5"/><path d="M6 14c0 4 3 7 6 8"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M10 22l2-8 3 3 2-5"/><path d="M6 14c0 4 3 7 6 8"/></svg>
         Seguridad y Movilidad Incluyente
       </button>
       <button class="ntab"        onclick="switchNovTab('cursos')"     id="ntb-cursos">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
         Cursos y Capacitaciones
       </button>
       <button class="ntab"        onclick="switchNovTab('protocolos')" id="ntb-protocolos">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         Protocolos
       </button>
       <button class="ntab"        onclick="switchNovTab('material')"   id="ntb-material">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Material
       </button>
     </div>
@@ -2518,35 +2741,31 @@ body.tab-mode section.noticias-section{display:none}
         <button class="itab"        onclick="switchVidTab('protoc')"     id="vt-protoc">Nuestros protocolos</button>
       </div>
       <div class="itab-pane active" id="vp-comunidad">
-        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;width:100%">
-          <div style="width:100%;max-width:400px;overflow:visible">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYdsHT2Nq2K/?igsh=eGR4bW90aXhkamt5" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
-          </div>
-          <div style="width:100%;max-width:400px;overflow:visible">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/DYbAWavBlgU/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
-          </div>
+        <div style="background:var(--azul-pale);border:1px solid var(--gris-borde);border-radius:var(--r);padding:32px;text-align:center;color:var(--gris-sub);font-size:15px">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 12px"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <div>Próximamente videos de nuestra comunidad.</div>
         </div>
         <!-- [VIDEO-COMUNIDAD] Agregar videos de comunidad aqui -->
       </div>
       <div class="itab-pane" id="vp-estadio">
-        <div class="info-tabs" style="margin-bottom:24px">
-          <button class="itab active" onclick="switchEstadioTab('videos')" id="et-videos">Videos</button>
-          <button class="itab" onclick="switchEstadioTab('visitas')" id="et-visitas">Visitas Guiadas</button>
-        </div>
-        <div class="itab-pane active" id="ep-videos">
-        <div class="vid-grid">
-          <!-- [VIDEO-ESTADIO] Agregar videos del estadio aqui -->
-          <div class="vid-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;background:var(--azul-pale)">
-            <div style="text-align:center;color:var(--gris-sub);font-size:15px">Videos del estadio<br><span style="font-size:13px;opacity:.6">[Agregar videos]</span></div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;width:100%">
+          <!-- reel DYdsHT2Nq2K (antes en comunidad) -->
+          <div style="width:100%;max-width:400px;overflow:visible">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYdsHT2Nq2K/?igsh=eGR4bW90aXhkamt5" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
           </div>
-        </div>
-        </div>
-        <div class="itab-pane" id="ep-visitas">
-          <div style="background:var(--azul-pale);border:1px solid var(--gris-borde);border-radius:var(--r);padding:24px;text-align:center">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 14px"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-            <div style="font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--azul);margin-bottom:8px">Visitas Guiadas al Estadio Olímpico Universitario</div>
-            <p style="font-size:15px;color:var(--gris-txt);font-weight:300;line-height:1.7;margin-bottom:16px">Próximamente disponible el enlace para solicitar visitas guiadas al Estadio Olímpico Universitario.</p>
-            <span style="display:inline-flex;align-items:center;gap:6px;background:var(--azul);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:9px;opacity:.6;cursor:not-allowed">Enlace pendiente</span>
+          <!-- DX4edw9jUgM -->
+          <div style="width:100%;max-width:400px;overflow:visible">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/DX4edw9jUgM/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
+          </div>
+          <!-- C_MKmH3u-OO -->
+          <div style="width:100%;max-width:400px;overflow:visible">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/C_MKmH3u-OO/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
+          </div>
+          <!-- YouTube R-EBun_vmjs -->
+          <div style="width:100%;max-width:720px;overflow:visible">
+            <div style="border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.10);aspect-ratio:16/9">
+              <iframe src="https://www.youtube.com/embed/R-EBun_vmjs" title="Estadio Olímpico Universitario UNAM" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy" style="width:100%;height:100%;border:none;display:block"></iframe>
+            </div>
           </div>
         </div>
       </div>
@@ -2559,10 +2778,12 @@ body.tab-mode section.noticias-section{display:none}
         </div>
       </div>
       <div class="itab-pane" id="vp-protoc">
-        <div class="vid-grid">
-          <!-- [VIDEO-PROTOCOLOS] Agregar videos de protocolos aqui -->
-          <div class="vid-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;background:var(--azul-pale)">
-            <div style="text-align:center;color:var(--gris-sub);font-size:15px">Videos de protocolos<br><span style="font-size:13px;opacity:.6">[Agregar videos]</span></div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;width:100%">
+          <div style="width:100%;max-width:400px;overflow:visible">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/DYnkMUfR75l/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
+          </div>
+          <div style="width:100%;max-width:400px;overflow:visible">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/DYbAWavBlgU/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
           </div>
         </div>
       </div>
@@ -2681,7 +2902,7 @@ body.tab-mode section.noticias-section{display:none}
       </style>
 
       <!-- ── Seguridad y orden público ── -->
-      <div class="proto-section-label">Seguridad y orden público</div>
+      <div class="proto-section-label">Seguridad y reacción inmediata</div>
       <div class="proto-grid">
         <div class="proto-card">
           <div class="proto-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
@@ -2851,7 +3072,7 @@ body.tab-mode section.noticias-section{display:none}
       </div>
 
       <!-- ── Atención médica y bienestar ── -->
-      <div class="proto-section-label">Atención médica y bienestar</div>
+      <div class="proto-section-label">Atención médica y salud mental</div>
       <div class="proto-grid">
         <div class="proto-card">
           <div class="proto-icon" style="background:#C62828"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
@@ -2935,7 +3156,6 @@ body.tab-mode section.noticias-section{display:none}
   <!-- EMERGENCIAS UNAM -->
   <section class="emerg-section" id="emergencias">
     <div class="emerg-head">
-      <div class="emerg-unam-logo"><div data-img="logo-unam" data-alt="UNAM" style="width:100%;height:100%"></div></div>
       <div>
         <div class="emerg-title">EMERGENCIAS <span>UNAM</span></div>
         <div class="emerg-sub">Marca 55 desde cualquier extensión UNAM</div>
@@ -3219,31 +3439,150 @@ body.tab-mode section.noticias-section{display:none}
 
   <!-- FOOTER -->
   <footer class="site-footer" id="contacto">
-    <!-- Background image -->
-    <div class="footer-bg-img"><div data-img="footer-bg" data-alt="UNAM campus" style="width:100%;height:100%"></div></div>
+    <style>
+    .site-footer{
+      background:#003366;position:relative;overflow:hidden;
+      padding:48px 52px 0;color:#fff;
+    }
+    /* Background buildings image */
+    .site-footer::before{
+      content:'';position:absolute;inset:0;
+      background-image:url('img/footer-buildings.png');
+      background-size:cover;background-position:center bottom;
+      opacity:.18;pointer-events:none;z-index:0;
+    }
+    .footer-inner{
+      position:relative;z-index:1;
+      display:grid;grid-template-columns:220px 1fr;gap:48px;
+      padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.15);
+      margin-bottom:22px;
+    }
+    /* Left: UNAM block */
+    .footer-unam-block{}
+    .footer-unam-logos{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .footer-unam-logo{width:90px;height:90px;flex-shrink:0}
+    .footer-unam-logo [data-img]{width:100%;height:100%}
+    .footer-unam-logo [data-img] img{object-fit:contain}
+    .footer-unam-logo .sph-name,.footer-unam-logo .sph-badge,.footer-unam-logo .sph-icon{display:none}
+    .footer-475{font-size:44px;font-weight:900;color:#D4AF37;line-height:1;letter-spacing:-.02em}
+    .footer-475-sub{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.14em;line-height:1.4}
+    .fb-name{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+    .fb-full{font-size:13px;color:rgba(255,255,255,.6);font-weight:300;line-height:1.6}
+    .footer-divider{width:36px;height:3px;background:#D4AF37;border-radius:2px;margin:14px 0}
+    /* Social icons */
+    .footer-social{display:flex;gap:10px;margin-top:14px}
+    .footer-social a{
+      width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);
+      display:flex;align-items:center;justify-content:center;color:#fff;
+      transition:all .2s;text-decoration:none;
+    }
+    .footer-social a:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.5)}
+    .footer-social svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    /* Right: SPAMSU + links */
+    .footer-right{display:flex;flex-direction:column;gap:0}
+    .footer-spamsu-head{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+    .footer-spamsu-logo{width:54px;height:54px;flex-shrink:0}
+    .footer-spamsu-logo img{width:100%;height:100%;object-fit:contain}
+    .footer-spamsu-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.10em;line-height:1.4}
+    .footer-links{display:flex;flex-direction:column;gap:2px}
+    .footer-link-row{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08);
+      color:rgba(255,255,255,.82);font-size:15px;font-weight:400;
+      text-decoration:none;transition:color .2s;cursor:pointer;
+      background:none;border-top:none;border-left:none;border-right:none;
+      font-family:var(--font-sans);text-align:left;width:100%;
+    }
+    .footer-link-row:hover{color:#fff}
+    .footer-link-row:last-child{border-bottom:none}
+    .footer-link-row svg{width:14px;height:14px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    .footer-link-row:hover svg{stroke:rgba(255,255,255,.8)}
+    /* Bottom bar */
+    .footer-bottom{
+      position:relative;z-index:1;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+      padding:16px 0;
+    }
+    .footer-copyright{font-size:13px;color:rgba(255,255,255,.5);font-weight:300}
+    .footer-dir-label{
+      display:flex;align-items:center;gap:8px;
+      font-size:12px;color:rgba(255,255,255,.5);font-weight:400;text-align:right;
+    }
+    .footer-dir-label svg{width:14px;height:14px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    .copyright-bar{
+      background:#001a33;color:rgba(255,255,255,.45);
+      font-size:12px;text-align:center;padding:10px 20px;
+    }
+    @media(max-width:900px){
+      .footer-inner{grid-template-columns:1fr;gap:28px}
+      .site-footer{padding:36px 24px 0}
+    }
+    </style>
+
     <div class="footer-inner">
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:7px">
-          <div class="footer-unam-logo" style="margin-bottom:0"><div data-img="logo-unam" data-alt="UNAM" style="width:116px;height:116px;border-radius:7px"></div></div>
-          <div class="footer-unam-logo" style="margin-bottom:0"><div data-img="logo-aniversario" data-alt="Aniversario UNAM" style="width:116px;height:116px;border-radius:7px"></div></div>
+      <!-- Left block -->
+      <div class="footer-unam-block">
+        <div class="footer-unam-logos">
+          <div class="footer-unam-logo"><div data-img="logo-unam" data-alt="UNAM" style="width:90px;height:90px;border-radius:7px"></div></div>
+          <div>
+            <div class="footer-475">475</div>
+            <div class="footer-475-sub">Universidad<br>México<br>1551 · 2026</div>
+          </div>
         </div>
+        <div class="footer-divider"></div>
         <div class="fb-name">UNAM</div>
         <div class="fb-full">Universidad Nacional Autónoma de México<br>1551 · 2026</div>
+        <div class="footer-social">
+          <a href="https://x.com/spamsu_unam" target="_blank" rel="noopener" aria-label="X / Twitter">
+            <svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg>
+          </a>
+          <a href="https://www.instagram.com/spamsu_unam" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@spamsu_unam" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+          </a>
+        </div>
       </div>
-      <div class="footer-col">
-        <div class="fc-title">Institución</div>
-        <a href="http://www.unam.mx/" target="_blank" rel="noopener">Portal UNAM</a>
-        <a href="#" onclick="showTab('informacion');return false">Acerca de SPAMSU</a>
-        <a href="#" onclick="showTab('directorio');return false">Directorio institucional</a>
-        <a href="http://www.transparencia.unam.mx/" target="_blank" rel="noopener">Transparencia UNAM</a>
+
+      <!-- Right block -->
+      <div class="footer-right">
+        <div class="footer-spamsu-head">
+          <div class="footer-spamsu-logo">
+            <img src="img/spamsu-blanco.png" alt="SPAMSU" onerror="this.style.display='none'">
+          </div>
+          <div class="footer-spamsu-name">Secretar&#237;a de Prevenci&#243;n y Apoyo a la<br>Movilidad y Seguridad Universitaria</div>
+        </div>
+        <div class="footer-links">
+          <a href="http://www.unam.mx/" target="_blank" rel="noopener" class="footer-link-row">
+            <span>Portal UNAM</span>
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <button class="footer-link-row" onclick="sbGoSection('panel-informacion','sb-informacion')">
+            <span>Acerca de SPAMSU</span>
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="footer-link-row" onclick="sbOpenTab('directorio','sb-directorio')">
+            <span>Directorio institucional</span>
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <a href="http://www.transparencia.unam.mx/" target="_blank" rel="noopener" class="footer-link-row">
+            <span>Transparencia UNAM</span>
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
       </div>
     </div>
+
     <div class="footer-bottom">
-      <div class="footer-copyright">© 2026 UNAM · Universidad Nacional Autónoma de México</div>
-      <div class="footer-dir-label">Dirección General de Análisis, Protección y Seguridad Universitaria</div>
+      <div class="footer-copyright">&#169; 2026 UNAM &#183; Universidad Nacional Aut&#243;noma de M&#233;xico</div>
+      <div class="footer-dir-label">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Direcci&#243;n General de An&#225;lisis, Protecci&#243;n y Seguridad Universitaria
+      </div>
     </div>
   </footer>
-  <div class="copyright-bar">Hecho en México · Universidad Nacional Autónoma de México · Todos los derechos reservados 2026</div>
+  <div class="copyright-bar">Hecho en M&#233;xico &#183; Universidad Nacional Aut&#243;noma de M&#233;xico &#183; Todos los derechos reservados 2026</div>
 
 </main>
 
@@ -3318,6 +3657,7 @@ body.tab-mode section.noticias-section{display:none}
 <div class="disclaimer-bg" id="disclaimerModal">
   <div class="disclaimer-box">
     <div class="disclaimer-head">
+      <img src="img/spamsu-blanco.png" alt="SPAMSU" style="width:72px;height:72px;object-fit:contain;margin:0 auto 12px;display:block" onerror="this.style.display='none'">
       <div class="disclaimer-head-title">¿Necesitas ayuda inmediata?</div>
       <div class="disclaimer-head-sub">Nuestros equipos de reacción están disponibles las 24 horas.<br>No dudes en llamar si estás en riesgo.</div>
     </div>
@@ -3327,28 +3667,35 @@ body.tab-mode section.noticias-section{display:none}
           <img src="img/disclaimer-cae.png" alt="CAE" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
           <span style="display:none;font-size:11px;font-weight:900;letter-spacing:.04em">CAE</span>
         </div>
-        <div class="disclaimer-card-info">
-          <div class="disclaimer-card-name">Central de Atención de Emergencias</div>
+        <div class="disclaimer-card-info" style="flex:1;text-align:center">
+          <div class="disclaimer-card-name">CENTRAL DE ATENCIÓN DE EMERGENCIAS</div>
           <div class="disclaimer-card-number">55 5616 0523</div>
         </div>
       </a>
       <a href="tel:5556226464" class="disclaimer-card">
         <div class="disclaimer-badge" style="background:#F57F17;padding:6px;overflow:hidden">
-          <img src="img/disclaimer-puma.png" alt="Línea de Reacción Puma" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <svg style="display:none" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+          <img src="img/disclaimer-sos-unam.png" alt="SOS UNAM" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span style="display:none;font-size:9px;font-weight:900;line-height:1.1;text-align:center">S.O.S<br>UNAM</span>
         </div>
-        <div class="disclaimer-card-info">
-          <div class="disclaimer-card-name">Línea de Reacción Puma</div>
+        <div class="disclaimer-card-info" style="flex:1;text-align:center">
+          <div class="disclaimer-card-name">LÍNEA DE REACCIÓN PUMA</div>
           <div class="disclaimer-card-number">55 5622 6464</div>
         </div>
       </a>
     </div>
     <div class="disclaimer-footer">
-      <a href="http://www.sos.unam.mx/" target="_blank" rel="noopener" class="disclaimer-sos-btn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-        Ir a S.O.S. UNAM
-      </a>
-      <button class="disclaimer-close-link" onclick="closeDisclaimer()">Entendido, continuar al sitio</button>
+      <!-- SOS UNAM logo image -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:4px">
+        <img src="img/disclaimer-sos-unam-logo.png" alt="S.O.S UNAM" style="width:72px;height:72px;object-fit:contain" onerror="this.style.display='none'">
+        <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.16em;text-transform:uppercase">S.O.S UNAM</div>
+      </div>
+      <!-- Decorative chevrons -->
+      <div style="display:flex;gap:8px;justify-content:center;margin:6px 0 12px">
+        <svg width="32" height="24" viewBox="0 0 32 24" fill="none"><polygon points="0,24 16,0 32,24 26,24 16,8 6,24" fill="rgba(169,198,232,.35)"/></svg>
+        <svg width="32" height="24" viewBox="0 0 32 24" fill="none"><polygon points="0,24 16,0 32,24 26,24 16,8 6,24" fill="rgba(169,198,232,.22)"/></svg>
+        <svg width="32" height="24" viewBox="0 0 32 24" fill="none"><polygon points="0,24 16,0 32,24 26,24 16,8 6,24" fill="rgba(169,198,232,.12)"/></svg>
+      </div>
+      <button class="disclaimer-close-link" onclick="closeDisclaimer()" style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700">CONTINUAR AL SITIO WEB</button>
     </div>
   </div>
 </div>
@@ -3698,7 +4045,53 @@ function closeModal(id){document.getElementById(id).classList.remove('open');doc
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.dir-modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.disclaimer-bg.open').forEach(function(m){m.classList.remove('open')});document.body.style.overflow='';}});
 
 /* ════════ HERO DOTS ════════ */
-/* heroSlide y YouTube API definidos en el bloque del hero */
+/* heroSlide y video local definidos en el bloque del hero */
+
+/* ════ RECTOR AUTOPLAY + PAUSE INVISIBLE VIDEOS ════ */
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+
+  /* Rector video: autoplay when 40% visible, pause when not */
+  var rectorSection = document.getElementById('video-rector');
+  if(rectorSection){
+    var rectorIframe = rectorSection.querySelector('iframe');
+    var rectorObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!rectorIframe) return;
+        if(e.isIntersecting){
+          // Enable autoplay by reloading src with autoplay=1
+          if(!rectorIframe.dataset.autoplayed){
+            rectorIframe.dataset.autoplayed = '1';
+            var src = rectorIframe.src;
+            if(src.indexOf('autoplay') === -1){
+              rectorIframe.src = src + (src.indexOf('?') >= 0 ? '&' : '?') + 'autoplay=1&mute=0';
+            }
+          }
+          try{ rectorIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*'); }catch(e2){}
+        } else {
+          try{ rectorIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*'); }catch(e2){}
+        }
+      });
+    },{threshold:0.4});
+    rectorObs.observe(rectorSection);
+  }
+
+  /* Pause ALL iframes (YouTube embeds) when they leave the viewport */
+  var allIframes = document.querySelectorAll('iframe[src*="youtube.com/embed"]');
+  var iframeObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var iframe = e.target;
+      if(!e.isIntersecting){
+        try{ iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*'); }catch(err){}
+      }
+    });
+  },{threshold:0.1});
+  allIframes.forEach(function(ifr){
+    // Skip rector (handled above) to avoid double observer
+    if(ifr.closest('#video-rector')) return;
+    iframeObs.observe(ifr);
+  });
+})();
 
 /* ════════ HERO PATTERN CANVAS ════════ */
 function drawHeroPattern() {
