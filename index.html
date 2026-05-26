@@ -145,7 +145,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .hero-wrap{position:relative;width:100%;height:400px;overflow:hidden;margin-top:0}
 .hero-wrap [data-img]{position:absolute;inset:0;width:100%;height:100%}
 .hero-wrap [data-img] img{object-fit:cover}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,30,60,.28) 0%,rgba(0,30,60,.08) 60%,transparent 100%);z-index:1}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,30,60,.28) 0%,rgba(0,30,60,.08) 60%,transparent 100%);z-index:1;pointer-events:none}
 
 /* Hero pattern — identical to reference image (triangles + circles) */
 .hero-pattern{
@@ -196,6 +196,8 @@ body.tab-mode section.noticias-section{display:none}
 .itab.active::after{transform:scaleX(1);background:var(--azul-claro)}
 .itab-pane{display:none;max-width:720px}.itab-pane.active{display:block;animation:fadeIn .3s ease}
 .itab-pane p{font-size:17px;color:var(--gris-txt);font-weight:300;line-height:1.85;margin-bottom:16px}
+/* Video tab panes need full width — override max-width */
+#vp-comunidad,#vp-estadio,#vp-protoc,#vp-proyectos{max-width:none!important;width:100%}
 
 /* ═══════════════════════════════════════════
    DECÁLOGO — Animated road infographic
@@ -842,26 +844,42 @@ body.tab-mode section.noticias-section{display:none}
   <!-- Hero -->
   <div class="hero-wrap" id="heroWrap">
     <!-- Slide 1 — Video local (carpeta videos/) -->
-    <div class="hero-slide" id="hero-slide-1" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;overflow:hidden;background:#000">
+    <div class="hero-slide" id="hero-slide-1" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;overflow:hidden;background:#000;pointer-events:none">
       <video id="heroLocalVideo" muted playsinline loop preload="auto"
         style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;pointer-events:none">
         <source src="videos/hero-video.mp4" type="video/mp4">
       </video>
     </div>
     <!-- Slide 2 — Imagen -->
-    <div class="hero-slide" id="hero-slide-2" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1">
+    <div class="hero-slide" id="hero-slide-2" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;pointer-events:none">
       <div data-img="hero-slide-2" data-alt="Ciudad Universitaria UNAM" class="dark-ph" style="width:100%;height:100%"></div>
     </div>
     <!-- Slide 3 — Imagen → clic va al Decálogo -->
-    <div class="hero-slide" id="hero-slide-3" onclick="sbGoSection('panel-informacion','sb-informacion');setTimeout(function(){switchInfoTab('decalogo')},400)"
-      style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;cursor:pointer">
-      <div data-img="hero-slide-3" data-alt="Decálogo SPAMSU" class="dark-ph" style="width:100%;height:100%"></div>
+    <div class="hero-slide" id="hero-slide-3"
+      onclick="irAlDecalogo()"
+      style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;cursor:pointer;overflow:hidden;pointer-events:none">
+      <div data-img="hero-slide-3" data-alt="Dec&#225;logo SPAMSU" class="dark-ph" style="width:100%;height:100%"></div>
+      <!-- Indicador visual al hacer hover -->
+      <div style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+                  display:flex;align-items:center;gap:10px;
+                  background:rgba(0,59,113,.75);backdrop-filter:blur(6px);
+                  border:1px solid rgba(169,198,232,.35);
+                  border-radius:30px;padding:10px 22px;
+                  color:#fff;font-family:var(--font-sans);font-size:14px;font-weight:600;
+                  pointer-events:none;letter-spacing:.04em;white-space:nowrap;
+                  opacity:0;transition:opacity .3s ease" class="slide3-hint">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A9C6E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Ver Dec&#225;logo SPAMSU
+      </div>
     </div>
+    <style>
+    #hero-slide-3:hover .slide3-hint{opacity:1}
+    </style>
     <!-- Slide 4 — Imagen -->
-    <div class="hero-slide" id="hero-slide-4" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1">
+    <div class="hero-slide" id="hero-slide-4" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;pointer-events:none">
       <div data-img="hero-slide-4" data-alt="SPAMSU UNAM" class="dark-ph" style="width:100%;height:100%"></div>
     </div>
-    <div class="hero-overlay" style="z-index:2"></div>
+    <div class="hero-overlay" style="z-index:2;pointer-events:none"></div>
     <div class="hero-dots" style="z-index:3">
       <button class="h-dot active" onclick="heroSlide(0)"></button>
       <button class="h-dot" onclick="heroSlide(1)"></button>
@@ -883,10 +901,14 @@ body.tab-mode section.noticias-section{display:none}
     var prev = _heroIdx;
     _heroIdx = n;
 
-    /* Ocultar / mostrar todos los slides */
+    /* Ocultar / mostrar todos los slides + gestionar pointer-events */
     _heroSlides.forEach(function(id,i){
       var el = document.getElementById(id);
-      if(el) el.style.opacity = i === n ? '1' : '0';
+      if(!el) return;
+      var active = i === n;
+      el.style.opacity = active ? '1' : '0';
+      /* Solo el slide activo recibe clics */
+      el.style.pointerEvents = active ? 'auto' : 'none';
     });
 
     if(!_heroDots) _heroDots = document.querySelectorAll('.h-dot');
@@ -958,14 +980,16 @@ body.tab-mode section.noticias-section{display:none}
       </div>
 
       <div class="itab-pane active" id="ip-acerca">
-        <p>La Secretaría de Prevención y Apoyo a la Movilidad y Seguridad Universitaria de la Universidad Nacional Autónoma de México es la instancia encargada de impulsar acciones institucionales orientadas a la prevención, la seguridad, la protección civil y la movilidad dentro de la Universidad.</p>
-        <p>Articulamos los esfuerzos de la Dirección General de Análisis, Protección y Seguridad Universitaria y la Dirección General de Servicios Generales y Movilidad para garantizar un campus seguro y accesible.</p>
+        <p>La Secretar&#237;a participa en el fortalecimiento de las acciones de prevenci&#243;n, movilidad, protecci&#243;n civil y seguridad dentro de la UNAM, contribuyendo al desarrollo de las actividades universitarias en un entorno de atenci&#243;n, organizaci&#243;n y apoyo a la comunidad.</p>
+        <p>A trav&#233;s del dise&#241;o e implementaci&#243;n de pol&#237;ticas, programas y estrategias institucionales, se coordinan acciones en materia de seguridad universitaria, prevenci&#243;n y movilidad, en colaboraci&#243;n con las distintas entidades y dependencias de la Universidad.</p>
+        <p>Asimismo, se promueve la cultura de la prevenci&#243;n, la protecci&#243;n civil y el cuidado del patrimonio universitario mediante lineamientos, protocolos y acciones orientadas al bienestar de la comunidad universitaria.</p>
+        <p>Nuestro trabajo busca contribuir al fortalecimiento de las condiciones que favorezcan el desarrollo de las funciones sustantivas de la Universidad y la atenci&#243;n de las necesidades de la comunidad universitaria.</p>
       </div>
       <div class="itab-pane" id="ip-mision">
-        <p>Preservar la integridad física y patrimonial de los integrantes de la comunidad universitaria mediante la implementación de políticas, protocolos y acciones de prevención, vigilancia y atención de emergencias, en un marco de respeto a los derechos humanos y la normatividad universitaria.</p>
+        <p>Impulsar una comunidad universitaria m&#225;s segura, ordenada y conectada mediante estrategias integrales de prevenci&#243;n, atenci&#243;n, movilidad y seguridad, que fortalezcan el bienestar y contribuyan al desarrollo de las actividades universitarias en la Universidad Nacional Aut&#243;noma de M&#233;xico.</p>
       </div>
       <div class="itab-pane" id="ip-vision">
-        <p>Ser una secretaría de excelencia, reconocida como referente nacional en materia de seguridad, movilidad y prevención de riesgos en el ámbito universitario; con un equipo comprometido, tecnología de vanguardia y una relación de confianza con toda la comunidad universitaria.</p>
+        <p>Consolidarnos como una Secretar&#237;a cercana, eficiente e innovadora, reconocida por promover entornos universitarios m&#225;s seguros, accesibles y confiables, a trav&#233;s de servicios y acciones que acompa&#241;en la vida universitaria y fortalezcan la cultura de prevenci&#243;n en la Universidad Nacional Aut&#243;noma de M&#233;xico.</p>
       </div>
       <div class="itab-pane" id="ip-valores" style="max-width:none;padding:0">
         <!-- VALORES QUE NOS DEFINEN — Image-based interactive puzzle -->
@@ -1515,7 +1539,7 @@ body.tab-mode section.noticias-section{display:none}
         cursor:pointer;z-index:10;transition:background .2s;
       }
       .dir-modal-close:hover{background:rgba(255,255,255,.35)}
-      .dir-modal-body{padding:32px}
+      .dir-modal-body{padding:32px 32px 0}
 
       /* Grid de unidades dentro del modal */
       .dir-modal-units{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:0}
@@ -1546,73 +1570,44 @@ body.tab-mode section.noticias-section{display:none}
           </div>
           <div class="dir-modal-body">
             <style>
-            .dmu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-            .dmu-card{background:#fff;border:1px solid #dde8f4;border-radius:14px;padding:28px 20px 0;display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden;transition:box-shadow .22s,transform .22s;position:relative}
-            .dmu-card:hover{box-shadow:0 8px 32px rgba(0,59,113,.13);transform:translateY(-3px)}
-            .dmu-icon-circle{width:72px;height:72px;border-radius:50%;background:#e8f1fb;display:flex;align-items:center;justify-content:center;margin-bottom:14px;flex-shrink:0}
-            .dmu-icon-circle svg{width:34px;height:34px;stroke:#003B71;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-            .dmu-icon-circle img{width:44px;height:44px;object-fit:contain}
-            .dmu-name{font-family:'Libre Baskerville',Georgia,serif;font-size:14px;font-weight:700;color:#003B71;line-height:1.35;margin-bottom:9px}
-            .dmu-desc{font-size:13px;color:#5A6475;font-weight:300;line-height:1.6;margin-bottom:18px;flex:1}
-            .dmu-foot{width:calc(100% + 40px);margin:0 -20px;height:12px;background:linear-gradient(90deg,#003B71 0%,#7AAED4 60%,#A9C6E8 100%);border-radius:0 0 3px 3px}
+            .dmu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+            .dmu-img-card{
+              border-radius:14px;overflow:hidden;cursor:default;
+              transition:box-shadow .22s,transform .22s;
+              line-height:0;background:#f0f5fb;
+            }
+            .dmu-img-card:hover{box-shadow:0 8px 32px rgba(0,59,113,.16);transform:translateY(-3px)}
+            .dmu-img-card img{width:100%;height:auto;display:block;object-fit:cover}
             @media(max-width:700px){.dmu-grid{grid-template-columns:1fr 1fr}}
             @media(max-width:480px){.dmu-grid{grid-template-columns:1fr}}
             </style>
             <div class="dmu-grid">
-              <!-- DSU -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgapsu-dsu-logo.png" alt="DSU" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <div class="dmu-name">Dirección de Seguridad Universitaria</div>
-                <div class="dmu-desc">Instancia responsable de planear, coordinar y ejecutar acciones de prevención, protección y atención de riesgos para salvaguardar la integridad de la comunidad universitaria.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgapsu-card-dsu.png" alt="Dirección de Seguridad Universitaria"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb';this.style.borderRadius='14px';this.alt='DSU'">
               </div>
-              <!-- Análisis y Prevención -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgapsu-analisis-logo.png" alt="Análisis y Prevención" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                </div>
-                <div class="dmu-name">Dirección de Análisis y Prevención de Riesgos</div>
-                <div class="dmu-desc">Realiza estudios técnicos para identificar, evaluar y mitigar riesgos potenciales en las instalaciones universitarias. Desarrolla políticas y programas preventivos basados en análisis de datos.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgapsu-card-analisis.png" alt="Dirección de Análisis y Prevención de Riesgos"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
-              <!-- Estadio Olímpico (sin "Enlace") -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgapsu-estadio-logo.png" alt="Estadio Olímpico" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-                </div>
-                <div class="dmu-name">Estadio Olímpico Universitario</div>
-                <div class="dmu-desc">Coordina todas las actividades de seguridad durante eventos deportivos y culturales de gran magnitud. Implementa protocolos especiales de evacuación, control de multitudes y coordinación con autoridades externas.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgapsu-card-estadio.png" alt="Estadio Olímpico Universitario"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
-              <!-- Protección Civil y Bomberos -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgapsu-pcivil-logo.png" alt="Protección Civil" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-                </div>
-                <div class="dmu-name">Dirección de Protección Civil y Bomberos</div>
-                <div class="dmu-desc">Se encarga de prevenir, mitigar y responder ante situaciones de emergencia. Coordina simulacros, capacitaciones en materia de protección civil y mantiene un cuerpo de bomberos especializado.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgapsu-card-pcivil.png" alt="Dirección de Protección Civil y Bomberos"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
-              <!-- Gestión Tecnológica -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgapsu-tecnologia-logo.png" alt="Gestión Tecnológica" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-                </div>
-                <div class="dmu-name">Coordinación de Gestión Tecnológica en Seguridad</div>
-                <div class="dmu-desc">Implementa y administra sistemas tecnológicos avanzados para el monitoreo, control y análisis de la seguridad. Gestiona videovigilancia, sistemas de acceso y plataformas de información.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgapsu-card-tecnologia.png" alt="Coordinación de Gestión Tecnológica en Seguridad"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
             </div>
-            <!-- Banner inferior -->
-            <div style="margin-top:24px;border-radius:10px;overflow:hidden;line-height:0">
-              <img src="img/dgapsu-banner-bottom.png" alt="DGAPSU UNAM" style="width:100%;height:auto;display:block;max-height:110px;object-fit:cover" onerror="this.style.display='none'">
+            <!-- Banner inferior flush al fondo -->
+            <div style="margin:18px -32px 0;line-height:0;overflow:hidden">
+              <img src="img/dgapsu-banner-bottom.png" alt="DGAPSU UNAM"
+                style="width:100%;height:auto;display:block;object-fit:cover"
+                onerror="this.style.display='none'">
             </div>
           </div>
         </div>
@@ -1627,70 +1622,36 @@ body.tab-mode section.noticias-section{display:none}
           </div>
           <div class="dir-modal-body">
             <div class="dmu-grid">
-              <!-- Pumabús -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgsgm-pumabus-logo.png" alt="Pumabús" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                </div>
-                <div class="dmu-name">Pumabús</div>
-                <div class="dmu-desc">Servicio de transporte interno del campus universitario. Rutas, horarios y paradas en Ciudad Universitaria.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgsgm-card-pumabus.png" alt="Pumabús"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
-              <!-- Servicios para Personas con Discapacidad -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgsgm-discapacidad-logo.png" alt="Discapacidad" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M10 22l2-8 3 3 2-5"/><path d="M6 14c0 4 3 7 6 8"/></svg>
-                </div>
-                <div class="dmu-name">Servicios para Personas con Discapacidad</div>
-                <div class="dmu-desc">Programas y apoyos de movilidad e inclusión para personas con discapacidad dentro del campus universitario.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgsgm-card-discapacidad.png" alt="Servicios para Personas con Discapacidad"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
-              <!-- Brigada Vial -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgsgm-brigada-logo.png" alt="Brigada Vial" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><path d="M18 10h-4V6l-4 6h4v4l4-6z"/><circle cx="12" cy="12" r="10"/></svg>
-                </div>
-                <div class="dmu-name">Brigada Vial</div>
-                <div class="dmu-desc">Apoyo y regulación del tráfico vehicular dentro del campus para garantizar una movilidad ordenada y segura.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgsgm-card-brigada.png" alt="Brigada Vial"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
-              <!-- Bicipuma / Biciescuela -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgsgm-bicipuma-logo.png" alt="Bicipuma" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg>
-                </div>
-                <div class="dmu-name">Bicipuma / Biciescuela</div>
-                <div class="dmu-desc">Sistema de transporte gratuito y escuela de ciclismo urbano para fomentar la movilidad sustentable y la salud en la comunidad universitaria.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgsgm-card-bicipuma.png" alt="Bicipuma / Biciescuela"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
-              <!-- Estacionamientos Controlados -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgsgm-estacionamiento-logo.png" alt="Estacionamientos" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-                </div>
-                <div class="dmu-name">Estacionamientos Controlados</div>
-                <div class="dmu-desc">Gestión y control de los estacionamientos dentro del campus universitario, accesos y registro de vehículos.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgsgm-card-estacionamiento.png" alt="Estacionamientos Controlados"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
-              <!-- Programa Cuida tu Moto -->
-              <div class="dmu-card">
-                <div class="dmu-icon-circle">
-                  <img src="img/dgsgm-moto-logo.png" alt="Cuida tu Moto" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                  <svg style="display:none" viewBox="0 0 24 24"><circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/><path d="M2 17h1l3-9 4 4 2-4h5"/></svg>
-                </div>
-                <div class="dmu-name">Programa Cuida tu Moto</div>
-                <div class="dmu-desc">Programa de seguridad y protección para motociclistas dentro del campus universitario de la UNAM.</div>
-                <div class="dmu-foot"></div>
+              <div class="dmu-img-card">
+                <img src="img/dgsgm-card-moto.png" alt="Programa Cuida tu Moto"
+                  onerror="this.style.padding='40px 20px';this.style.background='#e8f1fb'">
               </div>
             </div>
-            <!-- Banner inferior -->
-            <div style="margin-top:24px;border-radius:10px;overflow:hidden;line-height:0">
-              <img src="img/dgsgm-banner-bottom.png" alt="DGSGM UNAM" style="width:100%;height:auto;display:block;max-height:110px;object-fit:cover" onerror="this.style.display='none'">
+            <!-- Banner inferior flush al fondo -->
+            <div style="margin:18px -32px 0;line-height:0;overflow:hidden">
+              <img src="img/dgsgm-banner-bottom.png" alt="DGSGM UNAM"
+                style="width:100%;height:auto;display:block;object-fit:cover"
+                onerror="this.style.display='none'">
             </div>
           </div>
         </div>
@@ -2133,409 +2094,190 @@ body.tab-mode section.noticias-section{display:none}
          DIRECTORIO
     ╚══════════════════════════════╝ -->
     <div class="tab-panel panel-tab-only" id="panel-directorio">
+      <!-- ═══════════ DIRECTORIO ═══════════ -->
       <style>
-      /* ── Access bar ── */
-      .dir-access-bar{
-        display:flex;flex-wrap:wrap;gap:10px;
-        background:#f0f4fa;border:1px solid #dde8f4;border-radius:14px;
-        padding:14px 18px;margin-bottom:32px;
-      }
-      .dir-access-chip{
-        display:flex;align-items:center;gap:10px;
-        background:#fff;border:1.5px solid #dde8f4;border-radius:10px;
-        padding:10px 18px;cursor:pointer;transition:all .2s;text-decoration:none;
-        color:var(--azul);font-family:var(--font-sans);font-size:14px;font-weight:600;
-        min-width:140px;
-      }
-      .dir-access-chip:hover{background:var(--azul);color:#fff;border-color:var(--azul)}
+      /* Quick-access bar */
+      .dir-access-bar{display:flex;flex-wrap:wrap;gap:10px;background:linear-gradient(135deg,#f0f5ff,#e8f0fb);border:1px solid #dde8f4;border-radius:16px;padding:16px 20px;margin-bottom:36px}
+      .dir-access-chip{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid #dde8f4;border-radius:10px;padding:10px 16px;cursor:pointer;transition:all .2s;text-decoration:none;color:var(--azul);font-family:var(--font-sans);font-size:13.5px;font-weight:600;flex:1 0 auto}
+      .dir-access-chip:hover{background:var(--azul);color:#fff;border-color:var(--azul);box-shadow:0 4px 14px rgba(0,59,113,.2)}
       .dir-access-chip:hover svg{stroke:#fff}
-      .dir-access-chip svg{width:22px;height:22px;stroke:var(--azul);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:stroke .2s}
-      .dir-access-chip span{font-size:12px;color:inherit;opacity:.75;display:block;font-weight:400;line-height:1.2}
-      /* ── Directorio groups ── */
-      .dir-group{margin-bottom:36px}
-      .dir-group-label{
-        font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;
-        color:var(--azul);border-left:4px solid #D4AF37;padding-left:12px;
-        margin-bottom:16px;line-height:1;
+      .dir-access-chip svg{width:20px;height:20px;stroke:var(--azul);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:stroke .2s}
+      .dir-access-chip-label{font-size:11px;color:inherit;opacity:.65;font-weight:400;display:block;line-height:1}
+      @media(max-width:640px){.dir-access-chip{flex:1 0 40%}}
+
+      /* Contact bar */
+      .dir-contact-bar{
+        display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+        background:linear-gradient(135deg,#002a54 0%,#003B71 100%);
+        color:#fff;padding:15px 24px;border-radius:12px;margin-bottom:36px;
+        box-shadow:0 4px 18px rgba(0,59,113,.22);
       }
-      @media(max-width:640px){.dir-access-bar{gap:8px}.dir-access-chip{min-width:120px;padding:8px 12px;font-size:13px}}
+      .dir-contact-bar a{color:var(--azul-claro);font-weight:700;text-decoration:none;transition:color .2s}
+      .dir-contact-bar a:hover{color:#fff}
+      .dir-contact-info{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:400}
+      .dir-contact-info svg{width:15px;height:15px;stroke:#A9C6E8;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+      .dir-contact-loc{font-size:13px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:7px}
+      .dir-contact-loc svg{width:13px;height:13px;stroke:rgba(255,255,255,.45);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+      /* Group header */
+      .dgrp-head{display:flex;align-items:center;gap:14px;margin:36px 0 16px}
+      .dgrp-head:first-child{margin-top:0}
+      .dgrp-line{height:1.5px;background:linear-gradient(90deg,#D4AF37,transparent);border-radius:1px;width:24px;flex-shrink:0}
+      .dgrp-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.20em;color:var(--azul);white-space:nowrap;padding:4px 14px;background:linear-gradient(135deg,#eef4fb,#e4eef8);border:1px solid #cddaf0;border-radius:20px}
+
+      /* Card grid */
+      .dgrp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+
+      /* Person card */
+      .dcard{border-radius:13px;padding:16px 18px;display:flex;align-items:flex-start;gap:13px;transition:box-shadow .2s,transform .2s;position:relative;overflow:hidden}
+      .dcard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--azul-claro);transform:scaleY(0);transform-origin:bottom;transition:transform .22s ease;border-radius:0}
+      .dcard:hover{box-shadow:0 6px 22px rgba(0,59,113,.12);transform:translateY(-2px)}
+      .dcard:hover::before{transform:scaleY(1)}
+      .dcard--gold::before{background:#D4AF37;transform:scaleY(1)}
+      .dcard--gold{grid-column:1/-1}
+      .dcard-av{width:42px;height:42px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;letter-spacing:.02em}
+      .dcard-body{flex:1;min-width:0}
+      .dcard-badge{display:inline-block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.10em;color:var(--azul);background:var(--azul-claro);padding:2px 8px;border-radius:20px;margin-bottom:4px}
+      .dcard-name{font-family:var(--font-serif);font-size:14px;font-weight:700;line-height:1.3;margin-bottom:2px}
+      .dcard-role{font-size:12px;font-weight:300;line-height:1.5;margin-bottom:6px}
+      .dcard-chips{display:flex;flex-wrap:wrap;gap:6px}
+      .dcard-pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:3px 10px;border-radius:7px;border:1px solid;text-decoration:none;transition:opacity .2s;cursor:default}
+      .dcard-pill-mail{cursor:pointer}
+      .dcard-pill-mail:hover{opacity:.75}
+      @media(max-width:640px){.dgrp-cards{grid-template-columns:1fr}.dcard--gold{grid-column:1}}
       </style>
 
-      <!-- Access bar (Image 5) -->
+      <!-- Quick-access -->
       <div class="dir-access-bar">
         <a href="tel:5556160523" class="dir-access-chip">
           <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4M12 16h.01"/></svg>
-          <div>Emergencias<span>55 5616 0523</span></div>
+          <div>Emergencias<span class="dir-access-chip-label">55 5616 0523</span></div>
         </a>
         <a href="https://www.dgsgm.unam.mx/pumabus.html" target="_blank" rel="noopener" class="dir-access-chip">
           <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-          <div>Pumabús<span>&nbsp;</span></div>
+          <div>Pumab&#250;s<span class="dir-access-chip-label">Transporte campus</span></div>
         </a>
         <a href="mailto:spamsu@unam.mx" class="dir-access-chip">
           <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-          <div>Atención a la Comunidad<span>&nbsp;</span></div>
+          <div>Atenci&#243;n Comunidad<span class="dir-access-chip-label">spamsu@unam.mx</span></div>
         </a>
         <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-access-chip">
           <svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg>
-          <div>Movilidad<span>&nbsp;</span></div>
+          <div>Movilidad<span class="dir-access-chip-label">DGSGM</span></div>
         </a>
         <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" class="dir-access-chip">
           <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <div>Seguridad Universitaria<span>&nbsp;</span></div>
+          <div>Seguridad Universitaria<span class="dir-access-chip-label">DGAPSU</span></div>
         </a>
       </div>
+
+      <!-- Section header -->
       <div class="sec-tag">Personal institucional</div>
       <h2 class="sec-title">Directorio Institucional</h2>
-      <style>
-      /* ── Directorio estilo UNAM ── */
-      .dir-contacto-bar{
-        display:flex;align-items:center;gap:10px;
-        background:var(--azul);color:#fff;
-        padding:13px 22px;border-radius:var(--r);
-        font-size:15px;font-weight:600;
-        margin-bottom:28px;
-      }
-      .dir-contacto-bar svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-      .dir-contacto-bar a{color:var(--azul-claro);font-weight:700;text-decoration:none}
-      .dir-contacto-bar a:hover{color:#fff}
 
-      .dir-table{width:100%;border-collapse:collapse;font-size:14.5px;border-spacing:0}
-      .dir-table tr.dir-tr-data{border-bottom:1px solid var(--gris-borde);transition:background var(--t)}
-      .dir-table tr.dir-tr-data:hover{background:var(--azul-pale)}
-      .dir-table tr.dir-tr-group td{
-        padding:20px 16px 8px;
-        background:transparent;
-        border-bottom:2.5px solid #D4AF37;
-      }
-      .dir-group-hd{
-        font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;
-        color:var(--azul);display:flex;align-items:center;gap:10px;
-      }
-      .dir-group-hd::before{
-        content:'';display:inline-block;width:3px;height:14px;
-        background:#D4AF37;border-radius:2px;flex-shrink:0;
-      }
-      .dir-table td{padding:13px 16px;vertical-align:top}
-      .dir-table td:first-child{width:34px;padding-right:0}
-      .dir-cell-avatar{
-        width:32px;height:32px;border-radius:50%;
-        background:var(--azul-claro);
-        display:flex;align-items:center;justify-content:center;
-        flex-shrink:0;margin-top:2px;
-      }
-      .dir-cell-avatar svg{width:15px;height:15px;stroke:var(--azul);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-      .dir-cell-avatar.av-gold{background:#F59E0B}
-      .dir-cell-avatar.av-gold svg{stroke:#fff}
-      .dir-name{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--azul);line-height:1.3;margin-bottom:2px}
-      .dir-role{font-size:13px;color:var(--gris-sub);font-weight:300;line-height:1.5;margin-bottom:5px}
-      .dir-meta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-      .dir-ext{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--gris-txt);font-weight:400}
-      .dir-ext svg{width:12px;height:12px;stroke:var(--azul-med);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-      .dir-email{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--azul);font-weight:500;text-decoration:none;transition:color var(--t)}
-      .dir-email:hover{color:var(--azul-med)}
-      .dir-email svg{width:12px;height:12px;stroke:var(--azul-claro);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-      .dir-badge-ig{
-        display:inline-block;font-size:10.5px;font-weight:700;
-        color:var(--azul);background:var(--azul-claro);
-        padding:2px 9px;border-radius:20px;letter-spacing:.06em;
-        text-transform:uppercase;margin-bottom:3px;
-      }
-      .dir-sep{height:0;border:none;border-top:2.5px solid var(--azul-claro);margin:6px 0}
-      .dir-sep-label{font-size:11px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.14em;padding:14px 16px 4px;display:flex;align-items:center;gap:8px}
-      .dir-sep-label::before{content:'';width:16px;height:2px;background:var(--azul-claro);border-radius:1px}
-      @media(max-width:640px){
-        .dir-table td:first-child{display:none}
-        .dir-table td{padding:12px 10px}
-      }
-      </style>
-
-      <!-- Contáctenos -->
-      <div class="dir-contacto-bar">
-        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-        Contáctenos: <a href="tel:5556222222">55 5622 2222</a>
-        &nbsp;·&nbsp; Torre de Rectoría, Ciudad Universitaria, Coyoacán, C.P. 04510
+      <!-- Contact bar -->
+      <div class="dir-contact-bar">
+        <div class="dir-contact-info">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          Cont&#225;ctenos: <a href="tel:5556222222">55 5622 2222</a>
+        </div>
+        <div class="dir-contact-loc">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          Torre de Rector&#237;a, CU, Coyoac&#225;n, C.P. 04510
+        </div>
       </div>
 
-      <table class="dir-table">
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Titular de la Secretaría</div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar av-gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Dr. Manuel Palma Rangel</div>
-            <div class="dir-role">Secretario de Prevención y Apoyo a la Movilidad y Seguridad Universitaria</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21284</span>
-              <a href="mailto:secretariospamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>secretariospamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Asistencia y Gestión</div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Lic. Mónica Carballido Quintanar</div>
-            <div class="dir-role">Asistente</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21286 y 21047</span>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Ing. Jesús Cruz Cervantes</div>
-            <div class="dir-role">Coordinador de Gestión</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40544</span>
-              <a href="mailto:coordgestion.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>coordgestion.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-badge-ig">Información General</div>
-            <div class="dir-name">Lic. Camila Fosado Balderas</div>
-            <div class="dir-role">Información General · SPAMSU</div>
-            <div class="dir-meta">
-              <a href="mailto:spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Coordinación de Análisis y Concertación</div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtro. Arturo Ruiz Ruisánchez</div>
-            <div class="dir-role">Coordinador de Análisis y Concertación</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40534</span>
-              <a href="mailto:canc@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>canc@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Med. Jaime Jimmy Revah Peralta</div>
-            <div class="dir-role">Subdirector de Análisis e Interpretación</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40536</span>
-              <a href="mailto:sai@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sai@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Lic. Sergio Luis Gutiérrez Mancilla</div>
-            <div class="dir-role">Subdirector de Concertación</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21041</span>
-              <a href="mailto:subdcon@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>subdcon@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Orientación y Asesoramiento</div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtra. Fusae Nakazawa Cuéllar</div>
-            <div class="dir-role">Secretaria Auxiliar de Orientación y Asesoramiento</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40104</span>
-              <a href="mailto:saora@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>saora@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Educación en Prevención y Seguridad</div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtro. Jaime Echartea Mojica</div>
-            <div class="dir-role">Coordinador de Educación en Prevención y Seguridad</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82697</span>
-              <a href="mailto:educacion.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>educacion.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Lic. Omar Pérez Salazar</div>
-            <div class="dir-role">Jefe del Departamento de Valores y Entornos Universitarios</div>
-            <div class="dir-meta">
-              <a href="mailto:jdvalores@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdvalores@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtra. Maritza Valencia Murcia</div>
-            <div class="dir-role">Jefa del Departamento de Prevención y Atención de Riesgos</div>
-            <div class="dir-meta">
-              <a href="mailto:jdriesgos@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdriesgos@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Enlace con Instancias de Gobierno</div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtra. Manuela Luna Briseño</div>
-            <div class="dir-role">Coordinadora de Enlace con Instancias de Gobierno</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82811</span>
-              <a href="mailto:ceig.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>ceig.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtro. Honorio Raúil Sotelo Esquivel</div>
-            <div class="dir-role">Secretario Auxiliar</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82707</span>
-              <a href="mailto:srioaux.ceig.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>srioaux.ceig.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Luz María Morales Cortés</div>
-            <div class="dir-role">Asistente</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82811</span>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtra. Karol Rivera Barrios</div>
-            <div class="dir-role">Jefa de Departamento de Bachillerato</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82694</span>
-              <a href="mailto:jdbachillerato.ceig.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdbachillerato.ceig.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Ing. Julio Calderón Juan</div>
-            <div class="dir-role">Jefe del Departamento Zona Metropolitana</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82700</span>
-              <a href="mailto:jdeptoedomex.ceig.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdeptoedomex.ceig.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Coordinación de Planeación Institucional</div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtro. Jorge Hugo Ibarra Cárdenas</div>
-            <div class="dir-role">Coordinador de Planeación Institucional</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21036</span>
-              <a href="mailto:planeacion_institucional.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>planeacion_institucional.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Lic. María del Rocío Guzmán García</div>
-            <div class="dir-role">Asistente</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21033</span>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Lic. Gerardo Nerio Gallardo</div>
-            <div class="dir-role">Secretario Auxiliar de Planeación</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21030</span>
-              <a href="mailto:sa_planeacion.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sa_planeacion.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Lic. Carlos Maximiliano Zetina Huerta</div>
-            <div class="dir-role">Jefe del Departamento de Evaluación</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21041</span>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Proyectos y Programas de Prevención</div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtra. Paola Romero Monterrubio</div>
-            <div class="dir-role">Coordinadora de Proyectos y Programas de Prevención y Seguridad</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40724</span>
-              <a href="mailto:copppres.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>copppres.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Monserrat Arumi Cortés Hernández</div>
-            <div class="dir-role">Secretaria Auxiliar</div>
-            <div class="dir-meta">
-              <a href="mailto:monserratcortes@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>monserratcortes@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Lic. Daniel Cuéllar Ramírez</div>
-            <div class="dir-role">Secretario Auxiliar</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21030</span>
-              <a href="mailto:daniel_cu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>daniel_cu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Comisiones Locales de Seguridad</div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Mtra. Georgina González Moreno</div>
-            <div class="dir-role">Coordinadora de Comisiones Locales de Seguridad de la Torre de Rectoría</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 40665</span>
-              <a href="mailto:ccls.tr.spamsu@unam.mx" class="dir-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>ccls.tr.spamsu@unam.mx</a>
-            </div>
-          </td>
-        </tr>
-        <tr class="dir-tr-group"><td colspan="2"><div class="dir-group-hd">Unidad Administrativa</div></td></tr>
-        <tr class="dir-tr-data"><td></td><td><div class="dir-name" style="font-weight:500;font-size:14px">Unidad Administrativa</div><div class="dir-meta"><span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 82688</span></div></td></tr>
-        <tr class="dir-tr-data">
-          <td><div class="dir-cell-avatar "><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div></td>
-          <td>
-            <div class="dir-name">Ing. Alejandro de Rosas Olaya</div>
-            <div class="dir-role">Asistente</div>
-            <div class="dir-meta">
-              <span class="dir-ext"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29"/></svg>Ext. 21299</span>
-            </div>
-          </td>
-        </tr>
-      </table>
+      <!-- Directorio groups -->
+      <div class="ddir-body">
+<div class="dgrp-head">
+          <div class="dgrp-line"></div>
+          <div class="dgrp-label">Titular de la Secretaría</div>
+          <div class="dgrp-line" style="flex:1"></div>
+        </div>
+        <div class="dgrp-cards">
+<div class="dcard dcard--gold" style="border:1.5px solid rgba(212,175,55,.5);box-shadow:0 4px 20px rgba(0,59,113,.18);background:linear-gradient(135deg,#001830 0%,#002b55 100%)"><div class="dcard-av" style="background:linear-gradient(135deg,#B8860B,#D4AF37)">DM</div><div class="dcard-body"><div class="dcard-name" style="color:#D4AF37">Dr. Manuel Palma Rangel</div><div class="dcard-role" style="color:rgba(255,255,255,.7)">Secretario de Prevención y Apoyo a la Movilidad y Seguridad Universitaria</div><div class="dcard-chips"><span class="dcard-pill" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.75)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21284</span><a href="mailto:secretariospamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(169,198,232,.85)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>secretariospamsu@unam.mx</a></div></div></div>
+        </div>
+<div class="dgrp-head">
+          <div class="dgrp-line"></div>
+          <div class="dgrp-label">Asistencia y Gestión</div>
+          <div class="dgrp-line" style="flex:1"></div>
+        </div>
+        <div class="dgrp-cards">
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">LM</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Lic. Mónica Carballido Quintanar</div><div class="dcard-role" style="color:var(--gris-sub)">Asistente</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21286 y 21047</span></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">IJ</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Ing. Jesús Cruz Cervantes</div><div class="dcard-role" style="color:var(--gris-sub)">Coordinador de Gestión</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40544</span><a href="mailto:coordgestion.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>coordgestion.spamsu@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">LC</div><div class="dcard-body"><span class="dcard-badge">Información General</span><div class="dcard-name" style="color:var(--azul)">Lic. Camila Fosado Balderas</div><div class="dcard-role" style="color:var(--gris-sub)">Información General · SPAMSU</div><div class="dcard-chips"><a href="mailto:spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>spamsu@unam.mx</a></div></div></div>
+        </div>
+<div class="dgrp-head">
+          <div class="dgrp-line"></div>
+          <div class="dgrp-label">Análisis y Concertación</div>
+          <div class="dgrp-line" style="flex:1"></div>
+        </div>
+        <div class="dgrp-cards">
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MA</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtro. Arturo Ruiz Ruisánchez</div><div class="dcard-role" style="color:var(--gris-sub)">Coordinador</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40534</span><a href="mailto:canc@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>canc@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MJ</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Med. Jaime Jimmy Revah Peralta</div><div class="dcard-role" style="color:var(--gris-sub)">Subdirector de Análisis e Interpretación</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40536</span><a href="mailto:sai@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sai@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">LS</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Lic. Sergio Luis Gutiérrez Mancilla</div><div class="dcard-role" style="color:var(--gris-sub)">Subdirector de Concertación</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21041</span><a href="mailto:subdcon@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>subdcon@unam.mx</a></div></div></div>
+        </div>
+<div class="dgrp-head">
+          <div class="dgrp-line"></div>
+          <div class="dgrp-label">Orientación y Asesoramiento</div>
+          <div class="dgrp-line" style="flex:1"></div>
+        </div>
+        <div class="dgrp-cards">
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MF</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtra. Fusae Nakazawa Cuéllar</div><div class="dcard-role" style="color:var(--gris-sub)">Secretaria Auxiliar de Orientación y Asesoramiento</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40104</span><a href="mailto:saora@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>saora@unam.mx</a></div></div></div>
+        </div>
+<div class="dgrp-head">
+          <div class="dgrp-line"></div>
+          <div class="dgrp-label">Educación en Prevención y Seguridad</div>
+          <div class="dgrp-line" style="flex:1"></div>
+        </div>
+        <div class="dgrp-cards">
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MJ</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtro. Jaime Echartea Mojica</div><div class="dcard-role" style="color:var(--gris-sub)">Coordinador</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82697</span><a href="mailto:educacion.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>educacion.spamsu@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">LO</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Lic. Omar Pérez Salazar</div><div class="dcard-role" style="color:var(--gris-sub)">Jefe del Departamento de Valores y Entornos Universitarios</div><div class="dcard-chips"><a href="mailto:jdvalores@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdvalores@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MM</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtra. Maritza Valencia Murcia</div><div class="dcard-role" style="color:var(--gris-sub)">Jefa del Departamento de Prevención y Atención de Riesgos</div><div class="dcard-chips"><a href="mailto:jdriesgos@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdriesgos@unam.mx</a></div></div></div>
+        </div>
+<div class="dgrp-head">
+          <div class="dgrp-line"></div>
+          <div class="dgrp-label">Enlace con Instancias de Gobierno</div>
+          <div class="dgrp-line" style="flex:1"></div>
+        </div>
+        <div class="dgrp-cards">
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MM</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtra. Manuela Luna Briseño</div><div class="dcard-role" style="color:var(--gris-sub)">Coordinadora</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82811</span><a href="mailto:ceig.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>ceig.spamsu@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MH</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtro. Honorio Raúil Sotelo Esquivel</div><div class="dcard-role" style="color:var(--gris-sub)">Secretario Auxiliar</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82707</span><a href="mailto:srioaux.ceig.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>srioaux.ceig.spamsu@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">LM</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Luz María Morales Cortés</div><div class="dcard-role" style="color:var(--gris-sub)">Asistente</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82811</span></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MK</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtra. Karol Rivera Barrios</div><div class="dcard-role" style="color:var(--gris-sub)">Jefa de Departamento de Bachillerato</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82694</span><a href="mailto:jdbachillerato.ceig.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdbachillerato.ceig.spamsu@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">IJ</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Ing. Julio Calderón Juan</div><div class="dcard-role" style="color:var(--gris-sub)">Jefe del Departamento Zona Metropolitana</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82700</span><a href="mailto:jdeptoedomex.ceig.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdeptoedomex.ceig.spamsu@unam.mx</a></div></div></div>
+        </div>
+<div class="dgrp-head">
+          <div class="dgrp-line"></div>
+          <div class="dgrp-label">Planeación Institucional</div>
+          <div class="dgrp-line" style="flex:1"></div>
+        </div>
+        <div class="dgrp-cards">
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MJ</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtro. Jorge Hugo Ibarra Cárdenas</div><div class="dcard-role" style="color:var(--gris-sub)">Coordinador</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21036</span><a href="mailto:planeacion_institucional.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>planeacion_institucional.spamsu@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">LM</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Lic. María del Rocío Guzmán García</div><div class="dcard-role" style="color:var(--gris-sub)">Asistente</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21033</span></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">LG</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Lic. Gerardo Nerio Gallardo</div><div class="dcard-role" style="color:var(--gris-sub)">Secretario Auxiliar de Planeación</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21030</span><a href="mailto:sa_planeacion.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sa_planeacion.spamsu@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">LC</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Lic. Carlos Maximiliano Zetina Huerta</div><div class="dcard-role" style="color:var(--gris-sub)">Jefe del Departamento de Evaluación</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21041</span></div></div></div>
+        </div>
+<div class="dgrp-head">
+          <div class="dgrp-line"></div>
+          <div class="dgrp-label">Proyectos y Programas de Prevención</div>
+          <div class="dgrp-line" style="flex:1"></div>
+        </div>
+        <div class="dgrp-cards">
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MP</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtra. Paola Romero Monterrubio</div><div class="dcard-role" style="color:var(--gris-sub)">Coordinadora</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40724</span><a href="mailto:copppres.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>copppres.spamsu@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MA</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Monserrat Arumi Cortés Hernández</div><div class="dcard-role" style="color:var(--gris-sub)">Secretaria Auxiliar</div><div class="dcard-chips"><a href="mailto:monserratcortes@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>monserratcortes@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">LD</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Lic. Daniel Cuéllar Ramírez</div><div class="dcard-role" style="color:var(--gris-sub)">Secretario Auxiliar</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21030</span><a href="mailto:daniel_cu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>daniel_cu@unam.mx</a></div></div></div>
+        </div>
+<div class="dgrp-head">
+          <div class="dgrp-line"></div>
+          <div class="dgrp-label">Comisiones Locales y Administración</div>
+          <div class="dgrp-line" style="flex:1"></div>
+        </div>
+        <div class="dgrp-cards">
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">MG</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Mtra. Georgina González Moreno</div><div class="dcard-role" style="color:var(--gris-sub)">Coordinadora de Comisiones Locales de Seguridad de la Torre de Rectoría</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40665</span><a href="mailto:ccls.tr.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>ccls.tr.spamsu@unam.mx</a></div></div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff"><div class="dcard-av" style="background:linear-gradient(135deg,#003B71,#1565C0)">IA</div><div class="dcard-body"><div class="dcard-name" style="color:var(--azul)">Ing. Alejandro de Rosas Olaya</div><div class="dcard-role" style="color:var(--gris-sub)">Asistente · Unidad Administrativa</div><div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21299</span></div></div></div>
+        </div>
+      </div>
     </div>
 
   </div><!-- /tab-panels-wrap -->
@@ -2740,50 +2482,260 @@ body.tab-mode section.noticias-section{display:none}
         <button class="itab"        onclick="switchVidTab('proyectos')"  id="vt-proyectos">Nuestros proyectos</button>
         <button class="itab"        onclick="switchVidTab('protoc')"     id="vt-protoc">Nuestros protocolos</button>
       </div>
-      <div class="itab-pane active" id="vp-comunidad">
-        <div style="background:var(--azul-pale);border:1px solid var(--gris-borde);border-radius:var(--r);padding:32px;text-align:center;color:var(--gris-sub);font-size:15px">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 12px"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          <div>Próximamente videos de nuestra comunidad.</div>
-        </div>
-        <!-- [VIDEO-COMUNIDAD] Agregar videos de comunidad aqui -->
-      </div>
-      <div class="itab-pane" id="vp-estadio">
-        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;width:100%">
-          <!-- reel DYdsHT2Nq2K (antes en comunidad) -->
-          <div style="width:100%;max-width:400px;overflow:visible">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DYdsHT2Nq2K/?igsh=eGR4bW90aXhkamt5" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
+      <div class="itab-pane active" id="vp-comunidad" style="position:relative;overflow:hidden">
+        <!-- Garabato decorativo de fondo (no interfiere con el grid) -->
+        <svg aria-hidden="true"
+          style="position:absolute;top:0;right:0;width:180px;height:100%;min-height:600px;pointer-events:none;z-index:0;opacity:.10"
+          viewBox="0 0 180 800" preserveAspectRatio="xMidYMid meet" fill="none">
+          <path d="M160 10 C160 10 20 90 20 180 C20 270 170 310 170 400
+                   C170 490 10 530 10 620 C10 710 160 750 160 800"
+                stroke="#003B71" stroke-width="28" stroke-linecap="round" fill="none"/>
+          <path d="M110 40 C110 40 10 110 10 200 C10 290 140 330 140 420
+                   C140 510 5 550 5 640 C5 730 130 770 130 800"
+                stroke="#7AAED4" stroke-width="16" stroke-linecap="round" fill="none"/>
+          <circle cx="162" cy="10"  r="10" fill="#003B71"/>
+          <circle cx="18"  cy="180" r="8"  fill="#7AAED4"/>
+          <circle cx="172" cy="400" r="10" fill="#003B71"/>
+          <circle cx="8"   cy="620" r="8"  fill="#7AAED4"/>
+          <circle cx="162" cy="800" r="10" fill="#003B71"/>
+        </svg>
+
+        <div style="position:relative;z-index:1;width:100%">
+          <div class="vid-inst-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            Instagram &middot; Nuestra comunidad
           </div>
-          <!-- DX4edw9jUgM -->
-          <div style="width:100%;max-width:400px;overflow:visible">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/DX4edw9jUgM/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
-          </div>
-          <!-- C_MKmH3u-OO -->
-          <div style="width:100%;max-width:400px;overflow:visible">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/C_MKmH3u-OO/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
-          </div>
-          <!-- YouTube R-EBun_vmjs -->
-          <div style="width:100%;max-width:720px;overflow:visible">
-            <div style="border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.10);aspect-ratio:16/9">
-              <iframe src="https://www.youtube.com/embed/R-EBun_vmjs" title="Estadio Olímpico Universitario UNAM" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy" style="width:100%;height:100%;border:none;display:block"></iframe>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%">
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/p/DVUfIPjgZyl/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/p/DVUfIPjgZyl/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DQx82XBChfc/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DQx82XBChfc/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DVTv0g7kRA-/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DVTv0g7kRA-/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DWNXSivj5ys/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DWNXSivj5ys/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DR5i3FmCmrv/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DR5i3FmCmrv/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DXxYgD8PMLc/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DXxYgD8PMLc/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DJkubBksdJS/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DJkubBksdJS/" target="_blank" rel="noopener">Ver en Instagram</a></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="itab-pane" id="vp-proyectos">
-        <div class="vid-grid">
-          <!-- [VIDEO-PROYECTOS] Agregar videos de proyectos aqui -->
-          <div class="vid-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;background:var(--azul-pale)">
-            <div style="text-align:center;color:var(--gris-sub);font-size:15px">Videos de proyectos<br><span style="font-size:13px;opacity:.6">[Agregar videos]</span></div>
+      <!-- ─── NUESTRO ESTADIO ─── -->
+      <div class="itab-pane" id="vp-estadio">
+        <style>
+        .vid-inst-label{
+          display:flex;align-items:center;gap:10px;
+          font-size:10.5px;font-weight:800;color:var(--azul);
+          text-transform:uppercase;letter-spacing:.18em;margin-bottom:18px;
+        }
+        .vid-inst-label::after{
+          content:'';flex:1;height:1.5px;
+          background:linear-gradient(90deg,var(--azul-claro) 0%,transparent 100%);
+          border-radius:1px;
+        }
+        /* Reels grid */
+        .vid-reel-grid{
+          display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+          gap:16px;margin-bottom:28px;width:100%;box-sizing:border-box;
+        }
+        .vid-reel-card{width:100%;min-width:0;box-sizing:border-box}
+        .vid-reel-card{
+          border-radius:16px;overflow:hidden;
+          border:1px solid var(--gris-borde);
+          background:#fff;
+          box-shadow:0 3px 14px rgba(0,59,113,.08);
+          display:flex;flex-direction:column;
+        }
+        /* Reel iframe wrapper — 9:16 */
+        .vid-reel-ratio{
+          position:relative;padding-top:177.78%; /* 9:16 */
+          background:#f0f4fa;overflow:hidden;
+        }
+        .vid-reel-ratio iframe{
+          position:absolute;inset:0;width:100%;height:100%;border:none;display:block;
+        }
+        /* Reel footer bar */
+        .vid-reel-foot{
+          display:flex;align-items:center;gap:8px;
+          padding:10px 14px;background:#fff;border-top:1px solid var(--gris-borde);
+        }
+        .vid-reel-foot svg{width:14px;height:14px;stroke:var(--azul-claro);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+        .vid-reel-foot a{font-size:12.5px;font-weight:600;color:var(--azul);text-decoration:none;transition:color .2s}
+        .vid-reel-foot a:hover{color:var(--azul-med)}
+        /* YouTube */
+        .vid-yt-card{
+          border-radius:16px;overflow:hidden;
+          border:1px solid var(--gris-borde);
+          background:#000;
+          box-shadow:0 6px 28px rgba(0,59,113,.14);
+          position:relative;
+        }
+        .vid-yt-ratio{aspect-ratio:16/9;width:100%}
+        .vid-yt-ratio iframe{width:100%;height:100%;border:none;display:block}
+        .vid-yt-badge{
+          position:absolute;top:12px;left:14px;
+          display:flex;align-items:center;gap:6px;
+          background:rgba(0,0,0,.62);backdrop-filter:blur(6px);
+          color:#fff;font-size:11px;font-weight:700;
+          padding:5px 12px;border-radius:7px;
+          letter-spacing:.06em;text-transform:uppercase;pointer-events:none;z-index:2;
+        }
+        .vid-yt-badge svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+        @media(max-width:880px){.vid-reel-grid{grid-template-columns:1fr 1fr}}
+        @media(max-width:540px){.vid-reel-grid{grid-template-columns:1fr}}
+        </style>
+
+        <!-- Instagram Reels -->
+        <div class="vid-inst-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram &middot; Reels
+        </div>
+        <div class="vid-reel-grid">
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/DYdsHT2Nq2K/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reel/DYdsHT2Nq2K/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
+          </div>
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/DX4edw9jUgM/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reels/DX4edw9jUgM/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
+          </div>
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/C_MKmH3u-OO/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reels/C_MKmH3u-OO/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
+          </div>
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/p/DYdwQmqB-ly/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/p/DYdwQmqB-ly/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- YouTube -->
+        <div class="vid-inst-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+          YouTube &middot; Estadio Ol&#237;mpico Universitario UNAM
+        </div>
+        <div class="vid-yt-card">
+          <div class="vid-yt-badge">
+            <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+            Estadio Ol&#237;mpico Universitario &middot; UNAM
+          </div>
+          <div class="vid-yt-ratio">
+            <iframe src="https://www.youtube.com/embed/R-EBun_vmjs?rel=0&modestbranding=1" title="Estadio Ol&#237;mpico Universitario UNAM" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
           </div>
         </div>
       </div>
-      <div class="itab-pane" id="vp-protoc">
-        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;width:100%">
-          <div style="width:100%;max-width:400px;overflow:visible">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/DYnkMUfR75l/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
+
+      <!-- ─── NUESTROS PROYECTOS ─── -->
+      <div class="itab-pane" id="vp-proyectos">
+        <div class="vid-inst-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram &middot; Nuestros proyectos</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start">
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/DJFvzWIpRJF/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reel/DJFvzWIpRJF/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
           </div>
-          <div style="width:100%;max-width:400px;overflow:visible">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/DYbAWavBlgU/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.10);margin:0 auto;max-width:400px;min-width:326px;padding:0;width:100%"></blockquote>
+        </div>
+      </div>
+
+      <!-- ─── NUESTROS PROTOCOLOS ─── -->
+      <div class="itab-pane" id="vp-protoc">
+        <div class="vid-inst-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram &middot; Protocolos de Seguridad</div>
+        <div class="vid-reel-grid">
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/DYnkMUfR75l/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reel/DYnkMUfR75l/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
+          </div>
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/DYbAWavBlgU/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reel/DYbAWavBlgU/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
+          </div>
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/DTgYmqUD-Tb/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reel/DTgYmqUD-Tb/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
+          </div>
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/DJK5USupZho/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reel/DJK5USupZho/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
+          </div>
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/DHwZ2MzIlG0/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reel/DHwZ2MzIlG0/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
+          </div>
+          <div class="vid-reel-card">
+            <div class="vid-reel-ratio">
+              <iframe src="https://www.instagram.com/reel/DQx82XBChfc/embed/captioned/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="vid-reel-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.instagram.com/reel/DQx82XBChfc/" target="_blank" rel="noopener">Ver en Instagram</a>
+            </div>
           </div>
         </div>
       </div>
@@ -3321,8 +3273,11 @@ body.tab-mode section.noticias-section{display:none}
     <style>
     .mapa-tabs-bar{display:flex;gap:0;background:var(--azul);padding:0 20px;overflow-x:auto;-webkit-overflow-scrolling:touch;box-shadow:0 2px 12px rgba(0,59,113,.3)}
     .mapa-tab-btn{background:none;border:none;font-family:var(--font-sans);font-size:14px;font-weight:600;color:rgba(255,255,255,.65);padding:14px 20px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .22s ease;display:flex;align-items:center;gap:8px}
+    .mapa-tab-btn svg{transition:opacity .22s ease;stroke:rgba(255,255,255,.65)}
     .mapa-tab-btn:hover{color:#fff;background:rgba(255,255,255,.15);border-bottom-color:rgba(169,198,232,.7);transform:none}
+    .mapa-tab-btn:hover svg{opacity:1!important;stroke:#fff}
     .mapa-tab-btn.active{color:#fff;border-bottom-color:var(--azul-claro);background:rgba(255,255,255,.1)}
+    .mapa-tab-btn.active svg{opacity:1!important;stroke:#A9C6E8}
     .mapa-tab-panel{display:none;position:relative;height:440px}
     .mapa-tab-panel.active{display:block}
     .mapa-tab-panel iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block}
@@ -3350,23 +3305,46 @@ body.tab-mode section.noticias-section{display:none}
     </div>
     <div class="mapa-tabs-bar">
       <button class="mapa-tab-btn active" onclick="switchMapaTab('rectoria',this)">
-        <img src="img/mapa-rectoria.png" alt="Rectoría" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
-        Rectoría
+        <!-- Rectoría: torre -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
+          <rect x="3" y="10" width="18" height="12"/><rect x="9" y="14" width="6" height="8"/><polyline points="3,10 12,2 21,10"/><line x1="12" y1="2" x2="12" y2="5"/>
+        </svg>
+        Rector&#237;a
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('estadio',this)">
-        <img src="img/mapa-estadio.png" alt="Estadio Olímpico" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
-        Estadio Olímpico
+        <!-- Estadio: elipse/pista -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
+          <ellipse cx="12" cy="12" rx="10" ry="6"/><line x1="12" y1="6" x2="12" y2="18"/><line x1="2" y1="12" x2="22" y2="12"/>
+        </svg>
+        Estadio Ol&#237;mpico
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('bicipuma',this)">
-        <img src="img/mapa-bicipuma.png" alt="Bicipuma" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
-        Bicipuma · Bicicentro
+        <!-- Bicicleta -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
+          <circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/>
+          <path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/>
+        </svg>
+        Bicipuma &middot; Bicicentro
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('pumabus',this)">
-        <img src="img/mapa-pumabus.png" alt="Pumabús" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
-        Pumabús
+        <!-- Autobús -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
+          <rect x="2" y="4" width="20" height="14" rx="2"/>
+          <line x1="2" y1="10" x2="22" y2="10"/>
+          <line x1="7" y1="4" x2="7" y2="10"/>
+          <line x1="17" y1="4" x2="17" y2="10"/>
+          <circle cx="6.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/>
+          <line x1="6.5" y1="18" x2="6.5" y2="14"/><line x1="17.5" y1="18" x2="17.5" y2="14"/>
+        </svg>
+        Pumab&#250;s
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('cuidamoto',this)">
-        <img src="img/mapa-cuidamoto.png" alt="Cuida tu Moto" style="width:22px;height:22px;object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">
+        <!-- Motocicleta -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
+          <circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/>
+          <path d="M5 17h4l2-5 3 1 2-4h3"/>
+          <path d="M14 8h2l1 3"/>
+        </svg>
         Programa Cuida tu Moto
       </button>
     </div>
@@ -3440,98 +3418,140 @@ body.tab-mode section.noticias-section{display:none}
   <!-- FOOTER -->
   <footer class="site-footer" id="contacto">
     <style>
+    /* ════ FOOTER — banner image base ════ */
     .site-footer{
-      background:#003366;position:relative;overflow:hidden;
-      padding:48px 52px 0;color:#fff;
+      position:relative;overflow:hidden;color:#fff;padding:0;
+      background:#002050;
     }
-    /* Background buildings image */
-    .site-footer::before{
+    /* Main banner image (buildings + background) covers entire footer */
+    .footer-banner-bg{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center;
+      z-index:0;display:block;
+    }
+    /* Dark overlay so text reads well */
+    .site-footer::after{
       content:'';position:absolute;inset:0;
-      background-image:url('img/footer-buildings.png');
-      background-size:cover;background-position:center bottom;
-      opacity:.18;pointer-events:none;z-index:0;
+      background:rgba(0,20,60,.45);z-index:1;pointer-events:none;
     }
-    .footer-inner{
-      position:relative;z-index:1;
-      display:grid;grid-template-columns:220px 1fr;gap:48px;
-      padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.15);
-      margin-bottom:22px;
+    /* Content sits above overlay */
+    .footer-content{
+      position:relative;z-index:2;
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:0;
+      padding:40px 56px 0;
+      min-height:280px;
     }
-    /* Left: UNAM block */
-    .footer-unam-block{}
-    .footer-unam-logos{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-    .footer-unam-logo{width:90px;height:90px;flex-shrink:0}
-    .footer-unam-logo [data-img]{width:100%;height:100%}
-    .footer-unam-logo [data-img] img{object-fit:contain}
-    .footer-unam-logo .sph-name,.footer-unam-logo .sph-badge,.footer-unam-logo .sph-icon{display:none}
-    .footer-475{font-size:44px;font-weight:900;color:#D4AF37;line-height:1;letter-spacing:-.02em}
-    .footer-475-sub{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.14em;line-height:1.4}
-    .fb-name{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
-    .fb-full{font-size:13px;color:rgba(255,255,255,.6);font-weight:300;line-height:1.6}
-    .footer-divider{width:36px;height:3px;background:#D4AF37;border-radius:2px;margin:14px 0}
-    /* Social icons */
-    .footer-social{display:flex;gap:10px;margin-top:14px}
+    /* ── Left: UNAM block ── */
+    .footer-left{
+      display:flex;flex-direction:column;justify-content:flex-start;gap:0;
+      padding-right:40px;
+      border-right:2px solid #D4AF37;
+    }
+    .footer-logos-row{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+    .footer-escudo{width:80px;height:80px;flex-shrink:0;border-radius:6px;overflow:hidden}
+    .footer-escudo img{width:100%;height:100%;object-fit:contain}
+    .footer-escudo [data-img]{width:80px;height:80px}
+    .footer-escudo [data-img] img{object-fit:contain}
+    .footer-475-img{height:90px;width:auto;display:block}
+    .footer-unam-name{font-size:24px;font-weight:800;color:#fff;letter-spacing:.04em;margin-bottom:2px}
+    .footer-unam-full{font-size:13px;color:rgba(255,255,255,.65);font-weight:300;line-height:1.55;margin-bottom:4px}
+    .footer-unam-years{font-size:13px;color:rgba(255,255,255,.65);font-weight:300;margin-bottom:16px}
+    .footer-divider-gold{width:36px;height:3px;background:#D4AF37;border-radius:2px;margin:10px 0 16px}
+    .footer-social{display:flex;gap:10px;margin-top:4px}
     .footer-social a{
-      width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);
-      display:flex;align-items:center;justify-content:center;color:#fff;
-      transition:all .2s;text-decoration:none;
+      width:36px;height:36px;border-radius:50%;
+      border:1.5px solid rgba(255,255,255,.3);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;transition:all .2s;text-decoration:none;
     }
-    .footer-social a:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.5)}
-    .footer-social svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-    /* Right: SPAMSU + links */
-    .footer-right{display:flex;flex-direction:column;gap:0}
+    .footer-social a:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.6)}
+    .footer-social svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    /* ── Right: SPAMSU + links ── */
+    .footer-right{
+      display:flex;flex-direction:column;
+      padding-left:48px;padding-top:4px;
+    }
     .footer-spamsu-head{display:flex;align-items:center;gap:14px;margin-bottom:24px}
-    .footer-spamsu-logo{width:54px;height:54px;flex-shrink:0}
+    .footer-spamsu-logo{width:52px;height:52px;flex-shrink:0}
     .footer-spamsu-logo img{width:100%;height:100%;object-fit:contain}
-    .footer-spamsu-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.10em;line-height:1.4}
-    .footer-links{display:flex;flex-direction:column;gap:2px}
+    .footer-spamsu-name{
+      font-size:11.5px;font-weight:700;color:rgba(255,255,255,.8);
+      text-transform:uppercase;letter-spacing:.12em;line-height:1.45;
+    }
+    .footer-links{display:flex;flex-direction:column;gap:0;max-width:480px}
     .footer-link-row{
       display:flex;align-items:center;justify-content:space-between;
-      padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08);
-      color:rgba(255,255,255,.82);font-size:15px;font-weight:400;
+      padding:12px 0;border-bottom:1px solid rgba(255,255,255,.10);
+      color:rgba(255,255,255,.85);font-size:15px;font-weight:400;
       text-decoration:none;transition:color .2s;cursor:pointer;
       background:none;border-top:none;border-left:none;border-right:none;
-      font-family:var(--font-sans);text-align:left;width:100%;
+      font-family:var(--font-sans);text-align:left;width:100%;gap:10px;
     }
+    .footer-link-row .flr-icon{
+      width:20px;height:20px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .footer-link-row .flr-icon svg{width:16px;height:16px;stroke:rgba(255,255,255,.6);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .footer-link-row span{flex:1}
+    .footer-link-row .flr-arrow svg{width:14px;height:14px;stroke:rgba(255,255,255,.35);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
     .footer-link-row:hover{color:#fff}
+    .footer-link-row:hover .flr-icon svg,.footer-link-row:hover .flr-arrow svg{stroke:rgba(255,255,255,.8)}
     .footer-link-row:last-child{border-bottom:none}
-    .footer-link-row svg{width:14px;height:14px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-    .footer-link-row:hover svg{stroke:rgba(255,255,255,.8)}
-    /* Bottom bar */
-    .footer-bottom{
-      position:relative;z-index:1;
-      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
-      padding:16px 0;
+    /* ── Bottom bar ── */
+    .footer-bottom-bar{
+      position:relative;z-index:2;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+      padding:14px 56px;
+      background:#3E7CB1;
+      margin-top:24px;
     }
-    .footer-copyright{font-size:13px;color:rgba(255,255,255,.5);font-weight:300}
+    .footer-copyright{font-size:12.5px;color:rgba(255,255,255,.9);font-weight:400}
     .footer-dir-label{
-      display:flex;align-items:center;gap:8px;
-      font-size:12px;color:rgba(255,255,255,.5);font-weight:400;text-align:right;
+      display:flex;align-items:center;gap:7px;
+      font-size:12px;color:rgba(255,255,255,.9);font-weight:400;
     }
-    .footer-dir-label svg{width:14px;height:14px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    .footer-dir-label svg{width:13px;height:13px;stroke:rgba(255,255,255,.8);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
     .copyright-bar{
-      background:#001a33;color:rgba(255,255,255,.45);
+      position:relative;z-index:2;
+      background:rgba(0,10,30,.5);color:rgba(255,255,255,.5);
       font-size:12px;text-align:center;padding:10px 20px;
     }
     @media(max-width:900px){
-      .footer-inner{grid-template-columns:1fr;gap:28px}
-      .site-footer{padding:36px 24px 0}
+      .footer-content{grid-template-columns:1fr;padding:32px 24px 0}
+      .footer-left{border-right:none;border-bottom:2px solid #D4AF37;padding-right:0;padding-bottom:24px;margin-bottom:24px}
+      .footer-right{padding-left:0}
+      .footer-bottom-bar{padding:14px 24px}
     }
     </style>
 
-    <div class="footer-inner">
-      <!-- Left block -->
-      <div class="footer-unam-block">
-        <div class="footer-unam-logos">
-          <div class="footer-unam-logo"><div data-img="logo-unam" data-alt="UNAM" style="width:90px;height:90px;border-radius:7px"></div></div>
-          <div>
-            <div class="footer-475">475</div>
-            <div class="footer-475-sub">Universidad<br>México<br>1551 · 2026</div>
+    <!-- Full-width banner background image with buildings -->
+    <img src="img/footer-banner.png" alt="" class="footer-banner-bg"
+      onerror="this.style.display='none'">
+
+    <div class="footer-content">
+      <!-- ── Left: UNAM + 475 ── -->
+      <div class="footer-left">
+        <div class="footer-logos-row">
+          <!-- Escudo UNAM -->
+          <div class="footer-escudo">
+            <div data-img="logo-unam" data-alt="UNAM" style="width:80px;height:80px;border-radius:6px"></div>
+          </div>
+          <!-- 475 badge — imagen PNG -->
+          <img src="img/footer-475.png" alt="475 Universidad México 1551-2026"
+            class="footer-475-img"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <!-- Fallback texto si no existe la imagen -->
+          <div style="display:none">
+            <div style="font-size:42px;font-weight:900;color:#D4AF37;line-height:1;letter-spacing:-.02em">475</div>
+            <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.14em;line-height:1.4">Universidad<br>M&#233;xico<br>1551 &middot; 2026</div>
           </div>
         </div>
-        <div class="footer-divider"></div>
-        <div class="fb-name">UNAM</div>
-        <div class="fb-full">Universidad Nacional Autónoma de México<br>1551 · 2026</div>
+        <div class="footer-divider-gold"></div>
+        <div class="footer-unam-name">UNAM</div>
+        <div class="footer-unam-full">Universidad Nacional Aut&#243;noma de M&#233;xico</div>
+        <div class="footer-unam-years">1551 &ndash; 2026</div>
         <div class="footer-social">
           <a href="https://x.com/spamsu_unam" target="_blank" rel="noopener" aria-label="X / Twitter">
             <svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg>
@@ -3545,7 +3565,7 @@ body.tab-mode section.noticias-section{display:none}
         </div>
       </div>
 
-      <!-- Right block -->
+      <!-- ── Right: SPAMSU + links ── -->
       <div class="footer-right">
         <div class="footer-spamsu-head">
           <div class="footer-spamsu-logo">
@@ -3555,34 +3575,39 @@ body.tab-mode section.noticias-section{display:none}
         </div>
         <div class="footer-links">
           <a href="http://www.unam.mx/" target="_blank" rel="noopener" class="footer-link-row">
+            <span class="flr-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>
             <span>Portal UNAM</span>
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            <span class="flr-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </a>
           <button class="footer-link-row" onclick="sbGoSection('panel-informacion','sb-informacion')">
+            <span class="flr-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span>
             <span>Acerca de SPAMSU</span>
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            <span class="flr-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </button>
           <button class="footer-link-row" onclick="sbOpenTab('directorio','sb-directorio')">
+            <span class="flr-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>
             <span>Directorio institucional</span>
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            <span class="flr-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </button>
           <a href="http://www.transparencia.unam.mx/" target="_blank" rel="noopener" class="footer-link-row">
+            <span class="flr-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
             <span>Transparencia UNAM</span>
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            <span class="flr-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </a>
         </div>
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <div class="footer-copyright">&#169; 2026 UNAM &#183; Universidad Nacional Aut&#243;noma de M&#233;xico</div>
+    <!-- Bottom bar -->
+    <div class="footer-bottom-bar">
+      <div class="footer-copyright">&#169; 2026 UNAM &middot; Universidad Nacional Aut&#243;noma de M&#233;xico</div>
       <div class="footer-dir-label">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Direcci&#243;n General de An&#225;lisis, Protecci&#243;n y Seguridad Universitaria
       </div>
     </div>
   </footer>
-  <div class="copyright-bar">Hecho en M&#233;xico &#183; Universidad Nacional Aut&#243;noma de M&#233;xico &#183; Todos los derechos reservados 2026</div>
+  <div class="copyright-bar">Hecho en M&#233;xico &middot; Universidad Nacional Aut&#243;noma de M&#233;xico &middot; Todos los derechos reservados 2026</div>
 
 </main>
 
@@ -3595,129 +3620,236 @@ body.tab-mode section.noticias-section{display:none}
   backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;
 }
 .disclaimer-bg.open{display:flex;animation:fadeIn .38s ease}
+/* ════ DISCLAIMER BOX ════ */
 .disclaimer-box{
-  background:#1a2e4a;border:1px solid rgba(169,198,232,.25);
-  border-radius:22px;max-width:560px;width:100%;
-  box-shadow:0 32px 80px rgba(0,0,0,.45);
+  background:#152336;
+  border:1px solid rgba(169,198,232,.18);
+  border-radius:20px;max-width:500px;width:100%;
+  box-shadow:0 40px 100px rgba(0,0,0,.6);
   position:relative;overflow:hidden;
   animation:modalIn .38s cubic-bezier(.4,0,.2,1);
 }
+/* ── Header ── */
 .disclaimer-head{
-  background:linear-gradient(135deg,#001d40 0%,#002f60 50%,#003B71 100%);
-  padding:32px 32px 24px;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(125deg,#000e22 0%,#001840 40%,#002868 80%,#003888 100%);
+  padding:26px 28px 22px;
+  display:flex;align-items:center;gap:18px;
+  position:relative;overflow:hidden;min-height:120px;
 }
-.disclaimer-head::before{
-  content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);
-  width:300px;height:300px;border-radius:50%;
-  background:radial-gradient(circle,rgba(169,198,232,.12) 0%,transparent 70%);
+/* Comet/arc decorative — top right */
+.disclaimer-head::after{
+  content:'';position:absolute;top:-20px;right:-10px;
+  width:200px;height:200px;
+  border-radius:50%;
+  background:conic-gradient(from 190deg at 70% 30%,transparent 0%,rgba(100,160,255,.3) 25%,transparent 55%);
   pointer-events:none;
 }
+.disclaimer-logo{width:76px;height:76px;flex-shrink:0;position:relative;z-index:2}
+.disclaimer-logo img{width:100%;height:100%;object-fit:contain}
+.disclaimer-head-text{flex:1;position:relative;z-index:2}
 .disclaimer-head-title{
-  font-family:var(--font-serif);font-size:clamp(20px,3vw,28px);font-weight:700;
-  color:#fff;line-height:1.2;margin-bottom:6px;position:relative;z-index:1;
+  font-family:var(--font-serif);font-size:clamp(17px,2.8vw,24px);font-weight:700;
+  color:#fff;line-height:1.2;margin-bottom:6px;
 }
-.disclaimer-head-sub{
-  font-size:14px;color:rgba(255,255,255,.65);font-weight:300;position:relative;z-index:1;
-}
-.disclaimer-body{padding:28px 32px}
-/* Tarjeta de número de emergencia */
+.disclaimer-head-sub{font-size:13px;color:rgba(255,255,255,.6);font-weight:300;line-height:1.6}
+/* ── Body ── */
+.disclaimer-body{padding:22px 28px 8px}
 .disclaimer-card{
-  display:flex;align-items:center;gap:16px;
-  background:rgba(255,255,255,.07);border:1px solid rgba(169,198,232,.2);
-  border-radius:14px;padding:16px 20px;margin-bottom:14px;
-  transition:background .2s ease;cursor:pointer;text-decoration:none;
+  display:flex;align-items:center;gap:14px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(169,198,232,.16);
+  border-radius:13px;padding:13px 18px;margin-bottom:10px;
+  transition:background .2s;cursor:pointer;text-decoration:none;
 }
-.disclaimer-card:hover{background:rgba(255,255,255,.12)}
+.disclaimer-card:hover{background:rgba(255,255,255,.11)}
 .disclaimer-badge{
-  width:52px;height:52px;border-radius:12px;flex-shrink:0;
+  width:48px;height:48px;border-radius:10px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:12px;color:#fff;letter-spacing:.02em;
-  background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.2);
-  text-align:center;line-height:1.2;flex-direction:column;gap:1px;
 }
-.disclaimer-card-info{}
-.disclaimer-card-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
-.disclaimer-card-number{font-family:var(--font-serif);font-size:22px;font-weight:700;color:#fff;line-height:1}
-.disclaimer-footer{padding:0 32px 28px;display:flex;flex-direction:column;gap:12px;align-items:center}
-.disclaimer-sos-btn{
-  display:flex;align-items:center;gap:10px;
-  background:var(--azul-claro);color:var(--azul);
-  font-family:var(--font-sans);font-size:15px;font-weight:700;
-  padding:13px 28px;border-radius:12px;border:none;cursor:pointer;
-  transition:all var(--t);width:100%;justify-content:center;text-decoration:none;
+.disclaimer-card-name{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.10em;margin-bottom:2px}
+.disclaimer-card-number{font-family:var(--font-serif);font-size:24px;font-weight:700;color:#fff;line-height:1}
+/* ── Footer ── */
+.disclaimer-footer{
+  padding:0 28px 24px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
 }
-.disclaimer-sos-btn:hover{background:#fff;color:var(--azul)}
+/* Full-width chevron band — pinned to absolute bottom of modal */
+.disclaimer-chevrons{
+  position:absolute;bottom:0;left:0;right:0;
+  height:56px;overflow:hidden;pointer-events:none;
+}
+.disclaimer-chevrons img{width:100%;height:100%;object-fit:cover;display:block}
+/* SOS UNAM clickable logo */
+.disclaimer-sos-link{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  text-decoration:none;transition:transform .2s;padding:4px;
+}
+.disclaimer-sos-link:hover{transform:scale(1.07)}
+.disclaimer-sos-link img{width:110px;height:110px;object-fit:contain;display:block}
+.disclaimer-sos-label{font-size:16px;font-weight:800;color:#fff;letter-spacing:.14em;text-transform:uppercase}
+/* Continue */
 .disclaimer-close-link{
-  font-size:13px;color:rgba(255,255,255,.45);cursor:pointer;
-  text-decoration:underline;transition:color .2s;background:none;border:none;
+  font-size:11.5px;font-weight:800;color:rgba(255,255,255,.6);
+  cursor:pointer;background:none;border:none;
+  letter-spacing:.16em;text-transform:uppercase;
+  transition:color .2s;padding:4px 0;
 }
-.disclaimer-close-link:hover{color:rgba(255,255,255,.75)}
+.disclaimer-close-link:hover{color:#fff}
 </style>
 
 <div class="disclaimer-bg" id="disclaimerModal">
   <div class="disclaimer-box">
+    <!-- Header: logo izquierda + título derecha -->
     <div class="disclaimer-head">
-      <img src="img/spamsu-blanco.png" alt="SPAMSU" style="width:72px;height:72px;object-fit:contain;margin:0 auto 12px;display:block" onerror="this.style.display='none'">
-      <div class="disclaimer-head-title">¿Necesitas ayuda inmediata?</div>
-      <div class="disclaimer-head-sub">Nuestros equipos de reacción están disponibles las 24 horas.<br>No dudes en llamar si estás en riesgo.</div>
+      <div class="disclaimer-logo">
+        <img src="img/spamsu-blanco.png" alt="SPAMSU"
+          onerror="this.style.opacity='.35'">
+      </div>
+      <div class="disclaimer-head-text">
+        <div class="disclaimer-head-title">&#191;Necesitas ayuda inmediata?</div>
+        <div class="disclaimer-head-sub">Nuestros equipos de reacci&#243;n est&#225;n disponibles las 24 horas.<br>No dudes en llamar si est&#225;s en riesgo.</div>
+      </div>
     </div>
+
+    <!-- Cards -->
     <div class="disclaimer-body">
+      <!-- CAE -->
       <a href="tel:5556160523" class="disclaimer-card">
-        <div class="disclaimer-badge" style="background:#002060;padding:6px;overflow:hidden">
-          <img src="img/disclaimer-cae.png" alt="CAE" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <span style="display:none;font-size:11px;font-weight:900;letter-spacing:.04em">CAE</span>
+        <div class="disclaimer-badge" style="background:#002060">
+          <img src="img/disclaimer-cae.png" alt="CAE"
+            style="width:100%;height:100%;object-fit:contain;border-radius:6px"
+            onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\'font-size:13px;font-weight:900;color:#fff;letter-spacing:.04em\'>CAE</span>')">
         </div>
-        <div class="disclaimer-card-info" style="flex:1;text-align:center">
-          <div class="disclaimer-card-name">CENTRAL DE ATENCIÓN DE EMERGENCIAS</div>
+        <div>
+          <div class="disclaimer-card-name">Central de Atenci&#243;n de Emergencias</div>
           <div class="disclaimer-card-number">55 5616 0523</div>
         </div>
       </a>
+      <!-- Línea Puma -->
       <a href="tel:5556226464" class="disclaimer-card">
-        <div class="disclaimer-badge" style="background:#F57F17;padding:6px;overflow:hidden">
-          <img src="img/disclaimer-sos-unam.png" alt="SOS UNAM" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <span style="display:none;font-size:9px;font-weight:900;line-height:1.1;text-align:center">S.O.S<br>UNAM</span>
+        <div class="disclaimer-badge" style="background:#E65100">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M20 21a8 8 0 10-16 0"/>
+          </svg>
         </div>
-        <div class="disclaimer-card-info" style="flex:1;text-align:center">
-          <div class="disclaimer-card-name">LÍNEA DE REACCIÓN PUMA</div>
+        <div>
+          <div class="disclaimer-card-name">L&#237;nea de Reacci&#243;n Puma</div>
           <div class="disclaimer-card-number">55 5622 6464</div>
         </div>
       </a>
     </div>
-    <div class="disclaimer-footer">
-      <!-- SOS UNAM logo image -->
-      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:4px">
-        <img src="img/disclaimer-sos-unam-logo.png" alt="S.O.S UNAM" style="width:72px;height:72px;object-fit:contain" onerror="this.style.display='none'">
-        <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.16em;text-transform:uppercase">S.O.S UNAM</div>
-      </div>
-      <!-- Decorative chevrons -->
-      <div style="display:flex;gap:8px;justify-content:center;margin:6px 0 12px">
-        <svg width="32" height="24" viewBox="0 0 32 24" fill="none"><polygon points="0,24 16,0 32,24 26,24 16,8 6,24" fill="rgba(169,198,232,.35)"/></svg>
-        <svg width="32" height="24" viewBox="0 0 32 24" fill="none"><polygon points="0,24 16,0 32,24 26,24 16,8 6,24" fill="rgba(169,198,232,.22)"/></svg>
-        <svg width="32" height="24" viewBox="0 0 32 24" fill="none"><polygon points="0,24 16,0 32,24 26,24 16,8 6,24" fill="rgba(169,198,232,.12)"/></svg>
-      </div>
-      <button class="disclaimer-close-link" onclick="closeDisclaimer()" style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700">CONTINUAR AL SITIO WEB</button>
+
+    <!-- Footer: SOS + CONTINUAR (encima del banner) -->
+    <!-- Extra padding-bottom para no quedar tapado por el banner absoluto -->
+    <div class="disclaimer-footer" style="padding-bottom:68px">
+      <!-- SOS UNAM logo — usa el que ya tenemos, click abre sos.unam.mx -->
+      <a href="http://www.sos.unam.mx/" target="_blank" rel="noopener" class="disclaimer-sos-link">
+        <img src="img/disclaimer-sos-unam-logo.png" alt="S.O.S UNAM"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <!-- SVG fallback si no existe la imagen -->
+        <svg style="display:none;width:110px;height:110px" viewBox="0 0 80 80" fill="none">
+          <polygon points="40,4 72,22 72,58 40,76 8,58 8,22" fill="rgba(169,198,232,.15)" stroke="rgba(169,198,232,.55)" stroke-width="1.5"/>
+          <text x="40" y="40" text-anchor="middle" font-size="12" font-weight="800" fill="#fff" letter-spacing="1" font-family="sans-serif">S.O.S</text>
+          <text x="40" y="58" text-anchor="middle" font-size="10" font-weight="600" fill="rgba(255,255,255,.7)" font-family="sans-serif">UNAM</text>
+        </svg>
+        <div class="disclaimer-sos-label">UNAM</div>
+      </a>
+      <button class="disclaimer-close-link" onclick="closeDisclaimer()">CONTINUAR AL SITIO WEB</button>
+    </div>
+
+    <!-- Banner PNG pegado al fondo absoluto del modal -->
+    <div class="disclaimer-chevrons" aria-hidden="true">
+      <img src="img/disclaimer-banner-bottom.png" alt=""
+        onerror="this.style.display='none'">
     </div>
   </div>
 </div>
 
 <!-- MODAL: ¿Qué hacemos? -->
 <div class="modal-bg" id="modal-quehacemos" onclick="if(event.target===this)closeModal('modal-quehacemos')" role="dialog" aria-modal="true">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('modal-quehacemos')">×</button>
-    <div class="modal-icon">🎯</div>
-    <h2 class="modal-title">¿Qué hacemos?</h2>
-    <div class="modal-body">
-      <p>La <strong>Secretaría de Prevención y Apoyo a la Movilidad y Seguridad Universitaria (SPAMSU)</strong> es la instancia de la UNAM encargada de impulsar acciones institucionales orientadas a la prevención, la seguridad, la protección civil y la movilidad dentro de la Universidad.</p>
-      <p>Nuestro trabajo se articula en cuatro ejes principales:</p>
-      <ul>
-        <li><strong>Prevención de riesgos</strong> — Protocolos, simulacros y capacitación en seguridad para toda la comunidad universitaria.</li>
-        <li><strong>Movilidad universitaria</strong> — Gestión de accesos, estacionamientos y transporte en el campus (CRACE).</li>
-        <li><strong>Igualdad y no violencia</strong> — Programas de prevención y atención en casos de violencia de género.</li>
-        <li><strong>Seguridad y protección</strong> — Vigilancia, protección civil y atención a emergencias en todo el campus.</li>
-      </ul>
+  <div class="qh-modal-box">
+    <button class="qh-close" onclick="closeModal('modal-quehacemos')" aria-label="Cerrar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <!-- Imagen principal — ocupa todo el modal -->
+    <img src="img/modal-que-hacemos.png" alt="¿Qué hacemos? — SPAMSU UNAM"
+      class="qh-img"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <!-- Fallback si no existe la imagen todavía -->
+    <div class="qh-fallback" style="display:none">
+      <div class="qh-fb-head">
+        <div class="qh-fb-logos">
+          <div data-img="logo-unam" data-alt="UNAM" style="width:52px;height:52px;border-radius:6px"></div>
+          <div data-img="spamsu" data-alt="SPAMSU" style="width:52px;height:52px;border-radius:6px"></div>
+        </div>
+        <h2 style="font-family:var(--font-serif);font-size:clamp(22px,3vw,32px);font-weight:700;color:var(--azul);text-align:center;margin:0">&#191;Qu&#233; hacemos?</h2>
+      </div>
+      <div class="qh-fb-body">
+        <p>La Secretar&#237;a de Prevenci&#243;n y Apoyo a la Movilidad y Seguridad Universitaria (SPAMSU) impulsa acciones de prevenci&#243;n, seguridad universitaria, protecci&#243;n civil y movilidad para fortalecer espacios m&#225;s seguros y accesibles dentro de la UNAM.</p>
+        <p>A trav&#233;s de una visi&#243;n basada en una pol&#237;tica de cuidados y corresponsabilidad universitaria, se promueve la participaci&#243;n activa de la comunidad en la construcci&#243;n de entornos preventivos, seguros y orientados al bienestar colectivo, favoreciendo el desarrollo pleno de la vida universitaria.</p>
+      </div>
     </div>
   </div>
 </div>
+
+<style>
+/* ── Modal ¿Qué hacemos? ── */
+.qh-modal-box{
+  background:#fff;
+  border-radius:20px;
+  max-width:780px;width:100%;
+  position:relative;
+  overflow:hidden;
+  animation:modalIn .3s cubic-bezier(.4,0,.2,1);
+  box-shadow:
+    0 0 0 1px rgba(0,59,113,.08),
+    0 8px 32px rgba(0,0,0,.12),
+    0 32px 80px rgba(0,59,113,.18);
+}
+.qh-img{
+  width:100%;height:auto;display:block;
+  border-radius:20px;
+}
+/* Close button — top right corner */
+.qh-close{
+  position:absolute;top:14px;right:14px;z-index:10;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(0,59,113,.10);border:1.5px solid rgba(0,59,113,.2);
+  color:#003B71;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .2s;
+}
+.qh-close:hover{background:#003B71;color:#fff;border-color:#003B71}
+/* Fallback */
+.qh-fallback{
+  flex-direction:column;gap:0;
+  background:linear-gradient(170deg,#fff 0%,#f0f5fb 100%);
+}
+.qh-fb-head{
+  background:linear-gradient(135deg,#002a54 0%,#003B71 60%,#1565C0 100%);
+  padding:32px 40px 28px;
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+  position:relative;overflow:hidden;
+}
+.qh-fb-head::after{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.qh-fb-head h2{color:#fff!important}
+.qh-fb-logos{display:flex;align-items:center;gap:14px}
+.qh-fb-body{
+  padding:32px 40px 36px;
+  font-size:16px;color:#2D3748;font-weight:300;line-height:1.85;
+  text-align:justify;
+}
+.qh-fb-body p{margin-bottom:16px}
+.qh-fb-body p:last-child{margin-bottom:0}
+@media(max-width:640px){
+  .qh-fb-head{padding:24px 20px 20px}
+  .qh-fb-body{padding:24px 20px 28px;font-size:15px}
+}
+</style>
 
 <!-- MODAL: Emergencias -->
 <div class="modal-bg" id="modal-emerg" onclick="if(event.target===this)closeModal('modal-emerg')" role="dialog" aria-modal="true">
@@ -3980,6 +4112,12 @@ function switchVidTab(id){
     if(b) b.classList.toggle('active', k===id);
     if(p) p.classList.toggle('active', k===id);
   });
+  /* Re-process Instagram embeds whenever a tab becomes visible */
+  setTimeout(function(){
+    if(window.instgrm && window.instgrm.Embeds){
+      window.instgrm.Embeds.process();
+    }
+  }, 120);
 }
 
 /* ════════ DECÁLOGO INTERACTIVE ════════ */
@@ -4028,6 +4166,10 @@ function switchNovTab(id){
   var panel=document.getElementById('np-'+id);
   if(btn)btn.classList.add('active');
   if(panel)panel.classList.add('active');
+  /* Re-process Instagram embeds */
+  setTimeout(function(){
+    if(window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+  }, 120);
 }
 
 /* ════════ ESTADIO SUB-TABS ════════ */
@@ -4044,8 +4186,33 @@ function openModal(id){document.getElementById(id).classList.add('open');documen
 function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.dir-modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.disclaimer-bg.open').forEach(function(m){m.classList.remove('open')});document.body.style.overflow='';}});
 
-/* ════════ HERO DOTS ════════ */
-/* heroSlide y video local definidos en el bloque del hero */
+/* ── Hero slide 3 → Decálogo ── */
+function irAlDecalogo(){
+  // 1. Salir del modo pestaña si estaba activo
+  document.body.classList.remove('tab-mode');
+  document.querySelectorAll('.panel-tab-only').forEach(function(p){p.classList.remove('panel-open')});
+  // 2. Activar sidebar item de Información
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
+  var sb = document.getElementById('sb-informacion');
+  if(sb) sb.classList.add('active');
+  // 3. Scroll suave al panel de información
+  var panel = document.getElementById('panel-informacion');
+  if(panel){
+    var offset = window.innerWidth <= 900 ? 62 : 0;
+    var top = panel.getBoundingClientRect().top + window.pageYOffset - offset - 12;
+    window.scrollTo({top: top, behavior: 'smooth'});
+  }
+  // 4. Activar la pestaña Decálogo tras el scroll
+  setTimeout(function(){
+    switchInfoTab('decalogo');
+    // Scroll fino hasta el decálogo por si el panel necesita más tiempo
+    var dec = document.getElementById('ip-decalogo');
+    if(dec){
+      var topDec = dec.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({top: topDec, behavior: 'smooth'});
+    }
+  }, 500);
+}
 
 /* ════ RECTOR AUTOPLAY + PAUSE INVISIBLE VIDEOS ════ */
 (function(){
@@ -4211,6 +4378,12 @@ window.addEventListener('scroll',function(){if(topBar)topBar.style.boxShadow=win
 
 <!-- Instagram embed script -->
 <script async src="https://www.instagram.com/embed.js"></script>
+<script>
+/* Process Instagram embeds once embed.js is fully loaded */
+window.addEventListener('load', function(){
+  if(window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+});
+</script>
 
 </body>
 </html>
