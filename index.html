@@ -1195,7 +1195,7 @@ body.tab-mode section.noticias-section{display:none}
         <style>
         /* ══ DECÁLOGO — colorful infographic style ══ */
         .dec2-wrap{width:100%;padding:0 0 32px;overflow:hidden;position:relative;
-          background:linear-gradient(160deg,#fdf6ff 0%,#f0f8ff 35%,#fff8f0 65%,#f0fff4 100%)}
+          background:#ffffff}
         /* Rich decorative background shapes */
         .dec2-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
         /* 2 horizontal rows of 5 */
@@ -1276,32 +1276,25 @@ body.tab-mode section.noticias-section{display:none}
         <div class="dec2-wrap">
           <div class="dec2-bg-shapes" aria-hidden="true">
           <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 1200 280" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Gradient blobs -->
-            <circle cx="80"  cy="60"  r="70" fill="rgba(124,77,255,.07)"/>
-            <circle cx="300" cy="200" r="55" fill="rgba(233,30,140,.06)"/>
-            <circle cx="550" cy="40"  r="80" fill="rgba(0,188,212,.06)"/>
-            <circle cx="780" cy="220" r="65" fill="rgba(255,152,0,.07)"/>
-            <circle cx="1050" cy="70" r="75" fill="rgba(139,195,74,.06)"/>
-            <circle cx="1180" cy="200"r="50" fill="rgba(244,67,54,.06)"/>
-            <!-- Stars scattered -->
-            <polygon points="120,20 123,30 133,30 125,36 128,46 120,40 112,46 115,36 107,30 117,30" fill="rgba(124,77,255,.18)"/>
-            <polygon points="220,180 222,187 229,187 224,191 226,198 220,194 214,198 216,191 211,187 218,187" fill="rgba(233,30,140,.20)"/>
-            <polygon points="450,30 452,37 459,37 454,41 456,48 450,44 444,48 446,41 441,37 448,37" fill="rgba(255,107,53,.18)"/>
-            <polygon points="620,240 622,247 629,247 624,251 626,258 620,254 614,258 616,251 611,247 618,247" fill="rgba(0,188,212,.20)"/>
-            <polygon points="850,15 852,22 859,22 854,26 856,33 850,29 844,33 846,26 841,22 848,22" fill="rgba(139,195,74,.20)"/>
-            <polygon points="980,200 982,207 989,207 984,211 986,218 980,214 974,218 976,211 971,207 978,207" fill="rgba(255,152,0,.18)"/>
-            <polygon points="1100,50 1102,57 1109,57 1104,61 1106,68 1100,64 1094,68 1096,61 1091,57 1098,57" fill="rgba(244,67,54,.18)"/>
-            <!-- Small sparkle dots -->
-            <circle cx="160" cy="140" r="5" fill="rgba(124,77,255,.22)"/>
-            <circle cx="380" cy="80"  r="4" fill="rgba(233,30,140,.22)"/>
-            <circle cx="500" cy="220" r="5" fill="rgba(0,188,212,.22)"/>
-            <circle cx="700" cy="50"  r="4" fill="rgba(255,107,53,.22)"/>
-            <circle cx="900" cy="180" r="5" fill="rgba(139,195,74,.22)"/>
-            <circle cx="1070"cy="140" r="4" fill="rgba(255,152,0,.22)"/>
-            <!-- Tiny crosses -->
-            <path d="M340 120 h8 M344 116 v8" stroke="rgba(124,77,255,.25)" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M680 190 h8 M684 186 v8" stroke="rgba(233,30,140,.25)" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M940 100 h8 M944 96 v8" stroke="rgba(0,188,212,.25)" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Stars only — no large blobs -->
+            <polygon points="60,18 63,28 73,28 65,34 68,44 60,38 52,44 55,34 47,28 57,28" fill="rgba(124,77,255,.20)"/>
+            <polygon points="220,230 222,237 229,237 224,241 226,248 220,244 214,248 216,241 211,237 218,237" fill="rgba(233,30,140,.22)"/>
+            <polygon points="400,22 402,29 409,29 404,33 406,40 400,36 394,40 396,33 391,29 398,29" fill="rgba(255,107,53,.20)"/>
+            <polygon points="590,240 592,247 599,247 594,251 596,258 590,254 584,258 586,251 581,247 588,247" fill="rgba(0,188,212,.22)"/>
+            <polygon points="800,16 802,23 809,23 804,27 806,34 800,30 794,34 796,27 791,23 798,23" fill="rgba(139,195,74,.22)"/>
+            <polygon points="950,230 952,237 959,237 954,241 956,248 950,244 944,248 946,241 941,237 948,237" fill="rgba(255,152,0,.20)"/>
+            <polygon points="1140,20 1142,27 1149,27 1144,31 1146,38 1140,34 1134,38 1136,31 1131,27 1138,27" fill="rgba(244,67,54,.20)"/>
+            <!-- Tiny accent dots -->
+            <circle cx="160" cy="200" r="4" fill="rgba(124,77,255,.16)"/>
+            <circle cx="340" cy="60"  r="3" fill="rgba(233,30,140,.16)"/>
+            <circle cx="500" cy="240" r="4" fill="rgba(0,188,212,.16)"/>
+            <circle cx="670" cy="40"  r="3" fill="rgba(255,107,53,.16)"/>
+            <circle cx="870" cy="220" r="4" fill="rgba(139,195,74,.16)"/>
+            <circle cx="1050" cy="60" r="3" fill="rgba(255,152,0,.16)"/>
+            <!-- Small crosses -->
+            <path d="M290 140 h6 M293 137 v6" stroke="rgba(124,77,255,.22)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M720 180 h6 M723 177 v6" stroke="rgba(233,30,140,.22)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M1000 110 h6 M1003 107 v6" stroke="rgba(0,188,212,.22)" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
 
