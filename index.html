@@ -613,6 +613,74 @@ body.tab-mode section.noticias-section{display:none}
 .modal-body p{margin-bottom:14px}
 .modal-body ul{list-style:disc;padding-left:20px;display:flex;flex-direction:column;gap:8px}
 .modal-body li{font-size:16px;color:var(--gris-txt);font-weight:300}
+/* ── Modal Cuida tu Moto ── */
+.ctm-modal-box{background:var(--blanco);border-radius:20px;max-width:480px;width:100%;box-shadow:0 28px 70px rgba(0,59,113,.22);position:relative;overflow:hidden;animation:modalIn .28s ease}
+.ctm-modal-head{background:linear-gradient(135deg,#003B71 0%,#1565C0 60%,#2d8fce 100%);padding:28px 32px 24px;display:flex;align-items:center;gap:16px;position:relative}
+.ctm-modal-head::after{content:"";position:absolute;right:-30px;top:-30px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+.ctm-modal-icon{width:52px;height:52px;flex-shrink:0;border-radius:10px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ctm-modal-icon img{width:34px;height:34px;object-fit:contain}
+.ctm-modal-head-title{font-family:var(--font-serif);font-size:20px;font-weight:700;color:#fff;line-height:1.2}
+.ctm-modal-head-sub{font-size:13px;color:rgba(255,255,255,.75);margin-top:3px}
+.ctm-modal-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:background .2s}
+.ctm-modal-close:hover{background:rgba(255,255,255,.35)}
+.ctm-modal-box{max-height:90vh;overflow-y:auto}
+.ctm-modal-body{padding:26px 32px 30px}
+.ctm-modal-gallery{position:relative;margin-bottom:22px;border-radius:12px;overflow:hidden;height:220px}
+.ctm-modal-gallery img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}
+.ctm-modal-gallery img.ctm-active{opacity:1}
+.ctm-dots{display:flex;justify-content:center;gap:7px;margin-top:10px;margin-bottom:16px}
+.ctm-dot{width:7px;height:7px;border-radius:50%;background:var(--gris-borde);border:none;padding:0;cursor:pointer;transition:background .3s}
+.ctm-dot.ctm-active{background:var(--azul)}
+.ctm-modal-desc{font-size:15.5px;color:var(--gris-txt);font-weight:300;line-height:1.8;margin-bottom:24px}
+.ctm-modal-actions{display:flex;flex-direction:column;gap:12px}
+.ctm-btn-registro{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--azul);color:#fff;border:none;border-radius:10px;padding:13px 20px;font-size:15px;font-weight:600;font-family:var(--font-sans);cursor:pointer;text-decoration:none;transition:background .2s,transform .15s}
+.ctm-btn-registro:hover{background:#1565C0;transform:translateY(-1px)}
+.ctm-btn-pdf{display:flex;align-items:center;justify-content:center;gap:9px;background:transparent;color:var(--azul);border:1.5px solid var(--azul-claro);border-radius:10px;padding:12px 20px;font-size:15px;font-weight:500;font-family:var(--font-sans);cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s}
+.ctm-btn-pdf:hover{background:rgba(0,59,113,.06);border-color:var(--azul)}
+/* ── Modal Bicipuma ── */
+.bici-modal-box{background:var(--blanco);border-radius:20px;max-width:420px;width:100%;box-shadow:0 28px 70px rgba(0,59,113,.22);position:relative;overflow:hidden;animation:modalIn .28s ease;display:flex;flex-direction:column}
+.bici-modal-head{background:linear-gradient(135deg,#003B71 0%,#1565C0 60%,#2d8fce 100%);padding:22px 28px;display:flex;align-items:center;gap:14px;flex-shrink:0;position:relative}
+.bici-modal-head::after{content:"";position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+.bici-modal-icon{width:46px;height:46px;flex-shrink:0;border-radius:10px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bici-modal-icon img{width:30px;height:30px;object-fit:contain}
+.bici-modal-head-title{font-family:var(--font-serif);font-size:19px;font-weight:700;color:#fff;line-height:1.2}
+.bici-modal-head-sub{font-size:12.5px;color:rgba(255,255,255,.75);margin-top:2px}
+.bici-modal-close{position:absolute;top:13px;right:13px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);color:#fff;width:30px;height:30px;border-radius:50%;font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:background .2s}
+.bici-modal-close:hover{background:rgba(255,255,255,.35)}
+.bici-modal-body{padding:20px 24px 24px;overflow:visible;flex:1}
+.bici-gallery{position:relative;border-radius:12px;overflow:hidden;background:#eaf1fa;margin-bottom:14px}
+.bici-gallery img{width:100%;height:auto;display:block;object-fit:contain;opacity:0;position:absolute;top:0;left:0;transition:opacity .5s ease;pointer-events:none}
+.bici-gallery img.bici-active{opacity:1;position:relative;pointer-events:auto}
+
+.bici-dots{display:flex;justify-content:center;gap:7px;margin-bottom:18px}
+.bici-dot{width:7px;height:7px;border-radius:50%;background:var(--gris-borde);border:none;padding:0;cursor:pointer;transition:background .3s}
+.bici-dot.bici-active{background:var(--azul)}
+.bici-btn-sitio{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--azul);color:#fff;border:none;border-radius:10px;padding:13px 20px;font-size:15px;font-weight:600;font-family:var(--font-sans);cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;width:100%}
+.bici-btn-sitio:hover{background:#1565C0;transform:translateY(-1px)}
+/* ══ Modal Biciescuela ══ */
+.be-modal-box{background:var(--blanco);border-radius:20px;max-width:420px;width:100%;box-shadow:0 28px 70px rgba(0,59,113,.22);position:relative;overflow:hidden;animation:modalIn .28s ease;display:flex;flex-direction:column}
+.be-modal-head{background:linear-gradient(135deg,#003B71 0%,#1565C0 60%,#2d8fce 100%);padding:22px 28px;display:flex;align-items:center;gap:14px;flex-shrink:0;position:relative}
+.be-modal-head::after{content:"";position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+.be-modal-icon{width:46px;height:46px;flex-shrink:0;border-radius:10px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.be-modal-icon img{width:30px;height:30px;object-fit:contain}
+.be-modal-head-title{font-family:var(--font-serif);font-size:19px;font-weight:700;color:#fff;line-height:1.2}
+.be-modal-head-sub{font-size:12.5px;color:rgba(255,255,255,.75);margin-top:2px}
+.be-modal-close{position:absolute;top:13px;right:13px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);color:#fff;width:30px;height:30px;border-radius:50%;font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:background .2s}
+.be-modal-close:hover{background:rgba(255,255,255,.35)}
+.be-modal-body{padding:20px 24px 0}
+.be-carousel{position:relative;border-radius:12px;overflow:hidden;background:#eaf1fa;margin-bottom:0}
+.be-carousel-slide{display:none;width:100%}
+.be-carousel-slide.be-active{display:block;animation:fadeIn .3s ease}
+.be-carousel-slide video,.be-carousel-slide img{width:100%;height:auto;display:block;object-fit:contain;border-radius:12px}
+.be-carousel-nav{display:flex;align-items:center;justify-content:space-between;padding:10px 0 14px}
+.be-carousel-btn{background:var(--azul-pale2);border:1.5px solid var(--gris-borde);color:var(--azul);width:32px;height:32px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1;flex-shrink:0}
+.be-carousel-btn:hover{background:var(--azul-claro);border-color:var(--azul-claro)}
+.be-carousel-dots{display:flex;justify-content:center;gap:8px}
+.be-carousel-dot{width:8px;height:8px;border-radius:50%;background:var(--gris-borde);border:none;padding:0;cursor:pointer;transition:background .3s}
+.be-carousel-dot.active{background:var(--azul)}
+.be-modal-footer{padding:0 24px 24px;background:var(--blanco)}
+.be-btn-registro{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--azul);color:#fff;border:none;border-radius:10px;padding:13px 20px;font-size:15px;font-weight:600;font-family:var(--font-sans);cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;width:100%}
+.be-btn-registro:hover{background:#1565C0;transform:translateY(-1px)}
 /* Emerg panel modal — diseño amplio (imagen 2) */
 .emerg-panel-modal{
   background:var(--blanco);border-radius:18px;padding:0;
@@ -1696,19 +1764,29 @@ body.tab-mode section.noticias-section{display:none}
         <h2 class="dir-showcase-title">Áreas que integran la dependencia</h2>
         <style>
         .coord-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:28px}
-        .coord-card{background:#F4F7FB;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px;transition:all var(--t)}
+        .coord-card{background:#F4F7FB;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px;transition:all var(--t);cursor:pointer;width:100%;text-align:left;font-family:var(--font-sans)}
         .coord-card:hover{border-color:var(--azul-claro);background:rgba(169,198,232,.12);transform:translateY(-2px)}
         .coord-dot{width:10px;height:10px;border-radius:50%;background:var(--azul);flex-shrink:0;margin-top:5px}
         .coord-name{font-size:15px;font-weight:600;color:var(--azul);line-height:1.35}
+        /* Modal área */
+        .area-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,30,60,.55);backdrop-filter:blur(4px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+        .area-modal-bg.open{display:flex}
+        .area-modal-box{background:#fff;border-radius:16px;box-shadow:0 16px 64px rgba(0,59,113,.28);max-width:720px;width:100%;overflow:hidden;position:relative;animation:fadeIn .25s ease}
+        .area-modal-close{position:absolute;top:14px;right:16px;background:rgba(0,59,113,.08);border:none;border-radius:50%;width:34px;height:34px;font-size:20px;line-height:1;cursor:pointer;color:var(--azul);transition:background var(--t);z-index:1}
+        .area-modal-close:hover{background:var(--azul-claro)}
+        .area-modal-img{width:100%;max-height:480px;object-fit:contain;display:block;background:var(--fondo)}
+        .area-modal-footer{padding:18px 24px;border-top:1px solid var(--gris-borde)}
+        .area-modal-title{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--azul)}
         </style>
         <div class="coord-grid">
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></div>
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></div>
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></div>
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Planeación Institucional</div></div>
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Coordinación de Proyectos y Programas de Prevención y Seguridad</div></div>
-          <div class="coord-card"><div class="coord-dot"></div><div class="coord-name">Comisiones Locales de Seguridad</div></div>
+          <button class="coord-card" onclick="document.getElementById('am-analisis').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></button>
+          <button class="coord-card" onclick="document.getElementById('am-educacion').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></button>
+          <button class="coord-card" onclick="document.getElementById('am-enlace').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></button>
+          <button class="coord-card" onclick="document.getElementById('am-planeacion').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Planeación Institucional</div></button>
+          <button class="coord-card" onclick="document.getElementById('am-proyectos').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Proyectos y Programas de Prevención y Seguridad</div></button>
+          <button class="coord-card" onclick="document.getElementById('am-comisiones').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Comisiones Locales de Seguridad</div></button>
         </div>
+
       </div>
 
     </div>
@@ -1751,12 +1829,13 @@ body.tab-mode section.noticias-section{display:none}
           </div>
         </div>
         <!-- 4. Moto Candados -->
-        <div class="srv-card">
+        <div class="srv-card" onclick="openModal('modal-cuidamoto')" style="cursor:pointer">
           <div class="srv-img"><div data-img="srv-candados" data-alt="Programa Cuida tu Moto"></div></div>
           <div class="srv-body">
             <div class="srv-icon srv-icon-png"><img src="img/icon-srv-candados.png" alt="Programa Cuida tu Moto"></div>
             <div class="srv-title">Programa Cuida tu Moto</div>
             <p class="srv-desc">Servicio de préstamo de moto candados para bicicletas disponible para la comunidad universitaria en campus.</p>
+            <span class="srv-cta">Ver más →</span>
           </div>
         </div>
         <!-- 5. Unidad Canina -->
@@ -1770,7 +1849,7 @@ body.tab-mode section.noticias-section{display:none}
           </div>
         </div>
         <!-- 9. Bicipuma -->
-        <a href="https://www.dgsgm.unam.mx/bicipuma.html" target="_blank" rel="noopener" class="srv-card">
+        <div class="srv-card" onclick="openModal('modal-bicipuma')" style="cursor:pointer">
           <div class="srv-img"><div data-img="srv-bicipuma" data-alt="Bicipuma UNAM"></div></div>
           <div class="srv-body">
             <div class="srv-icon srv-icon-png"><img src="img/icon-srv-bicipuma.png" alt="Bicipuma UNAM"></div>
@@ -1778,18 +1857,19 @@ body.tab-mode section.noticias-section{display:none}
             <p class="srv-desc">Sistema de transporte gratuito para la Comunidad Universitaria que fomenta la movilidad sustentable y la salud.</p>
             <span class="srv-cta">Ver más →</span>
           </div>
-        </a>
+        </div>
         <!-- 10. Biciescuela -->
-        <div class="srv-card">
+        <div class="srv-card" style="cursor:pointer" onclick="openModal('modal-biciescuela')">
           <div class="srv-img"><div data-img="srv-biciescuela" data-alt="Biciescuela UNAM"></div></div>
           <div class="srv-body">
             <div class="srv-icon srv-icon-png"><img src="img/icon-srv-biciescuela.png" alt="Biciescuela UNAM"></div>
             <div class="srv-title">Biciescuela</div>
             <p class="srv-desc">Aprende a andar en bicicleta de manera segura en el campus universitario. Clases gratuitas para toda la comunidad universitaria.</p>
+            <span class="srv-cta">Ver más →</span>
           </div>
         </div>
         <!-- 6. Pumabús -->
-        <a href="https://www.dgsgm.unam.mx/pumabus.html" target="_blank" rel="noopener" class="srv-card">
+        <div class="srv-card" style="cursor:pointer" onclick="openModal('modal-pumabus')">
           <div class="srv-img"><div data-img="srv-pumabus" data-alt="Pumabús UNAM"></div></div>
           <div class="srv-body">
             <div class="srv-icon srv-icon-png"><img src="img/icon-srv-pumabus.png" alt="Pumabús UNAM"></div>
@@ -1797,7 +1877,7 @@ body.tab-mode section.noticias-section{display:none}
             <p class="srv-desc">Servicio de transporte interno del campus universitario. Rutas, horarios y paradas en Ciudad Universitaria.</p>
             <span class="srv-cta">Ver horarios →</span>
           </div>
-        </a>
+        </div>
         <!-- 7. Estacionamientos -->
         <a href="https://www.dgsgm.unam.mx/estacionamientos.html" target="_blank" rel="noopener" class="srv-card">
           <div class="srv-img"><div data-img="srv-estacionamientos" data-alt="Estacionamientos"></div></div>
@@ -1806,6 +1886,16 @@ body.tab-mode section.noticias-section{display:none}
             <div class="srv-title">Estacionamientos Controlados</div>
             <p class="srv-desc">Estacionamientos dentro del campus, accesos, tarifas y registro de vehículos.</p>
             <span class="srv-cta">Ir al sitio →</span>
+          </div>
+        </a>
+        <!-- 8. Brigada Vial -->
+        <a href="https://www.dgsgm.unam.mx/brigada.html" target="_blank" rel="noopener" class="srv-card">
+          <div class="srv-img"><div data-img="srv-brigada" data-alt="Brigada Vial UNAM"></div></div>
+          <div class="srv-body">
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-brigada.png" alt="Brigada Vial"></div>
+            <div class="srv-title">Brigada Vial</div>
+            <p class="srv-desc">Programa de apoyo vial y seguridad en la circulación dentro del campus universitario.</p>
+            <span class="srv-cta">Ir al sitio &rarr;</span>
           </div>
         </a>
       </div>
@@ -3519,6 +3609,8 @@ body.tab-mode section.noticias-section{display:none}
     .mapa-tab-btn:hover svg{opacity:1!important;stroke:#fff}
     .mapa-tab-btn.active{color:#fff;border-bottom-color:var(--azul-claro);background:rgba(255,255,255,.1)}
     .mapa-tab-btn.active svg{opacity:1!important;stroke:#A9C6E8}
+    .mapa-tab-icon{width:22px;height:22px;object-fit:contain;flex-shrink:0;opacity:.65;filter:brightness(0) invert(1);transition:opacity .22s ease}
+    .mapa-tab-btn:hover .mapa-tab-icon,.mapa-tab-btn.active .mapa-tab-icon{opacity:1}
     .mapa-tab-panel{display:none;position:relative;height:440px}
     .mapa-tab-panel.active{display:block}
     .mapa-tab-panel iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block}
@@ -3546,23 +3638,23 @@ body.tab-mode section.noticias-section{display:none}
     </div>
     <div class="mapa-tabs-bar">
       <button class="mapa-tab-btn active" onclick="switchMapaTab('rectoria',this)">
-        <img src="img/mapa-tab-rectoria.png" alt="Rectoría" width="20" height="20" style="flex-shrink:0;opacity:.85">
+        <img src="img/mapa-tab-rectoria.png"  class="mapa-tab-icon" style="width:22px;height:22px;object-fit:contain;flex-shrink:0;filter:brightness(0) invert(1);opacity:.7;transition:opacity .2s" alt="">
         Rector&#237;a
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('estadio',this)">
-        <img src="img/mapa-tab-estadio.png" alt="Estadio Olímpico" width="20" height="20" style="flex-shrink:0;opacity:.85">
+        <img src="img/mapa-tab-estadio.png"   class="mapa-tab-icon" style="width:22px;height:22px;object-fit:contain;flex-shrink:0;filter:brightness(0) invert(1);opacity:.7;transition:opacity .2s" alt="">
         Estadio Ol&#237;mpico
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('bicipuma',this)">
-        <img src="img/mapa-tab-bicipuma.png" alt="Bicipuma" width="20" height="20" style="flex-shrink:0;opacity:.85">
+        <img src="img/mapa-tab-bicipuma.png"  class="mapa-tab-icon" style="width:22px;height:22px;object-fit:contain;flex-shrink:0;filter:brightness(0) invert(1);opacity:.7;transition:opacity .2s" alt="">
         Bicipuma &middot; Bicicentro
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('pumabus',this)">
-        <img src="img/mapa-tab-pumabus.png" alt="Pumabús" width="20" height="20" style="flex-shrink:0;opacity:.85">
+        <img src="img/mapa-tab-pumabus.png"   class="mapa-tab-icon" style="width:22px;height:22px;object-fit:contain;flex-shrink:0;filter:brightness(0) invert(1);opacity:.7;transition:opacity .2s" alt="">
         Pumab&#250;s
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('cuidamoto',this)">
-        <img src="img/mapa-tab-cuidamoto.png" alt="Cuida tu Moto" width="20" height="20" style="flex-shrink:0;opacity:.85">
+        <img src="img/mapa-tab-cuidamoto.png" class="mapa-tab-icon" style="width:22px;height:22px;object-fit:contain;flex-shrink:0;filter:brightness(0) invert(1);opacity:.7;transition:opacity .2s" alt="">
         Programa Cuida tu Moto
       </button>
     </div>
@@ -4402,7 +4494,9 @@ function switchEstadioTab(id){
 /* ════════ MODALS ════════ */
 function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.dir-modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.disclaimer-bg.open').forEach(function(m){m.classList.remove('open')});document.body.style.overflow='';}});
+function openAreaModal(id){document.getElementById('modal-area-'+id).classList.add('open');document.body.style.overflow='hidden';}
+function closeAreaModal(id){document.getElementById('modal-area-'+id).classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.dir-modal-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.disclaimer-bg.open').forEach(function(m){m.classList.remove('open')});document.querySelectorAll('.area-modal-bg.open').forEach(function(m){m.classList.remove('open')});document.body.style.overflow='';}});
 
 /* ── Hero slide 4 → Planes y Programas ── */
 function irAPlanes(){
@@ -4599,6 +4693,329 @@ window.addEventListener('load', function(){
   if(window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
 });
 </script>
+
+<!-- ══ MODAL: Bicipuma ══ -->
+<div class="modal-bg" id="modal-bicipuma" onclick="if(event.target===this){closeModal('modal-bicipuma');biciStop()}" role="dialog" aria-modal="true">
+  <div class="bici-modal-box">
+    <button class="bici-modal-close" onclick="closeModal('modal-bicipuma');biciStop()" aria-label="Cerrar">&#215;</button>
+    <div class="bici-modal-head">
+      <div class="bici-modal-icon">
+        <img src="img/icon-srv-bicipuma.png" alt="Bicipuma">
+      </div>
+      <div>
+        <div class="bici-modal-head-title">Bicipuma</div>
+        <div class="bici-modal-head-sub">DGSGM &mdash; UNAM</div>
+      </div>
+    </div>
+    <div class="bici-modal-body">
+      <div class="bici-gallery" id="bici-gallery">
+        <img src="img/bicipuma-foto-1.jpg" alt="Bicipuma UNAM" class="bici-active">
+        <img src="img/bicipuma-foto-2.jpg" alt="Bicipuma UNAM">
+        <img src="img/bicipuma-foto-3.jpg" alt="Bicipuma UNAM">
+      </div>
+      <div class="bici-dots" id="bici-dots">
+        <button class="bici-dot bici-active" onclick="biciGoTo(0)"></button>
+        <button class="bici-dot" onclick="biciGoTo(1)"></button>
+        <button class="bici-dot" onclick="biciGoTo(2)"></button>
+      </div>
+      <a href="https://www.dgsgm.unam.mx/bicipuma.html" target="_blank" rel="noopener" class="bici-btn-sitio" onclick="event.stopPropagation()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Visitar sitio oficial
+      </a>
+    </div>
+  </div>
+</div>
+<!-- ══ MODAL: Pumabús ══ -->
+<div class="modal-bg" id="modal-pumabus" onclick="if(event.target===this){closeModal('modal-pumabus')}" role="dialog" aria-modal="true">
+  <div class="bici-modal-box">
+    <button class="bici-modal-close" onclick="closeModal('modal-pumabus')" aria-label="Cerrar">&#215;</button>
+    <div class="bici-modal-head">
+      <div class="bici-modal-icon">
+        <img src="img/icon-srv-pumabus.png" alt="Pumabús">
+      </div>
+      <div>
+        <div class="bici-modal-head-title">Pumab&uacute;s</div>
+        <div class="bici-modal-head-sub">DGSGM &mdash; UNAM</div>
+      </div>
+    </div>
+    <div class="bici-modal-body">
+      <div class="bici-gallery" id="puma-gallery">
+        <img src="img/pumabus-foto-1.jpg" alt="Pumabús UNAM" class="bici-active">
+        <img src="img/pumabus-foto-2.jpg" alt="Pumabús UNAM">
+        <img src="img/pumabus-foto-3.jpg" alt="Pumabús UNAM">
+      </div>
+      <div class="bici-dots" id="puma-dots">
+        <button class="bici-dot bici-active" onclick="pumaGoTo(0)"></button>
+        <button class="bici-dot" onclick="pumaGoTo(1)"></button>
+        <button class="bici-dot" onclick="pumaGoTo(2)"></button>
+      </div>
+      <a href="https://www.dgsgm.unam.mx/pumabus.html" target="_blank" rel="noopener" class="bici-btn-sitio" onclick="event.stopPropagation()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Visitar sitio oficial
+      </a>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var pumaCurrent = 0, pumaTimer = null;
+  function pumaGoTo(n){
+    var imgs = document.querySelectorAll("#puma-gallery img");
+    var dots = document.querySelectorAll("#puma-dots .bici-dot");
+    imgs[pumaCurrent].classList.remove("bici-active");
+    dots[pumaCurrent].classList.remove("bici-active");
+    pumaCurrent = (n + imgs.length) % imgs.length;
+    imgs[pumaCurrent].classList.add("bici-active");
+    dots[pumaCurrent].classList.add("bici-active");
+  }
+  window.pumaGoTo = pumaGoTo;
+  window.pumaStop = function(){ clearInterval(pumaTimer); };
+  var origOpen = window.openModal;
+  window.openModal = function(id){
+    origOpen(id);
+    if(id === "modal-pumabus"){ pumaGoTo(0); pumaTimer = setInterval(function(){ pumaGoTo(pumaCurrent+1); }, 3500); }
+  };
+  var origClose = window.closeModal;
+  window.closeModal = function(id){
+    origClose(id);
+    if(id === "modal-pumabus"){ window.pumaStop(); }
+  };
+})();
+</script>
+<script>
+(function(){
+  var biciCurrent = 0, biciTimer = null;
+  function biciGoTo(n){
+    var imgs = document.querySelectorAll('#bici-gallery img');
+    var dots = document.querySelectorAll('#bici-dots .bici-dot');
+    imgs[biciCurrent].classList.remove('bici-active');
+    dots[biciCurrent].classList.remove('bici-active');
+    biciCurrent = (n + imgs.length) % imgs.length;
+    imgs[biciCurrent].classList.add('bici-active');
+    dots[biciCurrent].classList.add('bici-active');
+  }
+  window.biciGoTo = biciGoTo;
+  window.biciStop = function(){ clearInterval(biciTimer); };
+  var origOpen = window.openModal;
+  window.openModal = function(id){
+    origOpen(id);
+    if(id === 'modal-bicipuma'){ biciGoTo(0); biciTimer = setInterval(function(){ biciGoTo(biciCurrent+1); }, 3500); }
+  };
+  var origClose = window.closeModal;
+  window.closeModal = function(id){
+    origClose(id);
+    if(id === 'modal-bicipuma'){ window.biciStop(); }
+  };
+})();
+</script>
+
+<!-- </body> -->
+<script>
+(function(){
+  var current = 0;
+  var timer = null;
+  function ctmGoTo(n){
+    var imgs = document.querySelectorAll('#ctm-gallery img');
+    var dots = document.querySelectorAll('#ctm-dots .ctm-dot');
+    imgs[current].classList.remove('ctm-active');
+    dots[current].classList.remove('ctm-active');
+    current = (n + imgs.length) % imgs.length;
+    imgs[current].classList.add('ctm-active');
+    dots[current].classList.add('ctm-active');
+  }
+  window.ctmGoTo = ctmGoTo;
+  function ctmNext(){ ctmGoTo(current + 1); }
+  function startCarousel(){ timer = setInterval(ctmNext, 3000); }
+  function stopCarousel(){ clearInterval(timer); }
+  // Arrancar cuando se abre el modal, parar al cerrar
+  var origOpen = window.openModal;
+  window.openModal = function(id){
+    origOpen(id);
+    if(id === 'modal-cuidamoto'){ ctmGoTo(0); startCarousel(); }
+  };
+  var origClose = window.closeModal;
+  window.closeModal = function(id){
+    origClose(id);
+    if(id === 'modal-cuidamoto'){ stopCarousel(); }
+  };
+  // También parar al hacer click en el fondo
+  document.addEventListener('DOMContentLoaded', function(){
+    var bg = document.getElementById('modal-cuidamoto');
+    if(bg) bg.addEventListener('click', function(e){ if(e.target===bg) stopCarousel(); });
+  });
+})();
+</script>
+
+<!-- ══ MODAL: Programa Cuida tu Moto ══ -->
+<div class="modal-bg" id="modal-cuidamoto" onclick="if(event.target===this){closeModal('modal-cuidamoto')}" role="dialog" aria-modal="true" aria-labelledby="ctm-title">
+  <div class="ctm-modal-box">
+    <button class="ctm-modal-close" onclick="closeModal('modal-cuidamoto')" aria-label="Cerrar">&#215;</button>
+    <div class="ctm-modal-head">
+      <div class="ctm-modal-icon">
+        <img src="img/icon-srv-candados.png" alt="Programa Cuida tu Moto">
+      </div>
+      <div>
+        <div class="ctm-modal-head-title" id="ctm-title">Programa Cuida tu Moto</div>
+        <div class="ctm-modal-head-sub">DGSGM &mdash; UNAM</div>
+      </div>
+    </div>
+    <div class="ctm-modal-body">
+      <div class="ctm-modal-gallery" id="ctm-gallery">
+        <img src="img/cuidamoto-foto-1.jpg" alt="Programa Cuida tu Moto" class="ctm-active">
+        <img src="img/cuidamoto-foto-2.jpg" alt="Programa Cuida tu Moto">
+        <img src="img/cuidamoto-foto-3.jpg" alt="Programa Cuida tu Moto">
+      </div>
+      <div class="ctm-dots" id="ctm-dots">
+        <button class="ctm-dot ctm-active" onclick="ctmGoTo(0)"></button>
+        <button class="ctm-dot" onclick="ctmGoTo(1)"></button>
+        <button class="ctm-dot" onclick="ctmGoTo(2)"></button>
+      </div>
+      <p class="ctm-modal-desc">Servicio de préstamo de candados para motocicletas disponible para la comunidad universitaria. Regístrate para participar en el programa y consulta los lineamientos en el documento oficial.</p>
+      <div class="ctm-modal-actions">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSctK_HC95MJEqzqPBec5hPNtNRaaQoX4qRE_uFi7-5PFJcVRA/viewform?pli=1"
+           target="_blank" rel="noopener" class="ctm-btn-registro" onclick="event.stopPropagation()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Registrarse al programa
+        </a>
+        <a href="pdf/Programa Cuida Tu Moto.pdf" download class="ctm-btn-pdf" onclick="event.stopPropagation()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Descargar PDF informativo
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: Biciescuela ══ -->
+<div class="modal-bg" id="modal-biciescuela" onclick="if(event.target===this){closeModal('modal-biciescuela');beStopVideo()}" role="dialog" aria-modal="true">
+  <div class="be-modal-box">
+    <button class="be-modal-close" onclick="closeModal('modal-biciescuela');beStopVideo()" aria-label="Cerrar">&#215;</button>
+    <div class="be-modal-head">
+      <div class="be-modal-icon">
+        <img src="img/icon-srv-biciescuela.png" alt="Biciescuela">
+      </div>
+      <div>
+        <div class="be-modal-head-title">Biciescuela</div>
+        <div class="be-modal-head-sub">DGSGM &mdash; UNAM</div>
+      </div>
+    </div>
+    <div class="be-modal-body">
+      <div class="be-carousel" id="be-carousel">
+        <div class="be-carousel-slide be-active" id="be-slide-0">
+          <video id="be-video" controls playsinline>
+            <source src="videos/biciescuela.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="be-carousel-slide" id="be-slide-1">
+          <img src="img/biciescuela-info.jpg" alt="Información Biciescuela">
+        </div>
+      </div>
+      <div class="be-carousel-nav">
+        <button class="be-carousel-btn" onclick="beCarousel(-1)" aria-label="Anterior">&#8249;</button>
+        <div class="be-carousel-dots">
+          <button class="be-carousel-dot active" onclick="beCarouselGoTo(0)"></button>
+          <button class="be-carousel-dot" onclick="beCarouselGoTo(1)"></button>
+        </div>
+        <button class="be-carousel-btn" onclick="beCarousel(1)" aria-label="Siguiente">&#8250;</button>
+      </div>
+    </div>
+    <div class="be-modal-footer">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScikPn4ltjpxall1IO9VC3QAn4BxjCMvM-m9pAi8eXBxEjH3Q/viewform?pli=1" target="_blank" rel="noopener" class="be-btn-registro" onclick="event.stopPropagation()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Registrarse
+      </a>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var beCurrent = 0;
+  var beTotal   = 2;
+
+  function beCarouselGoTo(n){
+    if(beCurrent === 0 && n !== 0){ beStopVideo(); }
+    document.getElementById('be-slide-' + beCurrent).classList.remove('be-active');
+    document.querySelectorAll('.be-carousel-dot')[beCurrent].classList.remove('active');
+    beCurrent = ((n % beTotal) + beTotal) % beTotal;
+    document.getElementById('be-slide-' + beCurrent).classList.add('be-active');
+    document.querySelectorAll('.be-carousel-dot')[beCurrent].classList.add('active');
+  }
+
+  function beCarousel(dir){ beCarouselGoTo(beCurrent + dir); }
+  window.beCarousel     = beCarousel;
+  window.beCarouselGoTo = beCarouselGoTo;
+
+  function beStopVideo(){
+    var v = document.getElementById('be-video');
+    if(v){ v.pause(); v.currentTime = 0; }
+  }
+  window.beStopVideo = beStopVideo;
+
+  var origOpen = window.openModal;
+  window.openModal = function(id){
+    origOpen(id);
+    if(id === 'modal-biciescuela'){
+      beCarouselGoTo(0);
+      var v = document.getElementById('be-video');
+      if(v){ v.currentTime = 0; v.play(); }
+    }
+  };
+
+  var origClose = window.closeModal;
+  window.closeModal = function(id){
+    origClose(id);
+    if(id === 'modal-biciescuela'){ beStopVideo(); }
+  };
+})();
+</script>
+
+<style>
+@keyframes amSlideUp{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+</style>
+<!-- ══ MODALES: Áreas que integran la dependencia ══ -->
+<div id="am-analisis" style="display:none;position:fixed;inset:0;background:rgba(0,20,50,.7);z-index:99999;align-items:center;justify-content:center;padding:20px" onclick="if(event.target===this){document.getElementById('am-analisis').style.display='none';document.body.style.overflow=''}">
+  <div style="background:#fff;border-radius:14px;max-width:760px;width:100%;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:amSlideUp .32s cubic-bezier(.22,.61,.36,1)">
+    <button style="position:absolute;top:10px;right:12px;background:rgba(0,59,113,.12);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;cursor:pointer;color:#003B71;z-index:1" onclick="document.getElementById('am-analisis').style.display='none';document.body.style.overflow=''">&#215;</button>
+    <img src="img/area-analisis.jpg" alt="Coordinación de Análisis y Concertación" style="width:100%;max-height:500px;object-fit:contain;display:block;background:#f4f7fb">
+    
+  </div>
+</div>
+<div id="am-educacion" style="display:none;position:fixed;inset:0;background:rgba(0,20,50,.7);z-index:99999;align-items:center;justify-content:center;padding:20px" onclick="if(event.target===this){document.getElementById('am-educacion').style.display='none';document.body.style.overflow=''}">
+  <div style="background:#fff;border-radius:14px;max-width:760px;width:100%;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:amSlideUp .32s cubic-bezier(.22,.61,.36,1)">
+    <button style="position:absolute;top:10px;right:12px;background:rgba(0,59,113,.12);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;cursor:pointer;color:#003B71;z-index:1" onclick="document.getElementById('am-educacion').style.display='none';document.body.style.overflow=''">&#215;</button>
+    <img src="img/area-educacion.jpg" alt="Coordinación de Educación en Prevención" style="width:100%;max-height:500px;object-fit:contain;display:block;background:#f4f7fb">
+    
+  </div>
+</div>
+<div id="am-enlace" style="display:none;position:fixed;inset:0;background:rgba(0,20,50,.7);z-index:99999;align-items:center;justify-content:center;padding:20px" onclick="if(event.target===this){document.getElementById('am-enlace').style.display='none';document.body.style.overflow=''}">
+  <div style="background:#fff;border-radius:14px;max-width:760px;width:100%;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:amSlideUp .32s cubic-bezier(.22,.61,.36,1)">
+    <button style="position:absolute;top:10px;right:12px;background:rgba(0,59,113,.12);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;cursor:pointer;color:#003B71;z-index:1" onclick="document.getElementById('am-enlace').style.display='none';document.body.style.overflow=''">&#215;</button>
+    <img src="img/area-enlace.jpg" alt="Coordinación de Enlace con Instancias de Gobierno" style="width:100%;max-height:500px;object-fit:contain;display:block;background:#f4f7fb">
+    
+  </div>
+</div>
+<div id="am-planeacion" style="display:none;position:fixed;inset:0;background:rgba(0,20,50,.7);z-index:99999;align-items:center;justify-content:center;padding:20px" onclick="if(event.target===this){document.getElementById('am-planeacion').style.display='none';document.body.style.overflow=''}">
+  <div style="background:#fff;border-radius:14px;max-width:760px;width:100%;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:amSlideUp .32s cubic-bezier(.22,.61,.36,1)">
+    <button style="position:absolute;top:10px;right:12px;background:rgba(0,59,113,.12);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;cursor:pointer;color:#003B71;z-index:1" onclick="document.getElementById('am-planeacion').style.display='none';document.body.style.overflow=''">&#215;</button>
+    <img src="img/area-planeacion.jpg" alt="Coordinación de Planeación Institucional" style="width:100%;max-height:500px;object-fit:contain;display:block;background:#f4f7fb">
+    
+  </div>
+</div>
+<div id="am-proyectos" style="display:none;position:fixed;inset:0;background:rgba(0,20,50,.7);z-index:99999;align-items:center;justify-content:center;padding:20px" onclick="if(event.target===this){document.getElementById('am-proyectos').style.display='none';document.body.style.overflow=''}">
+  <div style="background:#fff;border-radius:14px;max-width:760px;width:100%;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:amSlideUp .32s cubic-bezier(.22,.61,.36,1)">
+    <button style="position:absolute;top:10px;right:12px;background:rgba(0,59,113,.12);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;cursor:pointer;color:#003B71;z-index:1" onclick="document.getElementById('am-proyectos').style.display='none';document.body.style.overflow=''">&#215;</button>
+    <img src="img/area-proyectos.jpg" alt="Coordinación de Proyectos y Programas de Prevención y Seguridad" style="width:100%;max-height:500px;object-fit:contain;display:block;background:#f4f7fb">
+    
+  </div>
+</div>
+<div id="am-comisiones" style="display:none;position:fixed;inset:0;background:rgba(0,20,50,.7);z-index:99999;align-items:center;justify-content:center;padding:20px" onclick="if(event.target===this){document.getElementById('am-comisiones').style.display='none';document.body.style.overflow=''}">
+  <div style="background:#fff;border-radius:14px;max-width:760px;width:100%;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:amSlideUp .32s cubic-bezier(.22,.61,.36,1)">
+    <button style="position:absolute;top:10px;right:12px;background:rgba(0,59,113,.12);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;cursor:pointer;color:#003B71;z-index:1" onclick="document.getElementById('am-comisiones').style.display='none';document.body.style.overflow=''">&#215;</button>
+    <img src="img/area-comisiones.jpg" alt="Comisiones Locales de Seguridad" style="width:100%;max-height:500px;object-fit:contain;display:block;background:#f4f7fb">
+    
+  </div>
+</div>
+
 
 </body>
 </html>
