@@ -520,7 +520,7 @@ body.tab-mode section.noticias-section{display:none}
 /* ═══════════════════════════════════════════
    ACCESOS INSTITUCIONALES
 ═══════════════════════════════════════════ */
-.accesos-section{background:var(--fondo);padding:56px 44px;border-top:2px solid var(--gris-borde)}
+.accesos-section{background:var(--fondo);padding:56px 44px;border-top:2px solid var(--gris-borde);position:relative;overflow:hidden}
 .accesos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
 .acceso-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);padding:20px 16px;text-align:center;transition:all var(--t);display:flex;flex-direction:column;align-items:center;gap:11px}
 .acceso-card:hover{box-shadow:var(--sh);border-color:var(--azul-claro);transform:translateY(-3px)}
@@ -1195,9 +1195,9 @@ body.tab-mode section.noticias-section{display:none}
         <style>
         /* ══ DECÁLOGO — colorful infographic style ══ */
         .dec2-wrap{width:100%;padding:0 0 32px;overflow:hidden;position:relative;
-          background:#ffffff}
-        /* Rich decorative background shapes */
-        .dec2-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+          background:#ffffff;isolation:isolate}
+        /* Rich decorative background shapes — strictly contained */
+        .dec2-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;contain:strict}
         /* 2 horizontal rows of 5 */
         .dec2-grid{
           position:relative;z-index:1;
@@ -2247,12 +2247,6 @@ body.tab-mode section.noticias-section{display:none}
 </div></div>
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
-<div class="dcard-name" style="color:var(--azul)">Mtra. Fusae Nakazawa Cuéllar</div>
-<div class="dcard-role" style="color:var(--gris-sub)">Secretaria Auxiliar de Orientación y Asesoramiento</div>
-<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40104</span><a href="mailto:saora@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>saora@unam.mx</a></div>
-</div></div>
-<div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
-<div class="dcard-body">
 <div class="dcard-name" style="color:var(--azul)">Lic. Camila Fosado Balderas</div>
 <div class="dcard-role" style="color:var(--gris-sub)">Información General · SPAMSU</div>
 <div class="dcard-chips"><a href="mailto:camilafosado@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>camilafosado@unam.mx</a></div>
@@ -2271,6 +2265,12 @@ body.tab-mode section.noticias-section{display:none}
 <div class="dcard-name" style="color:var(--azul)">Med. Jaime Jimmy Revah Peralta</div>
 <div class="dcard-role" style="color:var(--gris-sub)">Subdirector de Análisis e Interpretación</div>
 <div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40536</span><a href="mailto:sai@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sai@unam.mx</a></div>
+</div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
+<div class="dcard-body">
+<div class="dcard-name" style="color:var(--azul)">Mtra. Fusae Nakazawa Cuéllar</div>
+<div class="dcard-role" style="color:var(--gris-sub)">Secretaria Auxiliar de Orientación y Asesoramiento</div>
+<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40104</span><a href="mailto:saora@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>saora@unam.mx</a></div>
 </div></div>
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
@@ -2407,12 +2407,12 @@ body.tab-mode section.noticias-section{display:none}
           position:absolute;inset:0;z-index:2;cursor:pointer;
           background:#000;border-radius:inherit;overflow:hidden;
         " onclick="loadRectorVideo()" title="Reproducir video">
-          <!-- Thumbnail de YouTube en el segundo 22 -->
+          <!-- Portada personalizada — agregar img/rector-poster.jpg -->
           <img
-            src="https://img.youtube.com/vi/dUX6ja2OX1Q/maxresdefault.jpg"
+            src="img/rector-poster.jpg"
             alt="Mensaje del Rector — UNAM"
-            style="width:100%;height:100%;object-fit:cover;display:block;opacity:.92"
-            onerror="this.src='https://img.youtube.com/vi/dUX6ja2OX1Q/hqdefault.jpg'">
+            style="width:100%;height:100%;object-fit:cover;display:block;opacity:.95"
+            onerror="this.src='https://img.youtube.com/vi/dUX6ja2OX1Q/maxresdefault.jpg'">
           <!-- Botón play -->
           <div style="
             position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
@@ -2466,15 +2466,6 @@ body.tab-mode section.noticias-section{display:none}
     rBtn.parentElement.addEventListener('mouseleave',function(){rBtn.style.transform='';rBtn.style.background='rgba(255,0,0,.88)'});
   }
   </script>
-      <div>
-        <div class="sec-tag">Mensaje institucional</div>
-        <h2 class="sec-title" style="margin-bottom:10px">Palabras del Rector</h2>
-        <div class="video-quote">"La seguridad es una condición indispensable para una educación plena en la Universidad Nacional."</div>
-        <div class="video-speaker">Dr. Leonardo Lomelí Vanegas<br><span style="color:var(--gris-sub);font-size:14px;font-weight:300">Rector de la UNAM</span></div>
-        <p style="font-size:16px;color:var(--gris-txt);font-weight:300;line-height:1.7;margin-top:18px">El rector de la UNAM comparte la visión institucional sobre seguridad, prevención y el nuevo paradigma de cuidado universitario.</p>
-      </div>
-    </div>
-  </section>
 
   <!-- ══════════════ NOTICIAS GACETA UNAM ══════════════ -->
   <section class="noticias-section" id="noticias">
@@ -2837,6 +2828,29 @@ body.tab-mode section.noticias-section{display:none}
             <iframe src="https://www.youtube.com/embed/R-EBun_vmjs?rel=0&modestbranding=1" title="Estadio Ol&#237;mpico Universitario UNAM" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
           </div>
         </div>
+      <!-- Botón Visitas Guiadas -->
+      <div style="margin-top:20px;display:flex;justify-content:flex-end">
+        <a href="https://comitedeanalisis.unam.mx/visitas.html" target="_blank" rel="noopener"
+          style="display:inline-flex;align-items:center;gap:9px;
+                 background:linear-gradient(135deg,#003B71,#1565C0);color:#fff;
+                 font-family:var(--font-sans);font-size:15px;font-weight:600;
+                 padding:13px 26px;border-radius:12px;text-decoration:none;
+                 box-shadow:0 4px 16px rgba(0,59,113,.25);
+                 transition:opacity .2s,transform .2s"
+          onmouseover="this.style.opacity='.88';this.style.transform='translateY(-2px)'"
+          onmouseout="this.style.opacity='1';this.style.transform=''">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Visitas guiadas al Estadio Olímpico Universitario
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </div>
       </div>
 
       <!-- ─── NUESTROS PROYECTOS ─── -->
