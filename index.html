@@ -1275,27 +1275,34 @@ body.tab-mode section.noticias-section{display:none}
 
         <div class="dec2-wrap">
           <div class="dec2-bg-shapes" aria-hidden="true">
-          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 1200 280" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Stars only — no large blobs -->
-            <polygon points="60,18 63,28 73,28 65,34 68,44 60,38 52,44 55,34 47,28 57,28" fill="rgba(124,77,255,.20)"/>
-            <polygon points="220,230 222,237 229,237 224,241 226,248 220,244 214,248 216,241 211,237 218,237" fill="rgba(233,30,140,.22)"/>
-            <polygon points="400,22 402,29 409,29 404,33 406,40 400,36 394,40 396,33 391,29 398,29" fill="rgba(255,107,53,.20)"/>
-            <polygon points="590,240 592,247 599,247 594,251 596,258 590,254 584,258 586,251 581,247 588,247" fill="rgba(0,188,212,.22)"/>
-            <polygon points="800,16 802,23 809,23 804,27 806,34 800,30 794,34 796,27 791,23 798,23" fill="rgba(139,195,74,.22)"/>
-            <polygon points="950,230 952,237 959,237 954,241 956,248 950,244 944,248 946,241 941,237 948,237" fill="rgba(255,152,0,.20)"/>
-            <polygon points="1140,20 1142,27 1149,27 1144,31 1146,38 1140,34 1134,38 1136,31 1131,27 1138,27" fill="rgba(244,67,54,.20)"/>
-            <!-- Tiny accent dots -->
-            <circle cx="160" cy="200" r="4" fill="rgba(124,77,255,.16)"/>
-            <circle cx="340" cy="60"  r="3" fill="rgba(233,30,140,.16)"/>
-            <circle cx="500" cy="240" r="4" fill="rgba(0,188,212,.16)"/>
-            <circle cx="670" cy="40"  r="3" fill="rgba(255,107,53,.16)"/>
-            <circle cx="870" cy="220" r="4" fill="rgba(139,195,74,.16)"/>
-            <circle cx="1050" cy="60" r="3" fill="rgba(255,152,0,.16)"/>
-            <!-- Small crosses -->
-            <path d="M290 140 h6 M293 137 v6" stroke="rgba(124,77,255,.22)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M720 180 h6 M723 177 v6" stroke="rgba(233,30,140,.22)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M1000 110 h6 M1003 107 v6" stroke="rgba(0,188,212,.22)" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+          <!-- Decoración CSS pura — no puede desbordarse fuera del contenedor -->
+          <style>
+          .dec2-star{position:absolute;pointer-events:none;font-size:0;line-height:0}
+          .dec2-star::before{content:'';display:block;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+          .d2s1{top:8%;left:3%;width:22px;height:22px}.d2s1::before{width:22px;height:22px;background:rgba(124,77,255,.22)}
+          .d2s2{top:75%;left:15%;width:14px;height:14px}.d2s2::before{width:14px;height:14px;background:rgba(233,30,140,.22)}
+          .d2s3{top:10%;left:30%;width:16px;height:16px}.d2s3::before{width:16px;height:16px;background:rgba(255,107,53,.20)}
+          .d2s4{top:80%;left:47%;width:14px;height:14px}.d2s4::before{width:14px;height:14px;background:rgba(0,188,212,.22)}
+          .d2s5{top:8%;left:62%;width:18px;height:18px}.d2s5::before{width:18px;height:18px;background:rgba(139,195,74,.22)}
+          .d2s6{top:70%;left:76%;width:14px;height:14px}.d2s6::before{width:14px;height:14px;background:rgba(255,152,0,.20)}
+          .d2s7{top:12%;left:90%;width:20px;height:20px}.d2s7::before{width:20px;height:20px;background:rgba(244,67,54,.20)}
+          /* Tiny dots */
+          .d2d1{top:50%;left:8%;width:6px;height:6px;border-radius:50%;background:rgba(124,77,255,.18)}
+          .d2d2{top:40%;left:25%;width:5px;height:5px;border-radius:50%;background:rgba(233,30,140,.18)}
+          .d2d3{top:60%;left:56%;width:6px;height:6px;border-radius:50%;background:rgba(0,188,212,.18)}
+          .d2d4{top:30%;left:82%;width:5px;height:5px;border-radius:50%;background:rgba(139,195,74,.18)}
+          </style>
+          <div class="dec2-star d2s1"></div>
+          <div class="dec2-star d2s2"></div>
+          <div class="dec2-star d2s3"></div>
+          <div class="dec2-star d2s4"></div>
+          <div class="dec2-star d2s5"></div>
+          <div class="dec2-star d2s6"></div>
+          <div class="dec2-star d2s7"></div>
+          <div class="dec2-star d2d1"></div>
+          <div class="dec2-star d2d2"></div>
+          <div class="dec2-star d2d3"></div>
+          <div class="dec2-star d2d4"></div>
         </div>
 
           <!-- ── Cabecera — imagen decalogo-banner.png ── -->
@@ -1718,7 +1725,7 @@ body.tab-mode section.noticias-section{display:none}
         <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" class="srv-card">
           <div class="srv-img"><div data-img="srv-pcivil" data-alt="Protección Civil"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-pcivil.png" alt="Protección Civil"></div>
             <div class="srv-title">Protección Civil</div>
             <p class="srv-desc">Protocolos, lineamientos y políticas de prevención para la seguridad de toda la comunidad universitaria.</p>
             <span class="srv-cta">Conocer más →</span>
@@ -1728,7 +1735,7 @@ body.tab-mode section.noticias-section{display:none}
         <a href="https://www.fundacionunam.org.mx/unam-al-dia/conoce-al-heroico-cuerpo-de-bomberos-de-la-unam/" target="_blank" rel="noopener" class="srv-card">
           <div class="srv-img"><div data-img="srv-bomberos" data-alt="Bomberos UNAM"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7 7 7 0 01-7-7c0-1.99.806-2.967 2.5-4.5z"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-bomberos.png" alt="Cuerpo de Bomberos UNAM"></div>
             <div class="srv-title">Cuerpo de Bomberos UNAM</div>
             <p class="srv-desc">Heroico Cuerpo de Bomberos de la UNAM. Respuesta inmediata ante incendios, rescates y emergencias en el campus.</p>
             <span class="srv-cta">Conocer más →</span>
@@ -1738,7 +1745,7 @@ body.tab-mode section.noticias-section{display:none}
         <div class="srv-card">
           <div class="srv-img"><div data-img="srv-comisiones" data-alt="Comisiones Locales de Seguridad"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-comisiones.png" alt="Comisiones Locales de Seguridad"></div>
             <div class="srv-title">Comisiones Locales de Seguridad</div>
             <p class="srv-desc">Instancias colegiadas de participación para la prevención, atención y seguimiento de situaciones de riesgo en las entidades universitarias.</p>
           </div>
@@ -1747,7 +1754,7 @@ body.tab-mode section.noticias-section{display:none}
         <div class="srv-card">
           <div class="srv-img"><div data-img="srv-candados" data-alt="Programa Cuida tu Moto"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-candados.png" alt="Programa Cuida tu Moto"></div>
             <div class="srv-title">Programa Cuida tu Moto</div>
             <p class="srv-desc">Servicio de préstamo de moto candados para bicicletas disponible para la comunidad universitaria en campus.</p>
           </div>
@@ -1756,7 +1763,7 @@ body.tab-mode section.noticias-section{display:none}
         <div class="srv-card">
           <div class="srv-img"><div data-img="srv-k9" data-alt="Unidad Canina UNAM"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 006 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-k9.png" alt="Unidad Canina UNAM"></div>
             <div class="srv-title">Unidad Canina (UNAMK9)</div>
             <p class="srv-desc">Perros entrenados para búsqueda, rescate y detección de riesgos. La UNAM avanza en garantizar la seguridad de la comunidad.</p>
             <a href="https://www.gaceta.unam.mx/forman-en-la-unam-perros-para-busqueda-y-rescate-de-personas/" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="srv-cta">Ver más →</a>
@@ -1766,7 +1773,7 @@ body.tab-mode section.noticias-section{display:none}
         <a href="https://www.dgsgm.unam.mx/bicipuma.html" target="_blank" rel="noopener" class="srv-card">
           <div class="srv-img"><div data-img="srv-bicipuma" data-alt="Bicipuma UNAM"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-bicipuma.png" alt="Bicipuma UNAM"></div>
             <div class="srv-title">Bicipuma</div>
             <p class="srv-desc">Sistema de transporte gratuito para la Comunidad Universitaria que fomenta la movilidad sustentable y la salud.</p>
             <span class="srv-cta">Ver más →</span>
@@ -1776,7 +1783,7 @@ body.tab-mode section.noticias-section{display:none}
         <div class="srv-card">
           <div class="srv-img"><div data-img="srv-biciescuela" data-alt="Biciescuela UNAM"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/><path d="M2 17h1l3-9 4 4 2-4h5"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-biciescuela.png" alt="Biciescuela UNAM"></div>
             <div class="srv-title">Biciescuela</div>
             <p class="srv-desc">Aprende a andar en bicicleta de manera segura en el campus universitario. Clases gratuitas para toda la comunidad universitaria.</p>
           </div>
@@ -1785,7 +1792,7 @@ body.tab-mode section.noticias-section{display:none}
         <a href="https://www.dgsgm.unam.mx/pumabus.html" target="_blank" rel="noopener" class="srv-card">
           <div class="srv-img"><div data-img="srv-pumabus" data-alt="Pumabús UNAM"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-pumabus.png" alt="Pumabús UNAM"></div>
             <div class="srv-title">Pumabús</div>
             <p class="srv-desc">Servicio de transporte interno del campus universitario. Rutas, horarios y paradas en Ciudad Universitaria.</p>
             <span class="srv-cta">Ver horarios →</span>
@@ -1795,7 +1802,7 @@ body.tab-mode section.noticias-section{display:none}
         <a href="https://www.dgsgm.unam.mx/estacionamientos.html" target="_blank" rel="noopener" class="srv-card">
           <div class="srv-img"><div data-img="srv-estacionamientos" data-alt="Estacionamientos"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-estacionamientos.png" alt="Estacionamientos Controlados"></div>
             <div class="srv-title">Estacionamientos Controlados</div>
             <p class="srv-desc">Estacionamientos dentro del campus, accesos, tarifas y registro de vehículos.</p>
             <span class="srv-cta">Ir al sitio →</span>
@@ -2615,27 +2622,27 @@ body.tab-mode section.noticias-section{display:none}
     <h2 class="sec-title">Novedades y Recursos</h2>
     <div class="nov-tab-bar">
       <button class="ntab active" onclick="switchNovTab('videos')"     id="ntb-videos">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        <img src="img/icon-nov-videos.png" width="20" height="20" alt="Videos">
         Videos
       </button>
       <button class="ntab"        onclick="switchNovTab('proyectos')"  id="ntb-proyectos">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        <img src="img/icon-nov-proyectos.png" width="20" height="20" alt="Planes y Programas">
         Planes y Programas
       </button>
       <button class="ntab"        onclick="switchNovTab('incluyente')" id="ntb-incluyente">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M10 22l2-8 3 3 2-5"/><path d="M6 14c0 4 3 7 6 8"/></svg>
+        <img src="img/icon-nov-incluyente.png" width="20" height="20" alt="Seguridad y Movilidad Incluyente">
         Seguridad y Movilidad Incluyente
       </button>
       <button class="ntab"        onclick="switchNovTab('cursos')"     id="ntb-cursos">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        <img src="img/icon-nov-cursos.png" width="20" height="20" alt="Cursos y Capacitaciones">
         Cursos y Capacitaciones
       </button>
       <button class="ntab"        onclick="switchNovTab('protocolos')" id="ntb-protocolos">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <img src="img/icon-nov-protocolos.png" width="20" height="20" alt="Protocolos">
         Protocolos
       </button>
       <button class="ntab"        onclick="switchNovTab('material')"   id="ntb-material">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <img src="img/icon-nov-material.png" width="20" height="20" alt="Material">
         Material
       </button>
     </div>
@@ -2998,7 +3005,7 @@ body.tab-mode section.noticias-section{display:none}
         <div class="srv-card">
           <div class="srv-img"><div data-img="incluyente-discapacidad" data-alt="Servicios para Personas con Discapacidad"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M10 22l2-8 3 3 2-5"/><path d="M6 14c0 4 3 7 6 8"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-discapacidad.png" alt="Servicios para Personas con Discapacidad"></div>
             <div class="srv-title">Servicios para Personas con Discapacidad</div>
             <p class="srv-desc">Apoyos y servicios de movilidad e inclusión para personas con discapacidad dentro del campus universitario.</p>
           </div>
@@ -3006,7 +3013,7 @@ body.tab-mode section.noticias-section{display:none}
         <div class="srv-card">
           <div class="srv-img"><div data-img="incluyente-accesibilidad" data-alt="Accesibilidad Universal"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M17 18a2 2 0 012 2v1M3 21v-1a2 2 0 012-2M12 3a2 2 0 110 4"/><path d="M12 7v5l3 3"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-accesibilidad.png" alt="Accesibilidad Universal"></div>
             <div class="srv-title">Accesibilidad Universal</div>
             <p class="srv-desc">Programas de accesibilidad e inclusión en el campus para garantizar el libre tránsito de toda la comunidad universitaria.</p>
           </div>
@@ -3014,7 +3021,7 @@ body.tab-mode section.noticias-section{display:none}
         <div class="srv-card">
           <div class="srv-img"><div data-img="incluyente-brigada" data-alt="Brigada Vial Incluyente"></div></div>
           <div class="srv-body">
-            <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-4V6l-4 6h4v4l4-6z"/><circle cx="12" cy="12" r="10"/></svg></div>
+            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-brigada.png" alt="Brigada Vial Incluyente"></div>
             <div class="srv-title">Brigada Vial Incluyente</div>
             <p class="srv-desc">Apoyo especializado para la movilidad de personas con discapacidad dentro del campus universitario.</p>
           </div>
@@ -3539,46 +3546,23 @@ body.tab-mode section.noticias-section{display:none}
     </div>
     <div class="mapa-tabs-bar">
       <button class="mapa-tab-btn active" onclick="switchMapaTab('rectoria',this)">
-        <!-- Rectoría: torre -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
-          <rect x="3" y="10" width="18" height="12"/><rect x="9" y="14" width="6" height="8"/><polyline points="3,10 12,2 21,10"/><line x1="12" y1="2" x2="12" y2="5"/>
-        </svg>
+        <img src="img/mapa-tab-rectoria.png" alt="Rectoría" width="20" height="20" style="flex-shrink:0;opacity:.85">
         Rector&#237;a
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('estadio',this)">
-        <!-- Estadio: elipse/pista -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
-          <ellipse cx="12" cy="12" rx="10" ry="6"/><line x1="12" y1="6" x2="12" y2="18"/><line x1="2" y1="12" x2="22" y2="12"/>
-        </svg>
+        <img src="img/mapa-tab-estadio.png" alt="Estadio Olímpico" width="20" height="20" style="flex-shrink:0;opacity:.85">
         Estadio Ol&#237;mpico
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('bicipuma',this)">
-        <!-- Bicicleta -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
-          <circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/>
-          <path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/>
-        </svg>
+        <img src="img/mapa-tab-bicipuma.png" alt="Bicipuma" width="20" height="20" style="flex-shrink:0;opacity:.85">
         Bicipuma &middot; Bicicentro
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('pumabus',this)">
-        <!-- Autobús -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
-          <rect x="2" y="4" width="20" height="14" rx="2"/>
-          <line x1="2" y1="10" x2="22" y2="10"/>
-          <line x1="7" y1="4" x2="7" y2="10"/>
-          <line x1="17" y1="4" x2="17" y2="10"/>
-          <circle cx="6.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/>
-          <line x1="6.5" y1="18" x2="6.5" y2="14"/><line x1="17.5" y1="18" x2="17.5" y2="14"/>
-        </svg>
+        <img src="img/mapa-tab-pumabus.png" alt="Pumabús" width="20" height="20" style="flex-shrink:0;opacity:.85">
         Pumab&#250;s
       </button>
       <button class="mapa-tab-btn" onclick="switchMapaTab('cuidamoto',this)">
-        <!-- Motocicleta -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.85">
-          <circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/>
-          <path d="M5 17h4l2-5 3 1 2-4h3"/>
-          <path d="M14 8h2l1 3"/>
-        </svg>
+        <img src="img/mapa-tab-cuidamoto.png" alt="Cuida tu Moto" width="20" height="20" style="flex-shrink:0;opacity:.85">
         Programa Cuida tu Moto
       </button>
     </div>
