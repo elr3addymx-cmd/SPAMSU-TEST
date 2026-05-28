@@ -332,11 +332,12 @@ body.tab-mode section.noticias-section{display:none}
   -webkit-backdrop-filter:blur(2px);
   margin-top:-60px;
 }
-.srv-icon{width:56px;height:56px;border-radius:12px;background:rgba(169,198,232,.22);border:1px solid rgba(169,198,232,.4);display:flex;align-items:center;justify-content:center;margin-bottom:11px;transition:background var(--t),border-color var(--t);overflow:hidden}
-.srv-icon img{width:100%;height:100%;object-fit:contain;padding:6px;border-radius:6px}
+.srv-icon{width:168px;height:168px;border-radius:20px;background:rgba(169,198,232,.22);border:1px solid rgba(169,198,232,.4);display:flex;align-items:center;justify-content:center;margin-bottom:11px;transition:background var(--t),border-color var(--t);overflow:hidden}
+.srv-icon img{width:100%;height:100%;object-fit:contain;padding:18px;border-radius:6px;transition:filter var(--t)}
 .srv-icon-png{padding:0!important}
 .srv-card:hover .srv-icon{background:var(--azul-claro);border-color:var(--azul-claro)}
-.srv-icon svg{width:20px;height:20px;stroke:var(--azul);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke var(--t)}
+.srv-card:hover .srv-icon img{filter:brightness(0) invert(1)}
+.srv-icon svg{width:60px;height:60px;stroke:var(--azul);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke var(--t)}
 .srv-card:hover .srv-icon svg{stroke:#fff}
 .srv-title{font-family:var(--font-serif);font-size:16px;font-weight:700;color:var(--azul);margin-bottom:6px;line-height:1.3}
 .srv-desc{font-size:14px;color:var(--gris-txt);line-height:1.6;font-weight:300}
@@ -362,6 +363,9 @@ body.tab-mode section.noticias-section{display:none}
 .ntab{background:transparent;border:none;font-family:var(--font-sans);font-size:12px;font-weight:600;color:var(--gris-sub);padding:10px 14px;border-radius:10px;cursor:pointer;transition:all var(--t);white-space:nowrap;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:72px}
 .ntab:hover{color:var(--azul);background:var(--azul-pale)}
 .ntab.active{background:var(--azul);color:#fff;font-weight:700}
+.ntab img{width:40px;height:40px;object-fit:contain;transition:filter var(--t)}
+.ntab:hover img{filter:brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(600%) hue-rotate(192deg)}
+.ntab.active img{filter:brightness(0) invert(1)}
 .ntab-panel{display:none}.ntab-panel.active{display:block;animation:fadeIn .3s ease}
 /* News cards */
 .nov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
@@ -1779,12 +1783,12 @@ body.tab-mode section.noticias-section{display:none}
         .area-modal-title{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--azul)}
         </style>
         <div class="coord-grid">
-          <button class="coord-card" onclick="document.getElementById('am-analisis').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></button>
-          <button class="coord-card" onclick="document.getElementById('am-educacion').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></button>
-          <button class="coord-card" onclick="document.getElementById('am-enlace').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></button>
-          <button class="coord-card" onclick="document.getElementById('am-planeacion').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Planeación Institucional</div></button>
-          <button class="coord-card" onclick="document.getElementById('am-proyectos').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Proyectos y Programas de Prevención y Seguridad</div></button>
-          <button class="coord-card" onclick="document.getElementById('am-comisiones').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Comisiones Locales de Seguridad</div></button>
+          <div class="coord-card" style="cursor:default"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></div>
+          <div class="coord-card" style="cursor:default"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></div>
+          <div class="coord-card" style="cursor:default"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></div>
+          <div class="coord-card" style="cursor:default"><div class="coord-dot"></div><div class="coord-name">Coordinación de Planeación Institucional</div></div>
+          <div class="coord-card" style="cursor:default"><div class="coord-dot"></div><div class="coord-name">Coordinación de Proyectos y Programas de Prevención y Seguridad</div></div>
+          <div class="coord-card" style="cursor:default"><div class="coord-dot"></div><div class="coord-name">Comisiones Locales de Seguridad</div></div>
         </div>
 
       </div>
@@ -2361,12 +2365,36 @@ body.tab-mode section.noticias-section{display:none}
       <div class="ddir-body">
 <div class="dgrp-head"><div class="dgrp-line"></div><div class="dgrp-label">Titular de la Secretaría</div><div class="dgrp-line" style="flex:1"></div></div>
 <div class="dgrp-cards">
-<div class="dcard  dcard--gold" style="border:1.5px solid rgba(212,175,55,.5);box-shadow:0 4px 20px rgba(0,59,113,.18);background:linear-gradient(135deg,#1a3f72 0%,#2155a0 100%)">
-<div class="dcard-body">
-<div class="dcard-name" style="color:#D4AF37">Dr. Manuel Palma Rangel</div>
-<div class="dcard-role" style="color:rgba(255,255,255,.8)">Secretario de Prevención y Apoyo a la Movilidad y Seguridad Universitaria</div>
-<div class="dcard-chips"><span class="dcard-pill" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.8)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21284</span><a href="mailto:secretariospamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(169,198,232,.9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>secretariospamsu@unam.mx</a></div>
-</div></div>
+<div class="dcard dcard--gold" style="
+  border:2px solid #7AAED4;
+  box-shadow:0 6px 28px rgba(0,59,113,.18);
+  background:#ffffff;
+  padding:22px 26px;
+  position:relative;
+  overflow:hidden;
+">
+  <!-- Banda de color lateral izquierda -->
+  <div style="position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,#3B82C4 0%,#7AAED4 100%);border-radius:0"></div>
+  <div class="dcard-body" style="padding-left:10px">
+    <!-- Etiqueta superior -->
+    <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:#3B82C4;margin-bottom:8px">Titular de la Secretaría · SPAMSU · UNAM</div>
+    <!-- Nombre -->
+    <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:20px;font-weight:700;color:#003B71;line-height:1.2;margin-bottom:6px">Dr. Manuel Palma Rangel</div>
+    <!-- Cargo -->
+    <div style="font-size:14px;font-weight:400;color:#2D3748;line-height:1.55;margin-bottom:14px">Secretario de Prevención y Apoyo a la Movilidad y Seguridad Universitaria</div>
+    <!-- Chips -->
+    <div class="dcard-chips">
+      <span class="dcard-pill" style="background:#EEF4FB;border-color:#BDD6EE;color:#003B71">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        Ext.&nbsp;21284
+      </span>
+      <a href="mailto:secretariospamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#EEF4FB;border-color:#BDD6EE;color:#003B71">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        secretariospamsu@unam.mx
+      </a>
+    </div>
+  </div>
+</div>
 </div>
 <div class="dgrp-head"><div class="dgrp-line"></div><div class="dgrp-label">Asistencia y Gestión</div><div class="dgrp-line" style="flex:1"></div></div>
 <div class="dgrp-cards">
@@ -2423,6 +2451,7 @@ body.tab-mode section.noticias-section{display:none}
 </div></div>
 </div>
 <div class="dgrp-head"><div class="dgrp-line"></div><div class="dgrp-label">Educación en Prevención y Seguridad</div><div class="dgrp-line" style="flex:1"></div></div>
+<p style="font-size:14px;color:var(--gris-txt);font-weight:300;line-height:1.75;margin-bottom:14px;max-width:760px">Diseña, coordina y ejecuta programas educativos y de capacitación para fomentar la cultura de la prevención, la autoprotección y la seguridad en la comunidad universitaria, a través de talleres, cursos y materiales formativos dirigidos a estudiantes, académicos y personal administrativo.</p>
 <div class="dgrp-cards">
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
@@ -2433,35 +2462,36 @@ body.tab-mode section.noticias-section{display:none}
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
 <div class="dcard-name" style="color:var(--azul)">Lic. Omar Pérez Salazar</div>
-<div class="dcard-role" style="color:var(--gris-sub)">Jefe del Departamento de Valores y Entornos Universitarios</div>
+<div class="dcard-role" style="color:var(--gris-sub)">Jefe del Departamento de Educación en Seguridad y Autoprotección</div>
 <div class="dcard-chips"><a href="mailto:jdvalores@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdvalores@unam.mx</a></div>
 </div></div>
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
 <div class="dcard-name" style="color:var(--azul)">Mtra. Maritza Valencia Murcia</div>
-<div class="dcard-role" style="color:var(--gris-sub)">Jefa del Departamento de Prevención y Atención de Riesgos</div>
+<div class="dcard-role" style="color:var(--gris-sub)">Jefa del Departamento de Educación en Prevención Universitaria</div>
 <div class="dcard-chips"><a href="mailto:jdriesgos@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdriesgos@unam.mx</a></div>
 </div></div>
 </div>
 <div class="dgrp-head"><div class="dgrp-line"></div><div class="dgrp-label">Enlace con Instancias de Gobierno</div><div class="dgrp-line" style="flex:1"></div></div>
+<p style="font-size:14px;color:var(--gris-txt);font-weight:300;line-height:1.75;margin-bottom:14px;max-width:760px">Mantiene la comunicación y coordinación con autoridades gubernamentales, dependencias de seguridad pública y organismos externos, a fin de articular acciones conjuntas que refuercen la seguridad dentro y en los entornos del campus universitario, incluyendo planteles de bachillerato y zona metropolitana.</p>
 <div class="dgrp-cards">
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
-<div class="dcard-name" style="color:var(--azul)">Mtra. Manuela Luna Briseño</div>
-<div class="dcard-role" style="color:var(--gris-sub)">Coordinadora</div>
-<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82811</span><a href="mailto:ceig.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>ceig.spamsu@unam.mx</a></div>
+<div class="dcard-name" style="color:var(--azul)">Mtra. Manuel Luna Briseño</div>
+<div class="dcard-role" style="color:var(--gris-sub)">Coordinadora de Enlace con Instancias de Gobierno de la SPAMSU</div>
+<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82811</span><a href="mailto:lunabman@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>lunabman@unam.mx</a></div>
 </div></div>
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
-<div class="dcard-name" style="color:var(--azul)">Mtro. Honorio Raúil Sotelo Esquivel</div>
-<div class="dcard-role" style="color:var(--gris-sub)">Secretario Auxiliar</div>
+<div class="dcard-name" style="color:var(--azul)">Mtro. Honorio Raúl Sotelo Esquivel</div>
+<div class="dcard-role" style="color:var(--gris-sub)">Secretario Auxiliar de la CEIG de la SPAMSU</div>
 <div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82707</span><a href="mailto:srioaux.ceig.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>srioaux.ceig.spamsu@unam.mx</a></div>
 </div></div>
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
 <div class="dcard-name" style="color:var(--azul)">Luz María Morales Cortés</div>
-<div class="dcard-role" style="color:var(--gris-sub)">Asistente</div>
-<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82811</span></div>
+<div class="dcard-role" style="color:var(--gris-sub)">Asistente Ejecutiva</div>
+<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82811</span><a href="mailto:controldeoficios.ceig@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>controldeoficios.ceig@unam.mx</a></div>
 </div></div>
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
@@ -2475,8 +2505,15 @@ body.tab-mode section.noticias-section{display:none}
 <div class="dcard-role" style="color:var(--gris-sub)">Jefe del Departamento Zona Metropolitana</div>
 <div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82700</span><a href="mailto:jdeptoedomex.ceig.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>jdeptoedomex.ceig.spamsu@unam.mx</a></div>
 </div></div>
+<div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
+<div class="dcard-body">
+<div class="dcard-name" style="color:var(--azul)">Alejandra López Gachúz</div>
+<div class="dcard-role" style="color:var(--gris-sub)">Asistente Ejecutiva</div>
+<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;82704</span><a href="mailto:controldeinformacion.ceig@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>controldeinformacion.ceig@unam.mx</a></div>
+</div></div>
 </div>
 <div class="dgrp-head"><div class="dgrp-line"></div><div class="dgrp-label">Planeación Institucional</div><div class="dgrp-line" style="flex:1"></div></div>
+<p style="font-size:14px;color:var(--gris-txt);font-weight:300;line-height:1.75;margin-bottom:14px;max-width:760px">Orienta el desarrollo estratégico de la Secretaría mediante la formulación, seguimiento y evaluación de planes, programas e indicadores institucionales, asegurando la alineación de las actividades con los objetivos de la UNAM y la mejora continua de los procesos de prevención y seguridad universitaria.</p>
 <div class="dgrp-cards">
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
@@ -2488,13 +2525,13 @@ body.tab-mode section.noticias-section{display:none}
 <div class="dcard-body">
 <div class="dcard-name" style="color:var(--azul)">Lic. María del Rocío Guzmán García</div>
 <div class="dcard-role" style="color:var(--gris-sub)">Asistente</div>
-<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21033</span></div>
+<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21036</span></div>
 </div></div>
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
 <div class="dcard-name" style="color:var(--azul)">Lic. Gerardo Nerio Gallardo</div>
 <div class="dcard-role" style="color:var(--gris-sub)">Secretario Auxiliar de Planeación</div>
-<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;21030</span><a href="mailto:sa_planeacion.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sa_planeacion.spamsu@unam.mx</a></div>
+<div class="dcard-chips"><span class="dcard-pill" style="background:#eef3fb;border-color:#dde8f4;color:var(--gris-txt)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Ext.&nbsp;40796</span><a href="mailto:sa_planeacion.spamsu@unam.mx" class="dcard-pill dcard-pill-mail" style="background:#eef3fb;border-color:#dde8f4;color:var(--azul)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sa_planeacion.spamsu@unam.mx</a></div>
 </div></div>
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
@@ -2504,6 +2541,7 @@ body.tab-mode section.noticias-section{display:none}
 </div></div>
 </div>
 <div class="dgrp-head"><div class="dgrp-line"></div><div class="dgrp-label">Proyectos y Programas de Prevención</div><div class="dgrp-line" style="flex:1"></div></div>
+<p style="font-size:14px;color:var(--gris-txt);font-weight:300;line-height:1.75;margin-bottom:14px;max-width:760px">Diseña e implementa proyectos y programas específicos de prevención del delito y seguridad universitaria, dando seguimiento a su operación, resultados e impacto, y coordinando los recursos humanos y materiales necesarios para su ejecución efectiva dentro de la comunidad universitaria.</p>
 <div class="dgrp-cards">
 <div class="dcard" style="border:1px solid #e2eaf5;background:#fff">
 <div class="dcard-body">
@@ -3107,29 +3145,32 @@ body.tab-mode section.noticias-section{display:none}
       <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--azul);margin-bottom:24px">Planes y Programas</h3>
       <div class="srv-grid">
         <!-- PMS -->
-        <div class="srv-card">
+        <div class="srv-card" style="cursor:pointer" onclick="openPmsModal()" onmouseover="this.style.boxShadow='0 8px 28px rgba(0,59,113,.18)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
           <div class="srv-img"><div data-img="proyecto-pms" data-alt="PMS"></div></div>
           <div class="srv-body">
             <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
             <div class="srv-title">PMS</div>
             <p class="srv-desc">Programa de Mejora a la Seguridad. Iniciativa institucional para el fortalecimiento de las capacidades de seguridad en el campus universitario.</p>
-            <span class="srv-cta">Conocer más &rarr;</span>
+            <span class="srv-cta" style="display:inline-flex;align-items:center;gap:6px">
+              Ver presentaci&#243;n
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </span>
           </div>
         </div>
         <!-- [PROYECTO-+] Agregar mas proyectos aqui -->
         <!-- PISBA -->
-        <div class="srv-card">
+        <a href="https://consejo.unam.mx/comisiones/CES/docs/PISBA.pdf" target="_blank" rel="noopener" class="srv-card" style="text-decoration:none;display:flex;flex-direction:column;cursor:pointer" onmouseover="this.style.boxShadow='0 8px 28px rgba(0,59,113,.18)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
           <div class="srv-img"><div data-img="proyecto-pisba" data-alt="PISBA"></div></div>
           <div class="srv-body">
             <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
             <div class="srv-title">PISBA</div>
             <p class="srv-desc">Plan Institucional de Seguridad. Documento rector que establece los lineamientos, estrategias y acciones para la seguridad universitaria.</p>
-            <a href="https://consejo.unam.mx/comisiones/CES/docs/PISBA.pdf" target="_blank" rel="noopener" class="srv-cta" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px">
+            <span class="srv-cta" style="display:inline-flex;align-items:center;gap:6px">
               Descargar PDF
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </a>
+            </span>
           </div>
-        </div>
+        </a>
       </div>
     </div>
 
@@ -3141,17 +3182,37 @@ body.tab-mode section.noticias-section{display:none}
         <div class="srv-card">
           <div class="srv-img"><div data-img="incluyente-discapacidad" data-alt="Servicios para Personas con Discapacidad"></div></div>
           <div class="srv-body">
-            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-discapacidad.png" alt="Servicios para Personas con Discapacidad"></div>
+            <div class="srv-icon" style="background:rgba(0,59,113,.10)">
+              <!-- Persona en silla de ruedas -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="4" r="2"/>
+                <path d="M9 10h6l-1 5H9z"/>
+                <path d="M9 10l-2 4H5"/>
+                <circle cx="8" cy="20" r="2"/>
+                <circle cx="17" cy="20" r="2"/>
+                <path d="M15 15l1 3h2"/>
+                <path d="M10 20h5"/>
+              </svg>
+            </div>
             <div class="srv-title">Servicios para Personas con Discapacidad</div>
-            <p class="srv-desc">Apoyos y servicios de movilidad e inclusión para personas con discapacidad dentro del campus universitario.</p>
+            <p class="srv-desc">Apoyos y servicios de movilidad e inclusi&#243;n para personas con discapacidad dentro del campus universitario.</p>
           </div>
         </div>
         <div class="srv-card">
           <div class="srv-img"><div data-img="incluyente-accesibilidad" data-alt="Accesibilidad Universal"></div></div>
           <div class="srv-body">
-            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-accesibilidad.png" alt="Accesibilidad Universal"></div>
+            <div class="srv-icon" style="background:rgba(0,59,113,.10)">
+              <!-- Símbolo de accesibilidad universal: figura + círculo -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="7" r="2"/>
+                <path d="M9 11h6"/>
+                <path d="M12 11v6"/>
+                <path d="M9 17l1.5-2.5M15 17l-1.5-2.5"/>
+              </svg>
+            </div>
             <div class="srv-title">Accesibilidad Universal</div>
-            <p class="srv-desc">Programas de accesibilidad e inclusión en el campus para garantizar el libre tránsito de toda la comunidad universitaria.</p>
+            <p class="srv-desc">Programas de accesibilidad e inclusi&#243;n en el campus para garantizar el libre tr&#225;nsito de toda la comunidad universitaria.</p>
           </div>
         </div>
         <div class="srv-card">
@@ -5062,6 +5123,134 @@ window.addEventListener('load', function(){
   </div>
 </div>
 
+
+<!-- ══════════════ MODAL PMS — Presentación ══════════════ -->
+<div id="pms-modal-bg" onclick="if(event.target===this)closePmsModal()"
+  style="display:none;position:fixed;inset:0;z-index:1100;background:rgba(0,20,50,.72);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px">
+  <div id="pms-modal-box" style="
+    background:#fff;border-radius:18px;max-width:900px;width:100%;
+    max-height:90vh;overflow-y:auto;overflow-x:hidden;
+    box-shadow:0 32px 80px rgba(0,0,0,.30);
+    position:relative;animation:modalIn .3s cubic-bezier(.4,0,.2,1)
+  ">
+    <!-- Close button -->
+    <button onclick="closePmsModal()" style="
+      position:sticky;top:12px;float:right;margin:12px 12px 0 0;z-index:10;
+      width:34px;height:34px;border-radius:50%;background:rgba(0,59,113,.10);
+      border:1.5px solid rgba(0,59,113,.2);color:#003B71;font-size:18px;
+      display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;
+    " onmouseover="this.style.background='#003B71';this.style.color='#fff'"
+       onmouseout="this.style.background='rgba(0,59,113,.10)';this.style.color='#003B71'">&#x2715;</button>
+
+    <style>
+    .pms-section{padding:48px 52px;border-bottom:1px solid #e8f0fb;overflow:hidden}
+    .pms-section:last-child{border-bottom:none}
+    .pms-row{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+    .pms-img-wrap{border-radius:14px;overflow:hidden;line-height:0;box-shadow:0 6px 24px rgba(0,59,113,.12)}
+    .pms-img-wrap img{width:100%;height:auto;display:block;object-fit:cover;min-height:200px;background:#e8f0fb}
+    .pms-vid-wrap{border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,59,113,.12);aspect-ratio:16/9;background:#000}
+    .pms-vid-wrap video,.pms-vid-wrap iframe{width:100%;height:100%;border:none;display:block}
+    .pms-section-tag{font-size:11px;font-weight:700;color:var(--azul-med);text-transform:uppercase;letter-spacing:.16em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+    .pms-section-tag::before{content:'';width:20px;height:2px;background:var(--azul-med);border-radius:1px}
+    .pms-title{font-family:var(--font-serif);font-size:clamp(18px,2.4vw,24px);font-weight:700;color:#003B71;line-height:1.3;margin-bottom:14px}
+    .pms-body{font-size:15px;color:var(--gris-txt);font-weight:300;line-height:1.85}
+    .pms-photos-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .pms-logos-wrap{margin-bottom:28px;border-radius:14px;overflow:hidden;line-height:0;border:1px solid #e8f0fb}
+    .pms-logos-wrap img{width:100%;height:auto;display:block;max-height:90px;object-fit:contain;background:#f8fbff;padding:12px}
+    @media(max-width:680px){
+      .pms-row{grid-template-columns:1fr}
+      .pms-photos-row{grid-template-columns:1fr 1fr}
+      .pms-section{padding:32px 20px}
+    }
+    </style>
+
+    <!-- BLOQUE 1: Texto izquierda · Imagen derecha -->
+    <div class="pms-section">
+      <div class="pms-row">
+        <div>
+          <div class="pms-section-tag">Programa de Mejora a la Seguridad</div>
+          <div class="pms-title">Introducci&#243;n al PMS</div>
+          <div class="pms-body"><p>El texto de esta secci&#243;n viene en la imagen adjunta. Agrega aqu&#237; descripciones complementarias si se requiere.</p></div>
+        </div>
+        <div class="pms-img-wrap">
+          <img src="img/pms-slide-1.jpg" alt="PMS Slide 1" onerror="this.style.minHeight='200px'">
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 1b: Video izquierda · Texto derecha -->
+    <div class="pms-section">
+      <div class="pms-row">
+        <div class="pms-vid-wrap">
+          <video controls preload="none" poster="img/pms-video-1-poster.jpg">
+            <source src="videos/pms-video-1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div>
+          <div class="pms-section-tag">Video</div>
+          <div class="pms-title">Presentaci&#243;n en video</div>
+          <div class="pms-body"><p>Descripci&#243;n del video de presentaci&#243;n del Programa de Mejora a la Seguridad.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 2: Logos arriba + tres fotos -->
+    <div class="pms-section">
+      <div class="pms-logos-wrap">
+        <img src="img/pms-logos-institucionales.png" alt="Logos institucionales" onerror="this.style.display='none'">
+      </div>
+      <div class="pms-photos-row">
+        <div class="pms-img-wrap"><img src="img/pms-foto-1.jpg" alt="Foto 1" onerror="this.style.minHeight='160px'"></div>
+        <div class="pms-img-wrap"><img src="img/pms-foto-2.jpg" alt="Foto 2" onerror="this.style.minHeight='160px'"></div>
+        <div class="pms-img-wrap"><img src="img/pms-foto-3.jpg" alt="Foto 3" onerror="this.style.minHeight='160px'"></div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 3: Texto izquierda · Imagen derecha -->
+    <div class="pms-section">
+      <div class="pms-row">
+        <div>
+          <div class="pms-section-tag">Resultados</div>
+          <div class="pms-title">Impacto y logros</div>
+          <div class="pms-body"><p>El texto de esta secci&#243;n viene en la imagen adjunta.</p></div>
+        </div>
+        <div class="pms-img-wrap">
+          <img src="img/pms-slide-2.jpg" alt="PMS Slide 2" onerror="this.style.minHeight='200px'">
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 3b: Video izquierda · Texto derecha (cierre) -->
+    <div class="pms-section">
+      <div class="pms-row">
+        <div class="pms-vid-wrap">
+          <video controls preload="none" poster="img/pms-video-2-poster.jpg">
+            <source src="videos/pms-video-2.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div>
+          <div class="pms-section-tag">Cierre</div>
+          <div class="pms-title">Conclusiones</div>
+          <div class="pms-body"><p>Reflexiones finales y proyecciones del Programa de Mejora a la Seguridad.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function openPmsModal(){
+  var m=document.getElementById('pms-modal-bg');
+  if(m){m.style.display='flex';document.body.style.overflow='hidden';}
+}
+function closePmsModal(){
+  var m=document.getElementById('pms-modal-bg');
+  if(m){m.style.display='none';document.body.style.overflow='';}
+  document.querySelectorAll('#pms-modal-box video').forEach(function(v){v.pause();});
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePmsModal();});
+</script>
 
 </body>
 </html>
