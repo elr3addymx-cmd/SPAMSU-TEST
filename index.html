@@ -161,11 +161,30 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 /* ═══════════════════════════════════════════
    TAB PANELS
 ═══════════════════════════════════════════ */
-.tab-panels-wrap{background:var(--blanco)}
+.tab-panels-wrap{background:transparent}
 /* Secciones de scroll: siempre visibles */
-.tab-panel{display:block;padding:52px 44px;border-bottom:2px solid var(--gris-borde)}
+.tab-panel{display:block;padding:0;border-bottom:2px solid var(--gris-borde);background:transparent}
 /* Paneles de pestaña: ocultos por defecto, se abren aparte */
-.tab-panel.panel-tab-only{display:none}
+.tab-panel:not(#panel-servicios){padding:52px 44px}
+.parallax-bg{padding:52px 44px;position:relative;background-attachment:fixed;background-size:cover;background-position:center;background-repeat:no-repeat}
+.parallax-bg::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:rgba(10,30,60,.30)}
+.parallax-bg > *{position:relative;z-index:1}
+.pb-1{background-image:url('img/bg-servicios.jpg')}
+.pb-2{background-image:url('img/bg-medio.jpg')}
+.pb-2::before{background:rgba(10,30,60,.30)}
+.pb-3{background-image:url('img/bg-reporte.jpg')}
+.pb-3::before{background:rgba(10,30,60,.30)}
+/* Títulos sobre el parallax en blanco */
+.pb-1 .sec-tag,.pb-1 .sec-title,
+.pb-2 .sec-tag,.pb-2 .sec-title,
+.pb-3 .sec-tag,.pb-3 .sec-title{color:#fff!important;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+/* Tarjetas srv con fondo semitransparente */
+.pb-1 .srv-card,.pb-2 .srv-card{background:rgba(255,255,255,.88)!important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+/* Reporte con fondo semitransparente */
+.pb-3 .rep-section-wrap{background:rgba(255,255,255,.92)!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+/* Senderos */
+.pb-2 .send-table{background:rgba(255,255,255,.88);border-radius:12px;overflow:hidden}
+@media(max-width:768px){.parallax-bg{background-attachment:scroll;padding:32px 20px}}
 .tab-panel.panel-tab-only.panel-open{display:block}
 /* Cuando un panel de pestaña está abierto, ocultar el contenido de scroll */
 body.tab-mode .tab-panel:not(.panel-tab-only){display:none}
@@ -322,6 +341,11 @@ body.tab-mode section.noticias-section{display:none}
 .srv-img{height:220px;position:relative;overflow:hidden}
 .srv-img [data-img]{height:220px;width:100%;position:absolute;inset:0}
 .srv-img [data-img] img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+[data-img="srv-pcivil"] img{object-position:50.7% 22.3%}
+[data-img="srv-bicipuma"] img{object-position:49.3% 36.8%}
+[data-img="srv-pumabus"] img{object-position:48.3% 29.1%}
+[data-img="srv-biciescuela"] img{object-position:50.4% 69.5%}
+[data-img="srv-brigada"] img{object-position:48.1% 25.5%}
 .srv-card:hover .srv-img [data-img] img{transform:scale(1.06)}
 /* Glassmorphism text overlay */
 .srv-body{
@@ -1867,6 +1891,7 @@ body.tab-mode section.noticias-section{display:none}
          SERVICIOS
     ╚══════════════════════════════╝ -->
     <div class="tab-panel" id="panel-servicios">
+      <div class="parallax-bg pb-1">
       <div class="sec-tag">Oferta institucional</div>
       <h2 class="sec-title">Servicios para la comunidad universitaria</h2>
 
@@ -1971,13 +1996,17 @@ body.tab-mode section.noticias-section{display:none}
             <span class="srv-cta">Ir al sitio &rarr;</span>
           </div>
         </a>
-      </div>
 
+      </div><!-- /srv-grid -->
+      </div><!-- /parallax-bg pb-1 -->
+
+      <!-- PARALLAX 2: Senderos + middle -->
+      <div class="parallax-bg pb-2" style="padding:30px 20px">
       <!-- Senderos Universitarios -->
       <div class="senderos-grid">
         <div>
-          <div class="sec-tag">Movilidad universitaria</div>
-          <h3 style="font-family:var(--font-serif);font-size:24px;font-weight:700;color:var(--azul);margin-bottom:18px">Senderos Universitarios</h3>
+          <div class="sec-tag" style="color:rgba(255,255,255,.8);font-size:13px">Movilidad universitaria</div>
+          <h3 style="font-family:var(--font-serif);font-size:32px;font-weight:700;color:#fff;margin-bottom:18px;text-shadow:0 2px 10px rgba(0,0,0,.3)">Senderos Universitarios</h3>
           <!-- Restored table -->
           <table class="send-table">
             <thead>
@@ -2016,13 +2045,21 @@ body.tab-mode section.noticias-section{display:none}
         </div>
       </div>
 
-      <!-- ╔══════════════════════════════╗
-           GENERA TU REPORTE EN UN MINUTO
-      ╚══════════════════════════════╝ -->
-      <div style="margin-top:48px;padding-top:44px;border-top:2px solid var(--gris-borde)">
+      </div><!-- /parallax-bg pb-2 -->
+
+      <!-- PARALLAX 3: Genera tu reporte -->
+      <div class="parallax-bg pb-3" style="padding:52px 44px">
+      <div style="max-width:1200px;margin:0 auto">
+
+      <!-- Header visible sobre el parallax -->
+      <div style="margin-bottom:36px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.7);margin-bottom:10px">— Plataforma digital SAVAR</div>
+        <h2 style="font-family:var(--font-serif);font-size:clamp(28px,4vw,46px);font-weight:700;color:#fff;margin-bottom:12px;text-shadow:0 2px 12px rgba(0,0,0,.3)">Genera tu reporte en un minuto</h2>
+        <p style="font-size:16px;color:rgba(255,255,255,.85);font-weight:300;max-width:560px;text-shadow:0 1px 6px rgba(0,0,0,.2)">Tu ayuda es importante para mejorar la seguridad y movilidad del campus universitario.</p>
+      </div>
         <style>
         /* ── REPORTE SECTION — redesign ── */
-        .rep-section-wrap{border-radius:18px;overflow:hidden;box-shadow:0 8px 40px rgba(0,59,113,.14);border:1px solid var(--gris-borde)}
+        .rep-section-wrap{border-radius:18px;overflow:hidden;box-shadow:0 8px 40px rgba(0,59,113,.2);border:1px solid rgba(255,255,255,.3);background:transparent}
 
         /* Banner header */
         .rep-banner{
@@ -2055,7 +2092,8 @@ body.tab-mode section.noticias-section{display:none}
 
         /* Location warning bar */
         .rep-loc-bar{
-          background:rgba(169,198,232,.10);border-bottom:1px solid var(--gris-borde);
+          background:rgba(255,255,255,.80);border-bottom:1px solid rgba(255,255,255,.3);
+          backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
           padding:13px 40px;display:flex;align-items:center;gap:10px;
         }
         .rep-loc-bar svg{width:18px;height:18px;stroke:var(--azul-med);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
@@ -2071,7 +2109,8 @@ body.tab-mode section.noticias-section{display:none}
         /* Two-column body */
         .rep-body{
           display:grid;grid-template-columns:1fr 1fr;
-          background:var(--blanco);
+          background:rgba(255,255,255,.88);
+          backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
         }
         @media(max-width:860px){.rep-body{grid-template-columns:1fr}}
 
@@ -2157,15 +2196,6 @@ body.tab-mode section.noticias-section{display:none}
         </style>
 
         <div class="rep-section-wrap">
-
-          <!-- Banner header — matches reference image style -->
-          <div class="rep-banner">
-            <div class="rep-banner-inner">
-              <div class="rep-banner-tag">Plataforma digital SAVAR</div>
-              <h3>Genera tu reporte en un minuto</h3>
-              <p>Tu ayuda es importante para mejorar la seguridad y movilidad del campus universitario.</p>
-            </div>
-          </div>
 
           <!-- Location info bar -->
           <div class="rep-loc-bar">
@@ -2284,6 +2314,8 @@ body.tab-mode section.noticias-section{display:none}
           document.getElementById('rep-fname').textContent='Ningun archivo';
         }
         </script>
+      </div><!-- /max-width wrapper -->
+      </div><!-- /parallax-bg pb-3 -->
       </div>
     </div>
 
