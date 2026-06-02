@@ -30,7 +30,7 @@
   --sh:         0 4px 24px rgba(0,59,113,.10);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:18px}
+html{scroll-behavior:smooth;font-size:clamp(14px,1.1vw,18px)}
 body{font-family:var(--font-sans);background:var(--fondo);color:var(--azul);overflow-x:hidden;line-height:1.6}
 a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-style:none}button{font-family:var(--font-sans);cursor:pointer;border:none}
 
@@ -106,14 +106,16 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 /* ── MAIN ── */
 .main-content{margin-left:var(--sidebar-w);min-height:100vh;display:flex;flex-direction:column;position:relative}
 
-/* ── TOPBAR — Floating overlay (sin barra blanca) ── */
+/* ── TOPBAR — Fixed overlay visible sobre video y durante scroll ── */
 .top-bar{
-  position:absolute;top:0;right:0;z-index:91;
+  position:fixed;top:0;right:0;z-index:95;
   background:transparent;
   height:54px;display:flex;align-items:center;justify-content:flex-end;
   padding:0 28px;gap:12px;
   width:calc(100% - var(--sidebar-w));
+  pointer-events:none; /* el wrapper no bloquea clics */
 }
+.top-bar > *{ pointer-events:auto; }
 /* Buttons get frosted glass so they're readable over any hero image */
 .btn-que{
   display:inline-flex;align-items:center;gap:7px;
@@ -140,28 +142,103 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .btn-emerg svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ═══════════════════════════════════════════
-   HERO — full-width, sin barra blanca arriba
+   HERO — Video parallax fijo (las secciones
+   suben encima conforme se hace scroll)
 ═══════════════════════════════════════════ */
-.hero-wrap{position:relative;width:100%;height:400px;overflow:hidden;margin-top:0}
-.hero-wrap [data-img]{position:absolute;inset:0;width:100%;height:100%}
-.hero-wrap [data-img] img{object-fit:cover}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,30,60,.28) 0%,rgba(0,30,60,.08) 60%,transparent 100%);z-index:1;pointer-events:none}
 
-/* Hero pattern — identical to reference image (triangles + circles) */
+/* El video ocupa el viewport solo en el hero inicial */
+.hero-video-bg{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+}
+.hero-video-bg video{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  min-width:100%;min-height:100%;
+  width:auto;height:auto;
+  object-fit:cover;
+}
+/* Overlay sobre el video */
+.hero-video-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to top,  rgba(0,15,40,.85) 0%,  rgba(0,15,40,.30) 40%, transparent 70%),
+    linear-gradient(to right, rgba(0,15,40,.40) 0%,  transparent 60%);
+  pointer-events:none;
+}
+
+/* Barra "Quiénes somos" — estilo IBERO: horizontal, centrada, borde inferior */
+.hero-qs-tab{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  z-index:4;
+  width:100%;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  background:var(--azul);
+  color:#fff;
+  font-family:var(--font-sans);
+  font-size:13px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  padding:16px 24px;
+  cursor:pointer;
+  border:none;
+  border-top:3px solid var(--azul-claro);
+  box-shadow:0 -4px 24px rgba(0,20,50,.38);
+  transition:background var(--t), border-color var(--t);
+  pointer-events:auto;
+  animation:hqsTabIn .5s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay:.4s;
+}
+.hero-qs-tab:hover{
+  background:#002a54;
+  border-top-color:#fff;
+}
+.hero-qs-tab .hqtab-chevron{
+  display:flex;align-items:center;
+  animation:chevronBounce 1.8s ease-in-out infinite;
+  animation-delay:1.2s;
+}
+.hero-qs-tab .hqtab-chevron svg{
+  width:16px;height:16px;
+  stroke:#fff;fill:none;
+  stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform var(--t);
+}
+.hero-qs-tab:hover .hqtab-chevron svg{transform:translateY(3px)}
+@keyframes chevronBounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(4px)}
+}
+@keyframes hqsTabIn{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* El contenido de tab-panels sube encima del video */
+.tab-panels-wrap{
+  position:relative;
+  z-index:2;
+  background:var(--fondo); /* tapa el video al subir */
+}
+
+/* Hero pattern */
 .hero-pattern{
   position:relative;z-index:2;
   height:48px;overflow:hidden;
   background:var(--blanco);
   line-height:0;
 }
-.hero-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:8px}
-.h-dot{width:9px;height:9px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:transparent;cursor:pointer;transition:all var(--t);padding:0}
-.h-dot.active{background:var(--azul-claro);border-color:var(--azul-claro)}
+.hero-dots{display:none} /* ya no hay dots de slider */
 
 /* ═══════════════════════════════════════════
    TAB PANELS
 ═══════════════════════════════════════════ */
-.tab-panels-wrap{background:transparent}
+.tab-panels-wrap-inner{background:transparent}
 /* Secciones de scroll: siempre visibles */
 .tab-panel{display:block;padding:0;border-bottom:2px solid var(--gris-borde);background:transparent}
 /* Paneles de pestaña: ocultos por defecto, se abren aparte */
@@ -169,6 +246,105 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .parallax-bg{padding:52px 44px;position:relative;background-attachment:fixed;background-size:cover;background-position:center;background-repeat:no-repeat}
 .parallax-bg::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:rgba(10,30,60,.30)}
 .parallax-bg > *{position:relative;z-index:1}
+/* ── Servicios: fondo claro institucional ── */
+.srv-institutional-bg{
+  padding:52px 44px;
+  background:linear-gradient(160deg,#f0f6ff 0%,#e8f1fb 45%,#ddeaf8 100%);
+  position:relative;
+  overflow:hidden;
+  border-bottom:2px solid var(--gris-borde);
+}
+.srv-institutional-bg::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 55% 70% at 92% 10%,rgba(122,174,212,.20) 0%,transparent 55%),
+    radial-gradient(ellipse 35% 45% at 5% 95%,rgba(169,198,232,.18) 0%,transparent 50%);
+  pointer-events:none;
+}
+.srv-institutional-bg::after{
+  content:'';position:absolute;
+  top:-100px;right:-100px;width:340px;height:340px;
+  border-radius:50%;
+  border:2px solid rgba(0,59,113,.07);
+  pointer-events:none;
+}
+.srv-institutional-bg > *{position:relative;z-index:1}
+/* Títulos sobre fondo claro — usan los colores institucionales normales */
+.srv-institutional-bg .sec-tag{color:var(--azul-claro)!important}
+.srv-institutional-bg .sec-tag::before{background:var(--azul-claro)!important}
+.srv-institutional-bg .sec-title{color:var(--azul)!important}
+/* Tarjetas sobre fondo claro */
+.srv-institutional-bg .srv-card{
+  background:#ffffff!important;
+  border-color:rgba(169,198,232,.5)!important;
+  box-shadow:0 2px 16px rgba(0,59,113,.07)!important;
+}
+/* Fondo senderos: blanco con acento azul muy claro */
+.srv-senderos-bg{
+  background:linear-gradient(160deg,#ffffff 0%,#f4f8ff 55%,#eaf1fb 100%);
+  position:relative;overflow:hidden;
+  border-top:2px solid var(--gris-borde);
+  border-bottom:2px solid var(--gris-borde);
+}
+.srv-senderos-bg::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 65% 55% at 82% 25%,rgba(122,174,212,.15) 0%,transparent 60%);
+  pointer-events:none;
+}
+.srv-senderos-bg > *{position:relative;z-index:1}
+/* Fondo reporte: azul claro institucional con leve profundidad */
+.srv-reporte-bg{
+  background:linear-gradient(160deg,#e8f1fb 0%,#dde9f8 40%,#cfdff5 100%);
+  position:relative;overflow:hidden;
+  border-top:2px solid var(--gris-borde);
+}
+.srv-reporte-bg::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 60% at 12% 20%,rgba(0,59,113,.06) 0%,transparent 55%);
+  pointer-events:none;
+}
+.srv-reporte-bg > *{position:relative;z-index:1}
+
+/* ── Separación visual entre secciones parallax (imágenes) en panel-estructura ── */
+/* Cada sección tiene su propio espacio generoso */
+#panel-estructura .parallax-bg{
+  padding-top:80px!important;
+  padding-bottom:80px!important;
+}
+/* Separador blanco entre imágenes: banda neutra que las distingue visualmente */
+#panel-estructura .parallax-bg + .parallax-bg{
+  margin-top:0;
+  border-top:none;
+  position:relative;
+}
+#panel-estructura .parallax-bg + .parallax-bg::after{
+  display:none; /* el separador se maneja via wrapper */
+}
+/* Insertar banda separadora blanca entre imágenes parallax usando un pseudo-elemento en el padre */
+#panel-estructura{
+  --sep-height:48px;
+}
+/* Envolver cada parallax en un contenedor que lleva el separador debajo */
+.parallax-section-sep{
+  height:var(--sep-height,48px);
+  background:var(--fondo);
+  border-top:2px solid var(--gris-borde);
+  border-bottom:2px solid var(--gris-borde);
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  gap:10px;
+}
+.parallax-section-sep::before,
+.parallax-section-sep::after{
+  content:'';width:40px;height:2px;
+  background:var(--gris-borde);border-radius:1px;
+}
+.parallax-section-sep span{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--azul-claro);display:block;
+  opacity:.6;
+}
+
 .pb-1{background-image:url('img/bg-servicios.jpg')}
 .pb-2{background-image:url('img/bg-medio.jpg')}
 .pb-2::before{background:rgba(10,30,60,.30)}
@@ -178,6 +354,8 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .pb-1 .sec-tag,.pb-1 .sec-title,
 .pb-2 .sec-tag,.pb-2 .sec-title,
 .pb-3 .sec-tag,.pb-3 .sec-title{color:#fff!important;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+/* Overlay más oscuro para parallax en panel-estructura (texto largo sobre foto) */
+#panel-estructura .parallax-bg::before{background:rgba(5,20,45,.58) !important}
 /* Tarjetas srv con fondo semitransparente */
 .pb-1 .srv-card,.pb-2 .srv-card{background:rgba(255,255,255,.88)!important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 /* Reporte con fondo semitransparente */
@@ -185,6 +363,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 /* Senderos */
 .pb-2 .send-table{background:rgba(255,255,255,.88);border-radius:12px;overflow:hidden}
 @media(max-width:768px){.parallax-bg{background-attachment:scroll;padding:32px 20px}}
+.tab-panel.panel-tab-only{display:none}
 .tab-panel.panel-tab-only.panel-open{display:block}
 /* Cuando un panel de pestaña está abierto, ocultar el contenido de scroll */
 body.tab-mode .tab-panel:not(.panel-tab-only){display:none}
@@ -215,6 +394,36 @@ body.tab-mode section.noticias-section{display:none}
 .itab.active::after{transform:scaleX(1);background:var(--azul-claro)}
 .itab-pane{display:none;max-width:720px}.itab-pane.active{display:block;animation:fadeIn .3s ease}
 .itab-pane p{font-size:16px;color:#2D3748;font-weight:400;line-height:1.9;margin-bottom:18px;font-family:var(--font-sans);text-align:justify;max-width:680px}
+
+/* ── Wrapper altura fija para panes Acerca / Misión / Visión ──
+   Evita que al cambiar pestaña se cuele el contenido de debajo.
+   La altura está calculada para el pane más largo (Acerca, 4 párrafos).
+   Los panes más cortos quedan con espacio en blanco al fondo — limpio. */
+.info-text-wrap{
+  position:relative;
+  height:320px;          /* altura del pane más largo + padding natural */
+  overflow:hidden;
+  margin-bottom:0;
+}
+/* Dentro del wrapper los panes ocupan la posición absoluta para no empujar */
+.info-text-wrap .itab-pane{
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  max-width:720px;
+  margin:0;padding:0;
+}
+@media(max-width:900px){
+  .info-text-wrap{height:380px}
+}
+@media(max-width:640px){
+  .info-text-wrap{height:420px}
+  .itab-pane p{font-size:15px;line-height:1.8}
+}
+@media(max-width:480px){
+  .info-text-wrap{height:480px}
+  .itab-pane p{font-size:14px}
+}
 /* Video tab panes need full width — override max-width */
 #vp-comunidad,#vp-estadio,#vp-protoc,#vp-proyectos{max-width:none!important;width:100%}
 
@@ -799,72 +1008,434 @@ body.tab-mode section.noticias-section{display:none}
 }
 
 /* ═══════════════════════════════════════════
-   MOBILE TOPBAR
+   MOBILE TOPBAR (visible solo en ≤900px)
 ═══════════════════════════════════════════ */
-.mobile-topbar{display:none;position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--gris-borde);height:58px;padding:0 16px;align-items:center;justify-content:space-between;gap:12px}
-.mob-hamburger{width:42px;height:42px;border-radius:9px;background:none;border:1px solid var(--gris-borde);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;flex-shrink:0}
+.mobile-topbar{
+  display:none;position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--gris-borde);
+  height:58px;padding:0 16px;
+  align-items:center;justify-content:space-between;gap:12px;
+}
+.mob-hamburger{
+  width:42px;height:42px;border-radius:9px;background:none;
+  border:1px solid var(--gris-borde);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;cursor:pointer;flex-shrink:0;
+}
 .mob-hamburger span{display:block;width:18px;height:2px;background:var(--azul);border-radius:2px;transition:all .25s ease}
 .mob-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .mob-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
 .mob-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mob-logo{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--azul)}
-.mob-emerg-btn{background:var(--azul-claro);color:var(--azul);border:none;font-family:var(--font-sans);font-size:13.5px;font-weight:700;padding:8px 16px;border-radius:9px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.mob-logo{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--azul);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.mob-emerg-btn{
+  background:var(--azul-claro);color:var(--azul);border:none;
+  font-family:var(--font-sans);font-size:13px;font-weight:700;
+  padding:8px 14px;border-radius:9px;cursor:pointer;
+  display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;
+}
 .mob-emerg-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,30,60,.45);z-index:98;backdrop-filter:blur(2px)}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,30,60,.45);z-index:199;backdrop-filter:blur(2px)}
 .sidebar-backdrop.open{display:block}
 
 /* ═══════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE SYSTEM — escala sin romper
+   Filosofía: el diseño se REDUCE, no se REORGANIZA
+   
+   1400px+  → pantalla grande / TV
+   1200px   → desktop / laptop
+    900px   → tablet landscape
+    640px   → tablet portrait / móvil grande
+    480px   → móvil estándar
 ═══════════════════════════════════════════ */
-@media(max-width:1100px){
+
+/* ── Base: font-size fluido — definido en el selector html global ── */
+
+/* ── 1200px ── */
+@media(max-width:1200px){
   :root{--sidebar-w:152px}
-  .emerg-grid{grid-template-columns:repeat(2,1fr)}
-  .footer-inner{grid-template-columns:180px 1fr 1fr 1fr;gap:28px}
-  .accesos-grid{grid-template-columns:repeat(2,1fr)}
-  .srv-grid{grid-template-columns:repeat(2,1fr)}
-  .dir-btns-grid{grid-template-columns:1fr}
-  .dir-card-detail{grid-template-columns:1fr}
-  .dir-units-grid{grid-template-columns:repeat(2,1fr)}
+  .sb-logo [data-img]{width:130px;height:96px}
+  .sb-nav-img{width:46px;height:46px}
+  .sb-label{font-size:11.5px}
+  .sb-item{padding:14px 6px;gap:6px}
+  .sos-img-wrap{width:78px;height:78px}
+  .footer-inner{grid-template-columns:160px 1fr 1fr 1fr;gap:24px}
+  .tab-panel:not(#panel-servicios){padding:48px 36px}
 }
+
+/* ── 900px: sidebar se oculta, topbar móvil aparece ── */
 @media(max-width:900px){
-  .sidebar{transform:translateX(-100%);transition:transform .3s ease;z-index:99;box-shadow:none;padding-top:58px}
-  .sidebar.mobile-open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.15)}
+  :root{--sidebar-w:0px}
+
+  /* Sidebar → drawer sin afectar el grid */
+  .sidebar{
+    width:210px;
+    transform:translateX(-100%);
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+    z-index:200;
+    box-shadow:none;
+    padding-top:58px;
+  }
+  .sidebar.mobile-open{
+    transform:translateX(0);
+    box-shadow:4px 0 32px rgba(0,0,0,.22);
+  }
   .page-wrap{grid-template-columns:1fr}
   .main-content{margin-left:0}
   .mobile-topbar{display:flex}
   .top-bar{display:none}
-  /* On mobile the top-bar (overlay) hides, mobile-topbar is sticky */
-  .tab-panel,.nov-section,.emerg-section,.video-section,.social-section,.accesos-section{padding:32px 20px}
-  .video-inner{grid-template-columns:1fr}
+
+  /* Hero */
+  .hero-video-bg{height:80vh;min-height:320px}
+
+  /* Secciones */
+  .tab-panel:not(#panel-servicios){padding:40px 28px}
+  .parallax-bg{padding:40px 28px;background-attachment:scroll}
+  .nov-section,.emerg-section,.video-section,.social-section,
+  .accesos-section,.noticias-section{padding:36px 28px}
+  .dir-showcase{padding:36px 28px}
+
+  /* Grids: 3→2 columnas */
+  .srv-grid{grid-template-columns:repeat(2,1fr)}
+  .accesos-grid{grid-template-columns:repeat(3,1fr)}
+  .emerg-grid{grid-template-columns:repeat(2,1fr)}
   .footer-inner{grid-template-columns:1fr 1fr;gap:24px}
+  .dir-units-grid{grid-template-columns:repeat(2,1fr)}
+  .vid-grid{grid-template-columns:repeat(2,1fr)}
+  .curso-grid{grid-template-columns:repeat(2,1fr)}
   .nov-grid{grid-template-columns:repeat(2,1fr)}
   .nov-grid .nov-card:first-child{grid-column:span 2;flex-direction:column}
   .nov-grid .nov-card:first-child .nov-img-wrap{height:200px;flex:none}
   .senderos-grid{grid-template-columns:1fr}
-  .social-grid{grid-template-columns:1fr}
   .dec-road-wrap{grid-template-columns:1fr}
+  .social-grid{grid-template-columns:1fr}
+  .video-inner{grid-template-columns:1fr}
+  .dir-btns-grid{grid-template-columns:1fr 1fr}
+  .dir-card-detail{grid-template-columns:1fr}
+  .dir-showcase-body{grid-template-columns:1fr;gap:24px}
+  .dir-showcase-logo-wrap{max-width:180px;margin:0 auto}
+  .dir-showcase-cta{align-self:flex-start}
+  .map-wrap{height:360px}
+  .mapa-final{height:320px}
+}
+
+/* ── 640px: móvil — compacto pero reconocible ── */
+@media(max-width:640px){
+  /* Hero */
+  .hero-video-bg{height:72vh;min-height:280px}
+  .hero-qs-tab{font-size:12px;padding:14px 18px;letter-spacing:.13em}
+
+  /* Padding secciones */
+  .tab-panel:not(#panel-servicios){padding:28px 16px}
+  .parallax-bg{padding:28px 16px}
+  .nov-section,.emerg-section,.video-section,.social-section,
+  .accesos-section,.noticias-section{padding:26px 16px}
+  .dir-showcase{padding:28px 16px}
+
+  /* Grids — mantener 2 col donde sea posible */
+  .srv-grid{grid-template-columns:repeat(2,1fr)}
+  .accesos-grid{grid-template-columns:repeat(2,1fr)}
+  .emerg-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:16px}
+  .dir-units-grid{grid-template-columns:repeat(2,1fr)}
   .vid-grid{grid-template-columns:repeat(2,1fr)}
   .curso-grid{grid-template-columns:repeat(2,1fr)}
-  .map-wrap{height:380px}
-  .hero-wrap{height:280px}
-  .mapa-final{height:340px}
-}
-@media(max-width:640px){
-  html{font-size:16px}
   .nov-grid{grid-template-columns:1fr}
   .nov-grid .nov-card:first-child{grid-column:span 1;flex-direction:column}
-  .accesos-grid{grid-template-columns:repeat(2,1fr)}
-  .srv-grid{grid-template-columns:1fr}
-  .footer-inner{grid-template-columns:1fr}
-  .dir-units-grid{grid-template-columns:1fr}
-  .vid-grid{grid-template-columns:1fr}
-  .curso-grid{grid-template-columns:1fr}
-  .info-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .dir-btns-grid{grid-template-columns:repeat(2,1fr)}
+
+  /* Tabs scrollables */
+  .info-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
   .nov-tab-bar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
-  .hero-wrap{height:220px}
+  .itab{font-size:14px;padding:10px 14px}
+
+  .map-wrap{height:300px}
+  .mapa-final{height:280px}
   .footer-bg-img{display:none}
   .dl-item{flex-wrap:wrap;gap:10px}
   .dl-btn{width:100%;justify-content:center}
+}
+
+/* ── 480px: móvil estándar — 1 col solo donde sea obligatorio ── */
+@media(max-width:480px){
+  .hero-video-bg{height:65vh;min-height:260px}
+  .hero-qs-tab{font-size:11.5px;padding:13px 14px;letter-spacing:.11em}
+
+  .tab-panel:not(#panel-servicios){padding:22px 12px}
+  .parallax-bg{padding:22px 12px}
+  .nov-section,.emerg-section,.video-section,.social-section,
+  .accesos-section,.noticias-section{padding:20px 12px}
+  .dir-showcase{padding:22px 12px}
+
+  /* Solo srv-grid y vid-grid colapsan a 1 col en pantallas muy pequeñas */
+  .srv-grid{grid-template-columns:1fr}
+  .vid-grid{grid-template-columns:1fr}
+  .curso-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr}
+  .dir-units-grid{grid-template-columns:repeat(2,1fr)}
+  .dir-btns-grid{grid-template-columns:1fr}
+
+  .emerg-card{padding:14px 8px}
+  .emerg-badge{width:44px;height:44px}
+  .map-wrap{height:260px}
+  .mapa-final{height:240px}
+}
+
+/* ═══════════════════════════════════════════
+   FONDOS DINÁMICOS POR SECCIÓN
+   Alternancia elegante con paleta institucional
+═══════════════════════════════════════════ */
+
+/* ── Tab-panels-wrap: fondo base limpio ── */
+.tab-panels-wrap{
+  background:#F4F7FB;
+  position:relative;
+  z-index:2;
+}
+
+/* ── panel-informacion: blanco con textura geométrica sutil ── */
+#panel-informacion{
+  background:#fff;
+  position:relative;
+  overflow:hidden;
+}
+#panel-informacion::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 92% 10%, rgba(169,198,232,.18) 0%, transparent 42%),
+    radial-gradient(circle at 5% 85%, rgba(0,59,113,.07) 0%, transparent 38%);
+  pointer-events:none;
+  z-index:0;
+}
+#panel-informacion > *{ position:relative; z-index:1; }
+
+/* ── panel-estructura: fondo neutro, las subsecciones tienen sus propios fondos ── */
+#panel-estructura{
+  background:transparent;
+}
+
+/* ─── Tipografía sobre parallax en sección Estructura ─── */
+.est-tag{
+  font-size:11px;font-weight:700;color:rgba(169,198,232,.9);
+  text-transform:uppercase;letter-spacing:.18em;
+  display:flex;align-items:center;gap:9px;
+  margin-bottom:12px;
+}
+.est-tag::before{content:'';width:20px;height:2px;background:rgba(169,198,232,.7);border-radius:1px;display:block}
+.est-title{
+  font-family:var(--font-serif);
+  font-size:clamp(22px,2.6vw,32px);
+  font-weight:700;color:#fff;
+  line-height:1.22;margin-bottom:20px;
+  text-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+.est-desc{
+  font-size:16px;color:rgba(255,255,255,.85);
+  line-height:1.85;font-weight:300;
+  text-align:justify;margin-bottom:28px;
+}
+.est-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  border:1.5px solid rgba(255,255,255,.35);
+  font-size:15px;font-weight:600;
+  padding:12px 26px;border-radius:10px;
+  transition:all var(--t);
+  backdrop-filter:blur(6px);
+}
+.est-cta:hover{background:rgba(255,255,255,.26);border-color:rgba(255,255,255,.6)}
+.est-cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t)}
+.est-cta:hover svg{transform:translateX(3px)}
+
+/* Botón puntitos sobre fondo oscuro */
+.dir-dots-btn-light{
+  border-color:rgba(255,255,255,.3) !important;
+  background:rgba(255,255,255,.08) !important;
+}
+.dir-dots-btn-light:hover{
+  border-color:rgba(255,255,255,.6) !important;
+  background:rgba(255,255,255,.18) !important;
+}
+
+/* ── video-section: degradado azul institucional profundo ── */
+.video-section{
+  background:linear-gradient(135deg,#003B71 0%,#02527F 50%,#003B71 100%) !important;
+  border-top:none !important;
+  position:relative;
+  overflow:hidden;
+}
+.video-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(ellipse at 80% 50%, rgba(122,174,212,.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 80%, rgba(169,198,232,.10) 0%, transparent 45%);
+  pointer-events:none;
+}
+/* Textos del video-section en blanco */
+.video-section .sec-tag{color:rgba(169,198,232,.85) !important;}
+.video-section .sec-tag::before{background:rgba(169,198,232,.6) !important;}
+.video-section .sec-title{color:#fff !important;}
+.video-section p{color:rgba(255,255,255,.78) !important;}
+.video-section .video-quote{color:#A9C6E8 !important; border-left-color:rgba(169,198,232,.6) !important;}
+.video-section .video-speaker{color:rgba(255,255,255,.55) !important;}
+.video-section .video-speaker *{color:rgba(255,255,255,.4) !important;}
+
+/* ── noticias-section: blanco con línea dorada / acento ── */
+.noticias-section{
+  background:#fff !important;
+  border-top:none !important;
+  position:relative;
+  overflow:hidden;
+}
+.noticias-section::before{
+  content:'';
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--azul),var(--azul-claro),var(--azul));
+  opacity:.35;
+}
+.noticias-section::after{
+  content:'';
+  position:absolute;
+  top:-60px; left:-60px;
+  width:320px; height:320px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(0,59,113,.05) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+/* ── nov-section: fondo fondo institucional suave con patrón ── */
+.nov-section{
+  background:linear-gradient(180deg,#F4F7FB 0%,#EBF2FA 100%) !important;
+  border-top:none !important;
+  position:relative;
+  overflow:hidden;
+}
+.nov-section::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:4px;
+  background:linear-gradient(90deg, transparent, var(--azul-claro), var(--azul), var(--azul-claro), transparent);
+  opacity:.5;
+}
+/* Diamantes geométricos decorativos */
+.nov-section::after{
+  content:'';
+  position:absolute;
+  right:-80px; bottom:-80px;
+  width:400px; height:400px;
+  background:
+    linear-gradient(45deg, transparent 49%, rgba(122,174,212,.08) 49%, rgba(122,174,212,.08) 51%, transparent 51%),
+    linear-gradient(-45deg, transparent 49%, rgba(122,174,212,.08) 49%, rgba(122,174,212,.08) 51%, transparent 51%);
+  background-size:60px 60px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── emerg-section: blanco con acento rojo-alarma institucional ── */
+.emerg-section{
+  background:#fff !important;
+  border-top:none !important;
+  position:relative;
+  overflow:hidden;
+}
+.emerg-section::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:4px;
+  background:linear-gradient(90deg,#C62828,#E65100,#F9A825,#E65100,#C62828);
+  opacity:.7;
+}
+.emerg-section::after{
+  content:'';
+  position:absolute;
+  top:-100px; right:-100px;
+  width:350px; height:350px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(230,81,0,.05) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+/* ── social-section: azul oscuro con gradiente dinámico ── */
+.social-section{
+  background:linear-gradient(135deg,#01253F 0%,#003B71 60%,#01314F 100%) !important;
+  border-top:none !important;
+  position:relative;
+  overflow:hidden;
+}
+.social-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(ellipse at 15% 50%, rgba(122,174,212,.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 20%, rgba(169,198,232,.08) 0%, transparent 45%);
+  pointer-events:none;
+}
+/* Hexágonos decorativos */
+.social-section::after{
+  content:'';
+  position:absolute;
+  left:-40px; bottom:-40px;
+  width:260px; height:260px;
+  border:1.5px solid rgba(169,198,232,.10);
+  border-radius:50%;
+  pointer-events:none;
+}
+.social-section .sec-tag{color:rgba(169,198,232,.8) !important;}
+.social-section .sec-tag::before{background:rgba(169,198,232,.5) !important;}
+.social-section .sec-title{color:#fff !important;}
+
+/* ── accesos-section: fondo claro con patrón de puntos ── */
+.accesos-section{
+  background:#F4F7FB !important;
+  border-top:none !important;
+  position:relative;
+  overflow:hidden;
+}
+.accesos-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image: radial-gradient(circle, rgba(0,59,113,.09) 1px, transparent 1px);
+  background-size:28px 28px;
+  pointer-events:none;
+  z-index:0;
+}
+.accesos-section::after{
+  content:'';
+  position:absolute;
+  top:-80px; left:50%;
+  transform:translateX(-50%);
+  width:600px; height:200px;
+  background:radial-gradient(ellipse, rgba(122,174,212,.12) 0%, transparent 70%);
+  pointer-events:none;
+  z-index:0;
+}
+.accesos-section > *{ position:relative; z-index:1; }
+
+/* ── mapa-ubicacion: azul medio con borde superior doble ── */
+#mapa-ubicacion{
+  background:linear-gradient(180deg,#EDF3FB,#fff) !important;
+  border-top:none !important;
+  position:relative;
+}
+#mapa-ubicacion::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:5px;
+  background:linear-gradient(90deg, var(--azul) 0%, var(--azul-claro) 50%, var(--azul) 100%);
+  z-index:1;
 }
 </style>
 </head>
@@ -940,123 +1511,35 @@ body.tab-mode section.noticias-section{display:none}
     </button>
   </div>
 
-  <!-- Hero -->
-  <div class="hero-wrap" id="heroWrap">
-    <!-- Slide 1 — Video local (carpeta videos/) -->
-    <div class="hero-slide" id="hero-slide-1" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;overflow:hidden;background:#000;pointer-events:none">
-      <video id="heroLocalVideo" muted playsinline loop preload="auto"
-        style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;pointer-events:none">
-        <source src="videos/hero-video.mp4" type="video/mp4">
-      </video>
-    </div>
-    <!-- Slide 2 — Imagen -->
-    <div class="hero-slide" id="hero-slide-2" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;pointer-events:none">
-      <div data-img="hero-slide-2" data-alt="Ciudad Universitaria UNAM" class="dark-ph" style="width:100%;height:100%"></div>
-    </div>
-    <!-- Slide 3 — Imagen → clic va al Decálogo -->
-    <div class="hero-slide" id="hero-slide-3"
-      onclick="irAlDecalogo()"
-      style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;cursor:pointer;overflow:hidden;pointer-events:none">
-      <div data-img="hero-slide-3" data-alt="Dec&#225;logo SPAMSU" class="dark-ph" style="width:100%;height:100%"></div>
-      <!-- Indicador visual al hacer hover -->
-      <div style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
-                  display:flex;align-items:center;gap:10px;
-                  background:rgba(0,59,113,.75);backdrop-filter:blur(6px);
-                  border:1px solid rgba(169,198,232,.35);
-                  border-radius:30px;padding:10px 22px;
-                  color:#fff;font-family:var(--font-sans);font-size:14px;font-weight:600;
-                  pointer-events:none;letter-spacing:.04em;white-space:nowrap;
-                  opacity:0;transition:opacity .3s ease" class="slide3-hint">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A9C6E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Ver Dec&#225;logo SPAMSU
-      </div>
-    </div>
-    <style>
-    #hero-slide-3:hover .slide3-hint{opacity:1}
-    </style>
-    <!-- Slide 4 — Imagen -->
-    <div class="hero-slide" id="hero-slide-4" onclick="irAPlanes()" style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .7s ease;opacity:0;z-index:1;pointer-events:none;cursor:pointer">
-      <div data-img="hero-slide-4" data-alt="Planes y Programas SPAMSU" class="dark-ph" style="width:100%;height:100%"></div>
-    </div>
-    <div class="hero-overlay" style="z-index:2;pointer-events:none"></div>
-    <div class="hero-dots" style="z-index:3">
-      <button class="h-dot active" onclick="heroSlide(0)"></button>
-      <button class="h-dot" onclick="heroSlide(1)"></button>
-      <button class="h-dot" onclick="heroSlide(2)"></button>
-      <button class="h-dot" onclick="heroSlide(3)"></button>
-    </div>
+  <!-- ══ VIDEO PARALLAX HERO ══
+       El video queda sticky al top; las secciones suben encima al hacer scroll -->
+  <div class="hero-video-bg" id="heroVideoBg">
+    <video id="heroLocalVideo" muted playsinline preload="auto" autoplay>
+      <source src="videos/hero-video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+    <!-- Barra "Quiénes somos" — estilo IBERO, horizontal al fondo del video -->
+    <button class="hero-qs-tab" onclick="document.getElementById('panel-informacion').scrollIntoView({behavior:'smooth',block:'start'})">
+      Quiénes somos
+      <span class="hqtab-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </button>
   </div>
+
+  <!-- TAB PANELS -->
   <script>
-  /* ════ HERO SLIDER ════ */
-  var _heroIdx    = 0;
-  var _heroTimer  = null;
-  var _heroSlides = ['hero-slide-1','hero-slide-2','hero-slide-3','hero-slide-4'];
-  var _heroDots   = null;
-  var _ytPlayer   = null;   /* kept for compatibility */
-  var _ytReady    = false;
-
-  /* ── Avanzar al slide n ── */
-  function heroSlide(n){
-    var prev = _heroIdx;
-    _heroIdx = n;
-
-    /* Ocultar / mostrar todos los slides + gestionar pointer-events */
-    _heroSlides.forEach(function(id,i){
-      var el = document.getElementById(id);
-      if(!el) return;
-      var active = i === n;
-      el.style.opacity = active ? '1' : '0';
-      /* Solo el slide activo recibe clics */
-      el.style.pointerEvents = active ? 'auto' : 'none';
-    });
-
-    if(!_heroDots) _heroDots = document.querySelectorAll('.h-dot');
-    _heroDots.forEach(function(d,i){ d.classList.toggle('active', i === n); });
-
-    clearTimeout(_heroTimer);
-    _heroTimer = null;
-
+  /* ════ HERO VIDEO — reproduce una vez, luego loop silencioso ════ */
+  (function(){
     var lv = document.getElementById('heroLocalVideo');
-    if(n === 0 && lv){
-      /* Slide de video local: reproducir, avanzar al terminar */
-      lv.currentTime = 0;
+    if(!lv) return;
+    /* Al terminar la primera reproducción → loop suave */
+    lv.addEventListener('ended', function(){
+      lv.loop = true;
       lv.play().catch(function(){});
-      lv.onended = function(){ heroSlide((_heroIdx + 1) % _heroSlides.length); };
-    } else {
-      /* Pausar video local si estaba reproduciéndose */
-      if(lv && !lv.paused){ lv.pause(); }
-      /* Imágenes: avanzar tras 5 s */
-      _heroTimer = setTimeout(function(){
-        heroSlide((_heroIdx + 1) % _heroSlides.length);
-      }, 5000);
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    /* Arrancar en el slide de video (índice 0) */
-    heroSlide(0);
-
-    /* ── Swipe táctil en móvil ── */
-    var hw = document.getElementById('heroWrap');
-    var _txStart = 0, _tyStart = 0;
-
-    hw.addEventListener('touchstart', function(e){
-      _txStart = e.touches[0].clientX;
-      _tyStart = e.touches[0].clientY;
-    }, {passive:true});
-
-    hw.addEventListener('touchend', function(e){
-      var dx = e.changedTouches[0].clientX - _txStart;
-      var dy = e.changedTouches[0].clientY - _tyStart;
-      if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
-        if(dx < 0){
-          heroSlide((_heroIdx + 1) % _heroSlides.length);
-        } else {
-          heroSlide((_heroIdx - 1 + _heroSlides.length) % _heroSlides.length);
-        }
-      }
-    }, {passive:true});
-  });
+    });
+    lv.play().catch(function(){});
+  })();
   </script>
   <!-- Decorative pattern below hero — identical to reference image -->
   <!-- hero-pattern canvas eliminado según solicitud -->
@@ -1078,18 +1561,21 @@ body.tab-mode section.noticias-section{display:none}
         <button class="itab"        onclick="switchInfoTab('decalogo')" id="it-decalogo">Decálogo</button>
       </div>
 
-      <div class="itab-pane active" id="ip-acerca">
-        <p>La Secretar&#237;a participa en el fortalecimiento de las acciones de prevenci&#243;n, movilidad, protecci&#243;n civil y seguridad dentro de la UNAM, contribuyendo al desarrollo de las actividades universitarias en un entorno de atenci&#243;n, organizaci&#243;n y apoyo a la comunidad.</p>
-        <p>A trav&#233;s del dise&#241;o e implementaci&#243;n de pol&#237;ticas, programas y estrategias institucionales, se coordinan acciones en materia de seguridad universitaria, prevenci&#243;n y movilidad, en colaboraci&#243;n con las distintas entidades y dependencias de la Universidad.</p>
-        <p>Asimismo, se promueve la cultura de la prevenci&#243;n, la protecci&#243;n civil y el cuidado del patrimonio universitario mediante lineamientos, protocolos y acciones orientadas al bienestar de la comunidad universitaria.</p>
-        <p>Nuestro trabajo busca contribuir al fortalecimiento de las condiciones que favorezcan el desarrollo de las funciones sustantivas de la Universidad y la atenci&#243;n de las necesidades de la comunidad universitaria.</p>
-      </div>
-      <div class="itab-pane" id="ip-mision">
-        <p>Impulsar una comunidad universitaria m&#225;s segura, ordenada y conectada mediante estrategias integrales de prevenci&#243;n, atenci&#243;n, movilidad y seguridad, que fortalezcan el bienestar y contribuyan al desarrollo de las actividades universitarias en la Universidad Nacional Aut&#243;noma de M&#233;xico.</p>
-      </div>
-      <div class="itab-pane" id="ip-vision">
-        <p>Consolidarnos como una Secretar&#237;a cercana, eficiente e innovadora, reconocida por promover entornos universitarios m&#225;s seguros, accesibles y confiables, a trav&#233;s de servicios y acciones que acompa&#241;en la vida universitaria y fortalezcan la cultura de prevenci&#243;n en la Universidad Nacional Aut&#243;noma de M&#233;xico.</p>
-      </div>
+      <!-- Wrapper altura fija para los panes de texto (Acerca / Misión / Visión) -->
+      <div class="info-text-wrap">
+        <div class="itab-pane active" id="ip-acerca">
+          <p>La Secretar&#237;a participa en el fortalecimiento de las acciones de prevenci&#243;n, movilidad, protecci&#243;n civil y seguridad dentro de la UNAM, contribuyendo al desarrollo de las actividades universitarias en un entorno de atenci&#243;n, organizaci&#243;n y apoyo a la comunidad.</p>
+          <p>A trav&#233;s del dise&#241;o e implementaci&#243;n de pol&#237;ticas, programas y estrategias institucionales, se coordinan acciones en materia de seguridad universitaria, prevenci&#243;n y movilidad, en colaboraci&#243;n con las distintas entidades y dependencias de la Universidad.</p>
+          <p>Asimismo, se promueve la cultura de la prevenci&#243;n, la protecci&#243;n civil y el cuidado del patrimonio universitario mediante lineamientos, protocolos y acciones orientadas al bienestar de la comunidad universitaria.</p>
+          <p>Nuestro trabajo busca contribuir al fortalecimiento de las condiciones que favorezcan el desarrollo de las funciones sustantivas de la Universidad y la atenci&#243;n de las necesidades de la comunidad universitaria.</p>
+        </div>
+        <div class="itab-pane" id="ip-mision">
+          <p>Impulsar una comunidad universitaria m&#225;s segura, ordenada y conectada mediante estrategias integrales de prevenci&#243;n, atenci&#243;n, movilidad y seguridad, que fortalezcan el bienestar y contribuyan al desarrollo de las actividades universitarias en la Universidad Nacional Aut&#243;noma de M&#233;xico.</p>
+        </div>
+        <div class="itab-pane" id="ip-vision">
+          <p>Consolidarnos como una Secretar&#237;a cercana, eficiente e innovadora, reconocida por promover entornos universitarios m&#225;s seguros, accesibles y confiables, a trav&#233;s de servicios y acciones que acompa&#241;en la vida universitaria y fortalezcan la cultura de prevenci&#243;n en la Universidad Nacional Aut&#243;noma de M&#233;xico.</p>
+        </div>
+      </div><!-- /info-text-wrap -->
       <div class="itab-pane" id="ip-valores" style="max-width:none;padding:0">
         <!-- VALORES QUE NOS DEFINEN — Image-based interactive puzzle -->
         <style>
@@ -1567,13 +2053,13 @@ body.tab-mode section.noticias-section{display:none}
     ╚══════════════════════════════╝ -->
     <div class="tab-panel" id="panel-estructura" style="padding:0">
 
-      <!-- ── SECCIÓN 1: DGSGM ── fondo blanco -->
-      <!-- ── SECCIÓN 1: DGAPSU ── fondo blanco (PRIMERO según instrucciones) -->
-      <div class="dir-showcase dir-showcase-light">
-        <h2 class="dir-showcase-title">Dirección General de Análisis, Protección y Seguridad Universitaria</h2>
-        <div class="dir-showcase-body">
+      <!-- ══════════════════════════════════════
+           DGAPSU — bg-servicios.jpg (pb-1)
+      ══════════════════════════════════════ -->
+      <div class="parallax-bg pb-1" style="padding:64px 52px">
+        <div class="dir-showcase-body" style="max-width:1000px;margin:0 auto">
           <div class="dir-showcase-img-col">
-            <div class="dir-showcase-logo-wrap">
+            <div class="dir-showcase-logo-wrap" style="box-shadow:0 16px 48px rgba(0,0,0,.38),0 4px 12px rgba(0,0,0,.22)">
               <img src="img/dgapsu-logo.png" alt="DGAPSU UNAM" class="dir-showcase-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="dir-showcase-logo-ph" style="display:none">
                 <span class="sph-icon">🔒</span>
@@ -1581,28 +2067,33 @@ body.tab-mode section.noticias-section{display:none}
                 <span class="sph-badge">Logo</span>
               </div>
             </div>
-            <!-- Tres puntitos — abren modal con info de imagen 1 -->
-            <button class="dir-dots-btn" onclick="openDirModal('dgapsu')" title="Ver más información" aria-label="Ver información de DGAPSU">
-              <span class="dir-dot-circle"></span>
-              <span class="dir-dot-circle"></span>
-              <span class="dir-dot-circle"></span>
+            <button class="dir-dots-btn dir-dots-btn-light" onclick="openDirModal('dgapsu')" title="Ver más información" aria-label="Ver información de DGAPSU">
+              <span class="dir-dot-circle" style="background:#fff"></span>
+              <span class="dir-dot-circle" style="background:#fff"></span>
+              <span class="dir-dot-circle" style="background:#fff"></span>
             </button>
           </div>
           <div class="dir-showcase-text-col">
-            <p class="dir-showcase-desc">La Dirección General de Análisis, Protección y Seguridad Universitaria impulsa las acciones para salvaguardar la integridad de la comunidad universitaria y sus visitantes, manteniendo el ambiente de seguridad, confianza y tranquilidad en el campus universitario, contribuyendo al desempeño de las actividades sustantivas de la docencia, investigación y difusión de la cultura, esto desarrollado con personal eficiente y con constante innovación tecnológica.</p>
-            <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" class="dir-showcase-cta">
-              Visitar el sitio <span class="dir-cta-arrow">→</span>
+            <div class="est-tag">Dirección General</div>
+            <h2 class="est-title">Dirección General de Análisis, Protección y Seguridad Universitaria</h2>
+            <p class="est-desc">La Dirección General de Análisis, Protección y Seguridad Universitaria impulsa las acciones para salvaguardar la integridad de la comunidad universitaria y sus visitantes, manteniendo el ambiente de seguridad, confianza y tranquilidad en el campus universitario, contribuyendo al desempeño de las actividades sustantivas de la docencia, investigación y difusión de la cultura, esto desarrollado con personal eficiente y con constante innovación tecnológica.</p>
+            <a href="https://seguridadyproteccion.unam.mx/" target="_blank" rel="noopener" class="est-cta">
+              Visitar el sitio <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
       </div>
 
-      <!-- ── SECCIÓN 2: DGSGM ── fondo gris suave -->
-      <div class="dir-showcase dir-showcase-gray">
-        <h2 class="dir-showcase-title">Dirección General de Servicios Generales y Movilidad</h2>
-        <div class="dir-showcase-body">
+      <!-- ── Separador visual entre imágenes ── -->
+      <div class="parallax-section-sep"><span></span></div>
+
+      <!-- ══════════════════════════════════════
+           DGSGM — bg-medio.jpg (pb-2)
+      ══════════════════════════════════════ -->
+      <div class="parallax-bg pb-2" style="padding:64px 52px">
+        <div class="dir-showcase-body" style="max-width:1000px;margin:0 auto">
           <div class="dir-showcase-img-col">
-            <div class="dir-showcase-logo-wrap">
+            <div class="dir-showcase-logo-wrap" style="box-shadow:0 16px 48px rgba(0,0,0,.38),0 4px 12px rgba(0,0,0,.22)">
               <img src="img/dgsgm-logo.png" alt="DG SGM" class="dir-showcase-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="dir-showcase-logo-ph" style="display:none">
                 <span class="sph-icon">🏢</span>
@@ -1610,17 +2101,18 @@ body.tab-mode section.noticias-section{display:none}
                 <span class="sph-badge">Logo</span>
               </div>
             </div>
-            <!-- Tres puntitos — abren modal con info de DGSGM -->
-            <button class="dir-dots-btn" onclick="openDirModal('dgsgm')" title="Ver más información" aria-label="Ver información de DGSGM">
-              <span class="dir-dot-circle"></span>
-              <span class="dir-dot-circle"></span>
-              <span class="dir-dot-circle"></span>
+            <button class="dir-dots-btn dir-dots-btn-light" onclick="openDirModal('dgsgm')" title="Ver más información" aria-label="Ver información de DGSGM">
+              <span class="dir-dot-circle" style="background:#fff"></span>
+              <span class="dir-dot-circle" style="background:#fff"></span>
+              <span class="dir-dot-circle" style="background:#fff"></span>
             </button>
           </div>
           <div class="dir-showcase-text-col">
-            <p class="dir-showcase-desc">Promover una movilidad universitaria sustentable y eficiente mediante los servicios de Pumabús, Bicipuma, Estacionamientos Controlados y Archivo General, implementando acciones, tecnologías y campañas de concientización que beneficien a toda la comunidad universitaria y contribuyan al cuidado del medio ambiente.</p>
-            <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="dir-showcase-cta">
-              Visitar el sitio <span class="dir-cta-arrow">→</span>
+            <div class="est-tag">Dirección General</div>
+            <h2 class="est-title">Dirección General de Servicios Generales y Movilidad</h2>
+            <p class="est-desc">Promover una movilidad universitaria sustentable y eficiente mediante los servicios de Pumabús, Bicipuma, Estacionamientos Controlados y Archivo General, implementando acciones, tecnologías y campañas de concientización que beneficien a toda la comunidad universitaria y contribuyan al cuidado del medio ambiente.</p>
+            <a href="https://www.dgsgm.unam.mx/" target="_blank" rel="noopener" class="est-cta">
+              Visitar el sitio <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -1787,13 +2279,17 @@ body.tab-mode section.noticias-section{display:none}
         </div>
       </div>
 
-      <!-- ── SECCIÓN: Áreas que integran la dependencia ── -->
-      <div class="dir-showcase dir-showcase-light" style="padding:44px 52px">
-        <h2 class="dir-showcase-title">Áreas que integran la dependencia</h2>
+      <!-- ── Separador visual entre imágenes ── -->
+      <div class="parallax-section-sep"><span></span></div>
+
+      <!-- ══════════════════════════════════════
+           ÁREAS — bg-reporte.jpg (pb-3)
+      ══════════════════════════════════════ -->
+      <div class="parallax-bg pb-3" style="padding:64px 52px">
         <style>
-        .coord-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:28px}
-        .coord-card{background:#F4F7FB;border:1px solid var(--gris-borde);border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px;transition:all var(--t);cursor:pointer;width:100%;text-align:left;font-family:var(--font-sans)}
-        .coord-card:hover{border-color:var(--azul-claro);background:rgba(169,198,232,.12);transform:translateY(-2px)}
+        .coord-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:32px}
+        .coord-card{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.6);border-radius:12px;padding:18px 22px;display:flex;align-items:flex-start;gap:12px;transition:all var(--t);cursor:pointer;width:100%;text-align:left;font-family:var(--font-sans);backdrop-filter:blur(4px)}
+        .coord-card:hover{background:#fff;border-color:var(--azul-claro);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,59,113,.14)}
         .coord-dot{width:10px;height:10px;border-radius:50%;background:var(--azul);flex-shrink:0;margin-top:5px}
         .coord-name{font-size:15px;font-weight:600;color:var(--azul);line-height:1.35}
         /* Modal área */
@@ -1806,19 +2302,22 @@ body.tab-mode section.noticias-section{display:none}
         .area-modal-footer{padding:18px 24px;border-top:1px solid var(--gris-borde)}
         .area-modal-title{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--azul)}
         </style>
+        <div class="est-tag" style="color:rgba(169,198,232,.9)">Coordinaciones</div>
+        <h2 class="est-title">Áreas que integran la dependencia</h2>
         <div class="coord-grid">
-          <div class="coord-card" onclick="document.getElementById('am-analisis').style.display='flex';document.body.style.overflow='hidden'" style="cursor:pointer"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></div>
-          <div class="coord-card" onclick="document.getElementById('am-educacion').style.display='flex';document.body.style.overflow='hidden'" style="cursor:pointer"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></div>
-          <div class="coord-card" onclick="document.getElementById('am-enlace').style.display='flex';document.body.style.overflow='hidden'" style="cursor:pointer"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></div>
-          <div class="coord-card" onclick="document.getElementById('am-planeacion').style.display='flex';document.body.style.overflow='hidden'" style="cursor:pointer"><div class="coord-dot"></div><div class="coord-name">Coordinación de Planeación Institucional</div></div>
-          <div class="coord-card" onclick="document.getElementById('am-proyectos').style.display='flex';document.body.style.overflow='hidden'" style="cursor:pointer"><div class="coord-dot"></div><div class="coord-name">Coordinación de Proyectos y Programas de Prevención y Seguridad</div></div>
-          <div class="coord-card" onclick="document.getElementById('am-comisiones').style.display='flex';document.body.style.overflow='hidden'" style="cursor:pointer"><div class="coord-dot"></div><div class="coord-name">Coordinación de Comisiones Locales de Seguridad</div></div>
+          <div class="coord-card" onclick="document.getElementById('am-analisis').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></div>
+          <div class="coord-card" onclick="document.getElementById('am-educacion').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></div>
+          <div class="coord-card" onclick="document.getElementById('am-enlace').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></div>
+          <div class="coord-card" onclick="document.getElementById('am-planeacion').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Planeación Institucional</div></div>
+          <div class="coord-card" onclick="document.getElementById('am-proyectos').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Proyectos y Programas de Prevención y Seguridad</div></div>
+          <div class="coord-card" onclick="document.getElementById('am-comisiones').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Comisiones Locales de Seguridad</div></div>
         </div>
-
       </div>
 
-      <!-- ── SECCIÓN: CINIG SPAMSU ── -->
-      <div class="dir-showcase" style="background:linear-gradient(145deg,#002a52 0%,#003B71 55%,#004e96 100%);border-bottom:none">
+      <!-- ══════════════════════════════════════
+           CRACE — primero (sin parallax, fondo propio)
+      ══════════════════════════════════════ -->
+      <div class="dir-showcase" style="background:linear-gradient(145deg,#003B71 0%,#1565C0 55%,#1976D2 100%);border-bottom:none;padding:64px 52px">
         <style>
         .cinig-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.16em;background:rgba(169,198,232,.15);border:1px solid rgba(169,198,232,.3);padding:4px 14px;border-radius:20px;margin-bottom:18px}
         .cinig-title{font-family:var(--font-serif);font-size:clamp(22px,2.4vw,30px);font-weight:700;color:#fff;line-height:1.22;margin-bottom:8px}
@@ -1834,33 +2333,7 @@ body.tab-mode section.noticias-section{display:none}
         .cinig-img-ph span{font-family:'Courier New',monospace;font-size:12px;font-weight:700;color:rgba(169,198,232,.7);background:rgba(255,255,255,.06);border:1px solid rgba(169,198,232,.22);padding:4px 12px;border-radius:4px}
         .cinig-divider{width:40px;height:3px;background:var(--azul-claro);border-radius:2px;margin-bottom:20px}
         </style>
-        <div class="dir-showcase-body">
-          <div class="dir-showcase-img-col">
-            <div class="cinig-img-wrap">
-              <img src="img/cinig-logo.png" alt="CINIG SPAMSU"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="cinig-img-ph" style="display:none">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(169,198,232,.5)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg>
-                <span>cinig-logo.png</span>
-              </div>
-            </div>
-          </div>
-          <div class="dir-showcase-text-col">
-            <h2 class="cinig-title">CINIG · SPAMSU</h2>
-            <div class="cinig-divider"></div>
-            <p class="cinig-desc">En concordancia con la CIGU, impulsar la implementación de la política institucional en materia de igualdad de género en la oficina de la SPAMSU y sus Coordinaciones, y prevenir cualquier tipo de discriminación y violencia por razones de género, a través de acciones diseñadas con la participación de las autoridades y la comunidad.</p>
-            <a href="https://serviciosalacomunidad.unam.mx/que%20es%20la%20cinig.htm"
-               target="_blank" rel="noopener" class="cinig-cta">
-              Conocer la CInIG
-              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── SECCIÓN: CRACE ── -->
-      <div class="dir-showcase" style="background:linear-gradient(145deg,#003B71 0%,#1565C0 55%,#1976D2 100%);border-bottom:none">
-        <div class="dir-showcase-body">
+        <div class="dir-showcase-body" style="max-width:1000px;margin:0 auto">
           <div class="dir-showcase-img-col">
             <div class="cinig-img-wrap">
               <img src="img/crace-logo.png" alt="CRACE UNAM"
@@ -1885,13 +2358,41 @@ body.tab-mode section.noticias-section{display:none}
         </div>
       </div>
 
+      <!-- ══════════════════════════════════════
+           CINIG — después de CRACE (sin parallax, fondo propio)
+      ══════════════════════════════════════ -->
+      <div class="dir-showcase" style="background:linear-gradient(145deg,#002a52 0%,#003B71 55%,#004e96 100%);border-bottom:none;padding:64px 52px">
+        <div class="dir-showcase-body" style="max-width:1000px;margin:0 auto">
+          <div class="dir-showcase-img-col">
+            <div class="cinig-img-wrap">
+              <img src="img/cinig-logo.png" alt="CINIG SPAMSU"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="cinig-img-ph" style="display:none">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(169,198,232,.5)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg>
+                <span>cinig-logo.png</span>
+              </div>
+            </div>
+          </div>
+          <div class="dir-showcase-text-col">
+            <h2 class="cinig-title">CINIG · SPAMSU</h2>
+            <div class="cinig-divider"></div>
+            <p class="cinig-desc">En concordancia con la CIGU, impulsar la implementación de la política institucional en materia de igualdad de género en la oficina de la SPAMSU y sus Coordinaciones, y prevenir cualquier tipo de discriminación y violencia por razones de género, a través de acciones diseñadas con la participación de las autoridades y la comunidad.</p>
+            <a href="https://serviciosalacomunidad.unam.mx/que%20es%20la%20cinig.htm"
+               target="_blank" rel="noopener" class="cinig-cta">
+              Conocer la CInIG
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- ╔══════════════════════════════╗
          SERVICIOS
     ╚══════════════════════════════╝ -->
     <div class="tab-panel" id="panel-servicios">
-      <div class="parallax-bg pb-1">
+      <div class="srv-institutional-bg">
       <div class="sec-tag">Oferta institucional</div>
       <h2 class="sec-title">Servicios para la comunidad universitaria</h2>
 
@@ -1998,15 +2499,15 @@ body.tab-mode section.noticias-section{display:none}
         </a>
 
       </div><!-- /srv-grid -->
-      </div><!-- /parallax-bg pb-1 -->
+      </div><!-- /srv-institutional-bg -->
 
-      <!-- PARALLAX 2: Senderos + middle -->
-      <div class="parallax-bg pb-2" style="padding:30px 20px">
+      <!-- Senderos + middle -->
+      <div class="srv-senderos-bg" style="padding:60px 44px">
       <!-- Senderos Universitarios -->
       <div class="senderos-grid">
         <div>
-          <div class="sec-tag" style="color:rgba(255,255,255,.8);font-size:13px">Movilidad universitaria</div>
-          <h3 style="font-family:var(--font-serif);font-size:32px;font-weight:700;color:#fff;margin-bottom:18px;text-shadow:0 2px 10px rgba(0,0,0,.3)">Senderos Universitarios</h3>
+          <div class="sec-tag" style="font-size:13px">Movilidad universitaria</div>
+          <h3 style="font-family:var(--font-serif);font-size:32px;font-weight:700;color:var(--azul);margin-bottom:18px">Senderos Universitarios</h3>
           <!-- Restored table -->
           <table class="send-table">
             <thead>
@@ -2045,21 +2546,21 @@ body.tab-mode section.noticias-section{display:none}
         </div>
       </div>
 
-      </div><!-- /parallax-bg pb-2 -->
+      </div><!-- /srv-senderos-bg -->
 
-      <!-- PARALLAX 3: Genera tu reporte -->
-      <div class="parallax-bg pb-3" style="padding:52px 44px">
+      <!-- Genera tu reporte -->
+      <div class="srv-reporte-bg" style="padding:52px 44px">
       <div style="max-width:1200px;margin:0 auto">
 
-      <!-- Header visible sobre el parallax -->
+      <!-- Header visible sobre fondo claro -->
       <div style="margin-bottom:36px">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.7);margin-bottom:10px">— Plataforma digital SAVAR</div>
-        <h2 style="font-family:var(--font-serif);font-size:clamp(28px,4vw,46px);font-weight:700;color:#fff;margin-bottom:12px;text-shadow:0 2px 12px rgba(0,0,0,.3)">Genera tu reporte en un minuto</h2>
-        <p style="font-size:16px;color:rgba(255,255,255,.85);font-weight:300;max-width:560px;text-shadow:0 1px 6px rgba(0,0,0,.2)">Tu ayuda es importante para mejorar la seguridad y movilidad del campus universitario.</p>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--azul-claro);margin-bottom:10px">— Plataforma digital SAVAR</div>
+        <h2 style="font-family:var(--font-serif);font-size:clamp(28px,4vw,46px);font-weight:700;color:var(--azul);margin-bottom:12px">Genera tu reporte en un minuto</h2>
+        <p style="font-size:16px;color:var(--gris-txt);font-weight:300;max-width:560px">Tu ayuda es importante para mejorar la seguridad y movilidad del campus universitario.</p>
       </div>
         <style>
         /* ── REPORTE SECTION — redesign ── */
-        .rep-section-wrap{border-radius:18px;overflow:hidden;box-shadow:0 8px 40px rgba(0,59,113,.2);border:1px solid rgba(255,255,255,.3);background:transparent}
+        .rep-section-wrap{border-radius:18px;overflow:hidden;box-shadow:0 8px 40px rgba(0,59,113,.12);border:1px solid var(--gris-borde);background:transparent}
 
         /* Banner header */
         .rep-banner{
@@ -2315,7 +2816,7 @@ body.tab-mode section.noticias-section{display:none}
         }
         </script>
       </div><!-- /max-width wrapper -->
-      </div><!-- /parallax-bg pb-3 -->
+      </div><!-- /srv-reporte-bg -->
       </div>
     </div>
 
@@ -3744,7 +4245,7 @@ body.tab-mode section.noticias-section{display:none}
   <section class="social-section" id="redes">
     <div class="sec-tag">Síguenos</div>
     <h2 class="sec-title">Redes sociales</h2>
-    <div class="social-grid social-grid-3">
+    <div class="social-grid">
 
       <!-- INSTAGRAM -->
       <div class="soc-card soc-ig">
@@ -3773,37 +4274,6 @@ body.tab-mode section.noticias-section{display:none}
           <a href="https://www.instagram.com/spamsu_unam" target="_blank" rel="noopener" class="soc-cta soc-cta-ig">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             Ver en Instagram
-          </a>
-        </div>
-      </div>
-
-      <!-- X / TWITTER -->
-      <div class="soc-card soc-x">
-        <div class="soc-header soc-header-dark">
-          <div class="soc-avatar soc-avatar-x">
-            <svg viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </div>
-          <div>
-            <div class="soc-name">SPAMSU UNAM</div>
-            <div class="soc-handle">@SPAMSU_UNAM</div>
-          </div>
-          <a href="https://x.com/SPAMSU_UNAM" target="_blank" rel="noopener" class="soc-follow-btn soc-follow-dark">Seguir</a>
-        </div>
-        <a href="https://x.com/SPAMSU_UNAM" target="_blank" rel="noopener" class="soc-img-link">
-          <img src="img/X_test.png" alt="Publicación de X SPAMSU" class="soc-preview-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="soc-img-fallback soc-img-fallback-dark" style="display:none">
-            <svg viewBox="0 0 24 24" fill="rgba(255,255,255,.35)" width="40" height="40"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63z"/></svg>
-            <span>Ver en X</span>
-          </div>
-          <div class="soc-img-overlay">
-            <svg viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63z"/></svg>
-            <span>Ver perfil completo</span>
-          </div>
-        </a>
-        <div class="soc-footer soc-footer-dark">
-          <a href="https://x.com/SPAMSU_UNAM" target="_blank" rel="noopener" class="soc-cta soc-cta-x">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63z"/></svg>
-            Seguir en X
           </a>
         </div>
       </div>
@@ -4145,9 +4615,6 @@ body.tab-mode section.noticias-section{display:none}
         <div class="footer-unam-full">Universidad Nacional Aut&#243;noma de M&#233;xico</div>
         <div class="footer-unam-years">1551 &ndash; 2026</div>
         <div class="footer-social">
-          <a href="https://x.com/spamsu_unam" target="_blank" rel="noopener" aria-label="X / Twitter">
-            <svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg>
-          </a>
           <a href="https://www.instagram.com/spamsu_unam" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
@@ -4555,24 +5022,6 @@ body.tab-mode section.noticias-section{display:none}
 </div>
 
 
-<!-- Twitter/X widget -->
-<script>
-(function(){
-  var s=document.createElement('script');s.src='https://platform.twitter.com/widgets.js';s.charset='utf-8';s.async=true;
-  s.onload=function(){
-    if(window.twttr&&window.twttr.widgets){
-      var c=document.getElementById('x-timeline-container');if(!c)return;
-      var l=document.getElementById('x-loading');
-      window.twttr.widgets.createTimeline({sourceType:'profile',screenName:'SPAMSU_UNAM'},c,{height:290,chrome:'noheader nofooter noborders',tweetLimit:5})
-      .then(function(){if(l)l.style.display='none'})
-      .catch(function(){if(l)l.innerHTML=xFallback()});
-    }
-  };
-  document.head.appendChild(s);
-})();
-function xFallback(){return'<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:190px;gap:12px;padding:20px"><svg width="32" height="32" viewBox="0 0 24 24" fill="rgba(255,255,255,.35)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span style="font-size:14px;color:rgba(255,255,255,.5);text-align:center;line-height:1.5">Visita nuestro perfil en X<br>para ver las últimas publicaciones</span><a href="https://x.com/SPAMSU_UNAM" target="_blank" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:14px;font-weight:600;padding:9px 20px;border-radius:20px;text-decoration:none">@SPAMSU_UNAM →</a></div>'}
-</script>
-
 <script>
 /* ════════ SCROLL FIX ════════ */
 (function(){
@@ -4639,8 +5088,17 @@ function sbOpenTab(panelId, btnId){
   // Marcar botón activo
   document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
   var btn = document.getElementById(btnId); if(btn) btn.classList.add('active');
-  window.scrollTo({top:0, behavior:'smooth'});
-  // Cierra sidebar móvil
+  // Scroll al inicio del panel en lugar del top de la pagina (evita mostrar el video hero)
+  setTimeout(function(){
+    var el = document.getElementById('panel-'+panelId);
+    if(el){
+      var top = el.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({top: top, behavior:'smooth'});
+    } else {
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  }, 20);
+  // Cierra sidebar movil
   var sb = document.getElementById('sidebar');
   if(sb && sb.classList.contains('mobile-open')) toggleSidebar();
 }
@@ -4694,6 +5152,12 @@ function switchInfoTab(id){
   document.querySelectorAll('.itab-pane').forEach(function(p){p.classList.remove('active')});
   document.getElementById('it-'+id).classList.add('active');
   document.getElementById('ip-'+id).classList.add('active');
+  /* Mostrar/ocultar el wrapper de altura fija según si el pane está dentro o fuera de él */
+  var wrap = document.querySelector('.info-text-wrap');
+  if(wrap){
+    var isTextPane = (id==='acerca' || id==='mision' || id==='vision');
+    wrap.style.display = isTextPane ? 'block' : 'none';
+  }
 }
 
 /* ════════ VIDEO SUB-TABS ════════ */
