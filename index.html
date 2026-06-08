@@ -74,7 +74,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .sb-nav{flex:1;width:100%;padding:10px 0;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
 .sb-item{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:7px;padding:16px 8px;width:100%;
+  gap:5px;padding:11px 8px;width:100%;
   background:none;color:var(--gris-sub);border:none;cursor:pointer;
   border-left:3.5px solid transparent;
   transition:all var(--t);position:relative;
@@ -84,7 +84,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .sb-item svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke var(--t)}
 .sb-item:hover svg,.sb-item.active svg{stroke:var(--azul)}
 .sb-nav-img{
-  width:56px;height:56px;
+  width:44px;height:44px;
   object-fit:contain;
   opacity:.75;
   transition:opacity var(--t),transform var(--t);
@@ -186,8 +186,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   background:var(--azul);
   border-top:3px solid var(--azul-claro);
   box-shadow:0 -4px 24px rgba(0,20,50,.38);
-  animation:hqsTabIn .5s cubic-bezier(.22,.61,.36,1) both;
-  animation-delay:.4s;
 }
 .hero-qs-half{
   flex:1;
@@ -392,42 +390,49 @@ body.tab-mode .page-wave{display:none}
 @keyframes itabIn{from{opacity:0;transform:translateX(40px) scale(.98)}to{opacity:1;transform:translateX(0) scale(1)}}
 @keyframes itabOut{from{opacity:1;transform:translateX(0) scale(1)}to{opacity:0;transform:translateX(-40px) scale(.98)}}
 .itab-pane{display:none;max-width:720px}.itab-pane.active{display:block}
-.itab-pane p{font-size:16px;color:#2D3748;font-weight:400;line-height:1.9;margin-bottom:18px;font-family:var(--font-sans);text-align:justify;max-width:680px}
-/* Layout imagen lateral — animación en todo el bloque */
-.info-with-img{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.itab-pane p{font-size:17px;color:#1e3a5f;font-weight:300;line-height:2.05;margin-bottom:22px;font-family:var(--font-sans);text-align:left;max-width:none;letter-spacing:.01em}
+/* Layout imagen lateral */
+.info-with-img{display:grid;grid-template-columns:1.3fr 1fr;gap:44px;align-items:start}
 .info-with-img.animating-out{animation:itabOut .22s cubic-bezier(.4,0,.2,1) forwards;pointer-events:none}
 .info-with-img.animating-in{animation:itabIn .4s cubic-bezier(.22,.61,.36,1) both}
 .info-with-img .info-text-wrap{width:100%}
-.info-side-img img{width:100%;height:auto;object-fit:cover;border-radius:0;display:block}
+.info-side-img img{width:100%;height:auto;object-fit:cover;border-radius:12px;display:block;box-shadow:0 8px 32px rgba(0,59,113,.12)}
 @media(max-width:900px){.info-with-img{grid-template-columns:1fr}.info-side-img{display:none}}
 
-/* ── Wrapper altura fija para panes Acerca / Misión / Visión ──
-   Evita que al cambiar pestaña se cuele el contenido de debajo.
-   La altura está calculada para el pane más largo (Acerca, 4 párrafos).
-   Los panes más cortos quedan con espacio en blanco al fondo — limpio. */
-.info-text-wrap{
-  position:relative;
-  height:320px;
-  overflow:hidden;
-  margin-bottom:0;
+/* ── Wrapper auto-height ── */
+.info-text-wrap{position:relative;height:auto;min-height:0;overflow:visible;margin-bottom:0}
+.info-text-wrap .itab-pane{position:relative;top:auto;left:auto;width:100%;max-width:none;margin:0;padding:0}
+
+/* ── Feature pane: Misión y Visión ── */
+.info-feature-pane{padding:0}
+.info-feature-label{
+  font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--azul-claro);margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
 }
-.info-text-wrap .itab-pane{
-  position:absolute;
-  top:0;left:0;
-  width:100%;
-  max-width:720px;
-  margin:0;padding:0;
+.info-feature-label::before{content:'';width:24px;height:2px;background:var(--azul-claro);border-radius:1px;display:block;flex-shrink:0}
+.info-feature-quote{
+  font-family:var(--font-serif);
+  font-size:clamp(20px,2.4vw,28px);
+  font-weight:400;
+  font-style:italic;
+  color:var(--azul);
+  line-height:1.7;
+  border-left:4px solid var(--azul-claro);
+  padding:12px 0 12px 28px;
+  margin:0;
+  text-align:left;
+  background:rgba(169,198,232,.06);
+  border-radius:0 10px 10px 0;
 }
-@media(max-width:900px){
-  .info-text-wrap{height:380px}
-}
+
 @media(max-width:640px){
-  .info-text-wrap{height:420px}
-  .itab-pane p{font-size:15px;line-height:1.8}
+  .itab-pane p{font-size:15.5px;line-height:1.85}
+  .info-feature-quote{font-size:17px}
 }
 @media(max-width:480px){
-  .info-text-wrap{height:480px}
-  .itab-pane p{font-size:14px}
+  .itab-pane p{font-size:15px}
+  .info-feature-quote{font-size:16px}
 }
 /* Video tab panes need full width — override max-width */
 #vp-comunidad,#vp-estadio,#vp-protoc,#vp-proyectos{max-width:none!important;width:100%}
@@ -551,12 +556,14 @@ body.tab-mode .page-wave{display:none}
    SERVICIOS
 ═══════════════════════════════════════════ */
 .srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.srv-grid > .srv-card:last-child:nth-child(3n-1){grid-column:2}
+.srv-grid > .srv-card:last-child:nth-child(3n+1){grid-column:2}
 .srv-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);overflow:hidden;transition:all var(--t);position:relative;display:block;cursor:pointer}
 .srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul-claro);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
 .srv-card:hover{border-color:var(--azul-claro);box-shadow:var(--sh);transform:translateY(-4px)}
 .srv-card:hover::before{transform:scaleX(1)}
-.srv-img{height:220px;position:relative;overflow:hidden}
-.srv-img [data-img]{height:220px;width:100%;position:absolute;inset:0}
+.srv-img{aspect-ratio:16/9;position:relative;overflow:hidden;width:100%}
+.srv-img [data-img]{position:absolute;inset:0;width:100%;height:100%}
 .srv-img [data-img] img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
 [data-img="srv-pcivil"] img{object-position:50.7% 22.3%}
 [data-img="srv-bicipuma"] img{object-position:49.3% 36.8%}
@@ -714,7 +721,7 @@ body.tab-mode .page-wave{display:none}
    REDES SOCIALES
 ═══════════════════════════════════════════ */
 .social-section{background:var(--blanco);padding:56px 44px;border-top:2px solid var(--gris-borde)}
-.social-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:28px;max-width:900px}
+.social-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px;max-width:100%}
 .social-grid-3{grid-template-columns:repeat(3,1fr)}
 
 /* ── Tarjetas unificadas de redes sociales ── */
@@ -1589,6 +1596,7 @@ html{scroll-behavior:smooth}
     <button class="sb-flyout-item" onclick="sbGoSection('panel-informacion','sb-informacion');switchInfoTab&&switchInfoTab('mision');sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Misión</button>
     <button class="sb-flyout-item" onclick="sbGoSection('panel-informacion','sb-informacion');switchInfoTab&&switchInfoTab('vision');sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Visión</button>
     <button class="sb-flyout-item" onclick="sbGoSection('panel-informacion','sb-informacion');switchInfoTab&&switchInfoTab('valores');sbCloseFlyout()"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Valores</button>
+    <button class="sb-flyout-item" onclick="sbGoSection('panel-informacion','sb-informacion');switchInfoTab&&switchInfoTab('decalogo');sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Decálogo</button>
     <button class="sb-flyout-close" onclick="sbCloseFlyout()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cerrar</button>
   </div>
 
@@ -1600,16 +1608,17 @@ html{scroll-behavior:smooth}
     <button class="sb-flyout-item" onclick="sbScrollToNovedades();switchNovTab('proyectos');sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Planes y Programas</button>
     <button class="sb-flyout-item" onclick="sbScrollToNovedades();switchNovTab('material');sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Material</button>
     <button class="sb-flyout-item" onclick="sbScrollToNovedades();switchNovTab('protocolos');sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Protocolos</button>
+    <button class="sb-flyout-item" onclick="sbGoSection('noticias','sb-novedades');sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/></svg>Noticias</button>
     <button class="sb-flyout-close" onclick="sbCloseFlyout()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cerrar</button>
   </div>
 
   <!-- Flyout: Estructura -->
   <div class="sb-flyout" id="fly-est">
     <div class="sb-flyout-title">Estructura</div>
-    <button class="sb-flyout-item" onclick="sbGoSection('panel-estructura','sb-estructura');sbCloseFlyout()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="8" y="14" width="8" height="7"/></svg>Organigrama</button>
+    <button class="sb-flyout-item" onclick="sbGoSection('panel-estructura','sb-estructura');sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Direcciones</button>
     <button class="sb-flyout-item" onclick="sbGoSection('panel-estructura','sb-estructura');setTimeout(function(){var e=document.getElementById('est-areas');if(e)e.scrollIntoView({behavior:'smooth'})},200);sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Áreas que integran</button>
-    <button class="sb-flyout-item" onclick="sbGoSection('panel-estructura','sb-estructura');setTimeout(function(){var e=document.getElementById('est-cinig');if(e)e.scrollIntoView({behavior:'smooth'})},200);sbCloseFlyout()"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>CInIG</button>
     <button class="sb-flyout-item" onclick="sbGoSection('panel-estructura','sb-estructura');setTimeout(function(){var e=document.getElementById('est-crace');if(e)e.scrollIntoView({behavior:'smooth'})},200);sbCloseFlyout()"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>CRACE</button>
+    <button class="sb-flyout-item" onclick="sbGoSection('panel-estructura','sb-estructura');setTimeout(function(){var e=document.getElementById('est-cinig');if(e)e.scrollIntoView({behavior:'smooth'})},200);sbCloseFlyout()"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>CInIG</button>
     <button class="sb-flyout-close" onclick="sbCloseFlyout()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cerrar</button>
   </div>
 
@@ -1646,7 +1655,7 @@ html{scroll-behavior:smooth}
     </button>
     <!-- Novedades y Recursos -->
     <button class="sb-item" onclick="sbOpenFlyout('fly-nov','sb-novedades')" id="sb-novedades">
-      <img class="sb-nav-img" src="img/icon-nov-actividades.png" alt="Novedades y Recursos">
+      <img class="sb-nav-img" src="img/img_nav-novedades.png" alt="Novedades y Recursos" onerror="this.src='img/icon-nov-actividades.png'">
       <span class="sb-label">Novedades</span>
     </button>
     <!-- Directorio -->
@@ -1680,19 +1689,162 @@ html{scroll-behavior:smooth}
     </button>
   </div>
 
-  <!-- ══ VIDEO PARALLAX HERO ══
-       El video queda sticky al top; las secciones suben encima al hacer scroll -->
-  <div class="hero-video-bg" id="heroVideoBg">
-    <video id="heroLocalVideo" muted playsinline preload="auto" autoplay>
-      <source src="videos/hero-video.mp4" type="video/mp4">
-    </video>
-    <div class="hero-video-overlay"></div>
-    <!-- Barra inferior del hero — una sola barra dividida en dos mitades iguales -->
-    <div style="line-height:0;overflow:hidden;position:absolute;bottom:58px;left:0;right:0;z-index:3;pointer-events:none">
-      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:60px">
-        <path d="M0,60 C360,0 720,60 1080,15 C1260,-15 1380,30 1440,15 L1440,60 Z" fill="#003B71"/>
-      </svg>
+  <!-- ══ HERO CAROUSEL ══ -->
+  <div class="hero-video-bg" id="heroCarousel">
+    <style>
+    /* ── Carousel track ── */
+    .hero-carousel-track{
+      display:flex;
+      width:400%;
+      height:100%;
+      transition:transform .6s cubic-bezier(.4,0,.2,1);
+      pointer-events:auto;
+    }
+    .hero-slide{
+      width:25%;
+      flex-shrink:0;
+      height:100%;
+      position:relative;
+      overflow:hidden;
+      pointer-events:auto;
+    }
+    /* Slide 1: video */
+    .hero-slide-video video{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      min-width:100%;min-height:100%;
+      width:auto;height:auto;object-fit:cover;
+    }
+    /* Slides 2-3: images */
+    .hero-slide-img{cursor:pointer;pointer-events:auto}
+    .hero-slide-img img{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;display:block;
+    }
+    .hero-slide-img .hero-slide-cta{
+      position:absolute;inset:0;display:flex;flex-direction:column;
+      align-items:flex-start;justify-content:flex-end;
+      padding:0 64px 130px;
+    }
+    .hero-slide-cta-label{
+      font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;
+      color:var(--azul-claro);margin-bottom:10px;
+    }
+    .hero-slide-cta-title{
+      font-family:var(--font-serif);font-size:clamp(28px,4vw,52px);
+      font-weight:700;color:#fff;line-height:1.15;margin-bottom:22px;
+      text-shadow:0 2px 16px rgba(0,0,0,.4);
+    }
+    .hero-slide-cta-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.5);
+      color:#fff;font-family:var(--font-sans);font-size:14px;font-weight:600;
+      padding:12px 28px;border-radius:10px;backdrop-filter:blur(4px);
+      transition:background .2s,border-color .2s;pointer-events:none;
+    }
+    .hero-slide-img:hover .hero-slide-cta-btn{background:rgba(255,255,255,.3);border-color:#fff}
+    /* Overlay shared */
+    .hero-slide-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to top, rgba(0,15,40,.82) 0%, rgba(0,15,40,.28) 45%, transparent 72%),
+                 linear-gradient(to right, rgba(0,15,40,.38) 0%, transparent 55%);
+      pointer-events:none;
+    }
+    /* Carousel arrows */
+    .hero-carousel-arrow{
+      position:absolute;top:50%;transform:translateY(-50%);
+      z-index:6;width:44px;height:44px;
+      background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);
+      border-radius:50%;cursor:pointer;pointer-events:auto;
+      display:flex;align-items:center;justify-content:center;
+      transition:background .2s,border-color .2s;
+    }
+    .hero-carousel-arrow:hover{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.7)}
+    .hero-carousel-arrow svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round}
+    .hero-carousel-prev{left:20px}
+    .hero-carousel-next{right:20px}
+    /* Dots */
+    .hero-carousel-dots{
+      position:absolute;bottom:72px;left:50%;transform:translateX(-50%);
+      z-index:6;display:flex;gap:8px;pointer-events:auto;
+    }
+    .hero-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:rgba(255,255,255,.4);border:none;cursor:pointer;
+      transition:all .3s;padding:0;
+    }
+    .hero-dot.active{background:#fff;width:24px;border-radius:4px}
+    @media(max-width:640px){
+      .hero-slide-img .hero-slide-cta{padding:0 24px 120px}
+      .hero-carousel-arrow{display:none}
+    }
+    </style>
+
+    <div class="hero-carousel-track" id="heroTrack">
+
+      <!-- ── Slide 1: Video ── -->
+      <div class="hero-slide hero-slide-video">
+        <video id="heroLocalVideo" muted playsinline preload="auto" autoplay>
+          <source src="videos/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-video-overlay"></div>
+      </div>
+
+      <!-- ── Slide 2: Portada (solo imagen) ── -->
+      <div class="hero-slide hero-slide-img" style="pointer-events:auto">
+        <img src="img/hero-slide-portada.png" alt="SPAMSU UNAM"
+             onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#001a40 0%,#002a55 50%,#003B71 100%)'">
+      </div>
+
+      <!-- ── Slide 3: Decálogo ── -->
+      <div class="hero-slide hero-slide-img" onclick="heroGoDecalogo()">
+        <img src="img/hero-slide-decalogo.png" alt="Decálogo SPAMSU"
+             onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#002a55 0%,#003B71 55%,#1565C0 100%)'">
+        <div class="hero-slide-overlay"></div>
+        <div class="hero-slide-cta">
+          <div class="hero-slide-cta-label">Información</div>
+          <div class="hero-slide-cta-title">Decálogo<br>SPAMSU</div>
+          <div class="hero-slide-cta-btn">
+            Conocer más
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Slide 4: Novedades y Recursos ── -->
+      <div class="hero-slide hero-slide-img" onclick="heroGoNovedades()">
+        <img src="img/hero-slide-novedades.png" alt="Novedades y Recursos"
+             onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#003B71 0%,#1565C0 55%,#1976D2 100%)'">
+        <div class="hero-slide-overlay"></div>
+        <div class="hero-slide-cta">
+          <div class="hero-slide-cta-label">Novedades y Recursos</div>
+          <div class="hero-slide-cta-title">Mantente<br>Informado</div>
+          <div class="hero-slide-cta-btn">
+            Ver novedades
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /hero-carousel-track -->
+
+    <!-- Arrows -->
+    <button class="hero-carousel-arrow hero-carousel-prev" onclick="heroCarouselMove(-1)" aria-label="Anterior">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="hero-carousel-arrow hero-carousel-next" onclick="heroCarouselMove(1)" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+    <!-- Dots -->
+    <div class="hero-carousel-dots" id="heroDots">
+      <button class="hero-dot active" onclick="heroCarouselGo(0)"></button>
+      <button class="hero-dot" onclick="heroCarouselGo(1)"></button>
+      <button class="hero-dot" onclick="heroCarouselGo(2)"></button>
+      <button class="hero-dot" onclick="heroCarouselGo(3)"></button>
     </div>
+
+    <!-- Bottom bar -->
     <div class="hero-qs-bar">
       <button class="hero-qs-half" onclick="sbGoSection('panel-informacion','sb-informacion')">
         Quiénes Somos
@@ -1704,21 +1856,65 @@ html{scroll-behavior:smooth}
         <span class="hqtab-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
       </button>
     </div>
-  </div>
-
-  <!-- TAB PANELS -->
+  </div><!-- /heroCarousel -->
   <script>
-  /* ════ HERO VIDEO — reproduce una vez, luego loop silencioso ════ */
+  /* ════ HERO CAROUSEL ════ */
   (function(){
+    var current = 0;
+    var total = 4;
+    var track = document.getElementById('heroTrack');
+    var dots  = document.querySelectorAll('.hero-dot');
+    var autoTimer;
+
+    function goTo(n){
+      current = (n + total) % total;
+      track.style.transform = 'translateX(-' + (current * 25) + '%)';
+      dots.forEach(function(d,i){ d.classList.toggle('active', i === current); });
+      /* Pause/play video on slide 0 */
+      var vid = document.getElementById('heroLocalVideo');
+      if(vid){ if(current===0){ vid.play().catch(function(){}); } else { vid.pause(); } }
+    }
+
+    window.heroCarouselMove = function(dir){ goTo(current + dir); };
+    window.heroCarouselGo   = function(n)  { goTo(n); };
+
+    function resetAuto(){ /* auto-advance desactivado */ }
+
+    /* Boot video */
     var lv = document.getElementById('heroLocalVideo');
-    if(!lv) return;
-    /* Al terminar la primera reproducción → loop suave */
-    lv.addEventListener('ended', function(){
-      lv.loop = true;
+    if(lv){
+      lv.addEventListener('ended', function(){ lv.loop = true; lv.play().catch(function(){}); });
       lv.play().catch(function(){});
-    });
-    lv.play().catch(function(){});
+    }
+
+    /* Auto-advance desactivado — navegación manual únicamente */
   })();
+
+/* ── Hero carousel navigation ── */
+function heroGoDecalogo(){
+  document.body.classList.remove('tab-mode');
+  document.querySelectorAll('.panel-tab-only').forEach(function(p){p.classList.remove('panel-open')});
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
+  var btn = document.getElementById('sb-informacion');
+  if(btn) btn.classList.add('active');
+  var panel = document.getElementById('panel-informacion');
+  if(panel){
+    var top = panel.getBoundingClientRect().top + window.pageYOffset - 12;
+    window.scrollTo({top: top, behavior:'smooth'});
+  }
+  setTimeout(function(){
+    if(typeof switchInfoTab === 'function') switchInfoTab('decalogo');
+  }, 500);
+}
+function heroGoNovedades(){
+  document.body.classList.remove('tab-mode');
+  document.querySelectorAll('.panel-tab-only').forEach(function(p){p.classList.remove('panel-open')});
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
+  var btn = document.getElementById('sb-novedades');
+  if(btn) btn.classList.add('active');
+  if(typeof sbScrollToNovedades === 'function') sbScrollToNovedades();
+}
+
   </script>
   <!-- Decorative pattern below hero — identical to reference image -->
   <!-- hero-pattern canvas eliminado según solicitud -->
@@ -1744,20 +1940,29 @@ html{scroll-behavior:smooth}
       <div class="info-with-img">
         <div class="info-text-wrap">
           <div class="itab-pane active" id="ip-acerca">
-            <p>La Secretar&#237;a participa en el fortalecimiento de las acciones de prevenci&#243;n, movilidad, protecci&#243;n civil y seguridad dentro de la UNAM, contribuyendo al desarrollo de las actividades universitarias en un entorno de atenci&#243;n, organizaci&#243;n y apoyo a la comunidad.</p>
-            <p>A trav&#233;s del dise&#241;o e implementaci&#243;n de pol&#237;ticas, programas y estrategias institucionales, se coordinan acciones en materia de seguridad universitaria, prevenci&#243;n y movilidad, en colaboraci&#243;n con las distintas entidades y dependencias de la Universidad.</p>
-            <p>Asimismo, se promueve la cultura de la prevenci&#243;n, la protecci&#243;n civil y el cuidado del patrimonio universitario mediante lineamientos, protocolos y acciones orientadas al bienestar de la comunidad universitaria.</p>
-            <p>Nuestro trabajo busca contribuir al fortalecimiento de las condiciones que favorezcan el desarrollo de las funciones sustantivas de la Universidad y la atenci&#243;n de las necesidades de la comunidad universitaria.</p>
+            <div class="info-feature-pane">
+              <div class="info-feature-label">Acerca de nosotros</div>
+              <blockquote class="info-feature-quote" style="font-size:clamp(16px,1.8vw,20px);margin-bottom:20px">La Secretaría participa en el fortalecimiento de las acciones de prevención, movilidad, protección civil y seguridad dentro de la UNAM, contribuyendo al desarrollo de las actividades universitarias en un entorno de atención, organización y apoyo a la comunidad.</blockquote>
+              <blockquote class="info-feature-quote" style="font-size:clamp(16px,1.8vw,20px);margin-bottom:20px">A través del diseño e implementación de políticas, programas y estrategias institucionales, se coordinan acciones en materia de seguridad universitaria, prevención y movilidad, en colaboración con las distintas entidades y dependencias de la Universidad.</blockquote>
+              <blockquote class="info-feature-quote" style="font-size:clamp(16px,1.8vw,20px);margin-bottom:20px">Asimismo, se promueve la cultura de la prevención, la protección civil y el cuidado del patrimonio universitario mediante lineamientos, protocolos y acciones orientadas al bienestar de la comunidad universitaria.</blockquote>
+              <blockquote class="info-feature-quote" style="font-size:clamp(16px,1.8vw,20px);margin-bottom:0">Nuestro trabajo busca contribuir al fortalecimiento de las condiciones que favorezcan el desarrollo de las funciones sustantivas de la Universidad y la atención de las necesidades de la comunidad universitaria.</blockquote>
+            </div>
           </div>
           <div class="itab-pane" id="ip-mision">
-            <p>Impulsar una comunidad universitaria m&#225;s segura, ordenada y conectada mediante estrategias integrales de prevenci&#243;n, atenci&#243;n, movilidad y seguridad, que fortalezcan el bienestar y contribuyan al desarrollo de las actividades universitarias en la Universidad Nacional Aut&#243;noma de M&#233;xico.</p>
+            <div class="info-feature-pane">
+              <div class="info-feature-label">Nuestra Misión</div>
+              <blockquote class="info-feature-quote">Impulsar una comunidad universitaria más segura, ordenada y conectada mediante estrategias integrales de prevención, atención, movilidad y seguridad, que fortalezcan el bienestar y contribuyan al desarrollo de las actividades universitarias en la Universidad Nacional Autónoma de México.</blockquote>
+            </div>
           </div>
           <div class="itab-pane" id="ip-vision">
-            <p>Consolidarnos como una Secretar&#237;a cercana, eficiente e innovadora, reconocida por promover entornos universitarios m&#225;s seguros, accesibles y confiables, a trav&#233;s de servicios y acciones que acompa&#241;en la vida universitaria y fortalezcan la cultura de prevenci&#243;n en la Universidad Nacional Aut&#243;noma de M&#233;xico.</p>
+            <div class="info-feature-pane">
+              <div class="info-feature-label">Nuestra Visión</div>
+              <blockquote class="info-feature-quote">Consolidarnos como una Secretaría cercana, eficiente e innovadora, reconocida por promover entornos universitarios más seguros, accesibles y confiables, a través de servicios y acciones que acompañen la vida universitaria y fortalezcan la cultura de prevención en la Universidad Nacional Autónoma de México.</blockquote>
+            </div>
           </div>
         </div><!-- /info-text-wrap -->
 
-        <!-- Imagen lateral — se muestra solo si la imagen existe -->
+        <!-- Imagen lateral -->
         <div class="info-side-img" id="info-side-img" style="display:none">
           <img src="img/acerca-nosotros.png" id="info-side-img-el" alt="SPAMSU"
                onload="document.getElementById('info-side-img').style.display=''"
@@ -2279,6 +2484,7 @@ html{scroll-behavior:smooth}
       <!-- ══════════════════════════════════════
            DGSGM — bg-medio.jpg (pb-2)
       ══════════════════════════════════════ -->
+      <div style="height:10px;background:#e8f0f8"></div>
       <div class="parallax-bg pb-2" style="padding:64px 52px">
         <div class="dir-showcase-body" style="max-width:1000px;margin:0 auto">
           <div class="dir-showcase-img-col">
@@ -2474,13 +2680,14 @@ html{scroll-behavior:smooth}
       <!-- ══════════════════════════════════════
            ÁREAS — bg-reporte.jpg (pb-3)
       ══════════════════════════════════════ -->
+      <div style="height:10px;background:#e8f0f8"></div>
       <div class="parallax-bg pb-3" style="padding:64px 52px">
         <style>
         .coord-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:32px}
-        .coord-card{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.6);border-radius:12px;padding:18px 22px;display:flex;align-items:flex-start;gap:12px;transition:all var(--t);cursor:pointer;width:100%;text-align:left;font-family:var(--font-sans);backdrop-filter:blur(4px)}
+        .coord-card{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.6);border-radius:14px;padding:28px 28px;display:flex;align-items:center;gap:14px;transition:all var(--t);cursor:pointer;width:100%;text-align:left;font-family:var(--font-sans);backdrop-filter:blur(4px);min-height:90px}
         .coord-card:hover{background:#fff;border-color:var(--azul-claro);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,59,113,.14)}
         .coord-dot{width:10px;height:10px;border-radius:50%;background:var(--azul);flex-shrink:0;margin-top:5px}
-        .coord-name{font-size:15px;font-weight:600;color:var(--azul);line-height:1.35}
+        .coord-name{font-size:17px;font-weight:600;color:var(--azul);line-height:1.35}
         /* Modal área */
         .area-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,30,60,.55);backdrop-filter:blur(4px);z-index:9999;align-items:center;justify-content:center;padding:20px}
         .area-modal-bg.open{display:flex}
@@ -2492,8 +2699,8 @@ html{scroll-behavior:smooth}
         .area-modal-title{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--azul)}
         </style>
         <div class="est-tag" style="color:rgba(169,198,232,.9)">Coordinaciones</div>
-        <h2 class="est-title"><span id="est-areas"></span>Áreas que integran la dependencia</h2>
-        <div class="coord-grid">
+        <h2 class="est-title" style="text-align:center"><span id="est-areas"></span>Áreas que integran la dependencia</h2>
+        <div class="coord-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 auto">
           <div class="coord-card" onclick="document.getElementById('am-analisis').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Análisis y Concertación</div></div>
           <div class="coord-card" onclick="document.getElementById('am-educacion').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Educación en Prevención</div></div>
           <div class="coord-card" onclick="document.getElementById('am-enlace').style.display='flex';document.body.style.overflow='hidden'"><div class="coord-dot"></div><div class="coord-name">Coordinación de Enlace con Instancias de Gobierno</div></div>
@@ -2683,8 +2890,8 @@ html{scroll-behavior:smooth}
             <span class="srv-cta">Ir al sitio →</span>
           </div>
         </a>
-        <!-- 8. Brigada Vial -->
-        <a href="https://www.dgsgm.unam.mx/brigada.html" target="_blank" rel="noopener" class="srv-card">
+        <!-- 8. Brigada Vial — centrada al ser la última del bloque -->
+        <a href="https://www.dgsgm.unam.mx/brigada.html" target="_blank" rel="noopener" class="srv-card" style="justify-self:center;width:100%">
           <div class="srv-img"><div data-img="srv-brigada" data-alt="Brigada Vial UNAM"></div></div>
           <div class="srv-body">
             <div class="srv-icon srv-icon-png"><img src="img/icon-srv-brigada.png" alt="Brigada Vial"></div>
@@ -2695,6 +2902,30 @@ html{scroll-behavior:smooth}
         </a>
 
       </div><!-- /srv-grid -->
+
+      <!-- Decorativo: banda institucional inferior -->
+      <div style="margin-top:44px;padding-top:32px;border-top:1px solid rgba(169,198,232,.3);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--azul-pale2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--azul-med)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span style="font-size:14px;color:var(--gris-sub);font-weight:400;max-width:420px;line-height:1.6">La SPAMSU coordina servicios de seguridad, protección civil y movilidad para toda la comunidad universitaria de la UNAM.</span>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--azul);background:var(--azul-pale);padding:6px 14px;border-radius:20px;border:1px solid var(--gris-borde)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Servicio continuo 24/7
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--azul);background:var(--azul-pale);padding:6px 14px;border-radius:20px;border:1px solid var(--gris-borde)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            Para toda la comunidad
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--azul);background:var(--azul-pale);padding:6px 14px;border-radius:20px;border:1px solid var(--gris-borde)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Ciudad Universitaria
+          </span>
+        </div>
+      </div>
       </div><!-- /srv-institutional-bg -->
 
       <!-- Senderos + middle -->
@@ -2746,9 +2977,9 @@ html{scroll-behavior:smooth}
       </div><!-- /srv-senderos-bg -->
 
       <!-- Genera tu reporte -->
-      <div style="line-height:0;overflow:hidden;background:linear-gradient(135deg,#002a55 0%,#003B71 55%,#1a5fa8 100%)">
+      <div style="line-height:0;overflow:hidden;background:#A9C6E8">
   <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:80px">
-    <path d="M0,0 C360,80 720,0 1080,60 C1260,80 1380,30 1440,50 L1440,0 Z" fill="#EAF2FB"/>
+    <path d="M0,0 C360,80 720,0 1080,60 C1260,80 1380,30 1440,50 L1440,0 Z" fill="#e8f1fb"/>
   </svg>
 </div>
 <span id="srv-reporte"></span>
@@ -3033,9 +3264,12 @@ html{scroll-behavior:smooth}
 
   <!-- ════ PANEL CINIG ════ -->
   <div class="tab-panel panel-tab-only" id="panel-cinig">
+
     <style>
-    .ci-hero{background:linear-gradient(135deg,#4a1060 0%,#6a1a8a 50%,#8b2fc9 100%);padding:52px 44px 40px;position:relative;overflow:hidden}
+    .ci-hero{background:linear-gradient(135deg,#4a1060 0%,#6a1a8a 50%,#8b2fc9 100%);padding:66px 44px 40px;position:relative;overflow:hidden}
     .ci-hero::after{content:'';position:absolute;right:-80px;bottom:-80px;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+    .ci-hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;pointer-events:none;z-index:0;display:block}
+    .ci-hero > *:not(.ci-hero-bg-img){position:relative;z-index:1}
     .ci-hero-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.55);margin-bottom:10px;display:flex;align-items:center;gap:8px}
     .ci-hero-tag::before{content:'';width:20px;height:2px;background:rgba(255,255,255,.4);border-radius:1px;display:block}
     .ci-hero h1{font-family:var(--font-serif);font-size:clamp(26px,3.5vw,42px);font-weight:700;color:#fff;margin-bottom:10px}
@@ -3077,7 +3311,29 @@ html{scroll-behavior:smooth}
     </style>
 
     <!-- Hero -->
-    <div class="ci-hero">
+    <div class="ci-hero" style="position:relative">
+      <img src="img/cinig-banner.png" alt="" class="ci-hero-bg-img" onerror="this.style.display='none'">
+  <button
+    onclick="panelGoBack()"
+    style="display:inline-flex;align-items:center;gap:10px;
+           background:none;border:none;cursor:pointer;padding:0;
+           font-family:var(--font-sans);font-size:12px;font-weight:700;
+           color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase;
+           position:absolute;top:18px;left:44px;z-index:10;
+           transition:color .2s;"
+    onmouseover="this.style.color='#fff'"
+    onmouseout="this.style.color='rgba(255,255,255,.7)'">
+    <span style="display:flex;align-items:center;justify-content:center;
+                 width:28px;height:28px;border-radius:50%;
+                 border:1.5px solid rgba(255,255,255,.4);
+                 transition:border-color .2s;flex-shrink:0">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none"
+           stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </span>
+    Regresar a Estructura
+  </button>
       <div class="ci-hero-tag">Órgano auxiliar · SPAMSU UNAM</div>
       <h1>CInIG · SPAMSU</h1>
       <p>Comité Interno de Igualdad de Género de la Secretaría de Prevención, Atención y Seguridad Universitaria</p>
@@ -3288,8 +3544,9 @@ html{scroll-behavior:smooth}
 
   <!-- ════ PANEL CRACE ════ -->
   <div class="tab-panel panel-tab-only" id="panel-crace">
+
     <style>
-    .cr-hero{background:linear-gradient(135deg,#003B71 0%,#1565C0 55%,#1976D2 100%);padding:52px 44px 40px;position:relative;overflow:hidden}
+    .cr-hero{background:linear-gradient(135deg,#003B71 0%,#1565C0 55%,#1976D2 100%);padding:66px 44px 40px;position:relative;overflow:hidden}
     .cr-hero::after{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none}
     .cr-hero-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:rgba(169,198,232,.7);margin-bottom:10px;display:flex;align-items:center;gap:8px}
     .cr-hero-tag::before{content:'';width:20px;height:2px;background:rgba(255,255,255,.5);border-radius:1px;display:block}
@@ -3346,7 +3603,28 @@ html{scroll-behavior:smooth}
     </style>
 
     <!-- Hero -->
-    <div class="cr-hero">
+    <div class="cr-hero" style="position:relative">
+  <button
+    onclick="panelGoBack()"
+    style="display:inline-flex;align-items:center;gap:10px;
+           background:none;border:none;cursor:pointer;padding:0;
+           font-family:var(--font-sans);font-size:12px;font-weight:700;
+           color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase;
+           position:absolute;top:18px;left:44px;z-index:10;
+           transition:color .2s;"
+    onmouseover="this.style.color='#fff'"
+    onmouseout="this.style.color='rgba(255,255,255,.7)'">
+    <span style="display:flex;align-items:center;justify-content:center;
+                 width:28px;height:28px;border-radius:50%;
+                 border:1.5px solid rgba(255,255,255,.4);
+                 transition:border-color .2s;flex-shrink:0">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none"
+           stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </span>
+    Regresar a Estructura
+  </button>
       <div class="cr-hero-tag">Órgano colegiado · UNAM</div>
       <h1>CRACE</h1>
       <p>Colegio de Responsables de Atención a la Comunidad Estudiantil de la Universidad Nacional Autónoma de México</p>
@@ -3500,8 +3778,9 @@ html{scroll-behavior:smooth}
 
 
   <div class="tab-panel panel-tab-only" id="panel-marco-juridico">
+
     <style>
-    .mj-hero{background:linear-gradient(135deg,#002244 0%,#003B71 55%,#1565C0 100%);padding:52px 44px 40px;position:relative;overflow:hidden}
+    .mj-hero{background:linear-gradient(135deg,#002244 0%,#003B71 55%,#1565C0 100%);padding:66px 44px 40px;position:relative;overflow:hidden}
     .mj-hero::after{content:'';position:absolute;right:-60px;bottom:-60px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
     .mj-hero-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:rgba(169,198,232,.7);margin-bottom:12px;display:flex;align-items:center;gap:8px}
     .mj-hero-tag::before{content:'';width:20px;height:2px;background:var(--azul-claro);border-radius:1px;display:block}
@@ -3512,8 +3791,8 @@ html{scroll-behavior:smooth}
     .mj-tab{background:none;border:none;font-family:var(--font-sans);font-size:14px;font-weight:700;color:var(--gris-sub);padding:11px 28px;border-radius:10px 10px 0 0;cursor:pointer;transition:all .2s;white-space:nowrap;border-bottom:3px solid transparent;letter-spacing:.01em}
     .mj-tab:hover{color:var(--azul);background:rgba(169,198,232,.15)}
     .mj-tab.active{color:var(--azul);background:#fff;border-bottom-color:var(--azul);box-shadow:0 -2px 12px rgba(0,59,113,.07)}
-    .mj-panel{display:none;padding:32px 44px 52px;background:#fff;animation:slideInRight .3s ease}
-    .mj-panel.active{display:block}
+    .mj-panel,.mj-leg-content{display:block;padding:32px 44px 52px;background:#fff;animation:slideInRight .3s ease}
+    
     .mj-subsec{margin-bottom:36px;padding-bottom:32px;border-bottom:1px solid #eef3fb}
     .mj-subsec:last-child{border-bottom:none;margin-bottom:0}
     .mj-subsec-title{font-family:var(--font-serif);font-size:17px;font-weight:700;color:var(--azul);margin-bottom:14px;padding-left:12px;border-left:3px solid var(--azul-claro)}
@@ -3530,30 +3809,38 @@ html{scroll-behavior:smooth}
     @media(max-width:640px){.mj-hero{padding:32px 20px 0}.mj-tabs{padding:16px 20px 0}.mj-panel{padding:24px 20px 36px}.mj-grid{grid-template-columns:1fr}.mj-tab{font-size:12px;padding:9px 16px}}
     </style>
 
-    <div class="mj-hero">
+    <div class="mj-hero" style="position:relative">
+  <button
+    onclick="panelGoBack()"
+    style="display:inline-flex;align-items:center;gap:10px;
+           background:none;border:none;cursor:pointer;padding:0;
+           font-family:var(--font-sans);font-size:12px;font-weight:700;
+           color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase;
+           position:absolute;top:18px;left:44px;z-index:10;
+           transition:color .2s;"
+    onmouseover="this.style.color='#fff'"
+    onmouseout="this.style.color='rgba(255,255,255,.7)'">
+    <span style="display:flex;align-items:center;justify-content:center;
+                 width:28px;height:28px;border-radius:50%;
+                 border:1.5px solid rgba(255,255,255,.4);
+                 transition:border-color .2s;flex-shrink:0">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none"
+           stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </span>
+    Regresar
+  </button>
       <div class="mj-hero-tag">Normatividad SPAMSU · UNAM</div>
       <h1>Normatividad</h1>
       <p>Consulta la legislación, reglamentos, lineamientos y disposiciones universitarias que rigen las actividades de seguridad, movilidad y prevención en la UNAM.</p>
       
     </div>
 
-    <div class="mj-tabs">
-      <button class="mj-tab" onclick="switchMjTab('normateca')">Normateca</button>
-      <button class="mj-tab active" onclick="switchMjTab('leg-unam')">Legislación UNAM</button>
-    </div>
 
-    <div class="mj-panel" id="mjp-normateca">
-      <div class="mj-subsec" style="border-bottom:none">
-        <div class="mj-grid">
-          <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Constitución Política de los Estados Unidos Mexicanos</div><div class="mj-card-date">23-abr.-2026</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://normatividadseguridad.unam.mx/leyes%20fed.html" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Leyes Federales</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://normatividadseguridad.unam.mx/leyes%20loc.html" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Leyes Locales</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://normatividadseguridad.unam.mx/reg%20fed%20y%20loc.html" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Reglamentos Federales y Locales</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://normatividadseguridad.unam.mx/norm%20of.html" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Normas Oficiales Mexicanas y otras disposiciones</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-        </div>
-      </div>    </div>
 
-    <div class="mj-panel active" id="mjp-leg-unam">
+    <div class="mj-leg-content">
+
       <div class="mj-subsec">
         <h3 class="mj-subsec-title">Legislación Universitaria</h3>
         <div class="mj-grid">
@@ -3670,7 +3957,6 @@ html{scroll-behavior:smooth}
         </div>
       </div>
     </div>
-
   </div><!-- /panel-marco-juridico -->
 
     <div class="tab-panel panel-tab-only" id="panel-directorio">
@@ -3999,7 +4285,7 @@ html{scroll-behavior:smooth}
   <!-- VIDEO DEL RECTOR -->
   <section class="video-section" id="video-rector">
     <div class="video-inner">
-      <div class="video-wrap" style="position:relative">
+      <div class="video-wrap act-block act-from-left" style="position:relative">
         <!-- Facade: thumbnail del segundo 0:22 como portada.
              Al hacer clic se reemplaza por el iframe y empieza desde 0. -->
         <div id="rector-facade" style="
@@ -4039,7 +4325,7 @@ html{scroll-behavior:smooth}
           style="position:absolute;inset:0;width:100%;height:100%;border:none;display:block">
         </iframe>
       </div>
-      <div>
+      <div class="act-block act-from-right">
         <div class="sec-tag">Mensaje institucional</div>
         <h2 class="sec-title" style="margin-bottom:10px">Palabras del Rector</h2>
         <div class="video-quote">"La seguridad es una condición indispensable para una educación plena en la Universidad Nacional."</div>
@@ -4166,7 +4452,7 @@ html{scroll-behavior:smooth}
 
     <!-- Magazine collage grid -->
     <div class="nws-grid">
-        <a href="https://www.gaceta.unam.mx/el-rector-de-la-unam-anuncia-nombramientos-en-seguridad-universitaria/" target="_blank" rel="noopener" class="nws-card nws-card-hero">
+        <a href="https://www.gaceta.unam.mx/el-rector-de-la-unam-anuncia-nombramientos-en-seguridad-universitaria/" target="_blank" rel="noopener" class="nws-card nws-card-hero" style="transition-delay:0.00s">
           <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/el-rector-de-la-unam-anuncia-nombramientos-en-seguridad-universitaria/"><div class="og-loader"></div></div></div>
           <div class="nws-body">
             <span class="nws-source">Gaceta UNAM</span>
@@ -4175,7 +4461,7 @@ html{scroll-behavior:smooth}
             <div class="nws-foot"><span class="nws-date">18 nov. 2025</span><span class="nws-link">Leer&nbsp;<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span></div>
           </div>
         </a>
-        <a href="https://www.gaceta.unam.mx/impulso-a-un-nuevo-paradigma-de-politica-de-cuidado-y-seguridad/" target="_blank" rel="noopener" class="nws-card nws-card-tall">
+        <a href="https://www.gaceta.unam.mx/impulso-a-un-nuevo-paradigma-de-politica-de-cuidado-y-seguridad/" target="_blank" rel="noopener" class="nws-card nws-card-tall" style="transition-delay:0.10s">
           <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/impulso-a-un-nuevo-paradigma-de-politica-de-cuidado-y-seguridad/"><div class="og-loader"></div></div></div>
           <div class="nws-body">
             <span class="nws-source">Gaceta UNAM</span>
@@ -4184,7 +4470,7 @@ html{scroll-behavior:smooth}
             <div class="nws-foot"><span class="nws-date">Gaceta UNAM</span><span class="nws-link">Leer&nbsp;<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span></div>
           </div>
         </a>
-        <a href="https://www.gaceta.unam.mx/analizan-retos-y-estrategias-de-seguridad-en-la-universidad/" target="_blank" rel="noopener" class="nws-card nws-card-sm">
+        <a href="https://www.gaceta.unam.mx/analizan-retos-y-estrategias-de-seguridad-en-la-universidad/" target="_blank" rel="noopener" class="nws-card nws-card-sm" style="transition-delay:0.20s">
           <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/analizan-retos-y-estrategias-de-seguridad-en-la-universidad/"><div class="og-loader"></div></div></div>
           <div class="nws-body">
             <span class="nws-source">Gaceta UNAM</span>
@@ -4193,7 +4479,7 @@ html{scroll-behavior:smooth}
             <div class="nws-foot"><span class="nws-date">6 abr. 2026</span><span class="nws-link">Leer&nbsp;<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span></div>
           </div>
         </a>
-        <a href="https://www.gaceta.unam.mx/seguridad-condicion-indispensable-para-una-educacion-plena/" target="_blank" rel="noopener" class="nws-card nws-card-sm">
+        <a href="https://www.gaceta.unam.mx/seguridad-condicion-indispensable-para-una-educacion-plena/" target="_blank" rel="noopener" class="nws-card nws-card-sm" style="transition-delay:0.30s">
           <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/seguridad-condicion-indispensable-para-una-educacion-plena/"><div class="og-loader"></div></div></div>
           <div class="nws-body">
             <span class="nws-source">Gaceta UNAM</span>
@@ -4202,7 +4488,7 @@ html{scroll-behavior:smooth}
             <div class="nws-foot"><span class="nws-date">27 nov. 2025</span><span class="nws-link">Leer&nbsp;<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span></div>
           </div>
         </a>
-        <a href="https://www.gaceta.unam.mx/jornadas-de-prevencion-universitaria-tercera-edicion-segundo-bloque/" target="_blank" rel="noopener" class="nws-card nws-card-sm">
+        <a href="https://www.gaceta.unam.mx/jornadas-de-prevencion-universitaria-tercera-edicion-segundo-bloque/" target="_blank" rel="noopener" class="nws-card nws-card-sm" style="transition-delay:0.40s">
           <div class="nws-img"><div data-og-url="https://www.gaceta.unam.mx/jornadas-de-prevencion-universitaria-tercera-edicion-segundo-bloque/"><div class="og-loader"></div></div></div>
           <div class="nws-body">
             <span class="nws-source">Gaceta UNAM</span>
@@ -4217,6 +4503,11 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
+<div class="page-wave" style="background:#ffffff;line-height:0;overflow:hidden">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:70px">
+    <path d="M0,70 C360,0 720,70 1080,20 C1260,0 1380,40 1440,20 L1440,70 Z" fill="#F4F7FB"/>
+  </svg>
+</div>
   <section class="nov-section" id="novedades">
     <h2 class="sec-title">Novedades y Recursos</h2>
     <div class="nov-tab-bar">
@@ -4687,12 +4978,12 @@ html{scroll-behavior:smooth}
 
       <!-- Sub-pestañas de Material -->
       <div class="info-tabs" style="margin-bottom:24px">
-        <button class="itab active" onclick="switchMatTab('general')"  id="mt-general">Material general</button>
-        <button class="itab"        onclick="switchMatTab('guias')"    id="mt-guias">Guías de actuación</button>
+        <button class="itab active" onclick="switchMatTab('guias')"    id="mt-guias">Guías de actuación</button>
+        <button class="itab"        onclick="switchMatTab('general')"  id="mt-general">Material general</button>
       </div>
 
       <!-- Panel: Material general -->
-      <div id="mp-general" style="display:block;animation:fadeIn .3s ease">
+      <div id="mp-general" style="display:none;animation:fadeIn .3s ease">
         <div class="dl-list">
           <!-- [MATERIAL-+] Agregar materiales aqui -->
           <a href="https://www.dgsgm.unam.mx/docs/Bases%20de%20participaci%C3%B3n%20del%20Bici%20Rally%20BiciFest%202026_%20VF.pdf" target="_blank" rel="noopener" class="dl-item">
@@ -4709,39 +5000,152 @@ html{scroll-behavior:smooth}
       </div>
 
       <!-- Panel: Guías de actuación -->
-      <div id="mp-guias" style="display:none;animation:fadeIn .3s ease">
-        <div class="dl-list">
-          <a href="pdf/guia-extorsion-amenaza-telefonica.pdf" target="_blank" rel="noopener" class="dl-item">
-            <div class="dl-icon" style="background:#C0392B"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
-            <div><div class="dl-name">Guía de actuación para la comunidad universitaria en caso de extorsión o amenaza telefónica</div><div class="dl-desc">Orientaciones y pasos a seguir ante situaciones de extorsión o amenaza telefónica</div></div>
-            <span class="dl-btn">Descargar <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+      <div id="mp-guias" style="display:block;animation:fadeIn .3s ease">
+        <style>
+        .guia-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+        .guia-card{border-radius:14px;overflow:hidden;border:1px solid var(--gris-borde);box-shadow:0 3px 16px rgba(0,59,113,.08);background:#fff;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s ease}
+        .guia-card:hover{transform:translateY(-5px);box-shadow:0 12px 36px rgba(0,59,113,.16)}
+        .guia-cover{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#e8f0fb;flex-shrink:0}
+        .guia-cover img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .35s ease}
+        .guia-card:hover .guia-cover img{transform:scale(1.03)}
+        .guia-cover-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;background:linear-gradient(160deg,#e8f1fb,#cfdff5)}
+        .guia-cover-ph svg{opacity:.35}
+        .guia-cover-ph span{font-family:'Courier New',monospace;font-size:10px;font-weight:700;color:var(--azul);opacity:.5;text-align:center;word-break:break-all}
+        .guia-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,20,55,.82) 0%,rgba(0,20,55,.15) 55%,transparent 100%);opacity:0;transition:opacity .25s ease;display:flex;align-items:flex-end;justify-content:center;padding-bottom:18px}
+        .guia-card:hover .guia-overlay{opacity:1}
+        .guia-dl-pill{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--azul);font-size:12px;font-weight:700;padding:7px 16px;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+        .guia-dl-pill svg{flex-shrink:0}
+        .guia-footer{padding:14px 16px;border-top:1px solid var(--gris-borde);background:#fff;display:flex;flex-direction:column;gap:4px}
+        .guia-title{font-size:13px;font-weight:700;color:var(--azul);line-height:1.4}
+        .guia-desc{font-size:11.5px;color:var(--gris-sub);font-weight:300;line-height:1.5}
+        .guia-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:#C0392B;background:rgba(192,57,43,.08);padding:3px 9px;border-radius:8px;margin-top:2px;width:fit-content}
+        @media(max-width:960px){.guia-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:580px){.guia-grid{grid-template-columns:1fr}}
+        </style>
+
+        <div class="guia-grid">
+
+          <!-- 1. Extorsión o amenaza telefónica -->
+          <a href="pdf/guia-extorsion-amenaza-telefonica.pdf" target="_blank" rel="noopener" class="guia-card">
+            <div class="guia-cover">
+              <img src="img/portada-guia-extorsion.png" alt="Guía extorsión telefónica"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="guia-cover-ph" style="display:none">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>portada-guia-extorsion.png</span>
+              </div>
+              <div class="guia-overlay">
+                <span class="guia-dl-pill"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--azul)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Abrir PDF</span>
+              </div>
+            </div>
+            <div class="guia-footer">
+              <span class="guia-badge"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81"/></svg>Extorsión · Amenaza</span>
+              <div class="guia-title">Extorsión o amenaza telefónica</div>
+              <div class="guia-desc">Orientaciones y pasos a seguir ante situaciones de extorsión o amenaza telefónica</div>
+            </div>
           </a>
-          <a href="pdf/guia-artefactos-peligrosos.pdf" target="_blank" rel="noopener" class="dl-item">
-            <div class="dl-icon" style="background:#E67E22"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-            <div><div class="dl-name">Guía de actuación para la comunidad universitaria ante la presencia de artefactos de naturaleza peligrosa</div><div class="dl-desc">Protocolo de respuesta ante la identificación de objetos o artefactos peligrosos en el campus</div></div>
-            <span class="dl-btn">Descargar <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+
+          <!-- 2. Artefactos peligrosos -->
+          <a href="pdf/guia-artefactos-peligrosos.pdf" target="_blank" rel="noopener" class="guia-card">
+            <div class="guia-cover">
+              <img src="img/portada-guia-artefactos.png" alt="Guía artefactos peligrosos"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="guia-cover-ph" style="display:none">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>portada-guia-artefactos.png</span>
+              </div>
+              <div class="guia-overlay">
+                <span class="guia-dl-pill"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--azul)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Abrir PDF</span>
+              </div>
+            </div>
+            <div class="guia-footer">
+              <span class="guia-badge"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>Seguridad · Riesgo</span>
+              <div class="guia-title">Artefactos de naturaleza peligrosa</div>
+              <div class="guia-desc">Protocolo ante la identificación de objetos o artefactos peligrosos en el campus</div>
+            </div>
           </a>
-          <a href="pdf/guia-actuacion-robo.pdf" target="_blank" rel="noopener" class="dl-item">
-            <div class="dl-icon" style="background:#7D3C98"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-            <div><div class="dl-name">Guía de actuación para la comunidad universitaria en caso de robo</div><div class="dl-desc">Indicaciones y recomendaciones para actuar correctamente ante un robo dentro o fuera del campus</div></div>
-            <span class="dl-btn">Descargar <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+
+          <!-- 3. Robo -->
+          <a href="pdf/guia-actuacion-robo.pdf" target="_blank" rel="noopener" class="guia-card">
+            <div class="guia-cover">
+              <img src="img/portada-guia-robo.png" alt="Guía caso de robo"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="guia-cover-ph" style="display:none">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>portada-guia-robo.png</span>
+              </div>
+              <div class="guia-overlay">
+                <span class="guia-dl-pill"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--azul)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Abrir PDF</span>
+              </div>
+            </div>
+            <div class="guia-footer">
+              <span class="guia-badge"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Seguridad · Robo</span>
+              <div class="guia-title">Caso de robo</div>
+              <div class="guia-desc">Indicaciones para actuar correctamente ante un robo dentro o fuera del campus</div>
+            </div>
           </a>
-          <a href="pdf/guia-mensajes-odio-redes.pdf" target="_blank" rel="noopener" class="dl-item">
-            <div class="dl-icon" style="background:#1565C0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-            <div><div class="dl-name">Guía de actuación para la comunidad universitaria en caso de mensajes de odio o amenazas en redes</div><div class="dl-desc">Lineamientos para identificar, documentar y reportar mensajes de odio o amenazas en redes sociales</div></div>
-            <span class="dl-btn">Descargar <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+
+          <!-- 4. Mensajes de odio en redes -->
+          <a href="pdf/guia-mensajes-odio-redes.pdf" target="_blank" rel="noopener" class="guia-card">
+            <div class="guia-cover">
+              <img src="img/portada-guia-odio-redes.png" alt="Guía mensajes de odio en redes"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="guia-cover-ph" style="display:none">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>portada-guia-odio-redes.png</span>
+              </div>
+              <div class="guia-overlay">
+                <span class="guia-dl-pill"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--azul)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Abrir PDF</span>
+              </div>
+            </div>
+            <div class="guia-footer">
+              <span class="guia-badge"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Redes · Violencia digital</span>
+              <div class="guia-title">Mensajes de odio o amenazas en redes</div>
+              <div class="guia-desc">Cómo identificar, documentar y reportar mensajes de odio o amenazas en redes sociales</div>
+            </div>
           </a>
-          <a href="pdf/guia-incidente-critico.pdf" target="_blank" rel="noopener" class="dl-item">
-            <div class="dl-icon" style="background:#B03A2E"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-            <div><div class="dl-name">Guía de actuación para la comunidad universitaria ante un incidente crítico</div><div class="dl-desc">Procedimientos de respuesta y coordinación ante situaciones de emergencia o incidente crítico en la UNAM</div></div>
-            <span class="dl-btn">Descargar <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+
+          <!-- 5. Incidente crítico -->
+          <a href="pdf/guia-incidente-critico.pdf" target="_blank" rel="noopener" class="guia-card">
+            <div class="guia-cover">
+              <img src="img/portada-guia-incidente-critico.png" alt="Guía incidente crítico"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="guia-cover-ph" style="display:none">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>portada-guia-incidente-critico.png</span>
+              </div>
+              <div class="guia-overlay">
+                <span class="guia-dl-pill"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--azul)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Abrir PDF</span>
+              </div>
+            </div>
+            <div class="guia-footer">
+              <span class="guia-badge"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Emergencia · Protocolo</span>
+              <div class="guia-title">Incidente crítico</div>
+              <div class="guia-desc">Procedimientos ante situaciones de emergencia o incidente crítico en la UNAM</div>
+            </div>
           </a>
-          <a href="pdf/guia-actuacion-comunidad-universitaria.pdf" target="_blank" rel="noopener" class="dl-item">
-            <div class="dl-icon" style="background:#1A5276"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
-            <div><div class="dl-name">Guía de actuación para la comunidad universitaria</div><div class="dl-desc">Guía general de orientación y actuación para todos los integrantes de la comunidad universitaria de la UNAM</div></div>
-            <span class="dl-btn">Descargar <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+
+          <!-- 6. Guía general de la comunidad universitaria -->
+          <a href="pdf/guia-actuacion-comunidad-universitaria.pdf" target="_blank" rel="noopener" class="guia-card">
+            <div class="guia-cover">
+              <img src="img/portada-guia-comunidad.png" alt="Guía comunidad universitaria"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="guia-cover-ph" style="display:none">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>portada-guia-comunidad.png</span>
+              </div>
+              <div class="guia-overlay">
+                <span class="guia-dl-pill"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--azul)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Abrir PDF</span>
+              </div>
+            </div>
+            <div class="guia-footer">
+              <span class="guia-badge"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>General · Comunidad</span>
+              <div class="guia-title">Guía general de la comunidad universitaria</div>
+              <div class="guia-desc">Orientación y actuación para todos los integrantes de la comunidad universitaria UNAM</div>
+            </div>
           </a>
-        </div>
+
+        </div><!-- /guia-grid -->
       </div>
 
     </div>
@@ -4764,6 +5168,7 @@ html{scroll-behavior:smooth}
       @keyframes actFadeUp{from{opacity:0;transform:translateY(32px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
       @keyframes actFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
+      /* ── Act animations (Actividades) ── */
       .act-block{opacity:0;transition:opacity .7s ease,transform .7s ease}
       .act-block.visible{opacity:1;transform:none!important}
       .act-from-left{transform:translateX(-40px)}
@@ -5209,28 +5614,25 @@ html{scroll-behavior:smooth}
   <!-- EMERGENCIAS UNAM -->
 
 
-<div class="page-wave" style="background:#ffffff;line-height:0;overflow:hidden">
-  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:120px">
-    <path d="M0,0 C360,120 720,0 1080,80 C1260,120 1380,40 1440,60 L1440,0 Z" fill="#EAF2FB"/>
-  </svg>
-</div>
+
 
 
 
   <!-- REDES SOCIALES -->
 
 
-<div class="page-wave" style="background:#ffffff;line-height:0;overflow:hidden">
-  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:120px">
-    <path d="M0,120 C240,0 480,120 720,40 C960,-40 1200,80 1440,40 L1440,120 Z" fill="#003B71"/>
+<div class="page-wave" style="background:#F4F7FB;line-height:0;overflow:hidden">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:70px">
+    <path d="M0,0 C360,70 720,0 1080,50 C1260,70 1380,30 1440,50 L1440,0 Z" fill="#ffffff"/>
   </svg>
-</div>  <section class="social-section" id="redes">
-    <div class="sec-tag">Síguenos</div>
+</div>
+<section class="social-section" id="redes">
+    <div class="sec-tag act-block act-from-up">Síguenos</div>
     <h2 class="sec-title">Redes sociales</h2>
     <div class="social-grid">
 
       <!-- INSTAGRAM -->
-      <div class="soc-card soc-ig">
+      <div class="soc-card soc-ig act-block act-from-up" style="transition-delay:0.00s">
         <div class="soc-header">
           <div class="soc-avatar soc-avatar-ig">
             <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -5241,17 +5643,20 @@ html{scroll-behavior:smooth}
           </div>
           <a href="https://www.instagram.com/spamsu_unam" target="_blank" rel="noopener" class="soc-follow-btn">Seguir</a>
         </div>
-        <a href="https://www.instagram.com/spamsu_unam" target="_blank" rel="noopener" class="soc-img-link">
-          <img src="img/insta_test.png" alt="Publicación de Instagram SPAMSU" class="soc-preview-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="soc-img-fallback" style="display:none">
-            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.5" width="40" height="40"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            <span>Ver en Instagram</span>
-          </div>
-          <div class="soc-img-overlay">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            <span>Ver perfil completo</span>
-          </div>
-        </a>
+        <!-- Vista previa del perfil de Instagram via embed oficial -->
+        <div style="flex:1;min-height:480px;overflow:hidden;background:#fafafa;display:flex;flex-direction:column">
+          <iframe
+            src="https://www.instagram.com/spamsu_unam/embed"
+            width="100%"
+            height="480"
+            frameborder="0"
+            scrolling="no"
+            allowtransparency="true"
+            style="border:none;display:block;flex:1;min-height:480px;background:#fafafa"
+            loading="lazy"
+            title="Perfil de Instagram SPAMSU UNAM">
+          </iframe>
+        </div>
         <div class="soc-footer">
           <a href="https://www.instagram.com/spamsu_unam" target="_blank" rel="noopener" class="soc-cta soc-cta-ig">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -5261,7 +5666,7 @@ html{scroll-behavior:smooth}
       </div>
 
       <!-- TIKTOK -->
-      <div class="soc-card soc-tiktok">
+      <div class="soc-card soc-tiktok act-block act-from-up" style="transition-delay:0.12s">
         <div class="soc-header soc-header-dark">
           <div class="soc-avatar soc-avatar-tt">
             <svg viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.73a4.85 4.85 0 01-1.01-.04z"/></svg>
@@ -5272,17 +5677,25 @@ html{scroll-behavior:smooth}
           </div>
           <a href="https://www.tiktok.com/@spamsu_unam" target="_blank" rel="noopener" class="soc-follow-btn soc-follow-tt">Seguir</a>
         </div>
-        <a href="https://www.tiktok.com/@spamsu_unam" target="_blank" rel="noopener" class="soc-img-link soc-img-link-tt">
-          <div class="soc-tt-placeholder">
-            <svg viewBox="0 0 24 24" fill="rgba(255,255,255,.18)" width="64" height="64"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.73a4.85 4.85 0 01-1.01-.04z"/></svg>
-            <span class="soc-tt-text">Ver videos en TikTok</span>
-            <span class="soc-tt-sub">Toca para abrir el perfil</span>
+        <!-- Vista previa TikTok — reemplazar el src del iframe cuando tengas el enlace oficial del canal -->
+        <div style="flex:1;min-height:480px;overflow:hidden;background:#010101;display:flex;flex-direction:column;position:relative">
+          <!-- TODO: Cuando tengas el enlace oficial del embed de TikTok, reemplaza el bloque de abajo:
+               Sustituye la URL del src del iframe por el embed oficial.
+               Ejemplo de formato típico: https://www.tiktok.com/embed/@spamsu_unam
+               o el iframe que TikTok provea desde su panel de creadores.
+          -->
+          <div style="width:100%;height:100%;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;background:linear-gradient(160deg,#010101 60%,#0d1117)">
+            <svg viewBox="0 0 24 24" fill="rgba(255,255,255,.12)" width="72" height="72"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.73a4.85 4.85 0 01-1.01-.04z"/></svg>
+            <span style="font-size:15px;font-weight:700;color:rgba(255,255,255,.8);text-align:center">Vista previa próximamente</span>
+            <span style="font-size:12px;color:rgba(255,255,255,.35);text-align:center;max-width:200px;line-height:1.6">El embed de TikTok se activará cuando tengamos el enlace oficial del canal</span>
+            <a href="https://www.tiktok.com/@spamsu_unam" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(90deg,#69C9D0,#EE1D52);color:#fff;font-size:13px;font-weight:700;padding:9px 20px;border-radius:20px;text-decoration:none;margin-top:4px;transition:opacity .2s"
+               onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.73a4.85 4.85 0 01-1.01-.04z"/></svg>
+              Ver perfil en TikTok
+            </a>
           </div>
-          <div class="soc-img-overlay">
-            <svg viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.73a4.85 4.85 0 01-1.01-.04z"/></svg>
-            <span>Abrir TikTok</span>
-          </div>
-        </a>
+        </div>
         <div class="soc-footer soc-footer-dark">
           <a href="https://www.tiktok.com/@spamsu_unam" target="_blank" rel="noopener" class="soc-cta soc-cta-tt">
             <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.73a4.85 4.85 0 01-1.01-.04z"/></svg>
@@ -5296,8 +5709,13 @@ html{scroll-behavior:smooth}
 
 
   <!-- ACCESOS INSTITUCIONALES -->
+<div class="page-wave" style="background:#ffffff;line-height:0;overflow:hidden">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:70px">
+    <path d="M0,70 C240,20 480,70 720,30 C960,0 1200,50 1440,30 L1440,70 Z" fill="#F4F7FB"/>
+  </svg>
+</div>
   <section class="accesos-section" id="accesos">
-    <div class="sec-tag">Red universitaria</div>
+    <div class="sec-tag act-block act-from-up">Red universitaria</div>
     <h2 class="sec-title">Accesos Institucionales UNAM</h2>
     <div class="accesos-grid">
       <a href="https://coordinaciongenero.unam.mx/" target="_blank" rel="noopener" class="acceso-card">
@@ -5333,6 +5751,8 @@ html{scroll-behavior:smooth}
   </section>
 
 
+  <!-- wave accesos→mapa -->
+<div class="page-wave" style="background:#F4F7FB;line-height:0;overflow:hidden"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:60px"><path d="M0,60 C360,10 720,60 1080,20 C1260,0 1380,35 1440,20 L1440,60 Z" fill="#ffffff"/></svg></div>
   <!-- MAPA FINAL — Pestanas de ubicaciones -->
   <div id="mapa-ubicacion" style="background:#fff;border-top:2px solid var(--gris-borde)">
     <style>
@@ -5366,7 +5786,7 @@ html{scroll-behavior:smooth}
     @media(max-width:480px){.mapa-tab-btn{font-size:13px;padding:12px 14px}}
     </style>
 
-    <div style="background:var(--azul);padding:16px 24px 0 24px">
+    <div class="act-block act-from-up" style="background:var(--azul);padding:16px 24px 0 24px">
       <div class="sec-tag" style="color:rgba(255,255,255,.65);margin:0 0 8px 0">Nuestra presencia en el campus</div>
       <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:700;color:#fff;margin-bottom:0;padding-bottom:0">Ubica nuestros lugares de operación</h3>
     </div>
@@ -5460,6 +5880,11 @@ html{scroll-behavior:smooth}
 
 
   <!-- FOOTER -->
+<div class="page-wave" style="background:#ffffff;line-height:0;overflow:hidden">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:80px">
+    <path d="M0,70 C360,0 720,70 1080,20 C1260,0 1380,40 1440,20 L1440,70 Z" fill="#003B71"/>
+  </svg>
+</div>
   <footer class="site-footer" id="contacto">
     <style>
     /* ════ FOOTER — banner image base ════ */
@@ -5576,7 +6001,7 @@ html{scroll-behavior:smooth}
 
     <div class="footer-content">
       <!-- ── Left: UNAM + 475 ── -->
-      <div class="footer-left">
+      <div class="footer-left act-block act-from-left">
         <div class="footer-logos-row">
           <!-- Escudo UNAM -->
           <div class="footer-escudo">
@@ -5607,7 +6032,7 @@ html{scroll-behavior:smooth}
       </div>
 
       <!-- ── Right: SPAMSU + links ── -->
-      <div class="footer-right">
+      <div class="footer-right act-block act-from-right" style="transition-delay:.15s">
         <div class="footer-spamsu-head">
           <div class="footer-spamsu-logo">
             <img src="img/spamsu-blanco.png" alt="SPAMSU" onerror="this.style.display='none'">
@@ -5657,11 +6082,6 @@ html{scroll-behavior:smooth}
 
 
 
-<div class="page-wave" style="background:#ffffff;line-height:0;overflow:hidden">
-  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:120px">
-    <path d="M0,0 C240,120 480,0 720,80 C960,160 1200,20 1440,80 L1440,0 Z" fill="#003B71"/>
-  </svg>
-</div>
 </main>
 
 
@@ -5706,12 +6126,12 @@ html{scroll-behavior:smooth}
 .disclaimer-img2 img{width:100%;display:block;aspect-ratio:960/1120;object-fit:cover}
 /* Botón continuar */
 .disclaimer-close-link{
-  font-size:12px;font-weight:800;color:rgba(255,255,255,.75);
-  cursor:pointer;background:none;border:none;
-  letter-spacing:.16em;text-transform:uppercase;
-  transition:color .2s;padding:4px 0;
+  font-size:15px;font-weight:800;color:#fff;
+  cursor:pointer;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);
+  border-radius:10px;letter-spacing:.12em;text-transform:uppercase;
+  transition:all .2s;padding:12px 32px;margin-top:4px;
 }
-.disclaimer-close-link:hover{color:#fff}
+.disclaimer-close-link:hover{background:rgba(255,255,255,.28);border-color:rgba(255,255,255,.7)}
 @media(max-width:580px){
   .disclaimer-imgs{grid-template-columns:1fr;max-width:360px;margin:0 auto 14px}
   .disclaimer-box{max-width:380px}
@@ -6032,6 +6452,10 @@ function sbGoSection(sectionId, btnId){
 
 /* Abrir un panel de pestaña aparte (Directorio, etc.) */
 function sbOpenTab(panelId, btnId){
+  // Guardar posición de scroll actual para poder regresar
+  window._lastScrollPos = window.pageYOffset;
+  window._lastSectionBtn = btnId;
+
   // Activar modo pestaña: oculta scroll, muestra el panel
   document.querySelectorAll('.panel-tab-only').forEach(function(p){p.classList.remove('panel-open')});
   var panelKey = panelId==='marco-juridico' ? 'panel-marco-juridico' : panelId==='crace' ? 'panel-crace' : panelId==='cinig' ? 'panel-cinig' : 'panel-'+panelId;
@@ -6041,7 +6465,7 @@ function sbOpenTab(panelId, btnId){
   // Marcar botón activo
   document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
   var btn = document.getElementById(btnId); if(btn) btn.classList.add('active');
-  // Scroll al inicio del panel en lugar del top de la pagina (evita mostrar el video hero)
+  // Scroll al inicio del panel
   setTimeout(function(){
     var el = document.getElementById('panel-'+panelId);
     if(el){
@@ -6054,6 +6478,24 @@ function sbOpenTab(panelId, btnId){
   // Cierra sidebar movil
   var sb = document.getElementById('sidebar');
   if(sb && sb.classList.contains('mobile-open')) toggleSidebar();
+}
+
+/* Regresar al lugar exacto donde se abrió el panel */
+function panelGoBack(){
+  document.body.classList.remove('tab-mode');
+  document.querySelectorAll('.panel-tab-only').forEach(function(p){p.classList.remove('panel-open')});
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
+  // Restaurar botón activo
+  var lastBtn = window._lastSectionBtn;
+  if(lastBtn){
+    var sidebarBtn = document.getElementById(lastBtn);
+    if(sidebarBtn) sidebarBtn.classList.add('active');
+  }
+  // Restaurar posición de scroll exacta
+  setTimeout(function(){
+    var pos = window._lastScrollPos || 0;
+    window.scrollTo({top: pos, behavior:'smooth'});
+  }, 50);
 }
 
 /* Alias: showTab sigue funcionando para cualquier llamada existente */
@@ -6115,15 +6557,6 @@ function switchCrTab(id){
   if(p) p.classList.add('active');
 }
 
-function switchMjTab(id){
-  document.querySelectorAll('.mj-tab').forEach(function(b){b.classList.remove('active')});
-  document.querySelectorAll('.mj-panel').forEach(function(p){p.classList.remove('active')});
-  document.querySelectorAll('.mj-tab').forEach(function(b){
-    if(b.getAttribute('onclick')&&b.getAttribute('onclick').indexOf(id)>-1) b.classList.add('active');
-  });
-  var pane=document.getElementById('mjp-'+id);
-  if(pane) pane.classList.add('active');
-}
 
 function openMarcoJuridico(){
   sbOpenTab('marco-juridico','sb-marco');
@@ -6135,7 +6568,7 @@ function switchInfoTab(id){
   var wrap = document.querySelector('.info-text-wrap');
   var sideImg = document.getElementById('info-side-img');
   var sideImgEl = document.getElementById('info-side-img-el');
-  var isTextPane = (id==='acerca' || id==='mision' || id==='vision');
+  var isImgPane = (id==='acerca' || id==='mision' || id==='vision');
 
   // Update tab buttons immediately
   document.querySelectorAll('.itab').forEach(function(b){b.classList.remove('active')});
@@ -6143,37 +6576,31 @@ function switchInfoTab(id){
   if(itBtn) itBtn.classList.add('active');
 
   if(container){
-    // Animate out
     container.classList.remove('animating-in');
     container.classList.add('animating-out');
 
     setTimeout(function(){
-      // Swap content
       document.querySelectorAll('.itab-pane').forEach(function(p){p.classList.remove('active')});
       var itPane = document.getElementById('ip-'+id);
       if(itPane) itPane.classList.add('active');
 
       // Swap image
-      if(sideImgEl && isTextPane){
-        var imgs = {acerca:'img/acerca-nosotros.png', mision:'img/mision.png', vision:'img/vision.png'};
-        sideImgEl.src = imgs[id] || 'img/acerca-nosotros.png';
+      var imgs = {acerca:'img/acerca-nosotros.png', mision:'img/mision.png', vision:'img/vision.png'};
+      if(sideImgEl && isImgPane && imgs[id]){
+        sideImgEl.src = imgs[id];
       }
-      if(wrap) wrap.style.display = isTextPane ? '' : 'none';
-      if(sideImg) sideImg.style.display = isTextPane ? '' : 'none';
+      if(sideImg) sideImg.style.display = isImgPane ? '' : 'none';
 
-      // Animate in
       container.classList.remove('animating-out');
       container.classList.add('animating-in');
       setTimeout(function(){ container.classList.remove('animating-in'); }, 420);
     }, 200);
 
   } else {
-    // Fallback for Valores / Decálogo (outside container)
     document.querySelectorAll('.itab-pane').forEach(function(p){p.classList.remove('active')});
     var itPane = document.getElementById('ip-'+id);
     if(itPane) itPane.classList.add('active');
-    if(wrap) wrap.style.display = isTextPane ? '' : 'none';
-    if(sideImg) sideImg.style.display = isTextPane ? '' : 'none';
+    if(sideImg) sideImg.style.display = isImgPane ? '' : 'none';
   }
 }
 
@@ -6907,135 +7334,34 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closePmsModa
 </script>
 
 <style>
-/* ══════════════════════════════════════
-   GLOBAL SCROLL ANIMATIONS
-   Aplica a todo el contenido de la página
-   ══════════════════════════════════════ */
-.sa-fade-up   { opacity:0; transform:translateY(30px);  transition:opacity .65s ease, transform .65s cubic-bezier(.22,.61,.36,1); }
-.sa-fade-left { opacity:0; transform:translateX(-36px); transition:opacity .65s ease, transform .65s cubic-bezier(.22,.61,.36,1); }
-.sa-fade-right{ opacity:0; transform:translateX(36px);  transition:opacity .65s ease, transform .65s cubic-bezier(.22,.61,.36,1); }
-.sa-zoom      { opacity:0; transform:scale(.94);        transition:opacity .6s ease, transform .6s cubic-bezier(.22,.61,.36,1); }
-.sa-visible   { opacity:1 !important; transform:none !important; }
-
-/* Stagger delays para grupos de cards/items */
-.sa-stagger > *:nth-child(1){ transition-delay:.05s }
-.sa-stagger > *:nth-child(2){ transition-delay:.13s }
-.sa-stagger > *:nth-child(3){ transition-delay:.21s }
-.sa-stagger > *:nth-child(4){ transition-delay:.29s }
-.sa-stagger > *:nth-child(5){ transition-delay:.37s }
-.sa-stagger > *:nth-child(6){ transition-delay:.45s }
-.sa-stagger > *:nth-child(7){ transition-delay:.53s }
-.sa-stagger > *:nth-child(8){ transition-delay:.61s }
-.sa-stagger > *:nth-child(n+9){ transition-delay:.69s }
-
-/* No animar si prefers-reduced-motion */
+/* ═══════════════════════════════════════════════════
+   GLOBAL SCROLL OBSERVER — complementa Actividades
+   ═══════════════════════════════════════════════════ */
+.nws-card{ opacity:0; transform:translateY(28px) scale(.97);
+  transition:opacity .6s ease, transform .6s cubic-bezier(.22,.61,.36,1); }
+.nws-card.visible{ opacity:1; transform:none; }
+.footer-left.act-block  { transform:translateX(-36px) }
+.footer-right.act-block { transform:translateX(36px)  }
 @media(prefers-reduced-motion:reduce){
-  .sa-fade-up,.sa-fade-left,.sa-fade-right,.sa-zoom{opacity:1;transform:none;transition:none}
+  .act-block,.nws-card{ opacity:1!important; transform:none!important; transition:none!important; }
 }
 </style>
-
 <script>
-/* ── Global Scroll Animation Engine ── */
 (function(){
-  'use strict';
-
-  /* No correr en tab-panels ocultos hasta que sean visibles */
-  function initScrollAnimations(){
-    var targets = document.querySelectorAll(
-      /* Títulos */
-      '.sec-title, .sec-tag, .sec-subtitle,' +
-      /* Cards de servicios, noticias, novedades, accesos */
-      '.srv-card, .noticia-card, .acceso-card, .soc-card,' +
-      /* Secciones de texto institucional */
-      '.info-section-header, .info-panel,' +
-      /* Directorio */
-      '.dir-card,' +
-      /* Hero items */
-      '.hero-qs-bar,' +
-      /* Galería / fotos */
-      '.nov-img-wrap, .senderos-photo,' +
-      /* Redes sociales */
-      '.social-grid,' +
-      /* Footer sections */
-      '.footer-col,' +
-      /* Videos */
-      '.video-wrap,' +
-      /* Panels: noticias, novedades header */
-      '.nov-header, .ntab-nav,' +
-      /* Grids de iconos o features */
-      '.features-grid > *, .icon-grid > *,' +
-      /* Tablas y bloques de texto */
-      '.info-block, .info-row'
-    );
-
-    if(!targets.length) return;
-
-    /* Asignar clases según posición */
-    targets.forEach(function(el, i){
-      /* Evitar elementos ya animados por el sistema de actividades */
-      if(el.classList.contains('act-block')) return;
-      /* Evitar elementos dentro de paneles internos que ya tienen su propia lógica */
-      if(el.closest('#panel-crace,#panel-cinig,#panel-marco-juridico,#panel-informacion,#panel-estructura,#panel-servicios,#panel-directorio,#np-actividades')) return;
-
-      var tag = el.tagName.toLowerCase();
-      var cls = el.className || '';
-
-      if(cls.indexOf('sec-title')>-1 || cls.indexOf('sec-tag')>-1){
-        el.classList.add('sa-fade-up');
-      } else if(cls.indexOf('soc-card')>-1 || cls.indexOf('footer-col')>-1){
-        el.classList.add('sa-fade-up');
-        el.closest('.social-grid,footer,.footer-wrap') && el.parentElement.classList.add('sa-stagger');
-      } else if(cls.indexOf('noticia-card')>-1 || cls.indexOf('acceso-card')>-1 || cls.indexOf('srv-card')>-1){
-        el.classList.add('sa-fade-up');
-        el.parentElement && el.parentElement.classList.add('sa-stagger');
-      } else if(cls.indexOf('dir-card')>-1){
-        el.classList.add('sa-fade-up');
-        el.parentElement && el.parentElement.classList.add('sa-stagger');
-      } else {
-        el.classList.add('sa-fade-up');
-      }
+  var els = document.querySelectorAll('.act-block, .nws-card');
+  if(!els.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
     });
-
-    /* Animar también imágenes grandes y videos del scroll principal */
-    document.querySelectorAll('section .parallax-bg, section video, .video-hero').forEach(function(el){
-      if(el.closest('#np-actividades')) return;
-      el.classList.add('sa-zoom');
-    });
-
-    /* IntersectionObserver */
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('sa-visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.sa-fade-up,.sa-fade-left,.sa-fade-right,.sa-zoom').forEach(function(el){
-      /* No observar si ya es visible (en viewport al cargar) */
-      var rect = el.getBoundingClientRect();
-      if(rect.top < window.innerHeight * 0.85){
-        el.classList.add('sa-visible');
-      } else {
-        io.observe(el);
-      }
-    });
-
-    /* También aplicar stagger a grids ya existentes */
-    document.querySelectorAll('.accesos-grid, .social-grid, .srv-grid, .noticias-grid').forEach(function(grid){
-      grid.classList.add('sa-stagger');
-    });
-  }
-
-  /* Esperar a que el DOM cargue completamente */
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', initScrollAnimations);
-  } else {
-    setTimeout(initScrollAnimations, 200);
-  }
+  },{ threshold:0.09, rootMargin:'0px 0px -20px 0px' });
+  els.forEach(function(el){
+    if(el.closest('#np-actividades')) return;
+    var r = el.getBoundingClientRect();
+    if(r.top < window.innerHeight * 0.9){ el.classList.add('visible'); }
+    else { io.observe(el); }
+  });
 })();
 </script>
-
 </body>
 </html>
