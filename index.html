@@ -1999,6 +1999,27 @@ html{scroll-behavior:smooth}
     window.heroCarouselMove = function(dir){ goTo(current + dir); };
     window.heroCarouselGo   = function(n)  { goTo(n); };
 
+    /* ── Swipe táctil en móvil ── */
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var isDragging  = false;
+
+    track.addEventListener('touchstart', function(e){
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      isDragging  = true;
+    }, { passive: true });
+
+    track.addEventListener('touchend', function(e){
+      if(!isDragging) return;
+      isDragging = false;
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      /* Solo swipe horizontal (dx > dy en valor absoluto) */
+      if(Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+      goTo(current + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
     function resetAuto(){ /* auto-advance desactivado */ }
 
     /* Boot video */
@@ -7311,6 +7332,19 @@ window.addEventListener('load', function(){
   function beCarousel(dir){ beCarouselGoTo(beCurrent + dir); }
   window.beCarousel     = beCarousel;
   window.beCarouselGoTo = beCarouselGoTo;
+
+  /* ── Swipe táctil ── */
+  var beEl = document.getElementById('be-carousel');
+  if(beEl){
+    var beTx = 0, beTy = 0;
+    beEl.addEventListener('touchstart', function(e){ beTx = e.touches[0].clientX; beTy = e.touches[0].clientY; }, {passive:true});
+    beEl.addEventListener('touchend',   function(e){
+      var dx = e.changedTouches[0].clientX - beTx;
+      var dy = e.changedTouches[0].clientY - beTy;
+      if(Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+      beCarousel(dx < 0 ? 1 : -1);
+    }, {passive:true});
+  }
 
   function beStopVideo(){
     var v = document.getElementById('be-video');
