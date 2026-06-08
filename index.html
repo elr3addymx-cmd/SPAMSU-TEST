@@ -6538,7 +6538,25 @@ function heroGoNovedades(){
 function scrollToEmerg(){var el=document.getElementById('emergencias');if(el){el.scrollIntoView({behavior:'smooth',block:'start'});var sb=document.getElementById('sidebar');if(sb&&sb.classList.contains('mobile-open'))toggleSidebar();}}
 function goTop(){window.scrollTo({top:0,behavior:'smooth'});}
 function toggleSidebar(){var sb=document.getElementById('sidebar');var bd=document.getElementById('sidebarBackdrop');var hb=document.getElementById('mobHamburger');var open=sb.classList.contains('mobile-open');sb.classList.toggle('mobile-open',!open);bd.classList.toggle('open',!open);hb.classList.toggle('open',!open);document.body.style.overflow=open?'':'hidden';}
-document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.sb-item').forEach(function(btn){btn.addEventListener('click',function(){var sb=document.getElementById('sidebar');if(sb&&sb.classList.contains('mobile-open'))toggleSidebar();});});});
+/* ── sb-item click: solo cierra sidebar si NO viene de un flyout ──
+   Los flyout-items llaman sbCloseFlyout() y luego la acción de nav.
+   El sidebar debe permanecer abierto en móvil mientras el usuario navega
+   por submenús; solo se cierra si toca directamente un sb-item sin flyout. */
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.sb-item').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      /* Si hay un flyout visible no cerrar el sidebar */
+      var flyoutOpen = !!document.querySelector('.sb-flyout.visible');
+      if(flyoutOpen) return;
+      /* Si el btn tiene onclick con sbOpenFlyout no cerrar aún */
+      var oc = btn.getAttribute('onclick') || '';
+      if(oc.indexOf('sbOpenFlyout') !== -1) return;
+      /* Solo cerrar para navegación directa (sin flyout) */
+      var sb = document.getElementById('sidebar');
+      if(sb && sb.classList.contains('mobile-open')) toggleSidebar();
+    });
+  });
+});
 
 /* ════════ NAVEGACIÓN HÍBRIDA: SCROLL + PANELES APARTE ════════ */
 
@@ -6584,6 +6602,7 @@ function sbScrollToNovedades(){
   var btn = document.getElementById('sb-novedades');
   if(btn) btn.classList.add('active');
   setTimeout(function(){ el.scrollIntoView({behavior:'smooth', block:'start'}); }, 100);
+  /* No cerrar sidebar si la llamada viene desde el flyout */
 }
 
 function sbGoSection(sectionId, btnId){
@@ -6599,9 +6618,12 @@ function sbGoSection(sectionId, btnId){
   var offset = window.innerWidth <= 900 ? 62 : 0;
   var top = el.getBoundingClientRect().top + window.pageYOffset - offset - 12;
   window.scrollTo({top: top, behavior:'smooth'});
-  // Cierra sidebar móvil
-  var sb = document.getElementById('sidebar');
-  if(sb && sb.classList.contains('mobile-open')) toggleSidebar();
+  // Cierra sidebar móvil SOLO si NO viene de un flyout
+  var fromFlyout = !!document.querySelector('.sb-flyout.visible');
+  if(!fromFlyout){
+    var sb = document.getElementById('sidebar');
+    if(sb && sb.classList.contains('mobile-open')) toggleSidebar();
+  }
 }
 
 /* Abrir un panel de pestaña aparte (Directorio, etc.) */
@@ -6629,9 +6651,12 @@ function sbOpenTab(panelId, btnId){
       window.scrollTo({top:0, behavior:'smooth'});
     }
   }, 20);
-  // Cierra sidebar movil
-  var sb = document.getElementById('sidebar');
-  if(sb && sb.classList.contains('mobile-open')) toggleSidebar();
+  // Cierra sidebar movil SOLO si NO viene de un flyout
+  var fromFlyout = !!document.querySelector('.sb-flyout.visible');
+  if(!fromFlyout){
+    var sb = document.getElementById('sidebar');
+    if(sb && sb.classList.contains('mobile-open')) toggleSidebar();
+  }
 }
 
 /* Regresar al lugar exacto donde se abrió el panel */
