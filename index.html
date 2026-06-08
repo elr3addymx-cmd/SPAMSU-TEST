@@ -2518,7 +2518,7 @@ function heroGoNovedades(){
       <!-- ══════════════════════════════════════
            DGAPSU — bg-servicios.jpg (pb-1)
       ══════════════════════════════════════ -->
-      <div class="parallax-bg pb-1" style="padding:64px 52px">
+      <div class="parallax-bg pb-1">
         <div class="dir-showcase-body" style="max-width:1000px;margin:0 auto">
           <div class="dir-showcase-img-col">
             <div class="dir-showcase-logo-wrap" style="box-shadow:0 16px 48px rgba(0,0,0,.38),0 4px 12px rgba(0,0,0,.22)">
@@ -2553,7 +2553,7 @@ function heroGoNovedades(){
            DGSGM — bg-medio.jpg (pb-2)
       ══════════════════════════════════════ -->
       <div style="height:10px;background:#e8f0f8"></div>
-      <div class="parallax-bg pb-2" style="padding:64px 52px">
+      <div class="parallax-bg pb-2">
         <div class="dir-showcase-body" style="max-width:1000px;margin:0 auto">
           <div class="dir-showcase-img-col">
             <div class="dir-showcase-logo-wrap" style="box-shadow:0 16px 48px rgba(0,0,0,.38),0 4px 12px rgba(0,0,0,.22)">
@@ -2749,7 +2749,7 @@ function heroGoNovedades(){
            ÁREAS — bg-reporte.jpg (pb-3)
       ══════════════════════════════════════ -->
       <div style="height:10px;background:#e8f0f8"></div>
-      <div class="parallax-bg pb-3" style="padding:64px 52px">
+      <div class="parallax-bg pb-3">
         <style>
         .coord-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
         .coord-card{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.6);border-radius:14px;padding:28px 28px;display:flex;align-items:center;gap:14px;transition:all var(--t);cursor:pointer;width:100%;text-align:left;font-family:var(--font-sans);backdrop-filter:blur(4px);min-height:90px}
@@ -2971,29 +2971,6 @@ function heroGoNovedades(){
 
       </div><!-- /srv-grid -->
 
-      <!-- Decorativo: banda institucional inferior -->
-      <div style="margin-top:44px;padding-top:32px;border-top:1px solid rgba(169,198,232,.3);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:16px">
-          <div style="width:40px;height:40px;border-radius:10px;background:var(--azul-pale2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--azul-med)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <span style="font-size:14px;color:var(--gris-sub);font-weight:400;max-width:420px;line-height:1.6">La SPAMSU coordina servicios de seguridad, protección civil y movilidad para toda la comunidad universitaria de la UNAM.</span>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--azul);background:var(--azul-pale);padding:6px 14px;border-radius:20px;border:1px solid var(--gris-borde)">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Servicio continuo 24/7
-          </span>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--azul);background:var(--azul-pale);padding:6px 14px;border-radius:20px;border:1px solid var(--gris-borde)">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-            Para toda la comunidad
-          </span>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--azul);background:var(--azul-pale);padding:6px 14px;border-radius:20px;border:1px solid var(--gris-borde)">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--azul-claro)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            Ciudad Universitaria
-          </span>
-        </div>
-      </div>
       </div><!-- /srv-institutional-bg -->
 
       <!-- Senderos + middle -->
@@ -4496,12 +4473,24 @@ function heroGoNovedades(){
       .nws-card-hero{grid-column:span 6;grid-row:span 1}
       .nws-card-tall{grid-column:span 3}
       .nws-card-sm  {grid-column:span 3}
+      .nws-card-hero .nws-img{height:220px}
     }
     @media(max-width:700px){
-      .noticias-section{padding:36px 20px}
-      .nws-grid{grid-template-columns:1fr}
-      .nws-card-hero,.nws-card-tall,.nws-card-sm{grid-column:span 1;grid-row:span 1}
+      .noticias-section{padding:28px 16px}
+      .nws-grid{grid-template-columns:1fr 1fr;gap:10px}
+      .nws-card-hero{grid-column:span 2;grid-row:span 1}
+      .nws-card-tall{grid-column:span 1}
+      .nws-card-sm  {grid-column:span 1}
+      .nws-card-hero .nws-img{height:180px}
+      .nws-card-tall .nws-img{height:140px}
+      .nws-card-sm  .nws-img{height:110px}
       .nws-card-sm .nws-desc{display:-webkit-box}
+      .nws-body{padding:12px 12px 10px}
+    }
+    @media(max-width:420px){
+      .nws-grid{grid-template-columns:1fr;gap:10px}
+      .nws-card-hero,.nws-card-tall,.nws-card-sm{grid-column:span 1}
+      .nws-card-hero .nws-img{height:160px}
     }
     </style>
 
@@ -6056,10 +6045,25 @@ function heroGoNovedades(){
       font-size:12px;text-align:center;padding:10px 20px;
     }
     @media(max-width:900px){
-      .footer-content{grid-template-columns:1fr;padding:32px 24px 0}
+      .footer-content{grid-template-columns:1fr;padding:28px 24px 0}
       .footer-left{border-right:none;border-bottom:2px solid #D4AF37;padding-right:0;padding-bottom:24px;margin-bottom:24px}
       .footer-right{padding-left:0}
-      .footer-bottom-bar{padding:14px 24px}
+      .footer-bottom-bar{padding:14px 24px;flex-direction:column;align-items:flex-start;gap:6px}
+    }
+    @media(max-width:640px){
+      .footer-content{padding:24px 16px 0}
+      .footer-bottom-bar{padding:12px 16px}
+      .footer-unam-name{font-size:20px}
+      .footer-spamsu-head{flex-direction:column;align-items:flex-start;gap:10px}
+      .footer-dir-label{font-size:11px}
+    }
+    @media(max-width:480px){
+      .footer-content{padding:20px 12px 0}
+      .footer-bottom-bar{padding:10px 12px}
+      .footer-logos-row{gap:10px}
+      .footer-475-img{height:70px}
+      .footer-escudo{width:64px;height:64px}
+      .footer-escudo [data-img]{width:64px;height:64px}
     }
     </style>
 
@@ -7724,5 +7728,110 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closePmsModa
 
 })();
 </script>
+
+<style>
+/* ════════════════════════════════════════════════════
+   MOBILE FIX GLOBAL — correcciones responsive finales
+   ════════════════════════════════════════════════════ */
+
+/* ── Parallax pb-1/pb-2/pb-3 padding responsive ── */
+.parallax-bg.pb-1,.parallax-bg.pb-2,.parallax-bg.pb-3{padding:64px 52px}
+@media(max-width:1200px){.parallax-bg.pb-1,.parallax-bg.pb-2,.parallax-bg.pb-3{padding:52px 40px}}
+@media(max-width:900px) {.parallax-bg.pb-1,.parallax-bg.pb-2,.parallax-bg.pb-3{padding:40px 28px;background-attachment:scroll}}
+@media(max-width:640px) {.parallax-bg.pb-1,.parallax-bg.pb-2,.parallax-bg.pb-3{padding:28px 16px}}
+@media(max-width:480px) {.parallax-bg.pb-1,.parallax-bg.pb-2,.parallax-bg.pb-3{padding:22px 12px}}
+
+/* ── Modales de Áreas — scroll en móvil ── */
+[id^="am-"]{overflow-y:auto!important;-webkit-overflow-scrolling:touch;
+  padding:12px!important;align-items:flex-start!important;
+  padding-top:max(16px,env(safe-area-inset-top))!important}
+[id^="am-"] > div{
+  max-height:calc(100dvh - 32px);max-height:calc(100vh - 32px);
+  overflow-y:auto;border-radius:14px;width:100%}
+@media(max-width:640px){
+  [id^="am-"]{padding:8px!important}
+  [id^="am-"] > div{max-height:calc(100dvh - 16px)}
+}
+
+/* ── dir-showcase-body max-width responsive ── */
+@media(max-width:640px){.dir-showcase-body{max-width:100%!important}}
+
+/* ── Senderos: tabla responsive ── */
+@media(max-width:480px){
+  .send-table{font-size:13px;display:block;overflow-x:auto}
+  .send-table th,.send-table td{padding:8px 10px}
+}
+
+/* ── Guía cards: texto en móvil ── */
+@media(max-width:480px){
+  .guia-footer{padding:10px 12px;gap:3px}
+  .guia-title{font-size:12px}
+  .guia-badge{font-size:9px;padding:2px 7px}
+}
+
+/* ── Hero qs-bar en muy chico ── */
+@media(max-width:380px){
+  .hero-qs-half{font-size:10px;letter-spacing:.07em;padding:11px 10px}
+}
+
+/* ── Video-section inner en mobile ── */
+@media(max-width:640px){
+  .video-inner{gap:20px}
+  .video-wrap{border-radius:12px;overflow:hidden}
+}
+
+/* ── Accesos cards en 360px ── */
+@media(max-width:360px){
+  .acceso-card{padding:12px 8px;gap:8px}
+  .acceso-name{font-size:12px}
+  .acceso-logo{width:42px;height:42px}
+}
+
+/* ── Social section iframes ── */
+@media(max-width:900px){
+  .soc-ig-frame{min-height:360px!important}
+  .soc-ig-frame iframe{min-height:360px!important;height:360px!important}
+}
+@media(max-width:640px){
+  .soc-ig-frame{min-height:300px!important}
+  .soc-ig-frame iframe{min-height:300px!important;height:300px!important}
+}
+
+/* ── Overflow horizontal global — nada se sale ── */
+.main-content,.tab-panels-wrap,.tab-panel,
+.srv-institutional-bg,.srv-senderos-bg,.srv-reporte-bg,
+.noticias-section,.social-section,.accesos-section,
+.video-section,.site-footer{max-width:100%;overflow-x:hidden}
+
+/* ── Imágenes nunca sobresalen ── */
+img{max-width:100%}
+img[style*="position:absolute"],img.footer-banner-bg,img.ci-hero-bg-img{max-width:none}
+
+/* ── Textos responsive ── */
+@media(max-width:640px){
+  .cinig-desc,.dir-showcase-desc,.sec-desc{font-size:15px}
+  .cinig-title{font-size:clamp(18px,5vw,26px)!important}
+  .est-title{font-size:clamp(20px,5.5vw,30px)}
+  .coord-name{font-size:16px}
+}
+
+/* ── PMS modal ── */
+@media(max-width:680px){
+  .pms-section{padding:28px 16px!important}
+  .pms-row{grid-template-columns:1fr!important}
+  .pms-photos-row{grid-template-columns:1fr 1fr!important}
+}
+
+/* ── safe-area para notch/isla dinámica ── */
+.mobile-topbar{
+  padding-left:max(16px,env(safe-area-inset-left));
+  padding-right:max(16px,env(safe-area-inset-right));
+}
+.disclaimer-bg{
+  padding-left:max(8px,env(safe-area-inset-left));
+  padding-right:max(8px,env(safe-area-inset-right));
+  padding-bottom:max(8px,env(safe-area-inset-bottom));
+}
+</style>
 </body>
 </html>
