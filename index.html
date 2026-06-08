@@ -1838,6 +1838,13 @@ html{scroll-behavior:smooth}
     }
     /* Slides 2-3: images */
     .hero-slide-img{cursor:pointer;pointer-events:auto}
+    /* Overlay táctil invisible para capturar swipe en móvil */
+    .hero-swipe-overlay{
+      position:absolute;inset:0;z-index:12;
+      background:transparent;-webkit-tap-highlight-color:transparent;
+      touch-action:pan-y;
+    }
+    @media(min-width:901px){.hero-swipe-overlay{display:none}}
     .hero-slide-img img{
       position:absolute;inset:0;width:100%;height:100%;
       object-fit:cover;display:block;
@@ -1948,6 +1955,8 @@ html{scroll-behavior:smooth}
       </div>
 
     </div><!-- /hero-carousel-track -->
+    <!-- Overlay táctil para swipe en móvil -->
+    <div class="hero-swipe-overlay" id="heroSwipeOverlay"></div>
 
     <!-- Arrows -->
     <button class="hero-carousel-arrow hero-carousel-prev" onclick="heroCarouselMove(-1)" aria-label="Anterior">
@@ -1999,26 +2008,32 @@ html{scroll-behavior:smooth}
     window.heroCarouselMove = function(dir){ goTo(current + dir); };
     window.heroCarouselGo   = function(n)  { goTo(n); };
 
-    /* ── Swipe táctil en móvil ── */
-    var touchStartX = 0;
-    var touchStartY = 0;
-    var isDragging  = false;
+    /* ── Swipe táctil — listener en wrapper y overlay ── */
+    var wrapper = document.getElementById('heroCarousel');
+    var overlay = document.getElementById('heroSwipeOverlay');
+    var swipeTargets = [wrapper, overlay].filter(Boolean);
 
-    track.addEventListener('touchstart', function(e){
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      isDragging  = true;
-    }, { passive: true });
+    swipeTargets.forEach(function(el){
+      var tx = 0, ty = 0;
 
-    track.addEventListener('touchend', function(e){
-      if(!isDragging) return;
-      isDragging = false;
-      var dx = e.changedTouches[0].clientX - touchStartX;
-      var dy = e.changedTouches[0].clientY - touchStartY;
-      /* Solo swipe horizontal (dx > dy en valor absoluto) */
-      if(Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
-      goTo(current + (dx < 0 ? 1 : -1));
-    }, { passive: true });
+      el.addEventListener('touchstart', function(e){
+        tx = e.touches[0].clientX;
+        ty = e.touches[0].clientY;
+      }, { passive: true, capture: true });
+
+      el.addEventListener('touchmove', function(e){
+        var dx = Math.abs(e.touches[0].clientX - tx);
+        var dy = Math.abs(e.touches[0].clientY - ty);
+        if(dx > dy && dx > 8) e.preventDefault();
+      }, { passive: false, capture: true });
+
+      el.addEventListener('touchend', function(e){
+        var dx = e.changedTouches[0].clientX - tx;
+        var dy = e.changedTouches[0].clientY - ty;
+        if(Math.abs(dx) < 35 || Math.abs(dx) < Math.abs(dy)) return;
+        goTo(current + (dx < 0 ? 1 : -1));
+      }, { passive: true, capture: true });
+    });
 
     function resetAuto(){ /* auto-advance desactivado */ }
 
