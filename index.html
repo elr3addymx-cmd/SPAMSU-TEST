@@ -416,27 +416,31 @@ body.tab-mode .page-wave{display:none}
 }
 .info-feature-label::before{content:'';width:24px;height:2px;background:var(--azul-claro);border-radius:1px;display:block;flex-shrink:0}
 .info-feature-quote{
-  font-family:var(--font-serif);
-  font-size:clamp(20px,2.4vw,28px);
+  font-family:var(--font-sans);
+  font-size:clamp(17px,1.9vw,22px);
   font-weight:400;
-  font-style:italic;
+  font-style:normal;
   color:var(--azul);
-  line-height:1.7;
   border-left:4px solid var(--azul-claro);
-  padding:12px 0 12px 28px;
+  padding:16px 24px 16px 28px;
   margin:0;
-  text-align:left;
+  text-align:justify;
+  text-justify:inter-word;
+  line-height:1.9;
+  hyphens:auto;
+  -webkit-hyphens:auto;
   background:rgba(169,198,232,.06);
   border-radius:0 10px 10px 0;
+  max-width:72ch;
 }
 
 @media(max-width:640px){
   .itab-pane p{font-size:15.5px;line-height:1.85}
-  .info-feature-quote{font-size:17px}
+  .info-feature-quote{font-size:16px;padding:14px 16px 14px 20px;max-width:100%}
 }
 @media(max-width:480px){
   .itab-pane p{font-size:15px}
-  .info-feature-quote{font-size:16px}
+  .info-feature-quote{font-size:15px;line-height:1.7}
 }
 /* Video tab panes need full width — override max-width */
 #vp-comunidad,#vp-estadio,#vp-protoc,#vp-proyectos{max-width:none!important;width:100%}
@@ -1704,7 +1708,7 @@ html{scroll-behavior:smooth}
 <aside class="sidebar" id="sidebar">
 
   <!-- Flyout overlay -->
-  <div id="sb-flyout-overlay" onclick="sbCloseFlyout()"></div>
+  <div id="sb-flyout-overlay" onclick="sbCloseFlyout(); event.stopPropagation();"></div>
 
   <!-- Flyout: Información -->
   <div class="sb-flyout" id="fly-info">
@@ -2089,58 +2093,52 @@ function heroGoNovedades(){
       <div class="itab-pane" id="ip-valores" style="max-width:none;padding:0">
         <!-- VALORES QUE NOS DEFINEN — Image-based interactive puzzle -->
         <style>
-        .valores-section{width:100%;background:#fff;padding:32px 0 28px}
-        .valores-header{display:flex;align-items:center;justify-content:space-between;padding:0 0 28px 0;gap:16px;flex-wrap:wrap}
-        .valores-title{font-family:var(--font-serif);font-size:clamp(22px,3vw,32px);font-weight:700;color:var(--azul)}
+        .valores-section{width:100%;background:#fff;padding:40px 0 36px}
+        .valores-header{display:flex;align-items:center;justify-content:space-between;padding:0 0 32px 0;gap:16px;flex-wrap:wrap}
+        .valores-title{font-family:var(--font-serif);font-size:clamp(24px,3.2vw,36px);font-weight:700;color:var(--azul)}
         .valores-logos{display:flex;align-items:center;gap:14px;flex-shrink:0}
-        .vlogo{width:56px;height:56px;border-radius:10px;overflow:hidden;border:1px solid var(--gris-borde);display:flex;align-items:center;justify-content:center;background:#f4f7fb}
+        .vlogo{width:60px;height:60px;border-radius:10px;overflow:hidden;border:1px solid var(--gris-borde);display:flex;align-items:center;justify-content:center;background:#f4f7fb}
         .vlogo img{width:100%;height:100%;object-fit:contain;padding:4px}
-        .valores-body{display:grid;grid-template-columns:300px 1fr;gap:40px;align-items:center}
+        .valores-body{display:grid;grid-template-columns:360px 1fr;gap:52px;align-items:center}
         /* ── Puzzle — coordenadas fijas calibradas ── */
         .valores-puzzle-grid{
           position:relative;
-          width:300px;
-          height:300px;
+          width:360px;
+          height:360px;
           flex-shrink:0;
-          /* Escalar proporcionalmente en pantallas pequeñas */
           transform-origin:top left;
         }
         .puzzle-img-wrap{
           position:absolute;
-          width:170px;
+          width:204px;
           cursor:pointer;
           transition:transform .28s cubic-bezier(.4,0,.2,1),
                       filter .28s ease,
                       box-shadow .28s ease;
         }
-        /* Coordenadas exactas calibradas */
-        #puzzle-0{ top:69px;  left:-14px; z-index:2 }  /* 01 Respeto */
-        #puzzle-1{ top:-18px; left:68px;  z-index:3 }  /* 02 Convivencia */
-        #puzzle-2{ top:150px; left:69px;  z-index:3 }  /* 03 Igualdad */
-        #puzzle-3{ top:63px;  left:152px; z-index:4 }  /* 04 Libertad */
+        /* Coordenadas escaladas proporcionalmente (300→360 = ×1.2) */
+        #puzzle-0{ top:83px;  left:-17px; z-index:2 }
+        #puzzle-1{ top:-22px; left:82px;  z-index:3 }
+        #puzzle-2{ top:180px; left:83px;  z-index:3 }
+        #puzzle-3{ top:76px;  left:182px; z-index:4 }
         .puzzle-img-wrap img{
-          width:100%;
-          height:auto;
-          display:block;
-          border-radius:0;
-          transition:inherit;
+          width:100%;height:auto;display:block;border-radius:0;transition:inherit;
         }
         .puzzle-img-wrap.highlighted{
           transform:translateY(-8px) scale(1.07) !important;
           filter:brightness(1.15) saturate(1.1);
-          box-shadow:0 12px 36px rgba(0,59,113,.32),
-                     0 0 0 3px rgba(169,198,232,.75);
+          box-shadow:0 12px 36px rgba(0,59,113,.32),0 0 0 3px rgba(169,198,232,.75);
           z-index:10 !important;
         }
-        .valores-items{display:flex;flex-direction:column;gap:14px}
-        .valor-item{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;border:1.5px solid var(--gris-borde);background:#fff;cursor:pointer;transition:all .25s ease;position:relative;overflow:hidden}
+        .valores-items{display:flex;flex-direction:column;gap:16px}
+        .valor-item{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-radius:12px;border:1.5px solid var(--gris-borde);background:#fff;cursor:pointer;transition:all .25s ease;position:relative;overflow:hidden}
         .valor-item::after{content:"";position:absolute;bottom:0;left:0;height:3px;width:0;background:var(--azul-claro);transition:width .38s cubic-bezier(.4,0,.2,1)}
         .valor-item:hover,.valor-item.vi-active{border-color:var(--azul-claro);background:rgba(169,198,232,.09);transform:translateX(4px)}
         .valor-item:hover::after,.valor-item.vi-active::after{width:100%}
-        .valor-icon-img{width:36px;height:36px;flex-shrink:0;border-radius:7px;overflow:hidden;background:var(--azul-pale)}
+        .valor-icon-img{width:42px;height:42px;flex-shrink:0;border-radius:8px;overflow:hidden;background:var(--azul-pale)}
         .valor-icon-img img{width:100%;height:100%;object-fit:contain}
-        .valor-name{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--azul);line-height:1.25;margin-bottom:3px}
-        .valor-sub{font-size:13px;color:var(--gris-sub);font-weight:300;line-height:1.4}
+        .valor-name{font-family:var(--font-serif);font-size:16px;font-weight:700;color:var(--azul);line-height:1.25;margin-bottom:4px}
+        .valor-sub{font-size:14px;color:var(--gris-sub);font-weight:300;line-height:1.4}
         .valor-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,30,60,.52);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px}
         .valor-modal-bg.open{display:flex;animation:fadeIn .22s ease}
         .valor-modal{background:#fff;border-radius:20px;max-width:540px;width:100%;box-shadow:0 28px 70px rgba(0,59,113,.22);position:relative;overflow:hidden;animation:modalIn .28s ease}
@@ -2153,7 +2151,8 @@ function heroGoNovedades(){
         .valor-modal-text{font-size:16px;color:var(--gris-txt);font-weight:300;line-height:1.85}
         .valor-modal-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:background .2s}
         .valor-modal-close:hover{background:rgba(255,255,255,.35)}
-        @media(max-width:700px){.valores-body{grid-template-columns:1fr}.valores-puzzle-grid{width:240px;margin:0 auto}}
+        @media(max-width:960px){.valores-body{grid-template-columns:300px 1fr;gap:36px}.valores-puzzle-grid{width:300px;height:300px}.puzzle-img-wrap{width:170px}#puzzle-0{top:69px;left:-14px}#puzzle-1{top:-18px;left:68px}#puzzle-2{top:150px;left:69px}#puzzle-3{top:63px;left:152px}}
+        @media(max-width:700px){.valores-body{grid-template-columns:1fr}.valores-puzzle-grid{width:260px;height:260px;margin:0 auto}.puzzle-img-wrap{width:148px}#puzzle-0{top:60px;left:-12px}#puzzle-1{top:-15px;left:59px}#puzzle-2{top:130px;left:60px}#puzzle-3{top:54px;left:132px}}
         </style>
 
         <div class="valores-section">
@@ -6277,9 +6276,10 @@ function heroGoNovedades(){
   .disclaimer-close-link{font-size:14px;padding:13px 20px;letter-spacing:.06em}
 }
 @media(max-width:400px){
-  .disclaimer-imgs{grid-template-columns:1fr;max-width:260px;margin:0 auto 10px}
-  .disclaimer-img2{display:none}
-  .disclaimer-close-link{font-size:13px;padding:12px 16px}
+  .disclaimer-bg{padding:10px 8px}
+  .disclaimer-imgs{grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+  .disclaimer-img2{display:block!important}
+  .disclaimer-close-link{font-size:13px;padding:11px 12px}
 }
 </style>
 
@@ -6550,7 +6550,6 @@ function sbOpenFlyout(flyId, btnId){
   var fly = document.getElementById(flyId);
   var btn = document.getElementById(btnId);
   if(fly && btn){
-    // En móvil (≤900px) es bottom sheet — no necesita posición top
     if(window.innerWidth > 900){
       var rect = btn.getBoundingClientRect();
       var top = rect.top + (rect.height/2) - 30;
@@ -6558,6 +6557,9 @@ function sbOpenFlyout(flyId, btnId){
       fly.style.top = Math.max(8, Math.min(top, maxTop)) + 'px';
     } else {
       fly.style.top = '';
+      /* Desactivar backdrop del sidebar para que no intercepte el toque al cerrar el flyout */
+      var bd = document.getElementById('sidebarBackdrop');
+      if(bd) bd.style.pointerEvents = 'none';
     }
     fly.classList.add('visible');
   }
@@ -6568,6 +6570,11 @@ function sbCloseFlyout(){
   document.querySelectorAll('.sb-flyout').forEach(function(f){ f.classList.remove('visible'); });
   var ov = document.getElementById('sb-flyout-overlay');
   if(ov) ov.classList.remove('visible');
+  /* Reactivar backdrop del sidebar tras cerrar el flyout */
+  setTimeout(function(){
+    var bd = document.getElementById('sidebarBackdrop');
+    if(bd) bd.style.pointerEvents = '';
+  }, 50);
 }
 function sbScrollToNovedades(){
   var el = document.getElementById('novedades');
