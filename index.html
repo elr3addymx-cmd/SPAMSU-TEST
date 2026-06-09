@@ -289,6 +289,27 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   border-color:rgba(169,198,232,.5)!important;
   box-shadow:0 2px 16px rgba(0,59,113,.07)!important;
 }
+/* ── Botón volver panels — flujo normal, no absolute ── */
+.panel-back-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:none;border:none;cursor:pointer;padding:0;
+  font-family:var(--font-sans);font-size:12px;font-weight:700;
+  color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase;
+  transition:color .2s;margin-bottom:20px;position:relative;z-index:10;
+}
+.panel-back-btn:hover{color:#fff}
+.panel-back-btn:hover .panel-back-circle{border-color:rgba(255,255,255,.8)}
+.panel-back-circle{
+  display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.4);
+  transition:border-color .2s;flex-shrink:0;
+}
+@media(max-width:640px){
+  .panel-back-btn{font-size:11px;margin-bottom:16px}
+  .panel-back-circle{width:26px;height:26px}
+}
+
 /* Senderos dentro de servicios */
 .srv-senderos-bg{
   background:linear-gradient(160deg,#ffffff 0%,#f4f8ff 55%,#eaf1fb 100%);
@@ -3397,13 +3418,13 @@ function heroGoNovedades(){
   <div class="tab-panel panel-tab-only" id="panel-cinig">
 
     <style>
-    .ci-hero{background:linear-gradient(135deg,#4a1060 0%,#6a1a8a 50%,#8b2fc9 100%);padding:66px 44px 40px;position:relative;overflow:hidden}
+    .ci-hero{background:linear-gradient(135deg,#4a1060 0%,#6a1a8a 50%,#8b2fc9 100%);padding:28px 44px 40px;position:relative;overflow:hidden}
     .ci-hero::after{content:'';position:absolute;right:-80px;bottom:-80px;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
     .ci-hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;pointer-events:none;z-index:0;display:block}
     .ci-hero > *:not(.ci-hero-bg-img){position:relative;z-index:1}
     @media(max-width:640px){
       .ci-hero-bg-img{opacity:.25}
-      .ci-hero{padding:48px 20px 28px}
+      .ci-hero{padding:20px 20px 28px}
     }
     .ci-hero-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.55);margin-bottom:10px;display:flex;align-items:center;gap:8px}
     .ci-hero-tag::before{content:'';width:20px;height:2px;background:rgba(255,255,255,.4);border-radius:1px;display:block}
@@ -3448,27 +3469,12 @@ function heroGoNovedades(){
     <!-- Hero -->
     <div class="ci-hero" style="position:relative">
       <img src="img/cinig-banner.png" alt="" class="ci-hero-bg-img" onerror="this.style.display='none'">
-  <button
-    onclick="panelGoBack()"
-    style="display:inline-flex;align-items:center;gap:10px;
-           background:none;border:none;cursor:pointer;padding:0;
-           font-family:var(--font-sans);font-size:12px;font-weight:700;
-           color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase;
-           position:absolute;top:18px;left:44px;z-index:10;
-           transition:color .2s;"
-    onmouseover="this.style.color='#fff'"
-    onmouseout="this.style.color='rgba(255,255,255,.7)'">
-    <span style="display:flex;align-items:center;justify-content:center;
-                 width:28px;height:28px;border-radius:50%;
-                 border:1.5px solid rgba(255,255,255,.4);
-                 transition:border-color .2s;flex-shrink:0">
-      <svg viewBox="0 0 24 24" width="13" height="13" fill="none"
-           stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-    </span>
-    Regresar a Estructura
-  </button>
+      <button onclick="panelGoBack()" class="panel-back-btn">
+        <span class="panel-back-circle">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </span>
+        Regresar a Estructura
+      </button>
       <div class="ci-hero-tag">Órgano auxiliar · SPAMSU UNAM</div>
       <h1>CInIG · SPAMSU</h1>
       <p>Comité Interno de Igualdad de Género de la Secretaría de Prevención, Atención y Seguridad Universitaria</p>
@@ -3681,7 +3687,7 @@ function heroGoNovedades(){
   <div class="tab-panel panel-tab-only" id="panel-crace">
 
     <style>
-    .cr-hero{background:linear-gradient(135deg,#003B71 0%,#1565C0 55%,#1976D2 100%);padding:66px 44px 40px;position:relative;overflow:hidden}
+    .cr-hero{background:linear-gradient(135deg,#003B71 0%,#1565C0 55%,#1976D2 100%);padding:28px 44px 40px;position:relative;overflow:hidden}
     .cr-hero::after{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none}
     .cr-hero-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:rgba(169,198,232,.7);margin-bottom:10px;display:flex;align-items:center;gap:8px}
     .cr-hero-tag::before{content:'';width:20px;height:2px;background:rgba(255,255,255,.5);border-radius:1px;display:block}
@@ -3739,27 +3745,12 @@ function heroGoNovedades(){
 
     <!-- Hero -->
     <div class="cr-hero" style="position:relative">
-  <button
-    onclick="panelGoBack()"
-    style="display:inline-flex;align-items:center;gap:10px;
-           background:none;border:none;cursor:pointer;padding:0;
-           font-family:var(--font-sans);font-size:12px;font-weight:700;
-           color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase;
-           position:absolute;top:18px;left:44px;z-index:10;
-           transition:color .2s;"
-    onmouseover="this.style.color='#fff'"
-    onmouseout="this.style.color='rgba(255,255,255,.7)'">
-    <span style="display:flex;align-items:center;justify-content:center;
-                 width:28px;height:28px;border-radius:50%;
-                 border:1.5px solid rgba(255,255,255,.4);
-                 transition:border-color .2s;flex-shrink:0">
-      <svg viewBox="0 0 24 24" width="13" height="13" fill="none"
-           stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-    </span>
-    Regresar a Estructura
-  </button>
+      <button onclick="panelGoBack()" class="panel-back-btn">
+        <span class="panel-back-circle">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </span>
+        Regresar a Estructura
+      </button>
       <div class="cr-hero-tag">Órgano colegiado · UNAM</div>
       <h1>CRACE</h1>
       <p>Colegio de Responsables de Atención a la Comunidad Estudiantil de la Universidad Nacional Autónoma de México</p>
@@ -3915,7 +3906,7 @@ function heroGoNovedades(){
   <div class="tab-panel panel-tab-only" id="panel-marco-juridico">
 
     <style>
-    .mj-hero{background:linear-gradient(135deg,#002244 0%,#003B71 55%,#1565C0 100%);padding:66px 44px 40px;position:relative;overflow:hidden}
+    .mj-hero{background:linear-gradient(135deg,#002244 0%,#003B71 55%,#1565C0 100%);padding:28px 44px 40px;position:relative;overflow:hidden}
     .mj-hero::after{content:'';position:absolute;right:-60px;bottom:-60px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
     .mj-hero-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:rgba(169,198,232,.7);margin-bottom:12px;display:flex;align-items:center;gap:8px}
     .mj-hero-tag::before{content:'';width:20px;height:2px;background:var(--azul-claro);border-radius:1px;display:block}
@@ -3945,27 +3936,12 @@ function heroGoNovedades(){
     </style>
 
     <div class="mj-hero" style="position:relative">
-  <button
-    onclick="panelGoBack()"
-    style="display:inline-flex;align-items:center;gap:10px;
-           background:none;border:none;cursor:pointer;padding:0;
-           font-family:var(--font-sans);font-size:12px;font-weight:700;
-           color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase;
-           position:absolute;top:18px;left:44px;z-index:10;
-           transition:color .2s;"
-    onmouseover="this.style.color='#fff'"
-    onmouseout="this.style.color='rgba(255,255,255,.7)'">
-    <span style="display:flex;align-items:center;justify-content:center;
-                 width:28px;height:28px;border-radius:50%;
-                 border:1.5px solid rgba(255,255,255,.4);
-                 transition:border-color .2s;flex-shrink:0">
-      <svg viewBox="0 0 24 24" width="13" height="13" fill="none"
-           stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-    </span>
-    Regresar
-  </button>
+      <button onclick="panelGoBack()" class="panel-back-btn">
+        <span class="panel-back-circle">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </span>
+        Regresar
+      </button>
       <div class="mj-hero-tag">Normatividad SPAMSU · UNAM</div>
       <h1>Normatividad</h1>
       <p>Consulta la legislación, reglamentos, lineamientos y disposiciones universitarias que rigen las actividades de seguridad, movilidad y prevención en la UNAM.</p>
