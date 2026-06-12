@@ -114,6 +114,8 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   padding:0 28px;gap:12px;
   width:calc(100% - var(--sidebar-w));
   pointer-events:none; /* el wrapper no bloquea clics */
+  isolation:isolate;
+  transform:translateZ(0);
 }
 .top-bar > *{ pointer-events:auto; }
 /* Buttons get frosted glass so they're readable over any hero image */
@@ -124,7 +126,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   padding:9px 20px;border-radius:9px;
   border:1.5px solid rgba(169,198,232,.4);
   transition:all var(--t);
-  backdrop-filter:blur(8px);
   box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 .btn-que:hover{background:rgba(255,255,255,1);border-color:var(--azul-claro)}
@@ -136,7 +137,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   padding:9px 20px;border-radius:9px;border:none;
   transition:all var(--t);
   box-shadow:0 2px 14px rgba(62,124,177,.45);
-  backdrop-filter:blur(8px);
 }
 .btn-emerg:hover{background:#2d6a9f;color:#fff;box-shadow:0 4px 18px rgba(62,124,177,.6)}
 .btn-emerg svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -169,7 +169,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .hero-video-overlay{
   position:absolute;inset:0;
   background:
-    linear-gradient(to top,  rgba(0,15,40,.85) 0%,  rgba(0,15,40,.30) 40%, transparent 70%),
+    linear-gradient(to top,  rgba(0,15,40,.85) 0%, rgba(0,15,40,.55) 22%, rgba(0,15,40,.30) 40%, rgba(0,15,40,.15) 55%, transparent 75%),
     linear-gradient(to right, rgba(0,15,40,.40) 0%,  transparent 60%);
   pointer-events:none;
 }
@@ -315,7 +315,6 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   background:linear-gradient(160deg,#ffffff 0%,#f4f8ff 55%,#eaf1fb 100%);
   position:relative;overflow:hidden;
   border-top:2px solid var(--gris-borde);
-  border-bottom:2px solid var(--gris-borde);
   padding:60px 44px;
 }
 .srv-senderos-bg::before{
@@ -380,6 +379,17 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 /* Senderos */
 .pb-2 .send-table{background:rgba(255,255,255,.88);border-radius:12px;overflow:hidden}
 @media(max-width:768px){.parallax-bg{background-attachment:scroll;padding:32px 20px}}
+
+/* ── Banner de video institucional (Información General / Estructura) ── */
+.video-banner{position:relative;height:clamp(170px,22vw,300px);overflow:hidden;display:flex;align-items:center;justify-content:center;width:100%;border-radius:20px;margin:48px 0}
+#panel-estructura .video-banner{border-radius:0;margin:0 0 0}
+.video-banner-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;z-index:0}
+.video-banner-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(120deg,rgba(0,40,80,.58) 0%,rgba(0,59,113,.42) 45%,rgba(21,101,192,.30) 100%)}
+.video-banner-content{position:relative;z-index:2;text-align:center;padding:0 28px;max-width:760px}
+.video-banner-tag{font-size:11.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:10px}
+.video-banner-title{font-family:var(--font-serif);font-size:clamp(18px,2.4vw,28px);font-weight:700;color:#fff;line-height:1.45;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+@media(max-width:768px){.video-banner{height:clamp(150px,40vw,240px)}}
+body.tab-mode .video-banner{display:none}
 .tab-panel.panel-tab-only{display:none}
 .tab-panel.panel-tab-only.panel-open{display:block}
 /* Cuando un panel de pestaña está abierto, ocultar el contenido de scroll */
@@ -464,7 +474,7 @@ body.tab-mode .page-wave{display:none}
   .info-feature-quote{font-size:15px;line-height:1.7}
 }
 /* Video tab panes need full width — override max-width */
-#vp-comunidad,#vp-estadio,#vp-protoc,#vp-proyectos{max-width:none!important;width:100%}
+#vp-comunidad,#vp-estadio,#vp-proyectos{max-width:none!important;width:100%}
 /* Ocultar barra inferior (likes/comments) en iframes Instagram */
 .vid-reel-ratio{overflow:hidden;position:relative}
 .vid-reel-ratio::after{content:'';position:absolute;bottom:0;left:0;right:0;height:52px;background:inherit;pointer-events:none;z-index:2}
@@ -587,6 +597,17 @@ body.tab-mode .page-wave{display:none}
 .srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .srv-grid > .srv-card:last-child:nth-child(3n-1){grid-column:2}
 .srv-grid > .srv-card:last-child:nth-child(3n+1){grid-column:2}
+/* Centrado fijo para Brigada Vial — independiente de :last-child */
+.srv-card-center{grid-column:2;grid-row:4}
+/* ── Grecas decorativas — formas geométricas que llenan los huecos laterales ── */
+.srv-greca{
+  display:flex;align-items:center;justify-content:center;
+  align-self:stretch;pointer-events:none;
+}
+.srv-greca svg{width:100%;height:440px;display:block}
+.srv-greca-left{grid-column:1;grid-row:4}
+.srv-greca-right{grid-column:3;grid-row:4}
+@media(max-width:900px){.srv-greca{display:none}}
 .srv-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);overflow:hidden;transition:all var(--t);position:relative;display:block;cursor:pointer}
 .srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul-claro);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
 .srv-card:hover{border-color:var(--azul-claro);box-shadow:var(--sh);transform:translateY(-4px)}
@@ -621,7 +642,7 @@ body.tab-mode .page-wave{display:none}
 .srv-cta{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--azul-claro);margin-top:9px;transition:gap var(--t)}
 .srv-card:hover .srv-cta{gap:9px}
 /* Senderos within servicios */
-.senderos-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;margin-top:44px;padding-top:36px;border-top:2px solid var(--gris-borde)}
+.senderos-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;margin-top:44px;padding-top:36px}
 .send-table{width:100%;border-collapse:collapse}
 .send-table th{background:var(--azul);color:#fff;font-size:14px;font-weight:600;padding:12px 14px;text-align:left}
 .send-table td{font-size:14px;color:var(--gris-txt);padding:11px 14px;border-bottom:1px solid var(--gris-borde)}
@@ -636,7 +657,13 @@ body.tab-mode .page-wave{display:none}
 ═══════════════════════════════════════════ */
 .nov-section{background:var(--fondo);padding:56px 44px;border-top:2px solid var(--gris-borde)}
 /* ── Novedades tab bar — barra unificada, fondo blanco, cambia al seleccionar ── */
-.nov-tab-bar{display:flex;gap:4px;margin-bottom:32px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-radius:14px;border:1.5px solid var(--gris-borde);padding:6px;flex-wrap:nowrap;white-space:nowrap}
+.nov-tab-wrap{background:#fff;border-radius:14px;border:1.5px solid var(--gris-borde);padding:6px;margin-bottom:32px}
+.nov-tab-bar{display:flex;gap:4px;margin-bottom:0;overflow-x:auto;-webkit-overflow-scrolling:touch;background:transparent;border-radius:0;border:none;padding:0;flex-wrap:nowrap;white-space:nowrap}
+.nov-subtab-bar{display:none;gap:4px;flex-wrap:wrap;margin-top:6px;padding-top:10px;border-top:1px solid var(--gris-borde)}
+.nov-subtab-bar.active{display:flex}
+.nov-subtab{background:transparent;border:none;font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--gris-sub);padding:9px 18px;border-radius:10px;cursor:pointer;transition:all var(--t)}
+.nov-subtab:hover{color:var(--azul);background:var(--azul-pale)}
+.nov-subtab.active{background:var(--azul);color:#fff;font-weight:700}
 .ntab{background:transparent;border:none;font-family:var(--font-sans);font-size:12px;font-weight:600;color:var(--gris-sub);padding:10px 14px;border-radius:10px;cursor:pointer;transition:all var(--t);white-space:nowrap;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:72px}
 .ntab:hover{color:var(--azul);background:var(--azul-pale)}
 .ntab.active{background:var(--azul);color:#fff;font-weight:700}
@@ -823,6 +850,38 @@ body.tab-mode .page-wave{display:none}
 .ruta-btn{margin-left:auto;display:inline-flex;align-items:center;gap:6px;background:var(--azul-claro);color:var(--azul);font-size:13px;font-weight:700;padding:9px 16px;border-radius:8px;white-space:nowrap;flex-shrink:0;transition:all var(--t)}
 .ruta-btn:hover{background:var(--azul-med);color:#fff}
 .ruta-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Tarjetas Ruta de Atención / Protocolo / Cartilla con portada ── */
+.ruta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+.ruta-card-v2{background:#fff;border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;box-shadow:0 3px 14px rgba(0,59,113,.06);transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease}
+.ruta-card-v2:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,59,113,.15)}
+.ruta-cover{position:relative;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(160deg,#e8f1fb,#cfdff5)}
+.ruta-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.ruta-card-v2:hover .ruta-cover img{transform:scale(1.04)}
+.ruta-cover-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;background:linear-gradient(160deg,#e8f1fb,#cfdff5)}
+.ruta-cover-ph svg{width:40px;height:40px;opacity:.35;stroke:var(--azul);fill:none;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.ruta-cover-ph span{font-family:'Courier New',monospace;font-size:10px;font-weight:700;color:var(--azul);opacity:.5;text-align:center;word-break:break-all}
+
+/* ── Portada dibujada: Protocolo ── */
+.ruta-cover-protocolo{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:22px 20px;text-align:center;transition:transform .35s ease}
+.ruta-card-v2:hover .ruta-cover-protocolo{transform:scale(1.03)}
+.ruta-cover-protocolo .rcp-deco{width:62%;max-width:170px;color:#9a9ea4}
+.ruta-cover-protocolo .rcp-text{font-family:var(--font-sans);font-weight:800;font-size:13px;line-height:1.4;letter-spacing:.01em;color:#6b6f76;text-transform:uppercase}
+
+/* ── Portada dibujada: Conoce la Ruta de Atención ── */
+.ruta-cover-ruta{background:linear-gradient(160deg,#2bc6da,#17a6bd);display:flex;align-items:center;justify-content:center;padding:30px 22px;text-align:center;position:relative;transition:transform .35s ease}
+.ruta-card-v2:hover .ruta-cover-ruta{transform:scale(1.03)}
+.ruta-cover-ruta .rcr-badge{position:absolute;top:-28px;left:-28px;width:74px;height:74px;border-radius:50%;background:#e2432b}
+.ruta-cover-ruta .rcr-text{font-family:var(--font-sans);font-weight:800;font-size:16px;line-height:1.35;color:#fff;text-transform:uppercase;position:relative;z-index:1}
+.ruta-card-v2-body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
+.ruta-card-v2-title{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--azul);margin-bottom:6px;line-height:1.35}
+.ruta-card-v2-desc{font-size:13px;color:var(--gris-sub);font-weight:300;line-height:1.6;margin-bottom:14px;flex:1}
+.ruta-card-v2-btn{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--azul);transition:gap .2s}
+.ruta-card-v2-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .2s}
+.ruta-card-v2:hover .ruta-card-v2-btn{gap:11px}
+.ruta-card-v2:hover .ruta-card-v2-btn svg{transform:translateX(2px)}
+@media(max-width:960px){.ruta-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.ruta-grid{grid-template-columns:1fr}}
 
 /* ═══════════════════════════════════════════
    MAPA FINAL
@@ -1216,6 +1275,8 @@ body.tab-mode .page-wave{display:none}
   /* Tabs scrollables */
   .info-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
   .nov-tab-bar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  .nov-subtab-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+  .nov-subtab{font-size:13px;padding:9px 12px}
   .itab{font-size:13px;padding:9px 12px}
   /* Textos */
   .sec-title{font-size:clamp(20px,5vw,28px)}
@@ -1287,6 +1348,7 @@ body.tab-mode .page-wave{display:none}
   .tab-panel:not(#panel-servicios){padding:16px 10px}
   .dir-showcase-colored{padding:22px 12px}
   .nov-tab-bar{gap:2px;padding:4px}
+  .nov-subtab{padding:7px 10px;font-size:11.5px}
   .ntab{min-width:52px;padding:7px 5px;font-size:10.5px}
 }
 
@@ -2612,6 +2674,8 @@ function heroGoNovedades(){
         </script>
       </div>
 
+
+
     </div>
 
     <!-- ╔══════════════════════════════╗
@@ -2619,6 +2683,21 @@ function heroGoNovedades(){
     ╚══════════════════════════════╝ -->
     <div class="tab-panel" id="panel-estructura" style="padding:0">
       <span id="est-organigrama"></span>
+
+      <!-- Banner de video institucional -->
+      <div class="video-banner">
+        <video class="video-banner-media" muted playsinline autoplay loop preload="auto">
+          <source src="videos/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-banner-overlay"></div>
+        <div class="video-banner-content">
+          <div class="video-banner-tag">Estructura institucional</div>
+          <div class="video-banner-title">Conoce las direcciones y áreas que integran nuestra Secretaría.</div>
+        </div>
+      </div>
+
+      <!-- ── Separador visual entre video y primera imagen ── -->
+      <div style="height:10px;background:#e8f0f8"></div>
 
       <!-- ══════════════════════════════════════
            DGAPSU — bg-servicios.jpg (pb-1)
@@ -3066,7 +3145,7 @@ function heroGoNovedades(){
           </div>
         </a>
         <!-- 8. Brigada Vial — centrada al ser la última del bloque -->
-        <a href="https://www.dgsgm.unam.mx/brigada.html" target="_blank" rel="noopener" class="srv-card" style="justify-self:center;width:100%">
+        <a href="https://www.dgsgm.unam.mx/brigada.html" target="_blank" rel="noopener" class="srv-card srv-card-center" style="width:100%">
           <div class="srv-img"><div data-img="srv-brigada" data-alt="Brigada Vial UNAM"></div></div>
           <div class="srv-body">
             <div class="srv-icon srv-icon-png"><img src="img/icon-srv-brigada.png" alt="Brigada Vial"></div>
@@ -3075,6 +3154,211 @@ function heroGoNovedades(){
             <span class="srv-cta">Ir al sitio &rarr;</span>
           </div>
         </a>
+
+        <!-- Composiciones decorativas — emblemas institucionales con gradientes y capas, a toda la altura -->
+        <div class="srv-greca srv-greca-left" aria-hidden="true">
+          <svg viewBox="0 0 220 440" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="srvGradL1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#003B71"/>
+                <stop offset="100%" stop-color="#1565C0"/>
+              </linearGradient>
+              <linearGradient id="srvGradL2" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#A9C6E8"/>
+                <stop offset="100%" stop-color="#7AAED4"/>
+              </linearGradient>
+              <radialGradient id="srvGradDotL" cx="35%" cy="35%" r="70%">
+                <stop offset="0%" stop-color="#D9E8F8"/>
+                <stop offset="100%" stop-color="#7AAED4"/>
+              </radialGradient>
+              <radialGradient id="srvGradDotL2" cx="35%" cy="35%" r="70%">
+                <stop offset="0%" stop-color="#E8F0FB"/>
+                <stop offset="100%" stop-color="#A9C6E8"/>
+              </radialGradient>
+            </defs>
+
+            <!-- Línea vertical de conexión, columna completa -->
+            <line x1="110" y1="0" x2="110" y2="440" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".22" stroke-dasharray="2 10"/>
+
+            <!-- ═══ ZONA SUPERIOR ═══ -->
+            <!-- Arco grande superior -->
+            <path d="M -40 130 A 180 180 0 0 1 200 -10" fill="none" stroke="url(#srvGradL2)" stroke-width="2" opacity=".30"/>
+
+            <!-- Hexágono superior con gradiente -->
+            <polygon points="150,15 200,45 200,105 150,135 100,105 100,45"
+                     fill="url(#srvGradL1)" opacity=".13"/>
+            <polygon points="150,15 200,45 200,105 150,135 100,105 100,45"
+                     fill="none" stroke="url(#srvGradL1)" stroke-width="3"/>
+
+            <!-- Rombo superior izquierdo -->
+            <rect x="10" y="60" width="80" height="80" rx="5"
+                  transform="rotate(45 50 100)"
+                  fill="var(--azul-claro)" opacity=".22"/>
+            <rect x="10" y="60" width="80" height="80" rx="5"
+                  transform="rotate(45 50 100)"
+                  fill="none" stroke="url(#srvGradL2)" stroke-width="3"/>
+
+            <!-- Círculo brillante superior -->
+            <circle cx="55" cy="35" r="22" fill="url(#srvGradDotL2)" opacity=".95"/>
+            <circle cx="55" cy="35" r="22" fill="none" stroke="#003B71" stroke-width="2" opacity=".20"/>
+            <circle cx="55" cy="35" r="9" fill="#003B71" opacity=".5"/>
+
+            <!-- Triángulo acento superior -->
+            <path d="M 130 175 L 195 175 L 162 220 Z" fill="none" stroke="url(#srvGradL1)" stroke-width="2.5"/>
+
+            <!-- Puntos dispersos zona superior -->
+            <circle cx="185" cy="150" r="4" fill="var(--azul-med)" opacity=".55"/>
+            <circle cx="20" cy="170" r="5" fill="var(--azul-claro)" opacity=".55"/>
+            <circle cx="115" cy="195" r="3" fill="var(--azul-med)" opacity=".45"/>
+
+            <!-- ═══ ZONA CENTRAL ═══ -->
+            <!-- Arco central -->
+            <path d="M 0 320 A 220 220 0 0 1 220 100" fill="none" stroke="url(#srvGradL2)" stroke-width="2" opacity=".30"/>
+
+            <!-- Hexágono principal -->
+            <polygon points="140,250 195,285 195,355 140,390 85,355 85,285"
+                     fill="url(#srvGradL1)" opacity=".14"/>
+            <polygon points="140,250 195,285 195,355 140,390 85,355 85,285"
+                     fill="none" stroke="url(#srvGradL1)" stroke-width="3"/>
+
+            <!-- Rombo girado superpuesto -->
+            <rect x="95" y="295" width="120" height="120" rx="6"
+                  transform="rotate(45 155 355)"
+                  fill="none" stroke="url(#srvGradL2)" stroke-width="3.5"/>
+            <rect x="118" y="318" width="74" height="74" rx="4"
+                  transform="rotate(45 155 355)"
+                  fill="var(--azul-claro)" opacity=".30"/>
+
+            <!-- Círculo brillante central -->
+            <circle cx="58" cy="290" r="30" fill="url(#srvGradDotL)" opacity=".9"/>
+            <circle cx="58" cy="290" r="30" fill="none" stroke="#003B71" stroke-width="2" opacity=".25"/>
+            <circle cx="58" cy="290" r="13" fill="#003B71" opacity=".55"/>
+
+            <!-- ═══ ZONA INFERIOR ═══ -->
+            <!-- Triángulo de acento inferior -->
+            <path d="M 60 395 L 140 395 L 100 440 Z" fill="none" stroke="url(#srvGradL1)" stroke-width="3"/>
+
+            <!-- Hexágono pequeño inferior -->
+            <polygon points="185,372 210,385 210,410 185,423 160,410 160,385"
+                     fill="var(--azul-claro)" opacity=".22"/>
+            <polygon points="185,372 210,385 210,410 185,423 160,410 160,385"
+                     fill="none" stroke="url(#srvGradL2)" stroke-width="2.5"/>
+
+            <!-- Arco inferior -->
+            <path d="M 0 425 A 118 118 0 0 1 118 305" fill="none" stroke="url(#srvGradL2)" stroke-width="1.5" opacity=".25"/>
+
+            <!-- Puntos dispersos zona inferior -->
+            <circle cx="30" cy="365" r="4" fill="var(--azul-med)" opacity=".5"/>
+            <circle cx="10" cy="425" r="3" fill="var(--azul-claro)" opacity=".5"/>
+
+            <!-- Líneas de conexión -->
+            <line x1="58" y1="320" x2="85" y2="355" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".4"/>
+            <line x1="140" y1="345" x2="155" y2="355" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".4"/>
+            <line x1="150" y1="135" x2="140" y2="250" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".3"/>
+          </svg>
+        </div>
+
+        <div class="srv-greca srv-greca-right" aria-hidden="true">
+          <svg viewBox="0 0 220 440" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="srvGradR1" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#003B71"/>
+                <stop offset="100%" stop-color="#1565C0"/>
+              </linearGradient>
+              <linearGradient id="srvGradR2" x1="100%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#A9C6E8"/>
+                <stop offset="100%" stop-color="#7AAED4"/>
+              </linearGradient>
+              <radialGradient id="srvGradDotR" cx="65%" cy="35%" r="70%">
+                <stop offset="0%" stop-color="#D9E8F8"/>
+                <stop offset="100%" stop-color="#7AAED4"/>
+              </radialGradient>
+              <radialGradient id="srvGradDotR2" cx="65%" cy="35%" r="70%">
+                <stop offset="0%" stop-color="#E8F0FB"/>
+                <stop offset="100%" stop-color="#A9C6E8"/>
+              </radialGradient>
+            </defs>
+
+            <!-- Línea vertical de conexión, columna completa -->
+            <line x1="110" y1="0" x2="110" y2="440" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".22" stroke-dasharray="2 10"/>
+
+            <!-- ═══ ZONA SUPERIOR ═══ -->
+            <!-- Arco grande superior -->
+            <path d="M 260 130 A 180 180 0 0 0 20 -10" fill="none" stroke="url(#srvGradR2)" stroke-width="2" opacity=".30"/>
+
+            <!-- Hexágono superior con gradiente -->
+            <polygon points="70,15 120,45 120,105 70,135 20,105 20,45"
+                     fill="url(#srvGradR1)" opacity=".13"/>
+            <polygon points="70,15 120,45 120,105 70,135 20,105 20,45"
+                     fill="none" stroke="url(#srvGradR1)" stroke-width="3"/>
+
+            <!-- Rombo superior derecho -->
+            <rect x="130" y="60" width="80" height="80" rx="5"
+                  transform="rotate(-45 170 100)"
+                  fill="var(--azul-claro)" opacity=".22"/>
+            <rect x="130" y="60" width="80" height="80" rx="5"
+                  transform="rotate(-45 170 100)"
+                  fill="none" stroke="url(#srvGradR2)" stroke-width="3"/>
+
+            <!-- Círculo brillante superior -->
+            <circle cx="165" cy="35" r="22" fill="url(#srvGradDotR2)" opacity=".95"/>
+            <circle cx="165" cy="35" r="22" fill="none" stroke="#003B71" stroke-width="2" opacity=".20"/>
+            <circle cx="165" cy="35" r="9" fill="#003B71" opacity=".5"/>
+
+            <!-- Triángulo acento superior -->
+            <path d="M 90 175 L 25 175 L 58 220 Z" fill="none" stroke="url(#srvGradR1)" stroke-width="2.5"/>
+
+            <!-- Puntos dispersos zona superior -->
+            <circle cx="35" cy="150" r="4" fill="var(--azul-med)" opacity=".55"/>
+            <circle cx="200" cy="170" r="5" fill="var(--azul-claro)" opacity=".55"/>
+            <circle cx="105" cy="195" r="3" fill="var(--azul-med)" opacity=".45"/>
+
+            <!-- ═══ ZONA CENTRAL ═══ -->
+            <!-- Arco central -->
+            <path d="M 220 320 A 220 220 0 0 0 0 100" fill="none" stroke="url(#srvGradR2)" stroke-width="2" opacity=".30"/>
+
+            <!-- Hexágono principal -->
+            <polygon points="80,250 135,285 135,355 80,390 25,355 25,285"
+                     fill="url(#srvGradR1)" opacity=".14"/>
+            <polygon points="80,250 135,285 135,355 80,390 25,355 25,285"
+                     fill="none" stroke="url(#srvGradR1)" stroke-width="3"/>
+
+            <!-- Rombo girado superpuesto -->
+            <rect x="5" y="295" width="120" height="120" rx="6"
+                  transform="rotate(-45 65 355)"
+                  fill="none" stroke="url(#srvGradR2)" stroke-width="3.5"/>
+            <rect x="28" y="318" width="74" height="74" rx="4"
+                  transform="rotate(-45 65 355)"
+                  fill="var(--azul-claro)" opacity=".30"/>
+
+            <!-- Círculo brillante central -->
+            <circle cx="162" cy="290" r="30" fill="url(#srvGradDotR)" opacity=".9"/>
+            <circle cx="162" cy="290" r="30" fill="none" stroke="#003B71" stroke-width="2" opacity=".25"/>
+            <circle cx="162" cy="290" r="13" fill="#003B71" opacity=".55"/>
+
+            <!-- ═══ ZONA INFERIOR ═══ -->
+            <!-- Triángulo de acento inferior -->
+            <path d="M 160 395 L 80 395 L 120 440 Z" fill="none" stroke="url(#srvGradR1)" stroke-width="3"/>
+
+            <!-- Hexágono pequeño inferior -->
+            <polygon points="35,372 60,385 60,410 35,423 10,410 10,385"
+                     fill="var(--azul-claro)" opacity=".22"/>
+            <polygon points="35,372 60,385 60,410 35,423 10,410 10,385"
+                     fill="none" stroke="url(#srvGradR2)" stroke-width="2.5"/>
+
+            <!-- Arco inferior -->
+            <path d="M 220 425 A 118 118 0 0 0 102 305" fill="none" stroke="url(#srvGradR2)" stroke-width="1.5" opacity=".25"/>
+
+            <!-- Puntos dispersos zona inferior -->
+            <circle cx="190" cy="365" r="4" fill="var(--azul-med)" opacity=".5"/>
+            <circle cx="210" cy="425" r="3" fill="var(--azul-claro)" opacity=".5"/>
+
+            <!-- Líneas de conexión -->
+            <line x1="162" y1="320" x2="135" y2="355" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".4"/>
+            <line x1="80" y1="345" x2="65" y2="355" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".4"/>
+            <line x1="70" y1="135" x2="80" y2="250" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".3"/>
+          </svg>
+        </div>
 
       </div><!-- /srv-grid -->
 
@@ -4159,7 +4443,7 @@ function heroGoNovedades(){
       <div class="dir-contact-bar">
         <div class="dir-contact-info">
           <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-          Cont&#225;ctenos: <a href="tel:5556222222">55 5622 2222</a>
+          Cont&#225;ctanos: <a href="tel:5556222222">55 5622 2222</a>
         </div>
         <div class="dir-contact-loc">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
@@ -4633,6 +4917,7 @@ function heroGoNovedades(){
 </div>
   <section class="nov-section" id="novedades">
     <h2 class="sec-title">Novedades y Recursos</h2>
+    <div class="nov-tab-wrap">
     <div class="nov-tab-bar">
       <button class="ntab active" onclick="switchNovTab('actividades')" id="ntb-actividades">
         <img src="img/icon-nov-actividades.png" width="20" height="20" alt="Actividades">
@@ -4663,16 +4948,15 @@ function heroGoNovedades(){
         Material
       </button>
     </div>
+    <div class="nov-subtab-bar" id="nov-subtab-videos">
+      <button class="nov-subtab active" onclick="switchVidTab('comunidad')"  id="vt-comunidad">Nuestra comunidad</button>
+      <button class="nov-subtab"        onclick="switchVidTab('estadio')"    id="vt-estadio">Nuestro estadio</button>
+      <button class="nov-subtab"        onclick="switchVidTab('proyectos')"  id="vt-proyectos">Nuestros proyectos</button>
+    </div>
+    </div>
 
     <!-- VIDEOS -->
     <div class="ntab-panel" id="np-videos">
-      <!-- Sub-pestanas de Videos -->
-      <div class="info-tabs" style="margin-bottom:24px">
-        <button class="itab active" onclick="switchVidTab('comunidad')"  id="vt-comunidad">Nuestra comunidad</button>
-        <button class="itab"        onclick="switchVidTab('estadio')"    id="vt-estadio">Nuestro estadio</button>
-        <button class="itab"        onclick="switchVidTab('proyectos')"  id="vt-proyectos">Nuestros proyectos</button>
-        <button class="itab"        onclick="switchVidTab('protoc')"     id="vt-protoc">Nuestros protocolos</button>
-      </div>
       <div class="itab-pane active" id="vp-comunidad" style="position:relative;overflow:hidden">
         <!-- Garabato decorativo de fondo (no interfiere con el grid) -->
         <svg aria-hidden="true"
@@ -4724,6 +5008,27 @@ function heroGoNovedades(){
             <div class="vid-reel-card">
               <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DJkubBksdJS/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
               <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DJkubBksdJS/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <!-- ── Videos de Protocolos de Seguridad, integrados aquí ── -->
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DYnkMUfR75l/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DYnkMUfR75l/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DYbAWavBlgU/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DYbAWavBlgU/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DTgYmqUD-Tb/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DTgYmqUD-Tb/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DJK5USupZho/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DJK5USupZho/" target="_blank" rel="noopener">Ver en Instagram</a></div>
+            </div>
+            <div class="vid-reel-card">
+              <div class="vid-reel-ratio"><iframe src="https://www.instagram.com/reel/DHwZ2MzIlG0/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe></div>
+              <div class="vid-reel-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/reel/DHwZ2MzIlG0/" target="_blank" rel="noopener">Ver en Instagram</a></div>
             </div>
           </div>
         </div>
@@ -4919,65 +5224,6 @@ function heroGoNovedades(){
       </div>
 
       <!-- ─── NUESTROS PROTOCOLOS ─── -->
-      <div class="itab-pane" id="vp-protoc">
-        <div class="vid-inst-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram &middot; Protocolos de Seguridad</div>
-        <div class="vid-reel-grid">
-          <div class="vid-reel-card">
-            <div class="vid-reel-ratio">
-              <iframe src="https://www.instagram.com/reel/DYnkMUfR75l/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
-            </div>
-            <div class="vid-reel-foot">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              <a href="https://www.instagram.com/reel/DYnkMUfR75l/" target="_blank" rel="noopener">Ver en Instagram</a>
-            </div>
-          </div>
-          <div class="vid-reel-card">
-            <div class="vid-reel-ratio">
-              <iframe src="https://www.instagram.com/reel/DYbAWavBlgU/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
-            </div>
-            <div class="vid-reel-foot">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              <a href="https://www.instagram.com/reel/DYbAWavBlgU/" target="_blank" rel="noopener">Ver en Instagram</a>
-            </div>
-          </div>
-          <div class="vid-reel-card">
-            <div class="vid-reel-ratio">
-              <iframe src="https://www.instagram.com/reel/DTgYmqUD-Tb/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
-            </div>
-            <div class="vid-reel-foot">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              <a href="https://www.instagram.com/reel/DTgYmqUD-Tb/" target="_blank" rel="noopener">Ver en Instagram</a>
-            </div>
-          </div>
-          <div class="vid-reel-card">
-            <div class="vid-reel-ratio">
-              <iframe src="https://www.instagram.com/reel/DJK5USupZho/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
-            </div>
-            <div class="vid-reel-foot">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              <a href="https://www.instagram.com/reel/DJK5USupZho/" target="_blank" rel="noopener">Ver en Instagram</a>
-            </div>
-          </div>
-          <div class="vid-reel-card">
-            <div class="vid-reel-ratio">
-              <iframe src="https://www.instagram.com/reel/DHwZ2MzIlG0/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
-            </div>
-            <div class="vid-reel-foot">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              <a href="https://www.instagram.com/reel/DHwZ2MzIlG0/" target="_blank" rel="noopener">Ver en Instagram</a>
-            </div>
-          </div>
-          <div class="vid-reel-card">
-            <div class="vid-reel-ratio">
-              <iframe src="https://www.instagram.com/reel/DQx82XBChfc/embed/" scrolling="no" allowtransparency="true" allow="encrypted-media" loading="lazy"></iframe>
-            </div>
-            <div class="vid-reel-foot">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              <a href="https://www.instagram.com/reel/DQx82XBChfc/" target="_blank" rel="noopener">Ver en Instagram</a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- PLANES Y PROGRAMAS (antes Nuestros Proyectos) -->
@@ -4991,7 +5237,7 @@ function heroGoNovedades(){
           <div class="srv-body">
             <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
             <div class="srv-title">PMS</div>
-            <p class="srv-desc">Programa de Mejora a la Seguridad. Iniciativa institucional para el fortalecimiento de las capacidades de seguridad en el campus universitario.</p>
+            <p class="srv-desc" style="text-align:justify;text-justify:inter-word;line-height:1.85;hyphens:auto;-webkit-hyphens:auto">El PMS-UNAM podrá organizar, regular y orientar el funcionamiento de las estructuras de trabajo y las acciones preventivas y correctivas para lograr condiciones de tranquilidad y seguridad dentro de las entidades académicas, dependencias universitarias y zonas comunes de la UNAM.</p>
             <span class="srv-cta" style="display:inline-flex;align-items:center;gap:6px">
               Ver presentaci&#243;n
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
@@ -5005,7 +5251,7 @@ function heroGoNovedades(){
           <div class="srv-body">
             <div class="srv-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
             <div class="srv-title">PISBA</div>
-            <p class="srv-desc">Plan Institucional de Seguridad. Documento rector que establece los lineamientos, estrategias y acciones para la seguridad universitaria.</p>
+            <p class="srv-desc" style="text-align:justify;text-justify:inter-word;line-height:1.85;hyphens:auto;-webkit-hyphens:auto">El PISBA constituye un instrumento institucional orientado a fortalecer la seguridad en los planteles del bachillerato universitario, mediante la reducción de vulnerabilidades del estudiantado; el fortalecimiento de la prevención a través de acciones de información y capacitación; la mejora de la infraestructura de seguridad; el establecimiento de protocolos específicos para la atención de situaciones de riesgo; la promoción de la salud integral; y la atención de fenómenos de alto impacto.</p>
             <span class="srv-cta" style="display:inline-flex;align-items:center;gap:6px">
               Descargar PDF
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -5078,23 +5324,685 @@ function heroGoNovedades(){
       </div>
     </div>
 
-    <!-- CURSOS -->
+    <!-- CURSOS Y CAPACITACIONES — rediseño con 3 apartados -->
     <div class="ntab-panel" id="np-cursos">
-      <div class="curso-grid">
-        <div class="curso-card"><div class="curso-img"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div class="curso-body"><div class="curso-badge">Curso en línea</div><div class="curso-title">Prevención y Autoprotección</div><p class="curso-desc">Fundamentos de prevención de riesgos y autoprotección para la comunidad universitaria.</p><span class="curso-link">Próximamente →</span></div></div>
-        <div class="curso-card"><div class="curso-img"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="curso-body"><div class="curso-badge">Taller presencial</div><div class="curso-title">Protección Civil Básica</div><p class="curso-desc">Protocolos de evacuación, primeros auxilios y respuesta ante emergencias.</p><span class="curso-link">Próximamente →</span></div></div>
-        <div class="curso-card"><div class="curso-img"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="curso-body"><div class="curso-badge">Certificación</div><div class="curso-title">Perspectiva de Género en la Seguridad</div><p class="curso-desc">Herramientas para identificar y atender situaciones de violencia de género en el campus.</p><span class="curso-link">Próximamente →</span></div></div>
-      </div>
-    </div>
+      <style>
+      /* ── Sub-navegación ── */
+      .cap-tabs{display:flex;gap:0;flex-wrap:wrap;margin-bottom:26px;border-bottom:2px solid var(--gris-borde);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+      .cap-tabs::-webkit-scrollbar{display:none}
 
-    <!-- CAPACITACIONES -->
-    <div class="ntab-panel" id="np-capac">
-      <div class="curso-grid">
-        <div class="curso-card"><div class="curso-img"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7 7 7 0 01-7-7c0-1.99.806-2.967 2.5-4.5z"/></svg></div><div class="curso-body"><div class="curso-badge">Capacitación</div><div class="curso-title">Manejo de Extintores</div><p class="curso-desc">Capacitación práctica en el uso correcto de extintores para el personal universitario.</p><span class="curso-link">Registrarse →</span></div></div>
-        <div class="curso-card"><div class="curso-img"><svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/></svg></div><div class="curso-body"><div class="curso-badge">Capacitación</div><div class="curso-title">Brigadas de Emergencia</div><p class="curso-desc">Formación de brigadas institucionales para la respuesta coordinada ante emergencias.</p><span class="curso-link">Registrarse →</span></div></div>
-        <div class="curso-card"><div class="curso-img"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/></svg></div><div class="curso-body"><div class="curso-badge">Capacitación</div><div class="curso-title">Primeros Auxilios</div><p class="curso-desc">Técnicas básicas de primeros auxilios y RCP para miembros de la comunidad universitaria.</p><span class="curso-link">Registrarse →</span></div></div>
+      /* ── Intro ── */
+      .cap-intro{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(135deg,rgba(169,198,232,.14),rgba(169,198,232,.04));border:1px solid var(--gris-borde);border-radius:14px;padding:22px 26px;margin-bottom:30px}
+      .cap-intro-icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#003B71,#1565C0);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 18px rgba(0,59,113,.25)}
+      .cap-intro-icon svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+      .cap-intro-text{font-size:14.5px;color:var(--gris-txt);line-height:1.85;font-weight:300;text-align:justify;text-justify:inter-word;hyphens:auto}
+      .cap-intro-text strong{color:var(--azul);font-weight:700}
+
+      /* ── Oferta: tarjetas ── */
+      .cap-oferta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+      .cap-oferta-card{background:#fff;border:1px solid var(--gris-borde);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+      .cap-oferta-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,59,113,.16);border-color:var(--azul-claro)}
+      .cap-oferta-head{height:118px;background:linear-gradient(135deg,#003B71,#1565C0 60%,#2d8fce);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+      .cap-oferta-head::after{content:'';position:absolute;right:-30px;bottom:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.08)}
+      .cap-oferta-head::before{content:'';position:absolute;left:-20px;top:-20px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.06)}
+      .cap-oferta-head svg{width:42px;height:42px;stroke:#fff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1;transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+      .cap-oferta-card:hover .cap-oferta-head svg{transform:scale(1.12) rotate(-4deg)}
+      .cap-oferta-body{padding:20px 20px 22px}
+      .cap-oferta-badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#1565C0;background:rgba(21,101,192,.08);padding:4px 10px;border-radius:8px;margin-bottom:10px}
+      .cap-oferta-title{font-family:var(--font-serif);font-size:17px;font-weight:700;color:var(--azul);margin-bottom:8px;line-height:1.3}
+      .cap-oferta-desc{font-size:13.5px;color:var(--gris-sub);font-weight:300;line-height:1.65;margin-bottom:16px}
+      .cap-oferta-link{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--azul);transition:gap .2s}
+      .cap-oferta-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .2s}
+      .cap-oferta-card:hover .cap-oferta-link{gap:11px}
+      .cap-oferta-card:hover .cap-oferta-link svg{transform:translateX(2px)}
+
+      /* ── Capacitación y Protección (GAPSU) ── */
+      .cap-gapsu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+      .cap-gapsu-card{background:#fff;border:1px solid var(--gris-borde);border-radius:16px;overflow:hidden;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+      .cap-gapsu-card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(0,59,113,.14);border-color:var(--azul-claro)}
+      .cap-gapsu-img{aspect-ratio:4/3;background:var(--azul-pale)}
+      .cap-gapsu-body{padding:16px 18px 18px}
+      .cap-gapsu-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#1565C0;background:rgba(21,101,192,.08);padding:4px 10px;border-radius:8px;margin-bottom:9px}
+      .cap-gapsu-title{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--azul);margin-bottom:6px;line-height:1.35}
+      .cap-gapsu-desc{font-size:13px;color:var(--gris-sub);font-weight:300;line-height:1.6}
+      .cap-gapsu-note{display:flex;align-items:center;gap:12px;background:rgba(169,198,232,.10);border:1px dashed var(--azul-claro);border-radius:12px;padding:14px 18px;margin-top:22px;font-size:12.5px;color:var(--gris-sub);font-weight:300;line-height:1.6}
+      .cap-gapsu-note svg{width:20px;height:20px;stroke:var(--azul-med);fill:none;stroke-width:1.8;flex-shrink:0}
+
+      /* ── Acordeón Capacitación y Protección (DGAPSU) ── */
+      .cap-acc-section{margin-bottom:42px}
+      .cap-acc-section-title{display:flex;align-items:center;gap:16px;font-family:var(--font-serif);font-size:22px;font-weight:700;margin-bottom:20px;color:var(--azul)}
+      .cap-acc-section-title::before,.cap-acc-section-title::after{content:'';flex:1;height:2px;background:var(--cap-accent,#E67E22)}
+      .cap-acc-section-title span{color:var(--cap-accent,#E67E22);white-space:nowrap}
+      .cap-acc-pc{--cap-accent:#E67E22}
+      .cap-acc-prev{--cap-accent:#C9962E}
+      .cap-acc-item{border-radius:12px;overflow:hidden;margin-bottom:14px;border:1px solid var(--gris-borde);box-shadow:0 2px 10px rgba(0,59,113,.04)}
+      .cap-acc-head{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;background:var(--azul);color:#fff;border:none;cursor:pointer;padding:18px 26px;font-family:var(--font-sans);font-size:17px;font-weight:700;text-align:left;transition:background .2s}
+      .cap-acc-head:hover{background:#00509e}
+      .cap-acc-head svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.5;flex-shrink:0;transition:transform .3s ease}
+      .cap-acc-item.open .cap-acc-head svg{transform:rotate(180deg)}
+      .cap-acc-body{display:grid;grid-template-columns:1fr 380px;gap:32px;padding:28px 30px;background:#fff;animation:fadeIn .25s ease;align-items:start}
+      .cap-acc-body.collapsed{display:none}
+      .cap-acc-obj-label,.cap-acc-tem-label{font-size:15px;font-weight:700;color:var(--azul);margin-bottom:6px}
+      .cap-acc-obj-text{font-size:15.5px;color:var(--gris-txt);font-weight:300;line-height:1.85;text-align:justify;text-justify:inter-word;hyphens:auto;margin-bottom:16px}
+      .cap-acc-dur{font-size:14.5px;color:var(--gris-txt);margin-bottom:16px}
+      .cap-acc-dur strong{color:var(--azul)}
+      .cap-acc-temario{margin:0 0 18px;padding-left:22px}
+      .cap-acc-temario li{font-size:14.5px;color:var(--gris-txt);line-height:1.85;text-align:justify;text-justify:inter-word}
+      .cap-acc-contact{font-size:14px;color:var(--gris-sub);font-weight:300;line-height:1.8;padding-top:14px;border-top:1px solid var(--gris-borde);text-align:justify;text-justify:inter-word;hyphens:auto}
+      .cap-acc-contact a{color:#E67E22;font-weight:700;text-decoration:none}
+      .cap-acc-contact a.prev-link{color:#C9962E}
+      .cap-acc-contact strong{color:var(--azul)}
+      .cap-acc-img{border-radius:12px;overflow:hidden;background:var(--azul-pale);aspect-ratio:4/3;align-self:start;box-shadow:0 8px 28px rgba(0,59,113,.12)}
+      .cap-acc-prev .cap-acc-img{aspect-ratio:1/1;background:#fff}
+      .cap-acc-prev .cap-acc-img img{object-fit:contain!important}
+      @media(max-width:1100px){
+        .cap-acc-body{grid-template-columns:1fr 300px}
+      }
+      @media(max-width:760px){
+        .cap-acc-body{grid-template-columns:1fr;padding:22px 20px}
+        .cap-acc-img{order:-1;aspect-ratio:16/9}
+        .cap-acc-head{font-size:15px;padding:16px 20px}
+      }
+
+      /* ── Carteles Informativos: tarjetas tipo póster ── */
+      .cap-cartel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+      .cap-cartel-card{border-radius:14px;overflow:hidden;border:1px solid var(--gris-borde);background:#fff;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s ease;box-shadow:0 3px 14px rgba(0,59,113,.06)}
+      .cap-cartel-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,59,113,.15)}
+      .cap-cartel-cover{position:relative;aspect-ratio:3/4;background:linear-gradient(160deg,#e8f1fb,#cfdff5);display:flex;align-items:center;justify-content:center;overflow:hidden}
+      .cap-cartel-cover img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .35s ease}
+      .cap-cartel-card:hover .cap-cartel-cover img{transform:scale(1.04)}
+      .cap-cartel-cover .cap-cartel-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;background:linear-gradient(160deg,#e8f1fb,#cfdff5)}
+      .cap-cartel-cover .cap-cartel-ph svg{opacity:.35}
+      .cap-cartel-cover .cap-cartel-ph span{font-family:'Courier New',monospace;font-size:9.5px;font-weight:700;color:var(--azul);opacity:.5;text-align:center;word-break:break-all;padding:0 12px}
+      .cap-cartel-cover svg{width:38px;height:38px;stroke:var(--azul);opacity:.32;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s ease}
+      .cap-cartel-card:hover .cap-cartel-cover svg{transform:scale(1.12)}
+      .cap-cartel-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,20,55,.82) 0%,rgba(0,20,55,.12) 55%,transparent 100%);opacity:0;transition:opacity .25s ease;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px}
+      .cap-cartel-card:hover .cap-cartel-overlay{opacity:1}
+      .cap-cartel-pill{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--azul);font-size:11px;font-weight:700;padding:6px 14px;border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+      .cap-cartel-pill svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6}
+      .cap-cartel-footer{padding:12px 14px;border-top:1px solid var(--gris-borde)}
+      .cap-cartel-title{font-size:12.5px;font-weight:700;color:var(--azul);line-height:1.4}
+
+      @media(max-width:1100px){
+        .cap-oferta-grid,.cap-gapsu-grid{grid-template-columns:repeat(2,1fr)}
+        .cap-cartel-grid{grid-template-columns:repeat(3,1fr)}
+      }
+      @media(max-width:760px){
+        .cap-oferta-grid,.cap-gapsu-grid{grid-template-columns:1fr}
+        .cap-cartel-grid{grid-template-columns:repeat(2,1fr)}
+        .cap-intro{flex-direction:column}
+      }
+      @media(max-width:480px){
+        .cap-cartel-grid{grid-template-columns:1fr}
+      }
+      </style>
+
+      <!-- Sub-pestañas -->
+      <div class="cap-tabs">
+        <button class="itab active" onclick="switchCursoTab('oferta')"        id="ct-oferta">Oferta</button>
+        <button class="itab"        onclick="switchCursoTab('capacitacion')"  id="ct-capacitacion">Capacitación y Protección</button>
+        <button class="itab"        onclick="switchCursoTab('carteles')"      id="ct-carteles">Carteles Informativos</button>
+      </div>
+
+      <!-- ═══ 1. OFERTA ═══ -->
+      <div class="cp-pane active" id="cp-oferta">
+        <div class="cap-intro">
+          <div class="cap-intro-icon"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+          <p class="cap-intro-text">La <strong>Coordinación de Educación en Prevención y Seguridad</strong> de la SPAMSU ofrece a la comunidad universitaria actividades de capacitación en prevención, autocuidado, gestión del riesgo, seguridad, participación colectiva y promoción de los valores universitarios, con perspectiva de género y de derechos humanos. Cursos presenciales y en línea.</p>
+        </div>
+
+        <div class="cap-oferta-grid">
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Talleres%20Bach.pdf" target="_blank" rel="noopener" class="cap-oferta-card">
+            <div class="cap-oferta-head"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+            <div class="cap-oferta-body">
+              <div class="cap-oferta-badge">Presencial</div>
+              <div class="cap-oferta-title">Talleres de Bachillerato</div>
+              <p class="cap-oferta-desc">Oferta de talleres presenciales de prevención y seguridad dirigidos a planteles del bachillerato universitario.</p>
+              <span class="cap-oferta-link">Descargar oferta <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+            </div>
+          </a>
+
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Oferta%20Academica.pdf" target="_blank" rel="noopener" class="cap-oferta-card">
+            <div class="cap-oferta-head"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <div class="cap-oferta-body">
+              <div class="cap-oferta-badge">En línea</div>
+              <div class="cap-oferta-title">Cursos en Línea</div>
+              <p class="cap-oferta-desc">Catálogo de cursos en línea sobre prevención, autocuidado y gestión del riesgo para toda la comunidad universitaria.</p>
+              <span class="cap-oferta-link">Descargar oferta <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+            </div>
+          </a>
+
+          <a href="https://capacitacionspasu.unam.mx/moodle/" target="_blank" rel="noopener" class="cap-oferta-card">
+            <div class="cap-oferta-head"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+            <div class="cap-oferta-body">
+              <div class="cap-oferta-badge">Plataforma</div>
+              <div class="cap-oferta-title">Plataforma Moodle</div>
+              <p class="cap-oferta-desc">Accede a la plataforma oficial de capacitación SPAMSU para inscribirte y dar seguimiento a tus cursos en línea.</p>
+              <span class="cap-oferta-link">Ir a la plataforma <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- ═══ 2. CAPACITACIÓN Y PROTECCIÓN (GAPSU) ═══ -->
+      <div class="cp-pane" id="cp-capacitacion" style="display:none">
+        <div class="cap-intro">
+          <div class="cap-intro-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <p class="cap-intro-text">La <strong>Dirección General de Análisis, Protección y Seguridad Universitaria (DGAPSU)</strong>, a través de sus direcciones de Protección Civil y Bomberos, y de Análisis y Prevención, pone a disposición de manera gratuita y exclusiva para las Dependencias y Entidades de la UNAM, las siguientes pláticas y talleres de capacitación en materia de Protección Civil y Prevención de Riesgos, los cuales tienen como objetivo generar una cultura de prevención, autocuidado, protección y seguridad. Los cursos deben ser solicitados vía oficio a través de las Entidades y Dependencias.</p>
+        </div>
+
+        <div class="cap-acc-section cap-acc-pc">
+          <div class="cap-acc-section-title"><span>Protección Civil</span></div>
+          <div class="cap-acc-item" id="pc-1">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-1')">
+              <span>Protección Civil</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Fomentar la cultura de la prevención en toda la comunidad universitaria, sensibilizando a su población en temas de prevención y fortaleciendo la autoprotección frente a los riesgos.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 3 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Antecedentes</li>
+                <li>Protección Civil</li>
+                <li>Brigadas</li>
+                <li>Señalización</li>
+                <li>Qué hacer en caso de sismo</li>
+                <li>Mochila de emergencia</li>
+                <li>Plan familiar</li>
+                <li>Simulacro</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Protección Civil</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-proteccion-civil" data-alt="Protección Civil"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-2">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-2')">
+              <span>Primeros Auxilios I</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Adquirir los conocimientos y habilidades básicas para ofrecer una adecuada atención de primeros auxilios a una persona lesionada o enferma, con el propósito de garantizar una atención primaria de calidad en su rol como primer respondiente.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 3 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Conocimientos Generales</li>
+                <li>Objetivos de los Primeros Auxilios</li>
+                <li>Cadena de sobrevida</li>
+                <li>Evaluación de la Escena</li>
+                <li>Signos vitales</li>
+                <li>Evaluación del paciente</li>
+                <li>Activación del Servicio Médico de Urgencias</li>
+                <li>Soporte básico de vida (Obstrucción vía aérea y RCP)</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Primeros Auxilios I</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-primeros-auxilios-1" data-alt="Primeros Auxilios I"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-3">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-3')">
+              <span>Primeros Auxilios II</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Adquirir los conocimientos y habilidades básicas para ofrecer una adecuada atención de primeros auxilios a una persona lesionada o enferma. Para cursar este taller se debe haber cursado el taller de Primeros Auxilios I.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 3 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Hemorragias</li>
+                <li>Heridas</li>
+                <li>Quemaduras</li>
+                <li>Lesiones musculo esqueléticas (fracturas, esguince, luxación)</li>
+                <li>Inmovilización y vendajes</li>
+                <li>Botiquín de primeros auxilios</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Primeros Auxilios II</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-primeros-auxilios-2" data-alt="Primeros Auxilios II"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-4">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-4')">
+              <span>Simulacros</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Que el participante conozca los componentes, tipos de simulacros en protección civil, para poder diseñarlos de acuerdo a los riesgos identificados en sus dependencias o entidades universitarias.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 3 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Conceptos Básicos</li>
+                <li>Organización</li>
+                <li>Unidad Interna de Protección Civil</li>
+                <li>Programa Interno de Protección Civil</li>
+                <li>Simulacros</li>
+                <li>Tipos de Simulacros</li>
+                <li>Planeación, Ejecución y Evaluación de Simulacros</li>
+                <li>Participación de Personas con Discapacidad</li>
+                <li>Simulacros en el Hogar</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Simulacros</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-simulacros" data-alt="Simulacros"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-5">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-5')">
+              <span>Uso y manejo de extintores portátiles</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Orientar y sensibilizar a la comunidad universitaria sobre la prevención de incendios y aprender el correcto uso de extintores portátiles frente a un conato de incendio.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 3 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>El fuego</li>
+                <li>Clasificación del fuego</li>
+                <li>Métodos para extinguir el fuego</li>
+                <li>Clasificación de incendios</li>
+                <li>Extintores Portátiles</li>
+                <li>Medidas de prevención para combatir un incendio</li>
+                <li>Qué hacer antes, durante y después de un incendio</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Uso y manejo de extintores portátiles</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-extintores" data-alt="Uso y manejo de extintores portátiles"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-6">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-6')">
+              <span>Primeros Auxilios Psicológicos</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Los participantes identificarán qué es una crisis, un desastre y una emergencia, así como los efectos psicológicos que pueden generar en las personas, identificando los componentes principales de los Primeros Auxilios Psicológicos que establece la Organización Mundial de la Salud.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 2:30 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Crisis (Tipos y Características)</li>
+                <li>Emergencias y desastres</li>
+                <li>Efectos personales que puede producir una crisis</li>
+                <li>Primeros auxilios psicológicos (PAP)</li>
+                <li>Intervención en PAP</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Primeros Auxilios Psicológicos</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-primeros-auxilios-psicologicos" data-alt="Primeros Auxilios Psicológicos"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-7">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-7')">
+              <span>Seguridad en Laboratorios</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Conocer las condiciones de seguridad, de acuerdo a la normatividad vigente, que deben aplicarse en laboratorios donde existan sustancias y residuos químicos.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 3 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Condiciones básicas de seguridad en laboratorios donde se manejan sustancias químicas</li>
+                <li>Equipo de protección personal</li>
+                <li>Equipo de atención de emergencias</li>
+                <li>Segregación y almacenamiento de reactivos</li>
+                <li>Identificación de riesgos de sustancias químicas</li>
+                <li>Manejo seguro de solventes</li>
+                <li>Manejo seguro de cilindros de gases comprimidos</li>
+                <li>Manejo de residuos químicos</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Seguridad en Laboratorios</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-seguridad-laboratorios" data-alt="Seguridad en Laboratorios"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-8">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-8')">
+              <span>Manejo de Sustancias Químicas</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Conocer la información y procedimientos necesarios para la atención básica de accidentes con sustancias y residuos químicos.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 2:30 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Atención básica de emergencias con sustancias químicas</li>
+                <li>Hojas de seguridad de materiales (MSDS, HDSM) y su uso para la atención básica de emergencias</li>
+                <li>Llamada de emergencia</li>
+                <li>Protocolo básico de atención por derrame de sustancias químicas</li>
+                <li>Atención básica de quemadura química y quemadura térmica</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Manejo de Sustancias Químicas</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-sustancias-quimicas" data-alt="Manejo de Sustancias Químicas"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-9">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-9')">
+              <span>Quemaduras Químicas</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Que los asistentes reconozcan los riesgos frente a una quemadura con químicos y adquieran los conocimientos necesarios de las acciones de primera respuesta que se deben realizar.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 3 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Presentación objetivos</li>
+                <li>Riesgos químicos</li>
+                <li>Piel: Su estructura y función</li>
+                <li>Quemaduras</li>
+                <li>Clasificación: Origen, profundidad, extensión y las características de cada una</li>
+                <li>Tratamiento frente a una quemadura química</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Quemaduras Químicas</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-quemaduras-quimicas" data-alt="Quemaduras Químicas"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-10">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-10')">
+              <span>Búsqueda y Rescate</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Dar a conocer acciones básicas y alcance de las brigadas internas de protección civil, referente a la búsqueda y rescate de personas, posterior a un fenómeno perturbador.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 3 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Antecedentes</li>
+                <li>Contexto actual</li>
+                <li>Respuesta social espontánea y especializada</li>
+                <li>Actividades principales</li>
+                <li>Alcance de las brigadas de primera respuesta</li>
+                <li>Equipos especializados</li>
+                <li>Tipo de daños</li>
+                <li>Tipo de riesgos</li>
+                <li>Tipo de búsquedas</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Búsqueda y Rescate</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-busqueda-rescate" data-alt="Búsqueda y Rescate"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="pc-11">
+            <button class="cap-acc-head" onclick="toggleCapAcc('pc-11')">
+              <span>Rappel</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Dar a conocer las técnicas básicas para el uso de equipos y procedimientos utilizados en sistemas de descenso por superficies verticales utilizando técnicas de cuerdas.</p>
+                <div class="cap-acc-dur"><strong>Duración:</strong> 3 horas</div>
+                <div class="cap-acc-tem-label">Temario:</div>
+                <ul class="cap-acc-temario">
+                <li>Reglas de seguridad</li>
+                <li>Antecedentes</li>
+                <li>Equipo de cuerdas, arneses y cintas</li>
+                <li>Equipos de metal</li>
+                <li>Nudos básicos</li>
+                <li>Sistema básico de descenso y anclaje</li>
+                <li>Tipo de descensos</li>
+                <li>Conclusiones</li>
+                </ul>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:proteccioncivil@unam.mx">proteccioncivil@unam.mx</a> con el asunto <strong>Capacitación Rappel</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="pc-rappel" data-alt="Rappel"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cap-acc-section cap-acc-prev">
+          <div class="cap-acc-section-title"><span>Prevención</span></div>
+          <div class="cap-acc-item" id="prev-1">
+            <button class="cap-acc-head" onclick="toggleCapAcc('prev-1')">
+              <span>Prevención de llamadas de extorsión telefónica y robo de datos personales</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Fortalecer las capacidades de la comunidad universitaria para identificar, prevenir y reaccionar adecuadamente ante intentos de extorsión telefónica y fraudes digitales, promoviendo el manejo responsable de la información personal y la adopción de medidas de protección para evitar el robo de datos.</p>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:analisis.dgapsu@unam.mx" class="prev-link">analisis.dgapsu@unam.mx</a> con el asunto <strong>Capacitación Prevención de llamadas de extorsión telefónica y robo de datos personales</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="prev-extorsion-telefonica" data-alt="Prevención de llamadas de extorsión telefónica y robo de datos personales"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="prev-2">
+            <button class="cap-acc-head" onclick="toggleCapAcc('prev-2')">
+              <span>Actuación ante artefacto explosivo</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Brindar conocimientos necesarios a la comunidad universitaria en los procedimientos de actuación ante amenazas relacionadas con artefactos explosivos y la coordinación de las instancias correspondientes.</p>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:analisis.dgapsu@unam.mx" class="prev-link">analisis.dgapsu@unam.mx</a> con el asunto <strong>Capacitación Actuación ante artefacto explosivo</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="prev-artefacto-explosivo" data-alt="Actuación ante artefacto explosivo"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="prev-3">
+            <button class="cap-acc-head" onclick="toggleCapAcc('prev-3')">
+              <span>Prevención del bullying y cyberbullying</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Enfocado a la comunidad del bachillerato universitario, para sensibilizar y brindar herramientas sobre la identificación, prevención y atención del bullying y el cyberbullying, fomentando entornos de respeto, la detección temprana de conductas de riesgo y el uso responsable de los medios digitales.</p>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:analisis.dgapsu@unam.mx" class="prev-link">analisis.dgapsu@unam.mx</a> con el asunto <strong>Capacitación Prevención del bullying y cyberbullying</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="prev-bullying-cyberbullying" data-alt="Prevención del bullying y cyberbullying"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="prev-4">
+            <button class="cap-acc-head" onclick="toggleCapAcc('prev-4')">
+              <span>Creación de protocolos</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Desarrollar capacidades en la elaboración de protocolos de actuación institucional, orientados a la identificación de riesgos, definición de responsabilidades y establecimiento de procedimientos claros que permitan una respuesta ordenada y eficaz ante situaciones de emergencia.</p>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:analisis.dgapsu@unam.mx" class="prev-link">analisis.dgapsu@unam.mx</a> con el asunto <strong>Capacitación Creación de protocolos</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="prev-creacion-protocolos" data-alt="Creación de protocolos"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="prev-5">
+            <button class="cap-acc-head" onclick="toggleCapAcc('prev-5')">
+              <span>Autocuidado y medidas de prevención</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Difundir y promover prácticas de autocuidado y prevención que fortalezcan la seguridad personal y comunitaria, mediante la adopción de hábitos, conductas preventivas y criterios de actuación que reduzcan la exposición a riesgos dentro y fuera del entorno universitario.</p>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:analisis.dgapsu@unam.mx" class="prev-link">analisis.dgapsu@unam.mx</a> con el asunto <strong>Capacitación Autocuidado y medidas de prevención</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="prev-autocuidado-prevencion" data-alt="Autocuidado y medidas de prevención"></div>
+            </div>
+          </div>
+          <div class="cap-acc-item" id="prev-6">
+            <button class="cap-acc-head" onclick="toggleCapAcc('prev-6')">
+              <span>Identificación de señales de alerta para prevenir actos de violencia</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="cap-acc-body collapsed">
+              <div class="cap-acc-text">
+                <div class="cap-acc-obj-label">Objetivo:</div>
+                <p class="cap-acc-obj-text">Fortalecer la capacidad de la comunidad universitaria para reconocer señales tempranas de riesgo y conductas de alerta asociadas a posibles actos de violencia, promoviendo la observación responsable, el reporte oportuno y la adopción de medidas preventivas que contribuyan a entornos universitarios seguros.</p>
+                <div class="cap-acc-contact">Para mayor información enviar un correo a <a href="mailto:analisis.dgapsu@unam.mx" class="prev-link">analisis.dgapsu@unam.mx</a> con el asunto <strong>Capacitación Identificación de señales de alerta para prevenir actos de violencia</strong>.</div>
+              </div>
+              <div class="cap-acc-img" data-img="prev-senales-alerta" data-alt="Identificación de señales de alerta para prevenir actos de violencia"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ 3. CARTELES INFORMATIVOS ═══ -->
+      <div class="cp-pane" id="cp-carteles" style="display:none">
+        <div class="cap-intro">
+          <div class="cap-intro-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+          <p class="cap-intro-text">Material gráfico de difusión con recomendaciones puntuales de actuación ante distintas situaciones de riesgo. Descarga los carteles para consultarlos o imprimirlos.</p>
+        </div>
+
+        <div class="cap-cartel-grid">
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Recomendaciones%20en%20caso%20de%20amenaza%20por%20red%20social.pdf" target="_blank" rel="noopener" class="cap-cartel-card">
+            <div class="cap-cartel-cover">
+              <img src="img/cartel-amenaza-red-social.png" alt="Cartel: Amenaza por red social"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="cap-cartel-ph" style="display:none">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>cartel-amenaza-red-social.png</span>
+              </div>
+              <div class="cap-cartel-overlay"><span class="cap-cartel-pill"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</span></div>
+            </div>
+            <div class="cap-cartel-footer"><div class="cap-cartel-title">Amenaza por red social</div></div>
+          </a>
+
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Recomendaciones%20en%20caso%20de%20actuacion%20ante%20artefacto%20explosivo%20en%20instalaciones%20universitarias.pdf" target="_blank" rel="noopener" class="cap-cartel-card">
+            <div class="cap-cartel-cover">
+              <img src="img/cartel-artefacto-explosivo.png" alt="Cartel: Artefacto explosivo en instalaciones universitarias"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="cap-cartel-ph" style="display:none">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>cartel-artefacto-explosivo.png</span>
+              </div>
+              <div class="cap-cartel-overlay"><span class="cap-cartel-pill"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</span></div>
+            </div>
+            <div class="cap-cartel-footer"><div class="cap-cartel-title">Artefacto explosivo en instalaciones universitarias</div></div>
+          </a>
+
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Recomendaciones%20en%20caso%20de%20robo%20en%20transporte%20publico.pdf" target="_blank" rel="noopener" class="cap-cartel-card">
+            <div class="cap-cartel-cover">
+              <img src="img/cartel-robo-transporte-publico.png" alt="Cartel: Robo en transporte público"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="cap-cartel-ph" style="display:none">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>cartel-robo-transporte-publico.png</span>
+              </div>
+              <div class="cap-cartel-overlay"><span class="cap-cartel-pill"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</span></div>
+            </div>
+            <div class="cap-cartel-footer"><div class="cap-cartel-title">Robo en transporte público</div></div>
+          </a>
+
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Recomendaciones%20en%20caso%20de%20robo.pdf" target="_blank" rel="noopener" class="cap-cartel-card">
+            <div class="cap-cartel-cover">
+              <img src="img/cartel-actuacion-robo.png" alt="Cartel: Actuación ante situación de robo"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="cap-cartel-ph" style="display:none">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>cartel-actuacion-robo.png</span>
+              </div>
+              <div class="cap-cartel-overlay"><span class="cap-cartel-pill"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</span></div>
+            </div>
+            <div class="cap-cartel-footer"><div class="cap-cartel-title">Actuación ante situación de robo</div></div>
+          </a>
+
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Recomendaciones%20en%20caso%20de%20agresion%20de%20grupos%20al%20exterior.pdf" target="_blank" rel="noopener" class="cap-cartel-card">
+            <div class="cap-cartel-cover">
+              <img src="img/cartel-agresion-grupos-exterior.png" alt="Cartel: Agresión de grupos al exterior"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="cap-cartel-ph" style="display:none">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>cartel-agresion-grupos-exterior.png</span>
+              </div>
+              <div class="cap-cartel-overlay"><span class="cap-cartel-pill"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</span></div>
+            </div>
+            <div class="cap-cartel-footer"><div class="cap-cartel-title">Agresión de grupos al exterior</div></div>
+          </a>
+
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Recomendaciones%20en%20caso%20de%20agresion%20de%20grupos%20al%20interior.pdf" target="_blank" rel="noopener" class="cap-cartel-card">
+            <div class="cap-cartel-cover">
+              <img src="img/cartel-agresion-grupos-interior.png" alt="Cartel: Agresión de grupos al interior"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="cap-cartel-ph" style="display:none">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>cartel-agresion-grupos-interior.png</span>
+              </div>
+              <div class="cap-cartel-overlay"><span class="cap-cartel-pill"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</span></div>
+            </div>
+            <div class="cap-cartel-footer"><div class="cap-cartel-title">Agresión de grupos al interior</div></div>
+          </a>
+
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Recomendaciones%20en%20caso%20de%20extorsion%20telefonica.pdf" target="_blank" rel="noopener" class="cap-cartel-card">
+            <div class="cap-cartel-cover">
+              <img src="img/cartel-extorsion-telefonica.png" alt="Cartel: Extorsión telefónica"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="cap-cartel-ph" style="display:none">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>cartel-extorsion-telefonica.png</span>
+              </div>
+              <div class="cap-cartel-overlay"><span class="cap-cartel-pill"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</span></div>
+            </div>
+            <div class="cap-cartel-footer"><div class="cap-cartel-title">Extorsión telefónica</div></div>
+          </a>
+
+          <a href="https://serviciosalacomunidad.unam.mx/index_htm_files/Recomendaciones%20en%20caso%20de%20presencia%20y%20uso%20de%20armas%20en%20la%20UNAM.pdf" target="_blank" rel="noopener" class="cap-cartel-card">
+            <div class="cap-cartel-cover">
+              <img src="img/cartel-armas-unam.png" alt="Cartel: Presencia y uso de armas en la UNAM"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="cap-cartel-ph" style="display:none">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>cartel-armas-unam.png</span>
+              </div>
+              <div class="cap-cartel-overlay"><span class="cap-cartel-pill"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</span></div>
+            </div>
+            <div class="cap-cartel-footer"><div class="cap-cartel-title">Presencia y uso de armas en la UNAM</div></div>
+          </a>
+        </div>
       </div>
     </div>
+    <script>
+    function switchCursoTab(tab){
+      ['oferta','capacitacion','carteles'].forEach(function(k){
+        var p = document.getElementById('cp-'+k);
+        var b = document.getElementById('ct-'+k);
+        if(p) p.style.display = (k===tab) ? 'block' : 'none';
+        if(b) b.classList.toggle('active', k===tab);
+      });
+    }
+    function toggleCapAcc(id){
+      var item = document.getElementById(id);
+      if(!item) return;
+      var section = item.closest('.cap-acc-section');
+      var isOpen = item.classList.contains('open');
+      if(section){
+        section.querySelectorAll('.cap-acc-item.open').forEach(function(other){
+          if(other !== item){
+            other.classList.remove('open');
+            var b = other.querySelector('.cap-acc-body');
+            if(b) b.classList.add('collapsed');
+          }
+        });
+      }
+      item.classList.toggle('open', !isOpen);
+      var body = item.querySelector('.cap-acc-body');
+      if(body) body.classList.toggle('collapsed', isOpen);
+    }
+    </script>
 
     <!-- MATERIAL DESCARGABLE -->
     <div class="ntab-panel" id="np-material">
@@ -5866,11 +6774,59 @@ function heroGoNovedades(){
         <div class="acceso-arrow"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
       </a>
     </div>
-    <a href="https://liveatteduunam-my.sharepoint.com/personal/comunicacion_cigu_unam_mx/_layouts/15/onedrive.aspx?ga=1&id=%2Fpersonal%2Fcomunicacion%5Fcigu%5Funam%5Fmx%2FDocuments%2FRuta%20de%20Atenci%C3%B3n%202024%2FCartel%2DRutaatencion%2D2024%2Epdf" target="_blank" rel="noopener" class="ruta-card">
-      <div class="ruta-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-      <div><div class="ruta-name">Ruta de Atención 2024</div><div class="ruta-desc">Cartel oficial de la ruta de atención para la comunidad universitaria</div></div>
-      <span class="ruta-btn">Ver documento <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
-    </a>
+    <div class="ruta-grid">
+      <!-- Protocolo de Atención Integral de Violencia por Razones de Género -->
+      <a href="https://www.defensoria.unam.mx/web/documentos/protocolo-atencion-integral-de-violencia-por-razones-de-genero.pdf" target="_blank" rel="noopener" class="ruta-card-v2">
+        <div class="ruta-cover ruta-cover-protocolo">
+          <svg class="rcp-deco" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="58" cy="36" rx="26" ry="18"/>
+            <ellipse cx="90" cy="24" rx="20" ry="15"/>
+            <ellipse cx="120" cy="38" rx="24" ry="17"/>
+            <ellipse cx="148" cy="24" rx="17" ry="13"/>
+            <circle cx="34" cy="20" r="5" fill="currentColor" stroke="none"/>
+            <circle cx="168" cy="34" r="4" fill="currentColor" stroke="none"/>
+            <path d="M84 30c2-4 8-4 10 0"/>
+            <path d="M112 28c2-4 8-4 10 0"/>
+          </svg>
+          <div class="rcp-text">Protocolo para la Atención Integral de Casos de Violencia por Razones de Género en la UNAM</div>
+        </div>
+        <div class="ruta-card-v2-body">
+          <div class="ruta-card-v2-title">Protocolo de Atención Integral de Violencia por Razones de Género</div>
+          <p class="ruta-card-v2-desc">Documento oficial de la Defensoría de los Derechos Universitarios con los lineamientos de atención integral en casos de violencia por razones de género.</p>
+          <span class="ruta-card-v2-btn">Ver documento <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Conoce la Ruta de Atención -->
+      <a href="https://liveatteduunam-my.sharepoint.com/personal/comunicacion_cigu_unam_mx/_layouts/15/onedrive.aspx?ga=1&id=%2Fpersonal%2Fcomunicacion%5Fcigu%5Funam%5Fmx%2FDocuments%2FRuta%20de%20Atenci%C3%B3n%202024%2FPDF%2Drutaatencion%2D2024%2Epdf&parent=%2Fpersonal%2Fcomunicacion%5Fcigu%5Funam%5Fmx%2FDocuments%2FRuta%20de%20Atenci%C3%B3n%202024" target="_blank" rel="noopener" class="ruta-card-v2">
+        <div class="ruta-cover ruta-cover-ruta">
+          <div class="rcr-badge"></div>
+          <div class="rcr-text">Conoce la Ruta de Atención para Quejas por Violencia de Género</div>
+        </div>
+        <div class="ruta-card-v2-body">
+          <div class="ruta-card-v2-title">Conoce la Ruta de Atención</div>
+          <p class="ruta-card-v2-desc">Conoce los pasos a seguir y las instancias universitarias a las que puedes acudir para recibir atención y acompañamiento.</p>
+          <span class="ruta-card-v2-btn">Ver documento <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Cartilla Universitaria -->
+      <a href="https://www.abogadogeneral.unam.mx/sites/default/files/archivos/Infografias2023/Junio/cartillaLGBTIQ.pdf" target="_blank" rel="noopener" class="ruta-card-v2">
+        <div class="ruta-cover">
+          <img src="img/ruta-cartilla-universitaria.png" alt="Cartilla Universitaria"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ruta-cover-ph" style="display:none">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+            <span>ruta-cartilla-universitaria.png</span>
+          </div>
+        </div>
+        <div class="ruta-card-v2-body">
+          <div class="ruta-card-v2-title">Cartilla Universitaria</div>
+          <p class="ruta-card-v2-desc">Información y derechos de la comunidad universitaria en materia de diversidad sexual y de género.</p>
+          <span class="ruta-card-v2-btn">Ver documento <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+        </div>
+      </a>
+    </div>
   </section>
 
 
@@ -6264,8 +7220,18 @@ function heroGoNovedades(){
   color:#003B71;letter-spacing:.14em;text-transform:uppercase;
 }
 /* Imagen 2 */
-.disclaimer-img2{border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.disclaimer-img2{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);display:block}
 .disclaimer-img2 img{width:100%;display:block;aspect-ratio:960/1120;object-fit:cover}
+.disc-img2-zone{position:absolute;left:0;right:0;border:none;background:transparent;cursor:pointer;transition:background .2s;padding:0}
+.disc-img2-zone:hover{background:rgba(255,255,255,.12)}
+.disc-img2-zone-top{top:0;height:58%}
+.disc-img2-zone-bottom{top:58%;bottom:0}
+
+/* ── Modal Botiquín de Primeros Auxilios ── */
+.botiquin-modal-box{position:relative;max-width:680px;width:100%;animation:modalIn .3s cubic-bezier(.4,0,.2,1)}
+.botiquin-modal-img{border-radius:16px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.4);background:#fff;aspect-ratio:1/1}
+.botiquin-modal-close{position:absolute;top:-46px;right:0;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.4);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+.botiquin-modal-close:hover{background:rgba(255,255,255,.32)}
 /* Botón continuar */
 .disclaimer-close-link{
   font-size:15px;font-weight:800;color:#fff;
@@ -6309,13 +7275,23 @@ function heroGoNovedades(){
         </a>
       </div>
 
-      <!-- Imagen 2 -->
+      <!-- Imagen 2: dos zonas — "60 Segundos de Seguridad" y "Tu Objeto Te Busca" -->
       <div class="disclaimer-img2">
         <img src="img/disclaimer-2.png" alt="Servicios para la comunidad SPAMSU UNAM">
+        <button type="button" class="disc-img2-zone disc-img2-zone-top" onclick="openBotiquinModal()" aria-label="60 Segundos de Seguridad — Botiquín de primeros auxilios"></button>
+        <a href="#" class="disc-img2-zone disc-img2-zone-bottom" onclick="event.preventDefault();closeDisclaimer();setTimeout(function(){sbGoSection('panel-servicios','sb-servicios')},150)" aria-label="Tu Objeto Te Busca — Servicios para la comunidad"></a>
       </div>
 
     </div>
     <button class="disclaimer-close-link" onclick="closeDisclaimer()">CONTINUAR AL SITIO WEB</button>
+  </div>
+</div>
+
+<!-- ── Modal: 60 Segundos de Seguridad — Botiquín de primeros auxilios ── -->
+<div class="disclaimer-bg" id="botiquinModal" onclick="if(event.target===this)closeBotiquinModal()">
+  <div class="botiquin-modal-box">
+    <button class="botiquin-modal-close" onclick="closeBotiquinModal()" aria-label="Cerrar">&times;</button>
+    <div class="botiquin-modal-img" data-img="botiquin-primeros-auxilios" data-alt="Botiquín de primeros auxilios — elementos básicos"></div>
   </div>
 </div>
 
@@ -6797,7 +7773,7 @@ function switchInfoTab(id){
 
 /* ════════ VIDEO SUB-TABS ════════ */
 function switchVidTab(id){
-  var all = ['comunidad','estadio','proyectos','protoc'];
+  var all = ['comunidad','estadio','proyectos'];
   all.forEach(function(k){
     var b=document.getElementById('vt-'+k), p=document.getElementById('vp-'+k);
     if(b) b.classList.toggle('active', k===id);
@@ -6857,6 +7833,9 @@ function switchNovTab(id){
   var panel=document.getElementById('np-'+id);
   if(btn)btn.classList.add('active');
   if(panel)panel.classList.add('active');
+  /* Mostrar la sub-barra de Videos solo cuando esa sección está activa */
+  var subVideos=document.getElementById('nov-subtab-videos');
+  if(subVideos) subVideos.classList.toggle('active', id==='videos');
   /* Re-process Instagram embeds */
   setTimeout(function(){
     if(window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
@@ -7062,8 +8041,17 @@ document.addEventListener('DOMContentLoaded',function(){
     }
   }
 });
+
+/* ── Modal: 60 Segundos de Seguridad — Botiquín ── */
+function openBotiquinModal(){
+  var m=document.getElementById('botiquinModal');
+  if(m){m.classList.add('open');document.body.style.overflow='hidden';}
+}
+function closeBotiquinModal(){
+  var m=document.getElementById('botiquinModal');
+  if(m){m.classList.remove('open');document.body.style.overflow='';}
+}
 var topBar=document.querySelector('.top-bar');
-window.addEventListener('scroll',function(){if(topBar)topBar.style.boxShadow=window.scrollY>10?'0 2px 16px rgba(169,198,232,.3)':'none';},{passive:true});
 </script>
 
 <!-- Instagram embed script -->
