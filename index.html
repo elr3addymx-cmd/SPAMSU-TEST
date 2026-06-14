@@ -381,7 +381,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 @media(max-width:768px){.parallax-bg{background-attachment:scroll;padding:32px 20px}}
 
 /* ── Banner de video institucional (Información General / Estructura) ── */
-.video-banner{position:relative;height:clamp(170px,22vw,300px);overflow:hidden;display:flex;align-items:center;justify-content:center;width:100%;border-radius:20px;margin:48px 0}
+.video-banner{position:relative;height:clamp(170px,22vw,300px);overflow:hidden;display:flex;align-items:center;justify-content:center;width:100%;border-radius:20px;margin:48px 0;transition:opacity .25s ease}
 #panel-estructura .video-banner{border-radius:0;margin:0 0 0}
 .video-banner-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;z-index:0}
 .video-banner-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(120deg,rgba(0,40,80,.58) 0%,rgba(0,59,113,.42) 45%,rgba(21,101,192,.30) 100%)}
@@ -390,6 +390,17 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .video-banner-title{font-family:var(--font-serif);font-size:clamp(18px,2.4vw,28px);font-weight:700;color:#fff;line-height:1.45;text-shadow:0 2px 12px rgba(0,0,0,.35)}
 @media(max-width:768px){.video-banner{height:clamp(150px,40vw,240px)}}
 body.tab-mode .video-banner{display:none}
+
+/* Franja fija que acompaña la sección Estructura durante el scroll */
+.video-banner.va-hidden{opacity:0;pointer-events:none}
+.video-banner-pinned{
+  position:fixed;top:0;left:var(--sidebar-w);
+  width:calc(100% - var(--sidebar-w));
+  height:33vh;min-height:200px;
+  z-index:40;opacity:0;pointer-events:none;
+}
+.video-banner-pinned.visible{opacity:1;pointer-events:auto}
+@media(max-width:900px){.video-banner-pinned{height:30vh;min-height:170px}}
 .tab-panel.panel-tab-only{display:none}
 .tab-panel.panel-tab-only.panel-open{display:block}
 /* Cuando un panel de pestaña está abierto, ocultar el contenido de scroll */
@@ -598,16 +609,17 @@ body.tab-mode .page-wave{display:none}
 .srv-grid > .srv-card:last-child:nth-child(3n-1){grid-column:2}
 .srv-grid > .srv-card:last-child:nth-child(3n+1){grid-column:2}
 /* Centrado fijo para Brigada Vial — independiente de :last-child */
-.srv-card-center{grid-column:2;grid-row:4}
-/* ── Grecas decorativas — formas geométricas que llenan los huecos laterales ── */
-.srv-greca{
-  display:flex;align-items:center;justify-content:center;
+.srv-card-center{grid-column:2;grid-row:4;position:relative;z-index:1}
+/* ── Decoración de fondo — imagen panorámica detrás de la fila de Brigada Vial ── */
+.srv-greca-bg{
+  grid-column:1/-1;grid-row:4;
   align-self:stretch;pointer-events:none;
+  background-image:url('img/srv-greca-decorativa.png');
+  background-size:cover;background-repeat:no-repeat;background-position:center bottom;
+  border-radius:var(--r);
+  min-height:440px;
 }
-.srv-greca svg{width:100%;height:440px;display:block}
-.srv-greca-left{grid-column:1;grid-row:4}
-.srv-greca-right{grid-column:3;grid-row:4}
-@media(max-width:900px){.srv-greca{display:none}}
+@media(max-width:900px){.srv-greca-bg{display:none}}
 .srv-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);overflow:hidden;transition:all var(--t);position:relative;display:block;cursor:pointer}
 .srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul-claro);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
 .srv-card:hover{border-color:var(--azul-claro);box-shadow:var(--sh);transform:translateY(-4px)}
@@ -2685,7 +2697,19 @@ function heroGoNovedades(){
       <span id="est-organigrama"></span>
 
       <!-- Banner de video institucional -->
-      <div class="video-banner">
+      <div class="video-banner" id="estructuraVideoBanner">
+        <video class="video-banner-media" muted playsinline autoplay loop preload="auto">
+          <source src="videos/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-banner-overlay"></div>
+        <div class="video-banner-content">
+          <div class="video-banner-tag">Estructura institucional</div>
+          <div class="video-banner-title">Conoce las direcciones y áreas que integran nuestra Secretaría.</div>
+        </div>
+      </div>
+
+      <!-- Franja fija: acompaña toda la sección Estructura mientras se hace scroll -->
+      <div class="video-banner video-banner-pinned" id="estructuraVideoBannerPinned">
         <video class="video-banner-media" muted playsinline autoplay loop preload="auto">
           <source src="videos/hero-video.mp4" type="video/mp4">
         </video>
@@ -3155,210 +3179,8 @@ function heroGoNovedades(){
           </div>
         </a>
 
-        <!-- Composiciones decorativas — emblemas institucionales con gradientes y capas, a toda la altura -->
-        <div class="srv-greca srv-greca-left" aria-hidden="true">
-          <svg viewBox="0 0 220 440" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="srvGradL1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#003B71"/>
-                <stop offset="100%" stop-color="#1565C0"/>
-              </linearGradient>
-              <linearGradient id="srvGradL2" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#A9C6E8"/>
-                <stop offset="100%" stop-color="#7AAED4"/>
-              </linearGradient>
-              <radialGradient id="srvGradDotL" cx="35%" cy="35%" r="70%">
-                <stop offset="0%" stop-color="#D9E8F8"/>
-                <stop offset="100%" stop-color="#7AAED4"/>
-              </radialGradient>
-              <radialGradient id="srvGradDotL2" cx="35%" cy="35%" r="70%">
-                <stop offset="0%" stop-color="#E8F0FB"/>
-                <stop offset="100%" stop-color="#A9C6E8"/>
-              </radialGradient>
-            </defs>
-
-            <!-- Línea vertical de conexión, columna completa -->
-            <line x1="110" y1="0" x2="110" y2="440" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".22" stroke-dasharray="2 10"/>
-
-            <!-- ═══ ZONA SUPERIOR ═══ -->
-            <!-- Arco grande superior -->
-            <path d="M -40 130 A 180 180 0 0 1 200 -10" fill="none" stroke="url(#srvGradL2)" stroke-width="2" opacity=".30"/>
-
-            <!-- Hexágono superior con gradiente -->
-            <polygon points="150,15 200,45 200,105 150,135 100,105 100,45"
-                     fill="url(#srvGradL1)" opacity=".13"/>
-            <polygon points="150,15 200,45 200,105 150,135 100,105 100,45"
-                     fill="none" stroke="url(#srvGradL1)" stroke-width="3"/>
-
-            <!-- Rombo superior izquierdo -->
-            <rect x="10" y="60" width="80" height="80" rx="5"
-                  transform="rotate(45 50 100)"
-                  fill="var(--azul-claro)" opacity=".22"/>
-            <rect x="10" y="60" width="80" height="80" rx="5"
-                  transform="rotate(45 50 100)"
-                  fill="none" stroke="url(#srvGradL2)" stroke-width="3"/>
-
-            <!-- Círculo brillante superior -->
-            <circle cx="55" cy="35" r="22" fill="url(#srvGradDotL2)" opacity=".95"/>
-            <circle cx="55" cy="35" r="22" fill="none" stroke="#003B71" stroke-width="2" opacity=".20"/>
-            <circle cx="55" cy="35" r="9" fill="#003B71" opacity=".5"/>
-
-            <!-- Triángulo acento superior -->
-            <path d="M 130 175 L 195 175 L 162 220 Z" fill="none" stroke="url(#srvGradL1)" stroke-width="2.5"/>
-
-            <!-- Puntos dispersos zona superior -->
-            <circle cx="185" cy="150" r="4" fill="var(--azul-med)" opacity=".55"/>
-            <circle cx="20" cy="170" r="5" fill="var(--azul-claro)" opacity=".55"/>
-            <circle cx="115" cy="195" r="3" fill="var(--azul-med)" opacity=".45"/>
-
-            <!-- ═══ ZONA CENTRAL ═══ -->
-            <!-- Arco central -->
-            <path d="M 0 320 A 220 220 0 0 1 220 100" fill="none" stroke="url(#srvGradL2)" stroke-width="2" opacity=".30"/>
-
-            <!-- Hexágono principal -->
-            <polygon points="140,250 195,285 195,355 140,390 85,355 85,285"
-                     fill="url(#srvGradL1)" opacity=".14"/>
-            <polygon points="140,250 195,285 195,355 140,390 85,355 85,285"
-                     fill="none" stroke="url(#srvGradL1)" stroke-width="3"/>
-
-            <!-- Rombo girado superpuesto -->
-            <rect x="95" y="295" width="120" height="120" rx="6"
-                  transform="rotate(45 155 355)"
-                  fill="none" stroke="url(#srvGradL2)" stroke-width="3.5"/>
-            <rect x="118" y="318" width="74" height="74" rx="4"
-                  transform="rotate(45 155 355)"
-                  fill="var(--azul-claro)" opacity=".30"/>
-
-            <!-- Círculo brillante central -->
-            <circle cx="58" cy="290" r="30" fill="url(#srvGradDotL)" opacity=".9"/>
-            <circle cx="58" cy="290" r="30" fill="none" stroke="#003B71" stroke-width="2" opacity=".25"/>
-            <circle cx="58" cy="290" r="13" fill="#003B71" opacity=".55"/>
-
-            <!-- ═══ ZONA INFERIOR ═══ -->
-            <!-- Triángulo de acento inferior -->
-            <path d="M 60 395 L 140 395 L 100 440 Z" fill="none" stroke="url(#srvGradL1)" stroke-width="3"/>
-
-            <!-- Hexágono pequeño inferior -->
-            <polygon points="185,372 210,385 210,410 185,423 160,410 160,385"
-                     fill="var(--azul-claro)" opacity=".22"/>
-            <polygon points="185,372 210,385 210,410 185,423 160,410 160,385"
-                     fill="none" stroke="url(#srvGradL2)" stroke-width="2.5"/>
-
-            <!-- Arco inferior -->
-            <path d="M 0 425 A 118 118 0 0 1 118 305" fill="none" stroke="url(#srvGradL2)" stroke-width="1.5" opacity=".25"/>
-
-            <!-- Puntos dispersos zona inferior -->
-            <circle cx="30" cy="365" r="4" fill="var(--azul-med)" opacity=".5"/>
-            <circle cx="10" cy="425" r="3" fill="var(--azul-claro)" opacity=".5"/>
-
-            <!-- Líneas de conexión -->
-            <line x1="58" y1="320" x2="85" y2="355" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".4"/>
-            <line x1="140" y1="345" x2="155" y2="355" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".4"/>
-            <line x1="150" y1="135" x2="140" y2="250" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".3"/>
-          </svg>
-        </div>
-
-        <div class="srv-greca srv-greca-right" aria-hidden="true">
-          <svg viewBox="0 0 220 440" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="srvGradR1" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#003B71"/>
-                <stop offset="100%" stop-color="#1565C0"/>
-              </linearGradient>
-              <linearGradient id="srvGradR2" x1="100%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stop-color="#A9C6E8"/>
-                <stop offset="100%" stop-color="#7AAED4"/>
-              </linearGradient>
-              <radialGradient id="srvGradDotR" cx="65%" cy="35%" r="70%">
-                <stop offset="0%" stop-color="#D9E8F8"/>
-                <stop offset="100%" stop-color="#7AAED4"/>
-              </radialGradient>
-              <radialGradient id="srvGradDotR2" cx="65%" cy="35%" r="70%">
-                <stop offset="0%" stop-color="#E8F0FB"/>
-                <stop offset="100%" stop-color="#A9C6E8"/>
-              </radialGradient>
-            </defs>
-
-            <!-- Línea vertical de conexión, columna completa -->
-            <line x1="110" y1="0" x2="110" y2="440" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".22" stroke-dasharray="2 10"/>
-
-            <!-- ═══ ZONA SUPERIOR ═══ -->
-            <!-- Arco grande superior -->
-            <path d="M 260 130 A 180 180 0 0 0 20 -10" fill="none" stroke="url(#srvGradR2)" stroke-width="2" opacity=".30"/>
-
-            <!-- Hexágono superior con gradiente -->
-            <polygon points="70,15 120,45 120,105 70,135 20,105 20,45"
-                     fill="url(#srvGradR1)" opacity=".13"/>
-            <polygon points="70,15 120,45 120,105 70,135 20,105 20,45"
-                     fill="none" stroke="url(#srvGradR1)" stroke-width="3"/>
-
-            <!-- Rombo superior derecho -->
-            <rect x="130" y="60" width="80" height="80" rx="5"
-                  transform="rotate(-45 170 100)"
-                  fill="var(--azul-claro)" opacity=".22"/>
-            <rect x="130" y="60" width="80" height="80" rx="5"
-                  transform="rotate(-45 170 100)"
-                  fill="none" stroke="url(#srvGradR2)" stroke-width="3"/>
-
-            <!-- Círculo brillante superior -->
-            <circle cx="165" cy="35" r="22" fill="url(#srvGradDotR2)" opacity=".95"/>
-            <circle cx="165" cy="35" r="22" fill="none" stroke="#003B71" stroke-width="2" opacity=".20"/>
-            <circle cx="165" cy="35" r="9" fill="#003B71" opacity=".5"/>
-
-            <!-- Triángulo acento superior -->
-            <path d="M 90 175 L 25 175 L 58 220 Z" fill="none" stroke="url(#srvGradR1)" stroke-width="2.5"/>
-
-            <!-- Puntos dispersos zona superior -->
-            <circle cx="35" cy="150" r="4" fill="var(--azul-med)" opacity=".55"/>
-            <circle cx="200" cy="170" r="5" fill="var(--azul-claro)" opacity=".55"/>
-            <circle cx="105" cy="195" r="3" fill="var(--azul-med)" opacity=".45"/>
-
-            <!-- ═══ ZONA CENTRAL ═══ -->
-            <!-- Arco central -->
-            <path d="M 220 320 A 220 220 0 0 0 0 100" fill="none" stroke="url(#srvGradR2)" stroke-width="2" opacity=".30"/>
-
-            <!-- Hexágono principal -->
-            <polygon points="80,250 135,285 135,355 80,390 25,355 25,285"
-                     fill="url(#srvGradR1)" opacity=".14"/>
-            <polygon points="80,250 135,285 135,355 80,390 25,355 25,285"
-                     fill="none" stroke="url(#srvGradR1)" stroke-width="3"/>
-
-            <!-- Rombo girado superpuesto -->
-            <rect x="5" y="295" width="120" height="120" rx="6"
-                  transform="rotate(-45 65 355)"
-                  fill="none" stroke="url(#srvGradR2)" stroke-width="3.5"/>
-            <rect x="28" y="318" width="74" height="74" rx="4"
-                  transform="rotate(-45 65 355)"
-                  fill="var(--azul-claro)" opacity=".30"/>
-
-            <!-- Círculo brillante central -->
-            <circle cx="162" cy="290" r="30" fill="url(#srvGradDotR)" opacity=".9"/>
-            <circle cx="162" cy="290" r="30" fill="none" stroke="#003B71" stroke-width="2" opacity=".25"/>
-            <circle cx="162" cy="290" r="13" fill="#003B71" opacity=".55"/>
-
-            <!-- ═══ ZONA INFERIOR ═══ -->
-            <!-- Triángulo de acento inferior -->
-            <path d="M 160 395 L 80 395 L 120 440 Z" fill="none" stroke="url(#srvGradR1)" stroke-width="3"/>
-
-            <!-- Hexágono pequeño inferior -->
-            <polygon points="35,372 60,385 60,410 35,423 10,410 10,385"
-                     fill="var(--azul-claro)" opacity=".22"/>
-            <polygon points="35,372 60,385 60,410 35,423 10,410 10,385"
-                     fill="none" stroke="url(#srvGradR2)" stroke-width="2.5"/>
-
-            <!-- Arco inferior -->
-            <path d="M 220 425 A 118 118 0 0 0 102 305" fill="none" stroke="url(#srvGradR2)" stroke-width="1.5" opacity=".25"/>
-
-            <!-- Puntos dispersos zona inferior -->
-            <circle cx="190" cy="365" r="4" fill="var(--azul-med)" opacity=".5"/>
-            <circle cx="210" cy="425" r="3" fill="var(--azul-claro)" opacity=".5"/>
-
-            <!-- Líneas de conexión -->
-            <line x1="162" y1="320" x2="135" y2="355" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".4"/>
-            <line x1="80" y1="345" x2="65" y2="355" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".4"/>
-            <line x1="70" y1="135" x2="80" y2="250" stroke="var(--azul-claro)" stroke-width="1.5" opacity=".3"/>
-          </svg>
-        </div>
+        <!-- Decoración de fondo con imagen institucional panorámica -->
+        <div class="srv-greca-bg" aria-hidden="true"></div>
 
       </div><!-- /srv-grid -->
 
@@ -8051,6 +7873,62 @@ function closeBotiquinModal(){
   var m=document.getElementById('botiquinModal');
   if(m){m.classList.remove('open');document.body.style.overflow='';}
 }
+
+/* ════ Franja de video fija — acompaña Estructura + inicio de Servicios ════ */
+(function(){
+  var orig = document.getElementById('estructuraVideoBanner');
+  var pinned = document.getElementById('estructuraVideoBannerPinned');
+  var section = document.getElementById('panel-estructura');
+  var panelServicios = document.getElementById('panel-servicios');
+  var endMarker = document.getElementById('video-rector');
+  if(!orig || !pinned || !section) return;
+
+  var pinnedTag = pinned.querySelector('.video-banner-tag');
+  var pinnedTitle = pinned.querySelector('.video-banner-title');
+  var TXT_ESTRUCTURA = {
+    tag: 'Estructura institucional',
+    title: 'Conoce las direcciones y áreas que integran nuestra Secretaría.'
+  };
+  var TXT_SERVICIOS = {
+    tag: 'Servicios para la comunidad',
+    title: 'Descubre los servicios, programas y herramientas que ponemos a tu disposición.'
+  };
+  var currentZone = null;
+
+  function update(){
+    if(document.body.classList.contains('tab-mode')){
+      pinned.classList.remove('visible');
+      orig.classList.remove('va-hidden');
+      currentZone = null;
+      return;
+    }
+    var topbarH = window.innerWidth > 900 ? 54 : 58;
+    var origRect = orig.getBoundingClientRect();
+    var endRect = endMarker ? endMarker.getBoundingClientRect() : null;
+    var shouldPin = origRect.top < topbarH && (!endRect || endRect.top > window.innerHeight);
+    pinned.classList.toggle('visible', shouldPin);
+    orig.classList.toggle('va-hidden', shouldPin);
+
+    if(shouldPin){
+      var srvRect = panelServicios ? panelServicios.getBoundingClientRect() : null;
+      var zone = (srvRect && srvRect.top < topbarH) ? 'servicios' : 'estructura';
+      if(zone !== currentZone){
+        var txt = zone === 'servicios' ? TXT_SERVICIOS : TXT_ESTRUCTURA;
+        if(pinnedTag) pinnedTag.textContent = txt.tag;
+        if(pinnedTitle) pinnedTitle.textContent = txt.title;
+        currentZone = zone;
+      }
+    } else {
+      currentZone = null;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  document.addEventListener('DOMContentLoaded', update);
+  new MutationObserver(update).observe(document.body, {attributes:true, attributeFilter:['class']});
+  update();
+})();
+
 var topBar=document.querySelector('.top-bar');
 </script>
 
