@@ -610,14 +610,14 @@ body.tab-mode .page-wave{display:none}
 .srv-grid > .srv-card:last-child:nth-child(3n+1){grid-column:2}
 /* Centrado fijo para Brigada Vial — independiente de :last-child */
 .srv-card-center{grid-column:2;grid-row:4;position:relative;z-index:1}
-/* ── Decoración de fondo — imagen panorámica detrás de la fila de Brigada Vial ── */
+/* ── Decoración de fondo — franja angosta abajo de la fila de Brigada Vial ── */
 .srv-greca-bg{
   grid-column:1/-1;grid-row:4;
-  align-self:stretch;pointer-events:none;
+  align-self:end;pointer-events:none;
+  height:300px;
   background-image:url('img/srv-greca-decorativa.png');
   background-size:cover;background-repeat:no-repeat;background-position:center bottom;
   border-radius:var(--r);
-  min-height:440px;
 }
 @media(max-width:900px){.srv-greca-bg{display:none}}
 .srv-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);overflow:hidden;transition:all var(--t);position:relative;display:block;cursor:pointer}
@@ -4739,6 +4739,19 @@ function heroGoNovedades(){
 </div>
   <section class="nov-section" id="novedades">
     <h2 class="sec-title">Novedades y Recursos</h2>
+
+    <!-- Banner de video institucional -->
+    <div class="video-banner">
+      <video class="video-banner-media" muted playsinline autoplay loop preload="auto">
+        <source src="videos/hero-video.mp4" type="video/mp4">
+      </video>
+      <div class="video-banner-overlay"></div>
+      <div class="video-banner-content">
+        <div class="video-banner-tag">Novedades y Recursos</div>
+        <div class="video-banner-title">Actividades, videos, planes y programas, y todo lo que necesitas conocer.</div>
+      </div>
+    </div>
+
     <div class="nov-tab-wrap">
     <div class="nov-tab-bar">
       <button class="ntab active" onclick="switchNovTab('actividades')" id="ntb-actividades">
@@ -7874,53 +7887,27 @@ function closeBotiquinModal(){
   if(m){m.classList.remove('open');document.body.style.overflow='';}
 }
 
-/* ════ Franja de video fija — acompaña Estructura + inicio de Servicios ════ */
+/* ════ Franja de video fija — acompaña la sección Estructura ════ */
 (function(){
   var orig = document.getElementById('estructuraVideoBanner');
   var pinned = document.getElementById('estructuraVideoBannerPinned');
   var section = document.getElementById('panel-estructura');
   var panelServicios = document.getElementById('panel-servicios');
-  var endMarker = document.getElementById('video-rector');
   if(!orig || !pinned || !section) return;
-
-  var pinnedTag = pinned.querySelector('.video-banner-tag');
-  var pinnedTitle = pinned.querySelector('.video-banner-title');
-  var TXT_ESTRUCTURA = {
-    tag: 'Estructura institucional',
-    title: 'Conoce las direcciones y áreas que integran nuestra Secretaría.'
-  };
-  var TXT_SERVICIOS = {
-    tag: 'Servicios para la comunidad',
-    title: 'Descubre los servicios, programas y herramientas que ponemos a tu disposición.'
-  };
-  var currentZone = null;
 
   function update(){
     if(document.body.classList.contains('tab-mode')){
       pinned.classList.remove('visible');
       orig.classList.remove('va-hidden');
-      currentZone = null;
       return;
     }
     var topbarH = window.innerWidth > 900 ? 54 : 58;
+    var vh = window.innerHeight;
     var origRect = orig.getBoundingClientRect();
-    var endRect = endMarker ? endMarker.getBoundingClientRect() : null;
-    var shouldPin = origRect.top < topbarH && (!endRect || endRect.top > window.innerHeight);
+    var serviciosRect = panelServicios ? panelServicios.getBoundingClientRect() : null;
+    var shouldPin = origRect.top < topbarH && (!serviciosRect || serviciosRect.top > vh);
     pinned.classList.toggle('visible', shouldPin);
     orig.classList.toggle('va-hidden', shouldPin);
-
-    if(shouldPin){
-      var srvRect = panelServicios ? panelServicios.getBoundingClientRect() : null;
-      var zone = (srvRect && srvRect.top < topbarH) ? 'servicios' : 'estructura';
-      if(zone !== currentZone){
-        var txt = zone === 'servicios' ? TXT_SERVICIOS : TXT_ESTRUCTURA;
-        if(pinnedTag) pinnedTag.textContent = txt.tag;
-        if(pinnedTitle) pinnedTitle.textContent = txt.title;
-        currentZone = zone;
-      }
-    } else {
-      currentZone = null;
-    }
   }
   window.addEventListener('scroll', update, {passive:true});
   window.addEventListener('resize', update);
