@@ -615,6 +615,7 @@ body.tab-mode .page-wave{display:none}
   grid-column:1/-1;grid-row:4;
   align-self:end;pointer-events:none;
   height:300px;
+  transform:translateY(60px);
   background-image:url('img/srv-greca-decorativa.png');
   background-size:cover;background-repeat:no-repeat;background-position:center bottom;
   border-radius:var(--r);
@@ -4788,6 +4789,15 @@ function heroGoNovedades(){
       <button class="nov-subtab"        onclick="switchVidTab('estadio')"    id="vt-estadio">Nuestro estadio</button>
       <button class="nov-subtab"        onclick="switchVidTab('proyectos')"  id="vt-proyectos">Nuestros proyectos</button>
     </div>
+    <div class="nov-subtab-bar" id="nov-subtab-cursos">
+      <button class="nov-subtab active" onclick="switchCursoTab('oferta')"        id="ct-oferta">Oferta</button>
+      <button class="nov-subtab"        onclick="switchCursoTab('capacitacion')"  id="ct-capacitacion">Capacitación y Protección</button>
+      <button class="nov-subtab"        onclick="switchCursoTab('carteles')"      id="ct-carteles">Carteles Informativos</button>
+    </div>
+    <div class="nov-subtab-bar" id="nov-subtab-material">
+      <button class="nov-subtab active" onclick="switchMatTab('guias')"   id="mt-guias">Guías de actuación</button>
+      <button class="nov-subtab"        onclick="switchMatTab('general')" id="mt-general">Material general</button>
+    </div>
     </div>
 
     <!-- VIDEOS -->
@@ -5271,13 +5281,6 @@ function heroGoNovedades(){
         .cap-cartel-grid{grid-template-columns:1fr}
       }
       </style>
-
-      <!-- Sub-pestañas -->
-      <div class="cap-tabs">
-        <button class="itab active" onclick="switchCursoTab('oferta')"        id="ct-oferta">Oferta</button>
-        <button class="itab"        onclick="switchCursoTab('capacitacion')"  id="ct-capacitacion">Capacitación y Protección</button>
-        <button class="itab"        onclick="switchCursoTab('carteles')"      id="ct-carteles">Carteles Informativos</button>
-      </div>
 
       <!-- ═══ 1. OFERTA ═══ -->
       <div class="cp-pane active" id="cp-oferta">
@@ -5842,11 +5845,6 @@ function heroGoNovedades(){
     <!-- MATERIAL DESCARGABLE -->
     <div class="ntab-panel" id="np-material">
 
-      <!-- Sub-pestañas de Material -->
-      <div class="info-tabs" style="margin-bottom:24px">
-        <button class="itab active" onclick="switchMatTab('guias')"    id="mt-guias">Guías de actuación</button>
-        <button class="itab"        onclick="switchMatTab('general')"  id="mt-general">Material general</button>
-      </div>
 
       <!-- Panel: Material general -->
       <div id="mp-general" style="display:none;animation:fadeIn .3s ease">
@@ -7668,9 +7666,13 @@ function switchNovTab(id){
   var panel=document.getElementById('np-'+id);
   if(btn)btn.classList.add('active');
   if(panel)panel.classList.add('active');
-  /* Mostrar la sub-barra de Videos solo cuando esa sección está activa */
+  /* Mostrar la sub-barra correspondiente solo cuando esa sección está activa */
   var subVideos=document.getElementById('nov-subtab-videos');
   if(subVideos) subVideos.classList.toggle('active', id==='videos');
+  var subCursos=document.getElementById('nov-subtab-cursos');
+  if(subCursos) subCursos.classList.toggle('active', id==='cursos');
+  var subMaterial=document.getElementById('nov-subtab-material');
+  if(subMaterial) subMaterial.classList.toggle('active', id==='material');
   /* Re-process Instagram embeds */
   setTimeout(function(){
     if(window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
