@@ -256,13 +256,15 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 .parallax-bg{padding:52px 44px;position:relative;background-attachment:fixed;background-size:cover;background-position:center;background-repeat:no-repeat}
 .parallax-bg::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:rgba(10,30,60,.30)}
 .parallax-bg > *{position:relative;z-index:1}
+/* ── Servicios (pb-1, pb-2, pb-3): sin overlay difuminado ── */
+#panel-servicios .parallax-bg::before{display:none}
 /* ── Servicios: fondo claro institucional ── */
 .srv-institutional-bg{
-  padding:52px 44px;
+  padding:52px 44px 0;
   background:linear-gradient(160deg,#f0f6ff 0%,#e8f1fb 45%,#ddeaf8 100%);
   position:relative;
   overflow:hidden;
-  border-bottom:2px solid var(--gris-borde);
+  border-bottom:none;
 }
 .srv-institutional-bg::before{
   content:'';position:absolute;inset:0;
@@ -278,7 +280,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   border:2px solid rgba(0,59,113,.07);
   pointer-events:none;
 }
-.srv-institutional-bg > *{position:relative;z-index:1}
+.srv-institutional-bg > *:not(.srv-greca-bg){position:relative;z-index:1}
 /* Títulos sobre fondo claro — usan los colores institucionales normales */
 .srv-institutional-bg .sec-tag{color:var(--azul-claro)!important}
 .srv-institutional-bg .sec-tag::before{background:var(--azul-claro)!important}
@@ -608,17 +610,27 @@ body.tab-mode .page-wave{display:none}
 .srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .srv-grid > .srv-card:last-child:nth-child(3n-1){grid-column:2}
 .srv-grid > .srv-card:last-child:nth-child(3n+1){grid-column:2}
-/* Centrado fijo para Brigada Vial — independiente de :last-child */
-.srv-card-center{grid-column:2;grid-row:4;position:relative;z-index:1}
-/* ── Decoración de fondo — franja angosta abajo de la fila de Brigada Vial ── */
+/* ── Centrado de las dos últimas cards ── */
+.srv-card-center{grid-column:1/-1;display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.srv-card-center > .srv-card, .srv-card-center.srv-card{width:calc(33.333% - 9px);min-width:260px}
 .srv-greca-bg{
-  grid-column:1/-1;grid-row:4;
-  align-self:end;pointer-events:none;
-  height:300px;
-  transform:translateY(60px);
+  display:block;
+  width:100%;
+  height:200px;
+  overflow:hidden;
+  pointer-events:none;
+  position:relative;
+  z-index:10;
+  margin-top:-40px;
+  margin-bottom:-60px;
+  background:transparent;
   background-image:url('img/srv-greca-decorativa.png');
-  background-size:cover;background-repeat:no-repeat;background-position:center bottom;
-  border-radius:var(--r);
+  background-repeat:no-repeat;
+  background-position:bottom center;
+  background-size:100% auto;
+}
+.srv-greca-bg img{
+  display:none;
 }
 @media(max-width:900px){.srv-greca-bg{display:none}}
 .srv-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--r);overflow:hidden;transition:all var(--t);position:relative;display:block;cursor:pointer}
@@ -638,10 +650,8 @@ body.tab-mode .page-wave{display:none}
 .srv-body{
   position:relative;z-index:2;
   padding:18px 18px 16px;
-  background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.92) 28%, rgba(255,255,255,0.97) 100%);
-  backdrop-filter:blur(2px);
-  -webkit-backdrop-filter:blur(2px);
-  margin-top:-60px;
+  background:#ffffff;
+  margin-top:0;
 }
 .srv-icon{width:56px;height:56px;border-radius:12px;background:rgba(169,198,232,.22);border:1px solid rgba(169,198,232,.4);display:flex;align-items:center;justify-content:center;margin-bottom:11px;transition:background var(--t),border-color var(--t);overflow:hidden}
 .srv-icon img{width:100%;height:100%;object-fit:contain;padding:6px;border-radius:6px;transition:filter var(--t)}
@@ -2187,6 +2197,7 @@ function heroGoNovedades(){
         <button class="itab"        onclick="switchInfoTab('vision')"  id="it-vision">Visión</button>
         <button class="itab"        onclick="switchInfoTab('valores')" id="it-valores">Valores</button>
         <button class="itab"        onclick="switchInfoTab('decalogo')" id="it-decalogo">Decálogo</button>
+        <button class="itab"        onclick="switchInfoTab('logo')" id="it-logo">Conoce Nuestro Logo</button>
       </div>
 
       <!-- Texto + imagen lateral -->
@@ -2687,9 +2698,12 @@ function heroGoNovedades(){
         </script>
       </div>
 
+      <!-- ── Pestaña: Conoce Nuestro Logo ── -->
+      <div class="itab-pane" id="ip-logo" style="max-width:none;padding:0">
+      </div>
 
 
-    </div>
+
 
     <!-- ╔══════════════════════════════╗
          ESTRUCTURA — Direcciones Generales
@@ -3169,21 +3183,32 @@ function heroGoNovedades(){
             <span class="srv-cta">Ir al sitio →</span>
           </div>
         </a>
-        <!-- 8. Brigada Vial — centrada al ser la última del bloque -->
-        <a href="https://www.dgsgm.unam.mx/brigada.html" target="_blank" rel="noopener" class="srv-card srv-card-center" style="width:100%">
-          <div class="srv-img"><div data-img="srv-brigada" data-alt="Brigada Vial UNAM"></div></div>
-          <div class="srv-body">
-            <div class="srv-icon srv-icon-png"><img src="img/icon-srv-brigada.png" alt="Brigada Vial"></div>
-            <div class="srv-title">Brigada Vial</div>
-            <p class="srv-desc">Programa de apoyo vial y seguridad en la circulación dentro del campus universitario.</p>
-            <span class="srv-cta">Ir al sitio &rarr;</span>
+        <!-- 8 y 9 centradas — fila final -->
+        <div style="grid-column:1/-1;display:flex;justify-content:center;gap:18px;flex-wrap:wrap">
+          <a href="https://www.dgsgm.unam.mx/brigada.html" target="_blank" rel="noopener" class="srv-card" style="width:calc(33.333% - 9px);min-width:260px">
+            <div class="srv-img"><div data-img="srv-brigada" data-alt="Brigada Vial UNAM"></div></div>
+            <div class="srv-body">
+              <div class="srv-icon srv-icon-png"><img src="img/icon-srv-brigada.png" alt="Brigada Vial"></div>
+              <div class="srv-title">Brigada Vial</div>
+              <p class="srv-desc">Programa de apoyo vial y seguridad en la circulación dentro del campus universitario.</p>
+              <span class="srv-cta">Ir al sitio &rarr;</span>
+            </div>
+          </a>
+          <div class="srv-card" style="width:calc(33.333% - 9px);min-width:260px">
+            <div class="srv-img"><div data-img="srv-linea-incidentes" data-alt="Línea Única de Incidentes UNAM"><img src="img/srv-linea-incidentes.png" alt="Línea Única de Incidentes UNAM"></div></div>
+            <div class="srv-body">
+              <div class="srv-icon srv-icon-png"><img src="img/icon-srv-linea-incidentes.png" alt="Línea Única de Incidentes UNAM"></div>
+              <div class="srv-title">Línea Única de Incidentes UNAM</div>
+              <p class="srv-desc">Canal directo para reportar incidentes y emergencias dentro de la comunidad universitaria.</p>
+              <span class="srv-cta">Conocer más →</span>
+            </div>
           </div>
-        </a>
-
-        <!-- Decoración de fondo con imagen institucional panorámica -->
-        <div class="srv-greca-bg" aria-hidden="true"></div>
+        </div>
 
       </div><!-- /srv-grid -->
+
+      <!-- Banner decorativo encima de las cards -->
+      <div class="srv-greca-bg" aria-hidden="true"><img src="img/srv-greca-decorativa.png" alt=""></div>
 
       </div><!-- /srv-institutional-bg -->
 
@@ -4093,36 +4118,6 @@ function heroGoNovedades(){
         <h3 class="mj-subsec-title">Códigos Universitarios</h3>
         <div class="mj-grid">
           <a href="https://www.abogadogeneral.unam.mx/sites/default/files/archivos/LegUniv/84-CodigoEtica_UNAM_rem38_021220.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Código de Ética de la Universidad Nacional Autónoma de México</div><div class="mj-card-date">30-jun.-2015</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-        </div>
-      </div>
-      <div class="mj-subsec">
-        <h3 class="mj-subsec-title">Protocolos Generales</h3>
-        <div class="mj-grid">
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_agresion_de_grupos_al_exterior_de_una_entidad_o_dependencia_universitaria.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de actuación ante agresión de grupos al exterior de una entidad universitaria</div><div class="mj-card-date">14-ago.-2014</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_agresion_de_grupos_al_interior_de_una_entidad_o_dependencia_universitaria.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de actuación ante agresión de grupos al interior de una entidad universitaria</div><div class="mj-card-date">14-ago.-2019</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_persona_no_localizada_parte_de_la_comunidad_universitaria.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo ante persona no localizada de la Comunidad Universitaria</div><div class="mj-card-date">14-ago.-2019</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_ante_situacion_de_robo.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de actuación ante situación de robo</div><div class="mj-card-date">22-jun.-2022</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_robo_en_transporte_publico.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de actuación ante robo en transporte público</div><div class="mj-card-date">22-jun.-2022</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_en_situacion_de_fuga_o_derrame.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo ante fuga o derrame de productos peligrosos</div><div class="mj-card-date">22-jun.-2022</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_sismo.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo en caso de sismo</div><div class="mj-card-date">22-jun.-2022</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_emergencias_por_fuga_de_gas_L.P.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de emergencias por fugas de gas L.P.</div><div class="mj-card-date">14-ago.-2019</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_extorsion_telefonica.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de extorsión telefónica</div><div class="mj-card-date">14-ago.-2019</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_incendio_para_la_UNAM.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de incendio para la UNAM</div><div class="mj-card-date">14-ago.-2019</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_para_el_caso_de_presencia_de_armas_en_la_UNAM.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo ante presencia y uso de armas en instalaciones de la UNAM</div><div class="mj-card-date">14-ago.-2019</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_ante_artefacto_explosivo_en_las_instalaciones_universitarias.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo ante artefacto explosivo en instalaciones universitarias</div><div class="mj-card-date">23-ene.-2020</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_amenaza_por_red_social.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo ante amenaza por red social</div><div class="mj-card-date">04-mar.-2020</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_actuacion_paquete_objeto_extranio.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de actuación ante paquete u objeto extraño</div><div class="mj-card-date">09-sept.-2020</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_atencion_riesgo_autolesion.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo para la Identificación y Manejo del Riesgo de Autolesión y/o Suicidio</div><div class="mj-card-date">06-nov.-2024</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_preservacion_lugar_donde_efectuo_hecho_ilicito.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de preservación del lugar de un hecho ilícito</div><div class="mj-card-date">09-sept.-2020</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_para_la_atencion_de_urgencias_medicas_en_Ciudad_Universitaria.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo para atención de urgencias médicas en Ciudad Universitaria</div><div class="mj-card-date">22-ene.-2020</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_para_la_atencion_de_urgencias_medicas_para_entidades_y_dependencias_externas.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo para atención de urgencias médicas en dependencias externas a CU</div><div class="mj-card-date">05-may.-2021</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_en_festivales_y_eventos_en_las_instalaciones_de_la_UNAM.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de actuación en festivales y eventos en instalaciones de la UNAM</div><div class="mj-card-date">05-may.-2021</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_ante_tormentas_torrenciales_e_inundaciones.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de actuación ante tormentas torrenciales e inundaciones</div><div class="mj-card-date">05-may.-2021</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_ante_contingencia_volcanica.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo ante contingencia volcánica (Popocatépetl)</div><div class="mj-card-date">22-jun.-2022</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_de_actuacion_en_situacion_de_ciclon_tropical.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo ante ciclón tropical</div><div class="mj-card-date">22-jun.-2022</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_para_la_atencion_de_menores.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo para atención de menores que desconocen el paradero de sus familiares</div><div class="mj-card-date">05-may.-2021</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="https://consejo.unam.mx/comisiones/CES/docs/protocolos/Protocolo_Atencion_Personas_Discapacidad_Emergencias.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo de atención a personas con discapacidad en situaciones de emergencia</div><div class="mj-card-date">06-nov.-2024</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
-          <a href="pdf/Protocolo%20botones%20de%20auxilio%202.pdf" target="_blank" rel="noopener" class="mj-card"><div class="mj-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="mj-card-body"><div class="mj-card-title">Protocolo ante la activación de botones de auxilio en una entidad académica</div><div class="mj-card-date">23-oct.-2025</div></div><div class="mj-card-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></a>
         </div>
       </div>
       <div class="mj-subsec">
@@ -6055,22 +6050,164 @@ function heroGoNovedades(){
       .act-list li{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:#3d4f63;line-height:1.5}
       .act-list li::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--azul-claro);flex-shrink:0;margin-top:6px}
 
-      /* Video mp4 */
-      .act-video-wrap{border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,59,113,.16);background:#000;aspect-ratio:9/16;max-width:340px;margin:0 auto;width:100%}
+      /* ── Keyframes para círculos decorativos ── */
+      /* ── Keyframes animaciones de marcos ── */
+      @keyframes blobFloat1{0%,100%{transform:translateY(0) scale(1)}45%{transform:translateY(-14px) scale(1.07)}75%{transform:translateY(7px) scale(.96)}}
+      @keyframes blobFloat2{0%,100%{transform:translateY(0)}40%{transform:translateY(12px) scale(.94)}68%{transform:translateY(-9px) scale(1.05)}}
+      @keyframes blobFloat3{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(15deg)}}
+      @keyframes blobPulse{0%,100%{opacity:.85;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+      @keyframes borderGlow{
+        0%,100%{box-shadow:0 0 0 0 rgba(0,59,113,.0),0 10px 36px rgba(0,59,113,.20)}
+        50%{box-shadow:0 0 0 5px rgba(122,174,212,.35),0 14px 48px rgba(0,59,113,.32)}
+      }
+      @keyframes borderGlow2{
+        0%,100%{box-shadow:0 0 0 0 rgba(169,198,232,.0),0 10px 36px rgba(0,59,113,.18)}
+        50%{box-shadow:0 0 0 5px rgba(0,59,113,.22),0 14px 48px rgba(0,59,113,.28)}
+      }
+
+      /* ══════════════════════════════════════════
+         FRAME DINÁMICO — VIDEO (Sección 1)
+         Marco: azul oscuro (#003B71) grueso
+      ══════════════════════════════════════════ */
+      .act-video-frame{
+        position:relative;
+        max-width:340px;margin:0 auto;
+        padding:22px 22px 22px 16px;
+      }
+      /* Marco principal: azul institucional oscuro, borde grueso */
+      .act-video-frame::before{
+        content:'';position:absolute;
+        top:12px;left:0;right:12px;bottom:0;
+        border-radius:52px;
+        border:10px solid #003B71;
+        animation:borderGlow 3s ease-in-out infinite;
+        z-index:0;
+      }
+      /* Segundo marco desplazado: azul medio */
+      .act-video-frame::after{
+        content:'';position:absolute;
+        top:0;left:12px;right:0;bottom:12px;
+        border-radius:52px;
+        border:6px solid #7AAED4;
+        animation:borderGlow2 3s ease-in-out infinite .8s;
+        z-index:0;
+      }
+      .act-video-wrap{
+        position:relative;z-index:1;
+        border-radius:40px;overflow:hidden;
+        box-shadow:0 10px 36px rgba(0,59,113,.28);
+        background:#000;aspect-ratio:9/16;width:100%;
+      }
       .act-video-wrap video{width:100%;height:100%;display:block;object-fit:cover}
+      /* Círculos decorativos — solo colores institucionales */
+      .act-video-frame .blob{position:absolute;border-radius:50%;z-index:2;pointer-events:none}
+      .act-video-frame .blob-1{width:44px;height:44px;background:#003B71;top:-14px;right:4px;animation:blobFloat1 3.4s ease-in-out infinite}
+      .act-video-frame .blob-2{width:30px;height:30px;background:#A9C6E8;top:16px;right:-12px;animation:blobFloat2 2.9s ease-in-out infinite .5s}
+      .act-video-frame .blob-3{width:58px;height:58px;background:#7AAED4;bottom:20px;left:-18px;animation:blobFloat1 4s ease-in-out infinite .7s}
+      .act-video-frame .blob-4{width:22px;height:22px;background:#003B71;bottom:72px;left:6px;animation:blobPulse 2.6s ease-in-out infinite 1.1s}
 
-      /* Gallery collage — 3 columnas, imágenes verticales sin recorte */
-      .act-gallery-wrap{padding:8px 0}
-      .act-collage{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:start}
-      .act-collage-main,.act-collage-side{border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,59,113,.13)}
-      .act-collage img{width:100%;height:auto;display:block;transition:transform .4s ease}
-      .act-collage img:hover{transform:scale(1.03)}
-      .act-gallery-title{font-family:var(--font-serif);font-size:clamp(16px,2vw,22px);font-weight:700;color:var(--azul);text-align:center;margin-bottom:20px}
-
-      /* Instagram float */
-      .act-insta-wrap{border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,59,113,.16);max-width:340px;margin:0 auto;width:100%}
+      /* ══════════════════════════════════════════
+         FRAME DINÁMICO — INSTAGRAM (Sección 3)
+         Marco: azul medio (#7AAED4) grueso
+      ══════════════════════════════════════════ */
+      .act-insta-frame{
+        position:relative;
+        max-width:340px;margin:0 auto;
+        padding:20px 16px 20px 22px;
+      }
+      .act-insta-frame::before{
+        content:'';position:absolute;
+        top:0;left:12px;right:0;bottom:12px;
+        border-radius:52px;
+        border:10px solid #7AAED4;
+        animation:borderGlow2 3.6s ease-in-out infinite;
+        z-index:0;
+      }
+      .act-insta-frame::after{
+        content:'';position:absolute;
+        top:12px;left:0;right:12px;bottom:0;
+        border-radius:52px;
+        border:6px solid #003B71;
+        animation:borderGlow 3.6s ease-in-out infinite .9s;
+        z-index:0;
+      }
+      .act-insta-wrap{
+        position:relative;z-index:1;
+        border-radius:40px;overflow:hidden;
+        box-shadow:0 10px 36px rgba(0,59,113,.22);
+        width:100%;
+      }
       .act-insta-wrap.floating{animation:actFloat 3.5s ease-in-out infinite}
       .act-insta-wrap iframe{width:100%;border:none;display:block}
+      .act-insta-frame .blob{position:absolute;border-radius:50%;z-index:2;pointer-events:none}
+      .act-insta-frame .blob-1{width:52px;height:52px;background:#A9C6E8;top:-16px;right:12px;animation:blobFloat2 3.5s ease-in-out infinite}
+      .act-insta-frame .blob-2{width:30px;height:30px;background:#003B71;top:12px;right:-12px;animation:blobPulse 2.8s ease-in-out infinite .4s}
+      .act-insta-frame .blob-3{width:62px;height:62px;background:#7AAED4;bottom:14px;left:-20px;animation:blobFloat1 4.2s ease-in-out infinite .8s}
+      .act-insta-frame .blob-4{width:22px;height:22px;background:#003B71;bottom:78px;left:4px;animation:blobFloat3 3.2s ease-in-out infinite 1.3s}
+
+      /* ══════════════════════════════════════════
+         GALERÍA DE ACTIVIDADES
+      ══════════════════════════════════════════ */
+      .act-gallery-wrap{padding:8px 0}
+      .act-gallery-title{
+        font-family:var(--font-serif);font-size:clamp(16px,2vw,22px);font-weight:700;
+        color:var(--azul);text-align:center;margin-bottom:32px;
+        position:relative;display:inline-block;left:50%;transform:translateX(-50%);
+      }
+      .act-gallery-title::after{
+        content:'';display:block;width:64px;height:4px;
+        background:linear-gradient(90deg,#003B71,#7AAED4,#A9C6E8);
+        border-radius:2px;margin:10px auto 0;
+      }
+
+      .act-collage{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:center}
+
+      /* Cada imagen con su marco propio */
+      .act-collage-item{position:relative;padding:12px}
+      .act-collage-item::before{
+        content:'';position:absolute;
+        border-radius:40px;z-index:0;
+        animation:borderGlow 3.2s ease-in-out infinite;
+      }
+      .act-collage-item::after{
+        content:'';position:absolute;
+        border-radius:40px;z-index:0;
+        animation:borderGlow2 3.2s ease-in-out infinite .7s;
+      }
+      /* img 1: marco azul oscuro desplazado abajo-derecha + azul medio arriba-izquierda */
+      .act-collage-item:nth-child(1)::before{border:9px solid #003B71;top:10px;left:4px;right:0;bottom:0;animation-delay:0s}
+      .act-collage-item:nth-child(1)::after{border:5px solid #7AAED4;top:0;left:0;right:10px;bottom:4px;animation-delay:.4s}
+      /* img 2: azul medio desplazado + azul claro */
+      .act-collage-item:nth-child(2)::before{border:9px solid #7AAED4;top:0;left:10px;right:0;bottom:10px;animation-delay:.6s}
+      .act-collage-item:nth-child(2)::after{border:5px solid #A9C6E8;top:10px;left:0;right:0;bottom:0;animation-delay:1s}
+      /* img 3: azul oscuro desplazado arriba + azul medio abajo */
+      .act-collage-item:nth-child(3)::before{border:9px solid #003B71;top:0;left:0;right:10px;bottom:10px;animation-delay:.3s}
+      .act-collage-item:nth-child(3)::after{border:5px solid #7AAED4;top:10px;left:10px;right:0;bottom:0;animation-delay:.9s}
+
+      /* Círculos decorativos galería */
+      .act-collage-item .act-collage-blob{position:absolute;border-radius:50%;z-index:3;pointer-events:none}
+      .act-collage-item:nth-child(1) .act-collage-blob-a{width:32px;height:32px;background:#7AAED4;top:-10px;right:8px;animation:blobFloat1 3.2s ease-in-out infinite}
+      .act-collage-item:nth-child(1) .act-collage-blob-b{width:20px;height:20px;background:#003B71;bottom:-4px;left:12px;animation:blobFloat2 3.6s ease-in-out infinite .5s}
+      .act-collage-item:nth-child(2) .act-collage-blob-a{width:28px;height:28px;background:#A9C6E8;top:-8px;left:10px;animation:blobFloat2 3s ease-in-out infinite .7s}
+      .act-collage-item:nth-child(2) .act-collage-blob-b{width:18px;height:18px;background:#003B71;bottom:0;right:8px;animation:blobPulse 2.7s ease-in-out infinite}
+      .act-collage-item:nth-child(3) .act-collage-blob-a{width:34px;height:34px;background:#003B71;top:-10px;left:6px;animation:blobFloat1 3.4s ease-in-out infinite .4s}
+      .act-collage-item:nth-child(3) .act-collage-blob-b{width:22px;height:22px;background:#7AAED4;bottom:-4px;right:10px;animation:blobFloat3 4s ease-in-out infinite .9s}
+
+      .act-collage-inner{
+        position:relative;z-index:1;
+        border-radius:28px;overflow:hidden;
+        box-shadow:0 10px 30px rgba(0,59,113,.18);
+        width:100%;
+      }
+      .act-collage-inner img{width:100%;height:auto;display:block;transition:transform .5s ease}
+      .act-collage-inner img:hover{transform:scale(1.04)}
+      .act-collage-inner .act-gal-ph{
+        width:100%;min-height:200px;
+        background:linear-gradient(135deg,rgba(0,59,113,.10),rgba(122,174,212,.20));
+        display:flex;align-items:center;justify-content:center;
+        color:var(--azul-med);font-size:13px;font-weight:600;
+        border-radius:28px;
+      }
 
       /* Stagger list items */
       .act-list li{opacity:0;transform:translateX(12px);transition:opacity .4s ease,transform .4s ease}
@@ -6089,8 +6226,13 @@ function heroGoNovedades(){
 
       @media(max-width:700px){
         .act-two-col{grid-template-columns:1fr}
-        .act-video-wrap,.act-insta-wrap{max-width:100%;margin:24px auto 0}
+        .act-video-frame,.act-insta-frame{max-width:100%;margin:24px auto 0}
+        .act-collage{grid-template-columns:1fr 1fr}
+        .act-collage-item:nth-child(3){grid-column:1/-1}
+      }
+      @media(max-width:480px){
         .act-collage{grid-template-columns:1fr}
+        .act-collage-item:nth-child(3){grid-column:auto}
       }
       </style>
 
@@ -6099,10 +6241,16 @@ function heroGoNovedades(){
         <div class="act-two-col">
           <!-- Video — izquierda -->
           <div class="act-block act-from-left" id="act-vid1">
-            <div class="act-video-wrap">
-              <video controls preload="metadata">
-                <source src="videos/actividades-presentacion.mp4#t=0.1" type="video/mp4">
-              </video>
+            <div class="act-video-frame">
+              <span class="blob blob-1"></span>
+              <span class="blob blob-2"></span>
+              <span class="blob blob-3"></span>
+              <span class="blob blob-4"></span>
+              <div class="act-video-wrap">
+                <video controls preload="metadata">
+                  <source src="videos/actividades-presentacion.mp4#t=0.1" type="video/mp4">
+                </video>
+              </div>
             </div>
           </div>
           <!-- Texto — derecha -->
@@ -6136,17 +6284,29 @@ function heroGoNovedades(){
         <div class="act-block act-from-up" id="act-gal">
           <div class="act-gallery-title">Galería de Actividades</div>
           <div class="act-collage">
-            <div class="act-collage-main act-block act-from-left" id="act-gal1" style="transition-delay:.05s">
-              <img src="img/actividades-galeria-1.jpg" alt="Galería actividades 1"
-                   onerror="this.style.background='var(--azul-pale)';this.style.minHeight='200px'">
+            <div class="act-collage-item act-block act-from-left" id="act-gal1" style="transition-delay:.05s">
+              <span class="act-collage-blob act-collage-blob-a"></span>
+              <span class="act-collage-blob act-collage-blob-b"></span>
+              <div class="act-collage-inner">
+                <img src="img/actividades-galeria-1.jpg" alt="Galería actividades 1"
+                     onerror="this.parentElement.innerHTML='<div class=act-gal-ph>📷</div>'">
+              </div>
             </div>
-            <div class="act-collage-side act-block act-from-right" id="act-gal2" style="transition-delay:.15s">
-              <img src="img/actividades-galeria-2.jpg" alt="Galería actividades 2"
-                   onerror="this.style.background='var(--azul-pale)';this.style.minHeight='120px'">
+            <div class="act-collage-item act-block act-from-up" id="act-gal2" style="transition-delay:.18s">
+              <span class="act-collage-blob act-collage-blob-a"></span>
+              <span class="act-collage-blob act-collage-blob-b"></span>
+              <div class="act-collage-inner">
+                <img src="img/actividades-galeria-2.jpg" alt="Galería actividades 2"
+                     onerror="this.parentElement.innerHTML='<div class=act-gal-ph>📷</div>'">
+              </div>
             </div>
-            <div class="act-collage-side act-block act-from-right" id="act-gal3" style="transition-delay:.28s">
-              <img src="img/actividades-galeria-3.jpg" alt="Galería actividades 3"
-                   onerror="this.style.background='var(--azul-pale)';this.style.minHeight='120px'">
+            <div class="act-collage-item act-block act-from-right" id="act-gal3" style="transition-delay:.32s">
+              <span class="act-collage-blob act-collage-blob-a"></span>
+              <span class="act-collage-blob act-collage-blob-b"></span>
+              <div class="act-collage-inner">
+                <img src="img/actividades-galeria-3.jpg" alt="Galería actividades 3"
+                     onerror="this.parentElement.innerHTML='<div class=act-gal-ph>📷</div>'">
+              </div>
             </div>
           </div>
         </div>
@@ -6168,13 +6328,19 @@ function heroGoNovedades(){
           </div>
           <!-- Instagram — derecha -->
           <div class="act-block act-from-right" id="act-ig3">
-            <div class="act-insta-wrap floating">
-              <blockquote class="instagram-media"
-                data-instgrm-permalink="https://www.instagram.com/reel/DUDoHO5Eaf_/"
-                data-instgrm-version="14"
-                style="width:100%;margin:0;border:none;background:#fff">
-              </blockquote>
-              <script async src="//www.instagram.com/embed.js"></script>
+            <div class="act-insta-frame">
+              <span class="blob blob-1"></span>
+              <span class="blob blob-2"></span>
+              <span class="blob blob-3"></span>
+              <span class="blob blob-4"></span>
+              <div class="act-insta-wrap floating">
+                <blockquote class="instagram-media"
+                  data-instgrm-permalink="https://www.instagram.com/reel/DUDoHO5Eaf_/"
+                  data-instgrm-version="14"
+                  style="width:100%;margin:0;border:none;background:#fff">
+                </blockquote>
+                <script async src="//www.instagram.com/embed.js"></script>
+              </div>
             </div>
           </div>
         </div>
@@ -7041,6 +7207,7 @@ function heroGoNovedades(){
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
   text-decoration:none;
   transition:transform .2s;
+  border-radius:0 0 16px 16px;
 }
 .disclaimer-img1-sos:hover{transform:scale(1.04)}
 .disclaimer-img1-sos img{
@@ -7056,7 +7223,7 @@ function heroGoNovedades(){
 .disclaimer-img2{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);display:block}
 .disclaimer-img2 img{width:100%;display:block;aspect-ratio:960/1120;object-fit:cover}
 .disc-img2-zone{position:absolute;left:0;right:0;border:none;background:transparent;cursor:pointer;transition:background .2s;padding:0}
-.disc-img2-zone:hover{background:rgba(255,255,255,.12)}
+.disc-img2-zone:hover{background:rgba(122,174,212,.32)}
 .disc-img2-zone-top{top:0;height:58%}
 .disc-img2-zone-bottom{top:58%;bottom:0}
 
@@ -7120,11 +7287,90 @@ function heroGoNovedades(){
   </div>
 </div>
 
-<!-- ── Modal: 60 Segundos de Seguridad — Botiquín de primeros auxilios ── -->
-<div class="disclaimer-bg" id="botiquinModal" onclick="if(event.target===this)closeBotiquinModal()">
-  <div class="botiquin-modal-box">
-    <button class="botiquin-modal-close" onclick="closeBotiquinModal()" aria-label="Cerrar">&times;</button>
-    <div class="botiquin-modal-img" data-img="botiquin-primeros-auxilios" data-alt="Botiquín de primeros auxilios — elementos básicos"></div>
+<!-- ── Modal: 60 Segundos de Seguridad — Carrusel ── -->
+<style>
+.carousel-modal-bg{
+  display:none;position:fixed;inset:0;z-index:1001;
+  background:rgba(0,10,30,.88);
+  backdrop-filter:blur(12px);
+  align-items:center;justify-content:center;
+  padding:12px;
+}
+.carousel-modal-bg.open{display:flex;animation:fadeIn .32s ease}
+.carousel-box{
+  position:relative;
+  width:100%;max-width:720px;
+  display:flex;flex-direction:column;align-items:center;
+  animation:modalIn .34s cubic-bezier(.4,0,.2,1);
+}
+.carousel-close{
+  position:absolute;top:-44px;right:0;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);
+  color:#fff;font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .2s;
+}
+.carousel-close:hover{background:rgba(255,255,255,.28)}
+.carousel-img-wrap{
+  width:100%;border-radius:14px;overflow:hidden;
+  box-shadow:0 12px 48px rgba(0,0,0,.5);
+  background:#000;
+  position:relative;
+}
+.carousel-img-wrap img{
+  width:100%;height:auto;display:block;
+  transition:opacity .22s ease;
+}
+/* Flechas */
+.carousel-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(0,0,0,.45);border:1.5px solid rgba(255,255,255,.3);
+  color:#fff;font-size:22px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .2s;
+  z-index:2;user-select:none;
+}
+.carousel-arrow:hover{background:rgba(0,59,113,.75)}
+.carousel-arrow-left{left:10px}
+.carousel-arrow-right{right:10px}
+/* Dots */
+.carousel-dots{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:5px;
+  margin-top:12px;max-width:100%;padding:0 4px;
+}
+.carousel-dot{
+  width:9px;height:9px;border-radius:2px;
+  background:rgba(255,255,255,.28);border:none;padding:0;cursor:pointer;
+  transition:background .18s,transform .18s;flex-shrink:0;
+}
+.carousel-dot:hover{background:#7AAED4;transform:scale(1.18)}
+.carousel-dot.active{background:#fff;transform:scale(1.18)}
+/* Contador */
+.carousel-counter{
+  margin-top:10px;
+  font-family:var(--font-sans);font-size:14px;font-weight:600;
+  color:rgba(255,255,255,.75);letter-spacing:.06em;
+}
+@media(max-width:640px){
+  .carousel-box{max-width:100%}
+  .carousel-arrow{width:34px;height:34px;font-size:18px}
+  .carousel-dot{width:7px;height:7px}
+  .carousel-counter{font-size:13px}
+}
+</style>
+
+<div class="carousel-modal-bg" id="botiquinModal" onclick="if(event.target===this)closeBotiquinModal()">
+  <div class="carousel-box">
+    <button class="carousel-close" onclick="closeBotiquinModal()" aria-label="Cerrar">&times;</button>
+    <div class="carousel-img-wrap">
+      <button class="carousel-arrow carousel-arrow-left" onclick="carouselPrev()" aria-label="Anterior">&#8249;</button>
+      <img id="carouselImg" src="img/60_img_1.png" alt="60 Segundos de Seguridad">
+      <button class="carousel-arrow carousel-arrow-right" onclick="carouselNext()" aria-label="Siguiente">&#8250;</button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+    <div class="carousel-counter" id="carouselCounter">1 de 46</div>
   </div>
 </div>
 
@@ -7880,14 +8126,74 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 /* ── Modal: 60 Segundos de Seguridad — Botiquín ── */
-function openBotiquinModal(){
-  var m=document.getElementById('botiquinModal');
-  if(m){m.classList.add('open');document.body.style.overflow='hidden';}
-}
-function closeBotiquinModal(){
-  var m=document.getElementById('botiquinModal');
-  if(m){m.classList.remove('open');document.body.style.overflow='';}
-}
+/* ════ CARRUSEL 60 Segundos de Seguridad ════ */
+(function(){
+  var TOTAL=46;
+  var PREFIX='img/60_img_';
+  var EXT='.png';
+  var current=1;
+
+  function buildDots(){
+    var wrap=document.getElementById('carouselDots');
+    if(!wrap)return;
+    wrap.innerHTML='';
+    for(var i=1;i<=TOTAL;i++){
+      var d=document.createElement('button');
+      d.className='carousel-dot'+(i===1?' active':'');
+      d.setAttribute('aria-label','Imagen '+i);
+      d.setAttribute('data-idx',i);
+      d.onclick=(function(idx){return function(){carouselGo(idx);};})(i);
+      wrap.appendChild(d);
+    }
+  }
+
+  function updateUI(){
+    var img=document.getElementById('carouselImg');
+    var counter=document.getElementById('carouselCounter');
+    var dots=document.querySelectorAll('.carousel-dot');
+    if(img){
+      img.style.opacity='0';
+      setTimeout(function(){
+        img.src=PREFIX+current+EXT;
+        img.style.opacity='1';
+      },120);
+    }
+    if(counter)counter.textContent=current+' de '+TOTAL;
+    dots.forEach(function(d,i){
+      d.classList.toggle('active',i+1===current);
+    });
+  }
+
+  window.carouselGo=function(idx){
+    current=((idx-1+TOTAL)%TOTAL)+1;
+    updateUI();
+  };
+  window.carouselPrev=function(){carouselGo(current-1);};
+  window.carouselNext=function(){carouselGo(current+1);};
+
+  window.openBotiquinModal=function(){
+    var m=document.getElementById('botiquinModal');
+    if(!m)return;
+    current=1;
+    buildDots();
+    updateUI();
+    m.classList.add('open');
+    document.body.style.overflow='hidden';
+  };
+  window.closeBotiquinModal=function(){
+    var m=document.getElementById('botiquinModal');
+    if(m){m.classList.remove('open');document.body.style.overflow='';}
+  };
+
+  /* Navegación con teclado */
+  document.addEventListener('keydown',function(e){
+    var m=document.getElementById('botiquinModal');
+    if(!m||!m.classList.contains('open'))return;
+    if(e.key==='ArrowRight')carouselNext();
+    else if(e.key==='ArrowLeft')carouselPrev();
+    else if(e.key==='Escape')closeBotiquinModal();
+  });
+})();
 
 /* ════ Franja de video fija — acompaña la sección Estructura ════ */
 (function(){
@@ -8776,6 +9082,101 @@ img[style*="position:absolute"],img.footer-banner-bg,img.ci-hero-bg-img{max-widt
   padding-right:max(8px,env(safe-area-inset-right));
   padding-bottom:max(8px,env(safe-area-inset-bottom));
 }
+/* ── DEBUG MODE ── */
+#greca-debug-panel{
+  display:none;position:fixed;bottom:20px;right:20px;z-index:99999;
+  background:#1a1a2e;color:#fff;border-radius:12px;padding:16px;
+  font-family:monospace;font-size:13px;box-shadow:0 8px 32px rgba(0,0,0,.5);
+  min-width:280px;
+}
+#greca-debug-panel.active{display:block}
+#greca-debug-panel h3{margin:0 0 12px;color:#7AAED4;font-size:14px}
+#greca-debug-panel label{display:block;margin:6px 0 2px;color:#aaa;font-size:11px}
+#greca-debug-panel input[type=range]{width:100%;accent-color:#7AAED4}
+#greca-debug-panel .val{color:#fff;font-weight:bold;margin-left:8px}
+#greca-debug-panel button{
+  margin-top:12px;width:100%;padding:8px;border:none;border-radius:6px;
+  background:#7AAED4;color:#003B71;font-weight:700;cursor:pointer;font-size:12px;
+}
+#greca-debug-panel .dbg-close{background:#e53935;color:#fff;margin-top:6px}
 </style>
+
+<!-- ── GRECA DEBUG PANEL ── -->
+<div id="greca-debug-panel">
+  <h3>🛠 Debug: srv-greca-bg</h3>
+
+  <label>Posición vertical (top) <span class="val" id="dbg-top-val">0px</span></label>
+  <input type="range" id="dbg-top" min="-400" max="400" value="0" step="1">
+
+  <label>Altura (height) <span class="val" id="dbg-h-val">130px</span></label>
+  <input type="range" id="dbg-h" min="50" max="400" value="130" step="1">
+
+  <label>Z-index <span class="val" id="dbg-z-val">10</span></label>
+  <input type="range" id="dbg-z" min="0" max="100" value="10" step="1">
+
+  <label>Opacidad <span class="val" id="dbg-op-val">1</span></label>
+  <input type="range" id="dbg-op" min="0" max="1" value="1" step="0.05">
+
+  <button onclick="copyGrecaCSS()">📋 Copiar valores CSS</button>
+  <button class="dbg-close" onclick="toggleDebug()">✕ Cerrar</button>
+</div>
+
+<script>
+(function(){
+  var keys={};
+  document.addEventListener('keydown',function(e){
+    keys[e.key.toLowerCase()]=true;
+    if(keys['control']&&keys['d']&&keys['b']) toggleDebug();
+  });
+  document.addEventListener('keyup',function(e){ keys[e.key.toLowerCase()]=false; });
+})();
+
+function toggleDebug(){
+  var p=document.getElementById('greca-debug-panel');
+  p.classList.toggle('active');
+  if(p.classList.contains('active')) initDebug();
+}
+
+function initDebug(){
+  var g=document.querySelector('.srv-greca-bg');
+  if(!g){ alert('No se encontró .srv-greca-bg'); return; }
+
+  // Forzar visibilidad para debug
+  g.style.outline='3px solid red';
+
+  function update(){
+    var top=document.getElementById('dbg-top').value;
+    var h=document.getElementById('dbg-h').value;
+    var z=document.getElementById('dbg-z').value;
+    var op=document.getElementById('dbg-op').value;
+
+    g.style.top=top+'px';
+    g.style.height=h+'px';
+    g.style.zIndex=z;
+    g.style.opacity=op;
+
+    document.getElementById('dbg-top-val').textContent=top+'px';
+    document.getElementById('dbg-h-val').textContent=h+'px';
+    document.getElementById('dbg-z-val').textContent=z;
+    document.getElementById('dbg-op-val').textContent=op;
+  }
+
+  ['dbg-top','dbg-h','dbg-z','dbg-op'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', update);
+  });
+  update();
+}
+
+function copyGrecaCSS(){
+  var top=document.getElementById('dbg-top').value;
+  var h=document.getElementById('dbg-h').value;
+  var z=document.getElementById('dbg-z').value;
+  var op=document.getElementById('dbg-op').value;
+  var css='.srv-greca-bg{\n  top:'+top+'px;\n  height:'+h+'px;\n  z-index:'+z+';\n  opacity:'+op+';\n}';
+  navigator.clipboard.writeText(css).then(function(){
+    alert('✅ CSS copiado:\n\n'+css);
+  });
+}
+</script>
 </body>
 </html>
