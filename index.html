@@ -325,6 +325,16 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
   pointer-events:none;
 }
 .srv-senderos-bg > *{position:relative;z-index:1}
+.srv-senderos-bg.spamsu-pattern-fade-senderos::before{
+  content:'';position:absolute;inset:0;
+  background-image:url('img/patron-institucional.png');
+  background-repeat:repeat;background-size:260px 260px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,transparent 50%,#000 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,transparent 50%,#000 100%);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;
+  pointer-events:none;z-index:0;
+}
 /* Fondo reporte: azul claro institucional con leve profundidad */
 .srv-reporte-bg{
   background:linear-gradient(160deg,#e8f1fb 0%,#dde9f8 40%,#cfdff5 100%);
@@ -471,8 +481,6 @@ body.tab-mode .page-wave{display:none}
   text-align:justify;
   text-justify:inter-word;
   line-height:1.9;
-  hyphens:auto;
-  -webkit-hyphens:auto;
   background:rgba(169,198,232,.06);
   border-radius:0 10px 10px 0;
   max-width:72ch;
@@ -2197,7 +2205,7 @@ function heroGoNovedades(){
         <button class="itab"        onclick="switchInfoTab('vision')"  id="it-vision">Visión</button>
         <button class="itab"        onclick="switchInfoTab('valores')" id="it-valores">Valores</button>
         <button class="itab"        onclick="switchInfoTab('decalogo')" id="it-decalogo">Decálogo</button>
-        <button class="itab"        onclick="switchInfoTab('logo')" id="it-logo">Conoce Nuestro Logo</button>
+        <button class="itab"        onclick="switchInfoTab('logo')" id="it-logo">Conoce nuestro logo</button>
       </div>
 
       <!-- Texto + imagen lateral -->
@@ -2700,6 +2708,13 @@ function heroGoNovedades(){
 
       <!-- ── Pestaña: Conoce Nuestro Logo ── -->
       <div class="itab-pane" id="ip-logo" style="max-width:none;padding:0">
+        <div style="background:transparent;border-radius:16px;overflow:hidden">
+          <img src="img/logo-banner.png" alt="Conoce nuestro logo — SPAMSU UNAM" style="width:100%;height:auto;display:block;border-radius:16px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <!-- Fallback si no existe la imagen -->
+          <div style="display:none;background:linear-gradient(135deg,#001d40 0%,#002f60 30%,#0d4f94 70%,#1565C0 100%);border-radius:16px;padding:36px;text-align:center;min-height:200px;align-items:center;justify-content:center;flex-direction:column">
+            <span style="color:#fff;font-size:14px">No se encontró img/logo-banner.png</span>
+          </div>
+        </div>
       </div>
 
 
@@ -3012,9 +3027,21 @@ function heroGoNovedades(){
   </svg>
 </div>
 <span id="est-crace"></span>
-      <div class="dir-showcase dir-showcase-colored" style="background:linear-gradient(145deg,#003B71 0%,#1565C0 55%,#1976D2 100%);border-bottom:none">
+      <div class="dir-showcase dir-showcase-colored spamsu-pattern-fade" style="background:#002a52;border-bottom:2px solid rgba(255,255,255,.4)">
         <style>
         .cinig-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:var(--azul-claro);text-transform:uppercase;letter-spacing:.16em;background:rgba(169,198,232,.15);border:1px solid rgba(169,198,232,.3);padding:4px 14px;border-radius:20px;margin-bottom:18px}
+        .spamsu-pattern-fade{position:relative}
+        .spamsu-pattern-fade::before{
+          content:'';position:absolute;inset:0;
+          background-image:url('img/patron-institucional.png');
+          background-repeat:repeat;background-size:260px 260px;
+          -webkit-mask-image:linear-gradient(to bottom,transparent 0%,transparent 50%,#000 100%);
+          mask-image:linear-gradient(to bottom,transparent 0%,transparent 50%,#000 100%);
+          -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+          -webkit-mask-size:100% 100%;mask-size:100% 100%;
+          pointer-events:none;z-index:0;
+        }
+        .spamsu-pattern-fade .dir-showcase-body{position:relative;z-index:1}
         .cinig-title{font-family:var(--font-serif);font-size:clamp(22px,2.4vw,30px);font-weight:700;color:#fff;line-height:1.22;margin-bottom:8px}
         .cinig-subtitle{font-size:13px;font-weight:600;color:var(--azul-claro);letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
         .cinig-desc{font-size:16px;color:rgba(255,255,255,.82);line-height:1.85;font-weight:300;text-align:justify;margin-bottom:28px}
@@ -3023,7 +3050,7 @@ function heroGoNovedades(){
         .cinig-cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t)}
         .cinig-cta:hover svg{transform:translateX(3px)}
         .cinig-img-wrap{width:100%;max-width:300px;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(169,198,232,.22);display:flex;align-items:center;justify-content:center;box-shadow:0 16px 48px rgba(0,0,0,.35)}
-        .cinig-img-wrap img{width:100%;height:100%;object-fit:contain}
+        .cinig-img-wrap img{width:100%;height:100%;object-fit:cover}
         .cinig-img-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;width:100%;height:100%}
         .cinig-img-ph span{font-family:'Courier New',monospace;font-size:12px;font-weight:700;color:rgba(169,198,232,.7);background:rgba(255,255,255,.06);border:1px solid rgba(169,198,232,.22);padding:4px 12px;border-radius:4px}
         .cinig-divider{width:40px;height:3px;background:var(--azul-claro);border-radius:2px;margin-bottom:20px}
@@ -3057,7 +3084,7 @@ function heroGoNovedades(){
            CINIG — después de CRACE (sin parallax, fondo propio)
       ══════════════════════════════════════ -->
       <span id="est-cinig"></span>
-      <div class="dir-showcase dir-showcase-colored" style="background:linear-gradient(145deg,#002a52 0%,#003B71 55%,#004e96 100%);border-bottom:none">
+      <div class="dir-showcase dir-showcase-colored spamsu-pattern-fade" style="background:#002a52;border-bottom:none">
         <div class="dir-showcase-body" style="max-width:1000px;margin:0 auto">
           <div class="dir-showcase-img-col">
             <div class="cinig-img-wrap">
@@ -3194,7 +3221,7 @@ function heroGoNovedades(){
               <span class="srv-cta">Ir al sitio &rarr;</span>
             </div>
           </a>
-          <div class="srv-card" style="width:calc(33.333% - 9px);min-width:260px">
+          <div class="srv-card" style="width:calc(33.333% - 9px);min-width:260px;cursor:pointer" onclick="openModal('modal-emerg')" role="button" tabindex="0">
             <div class="srv-img"><div data-img="srv-linea-incidentes" data-alt="Línea Única de Incidentes UNAM"><img src="img/srv-linea-incidentes.png" alt="Línea Única de Incidentes UNAM"></div></div>
             <div class="srv-body">
               <div class="srv-icon srv-icon-png"><img src="img/icon-srv-linea-incidentes.png" alt="Línea Única de Incidentes UNAM"></div>
@@ -3213,7 +3240,7 @@ function heroGoNovedades(){
       </div><!-- /srv-institutional-bg -->
 
       <!-- Senderos + middle -->
-      <div class="srv-senderos-bg">
+      <div class="srv-senderos-bg spamsu-pattern-fade-senderos">
       <!-- Senderos Universitarios -->
       <span id="novedades-senderos"></span>
       <div class="senderos-grid">
@@ -3883,7 +3910,7 @@ function heroGoNovedades(){
         </span>
         Regresar a Estructura
       </button>
-      <div class="cr-hero-tag">Órgano colegiado · UNAM</div>
+      <div class="cr-hero-tag">Órgano colegiado</div>
       <h1>CRACE</h1>
       <p>Colegio de Responsables de Atención a la Comunidad Estudiantil de la Universidad Nacional Autónoma de México</p>
 
@@ -7482,13 +7509,6 @@ function heroGoNovedades(){
     <!-- Grid 4×2 de tarjetas -->
     <div class="ep-grid">
 
-      <!-- 1. CAE -->
-      <a href="tel:5556222597" class="ep-item">
-        <div class="ep-badge" style="background:#002060;font-size:11px;letter-spacing:.02em">CAE</div>
-        <div class="ep-item-name">Central de Atención de Emergencias</div>
-        <div class="ep-item-phone">55-5622-2597</div>
-      </a>
-
       <!-- 2. Postes -->
       <div class="ep-item">
         <div class="ep-badge" style="background:#E65100">
@@ -7496,15 +7516,6 @@ function heroGoNovedades(){
         </div>
         <div class="ep-item-name">Postes de Emergencia</div>
         <div class="ep-item-desc">Se localizan en diferentes puntos del campus</div>
-      </div>
-
-      <!-- 3. Teléfono de Emergencia -->
-      <div class="ep-item">
-        <div class="ep-badge" style="background:#F9A825">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.29 6.29l1.27-.77a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-        </div>
-        <div class="ep-item-name">Teléfono de Emergencia</div>
-        <div class="ep-item-desc">Al descolgar será atendida su llamada</div>
       </div>
 
       <!-- 4. SOS UNAM -->
@@ -7517,33 +7528,6 @@ function heroGoNovedades(){
         <div class="ep-item-link">Aplicación →</div>
         <div class="ep-item-desc">Descarga la app oficial</div>
       </div>
-
-      <!-- 5. Protección Civil -->
-      <a href="tel:5556226552" class="ep-item">
-        <div class="ep-badge" style="background:#E65100">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="ep-item-name">Protección Civil</div>
-        <div class="ep-item-phone">55-5622-6552</div>
-      </a>
-
-      <!-- 6. Bomberos UNAM -->
-      <a href="tel:5556161560" class="ep-item">
-        <div class="ep-badge" style="background:#C62828">
-          <svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-7 7 7 7 0 01-7-7c0-1.99.806-2.967 2.5-4.5z"/></svg>
-        </div>
-        <div class="ep-item-name">Bomberos UNAM</div>
-        <div class="ep-item-phone">55-5616-1560</div>
-      </a>
-
-      <!-- 7. Línea Reacción Puma -->
-      <a href="tel:5556226464" class="ep-item">
-        <div class="ep-badge" style="background:#F57F17">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
-        </div>
-        <div class="ep-item-name">Línea de Reacción Puma</div>
-        <div class="ep-item-phone">55-5622-6464</div>
-      </a>
 
       <!-- 8. 911 -->
       <a href="tel:911" class="ep-item">
@@ -8763,6 +8747,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closePmsModa
   document.querySelectorAll('.dir-showcase').forEach(function(sec){
     var bg=sec.getAttribute('style')||'';
     if(bg.indexOf('1565C0')<0&&bg.indexOf('1976D2')<0&&bg.indexOf('002a52')<0&&bg.indexOf('003B71')<0)return;
+    if(bg.indexOf('patron-institucional')>=0)return;
     var dark=bg.indexOf('002a52')>=0||bg.indexOf('004e96')>=0;
     inject(sec,function(){
       var s=svg('0 0 1100 440');
